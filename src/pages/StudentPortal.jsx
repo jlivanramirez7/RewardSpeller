@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
+import { warmupAudio } from '../services/ttsService';
 import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
 
   const handleCompleteSection = () => {
+    const sectionData = activePlayData?.section;
+    
     setActivePlayData(null);
-    // Logic to unlock next tier if passing grade... (could add later)
+
+    // Auto-unlock next tier if mastery assessment is complete and passed
+    if (sectionData && sectionData.id.toString().includes('mastery')) {
+      const currentTierId = activePlayData.tierId;
+      if (isSectionMastered(sectionData.id)) {
+        if (!unlockedTiers.includes(currentTierId + 1)) {
+          // Safely push next tier ID
+          setUnlockedTiers(prev => [...prev, currentTierId + 1]);
+          alert(`🌟 LEGENDARY! You have mastered Tier ${currentTierId}. Tier ${currentTierId + 1} is now officially unlocked!`);
+        }
+      }
+    }
   };
 
   return (
@@ -50,7 +64,7 @@ const StudentPortal = () => {
             <h2 style={{ marginBottom: '1.5rem' }}>Learning Map</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {tiers.map((tier, index) => {
-                const isUnlocked = unlockedTiers.includes(tier.id);
+                const isUnlocked = !enablePacing || unlockedTiers.includes(tier.id);
                 return (
                   <div 
                     key={tier.id}
@@ -74,21 +88,25 @@ const StudentPortal = () => {
                     </div>
                     <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       {(() => {
-                        const completedCount = tier.sections.reduce((count, section) => {
-                          return count + ((isSectionMastered(section.id) || listenedLessons.includes(section.id)) ? 1 : 0);
-                        }, 0);
+                        const firstUnmastered = tier.sections.findIndex(sec => !isSectionMastered(sec.id));
+                        const unlockLimit = firstUnmastered === -1 ? 999 : firstUnmastered + 3;
 
                         return tier.sections.map((section, sIdx) => {
-                          const isSectionMasteredStatus = isSectionMastered(section.id);
+                          const stats = getSectionStats(section.id);
+                          const isSectionMasteredStatus = stats.isPassed;
                           const isSectionListened = listenedLessons.includes(section.id);
-                          // progressive unlock: index <= completedCount ensures the next section opens
-                          const isSectionUnlocked = isUnlocked && (sIdx <= completedCount);
+                          
+                          // Only 3 non-mastered sections available at a time rolling gate (unless user pacing disabled)
+                          const isSectionUnlocked = isUnlocked && (!enablePacing || sIdx < unlockLimit);
 
                           return (
                             <div key={section.id} style={{ display: 'flex', gap: '0.5rem', width: '100%', alignItems: 'center' }}>
                               <button 
                                 className="btn-secondary"
-                                onClick={() => setActiveLessonData(section)}
+                                onClick={() => {
+                                  warmupAudio(); // Claim interaction focus for audio!
+                                  setActiveLessonData({ ...section, parentTierId: tier.id });
+                                }}
                                 disabled={!isSectionUnlocked}
                                 title="Read Lesson"
                                 style={{ 
@@ -106,33 +124,45 @@ const StudentPortal = () => {
                               </button>
                               <button 
                                 className={isSectionListened ? "btn-primary" : "btn-secondary"} 
-                                onClick={() => setActivePlayData({ tierId: tier.id, section })}
+                                onClick={() => {
+                                  warmupAudio(); // Trigger audio channel open
+                                  setActivePlayData({ tierId: tier.id, section });
+                                }}
                                 disabled={!isSectionListened || !isSectionUnlocked}
                                 style={{ 
                                   padding: '0.5rem 1rem', 
                                   fontSize: '0.875rem',
                                   opacity: (isSectionListened && isSectionUnlocked) ? 1 : 0.5,
-                                  border: isSectionMasteredStatus ? '2px solid #fbbf24' : 'none',
+                                  border: stats.is100Percent ? '2px solid #10b981' : (isSectionMasteredStatus ? '2px solid #fbbf24' : 'none'),
                                   flex: 1,
                                   textAlign: 'left'
                                 }}
                               >
-                                {section.name}: {section.theme} {isSectionMasteredStatus ? '⭐' : (isSectionListened ? '▶' : '🔒 (Listen to Lesson)')}
+                                {section.name}: {section.theme} {stats.is100Percent ? '👑' : (isSectionMasteredStatus ? '⭐' : (isSectionListened ? '▶' : '🔒 (Listen First)'))}
                               </button>
+                              {/* Progress Display Badge */}
                               <div style={{ 
                                 display: 'flex', 
-                                gap: '0.75rem', 
-                                fontSize: '0.75rem', 
-                                color: 'var(--text-secondary)',
-                                background: 'rgba(0,0,0,0.2)',
+                                flexDirection: 'column',
+                                gap: '0.25rem', 
                                 padding: '0.5rem 0.75rem',
-                                borderRadius: '6px',
+                                background: 'rgba(0,0,0,0.2)',
+                                borderRadius: '8px',
                                 border: '1px solid var(--surface-border)',
-                                whiteSpace: 'nowrap'
+                                width: '130px'
                               }}>
-                                <span style={{ color: '#10b981', fontWeight: 'bold' }}>Easy: 10pts</span>
-                                <span style={{ color: '#fbbf24', fontWeight: 'bold' }}>Med: 20pts</span>
-                                <span style={{ color: '#ef4444', fontWeight: 'bold' }}>Hard: 30pts</span>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'white', fontWeight: 'bold' }}>
+                                  <span>Progress</span>
+                                  <span style={{ color: stats.completionPercent === 100 ? '#10b981' : '#fbbf24' }}>{stats.completionPercent}%</span>
+                                </div>
+                                <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                                  <div style={{ height: '100%', width: `${stats.completionPercent}%`, background: stats.completionPercent === 100 ? '#10b981' : 'var(--accent-color)', transition: 'width 0.5s' }}></div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px', fontSize: '0.65rem' }}>
+                                  <span style={{ opacity: stats.easyAcc === 100 ? 1 : 0.4, color: stats.easyAcc === 100 ? '#10b981' : '#9ca3af' }}>E</span>
+                                  <span style={{ opacity: stats.medAcc === 100 ? 1 : 0.4, color: stats.medAcc === 100 ? '#10b981' : '#9ca3af' }}>M</span>
+                                  <span style={{ opacity: stats.hardAcc === 100 ? 1 : 0.4, color: stats.hardAcc === 100 ? '#10b981' : '#9ca3af' }}>H</span>
+                                </div>
                               </div>
                             </div>
                           );
@@ -140,14 +170,15 @@ const StudentPortal = () => {
                       })()}
                       
                       {(() => {
-                        const completedCount = tier.sections.reduce((count, section) => {
-                          return count + ((isSectionMastered(section.id) || listenedLessons.includes(section.id)) ? 1 : 0);
+                        const masteredCount = tier.sections.reduce((count, section) => {
+                          return count + (isSectionMastered(section.id) ? 1 : 0);
                         }, 0);
-                        const tierMasteryUnlocked = completedCount >= 6;
+                        const tierMasteryUnlocked = masteredCount >= tier.sections.length;
                         
                         if (!tierMasteryUnlocked) return null;
                         
                         const handleTierMastery = () => {
+                          warmupAudio(); // Prepare audio for end-tier speech
                           let allWords = [];
                           tier.sections.forEach(s => allWords.push(...s.words));
                           const shuffledAll = [...allWords].sort(() => Math.random() - 0.5);
@@ -257,7 +288,15 @@ const StudentPortal = () => {
       )}
 
       {activeLessonData && (
-        <LessonModal lessonData={activeLessonData} onClose={() => setActiveLessonData(null)} />
+        <LessonModal 
+          lessonData={activeLessonData} 
+          onClose={() => setActiveLessonData(null)} 
+          onBeginTrials={(secData) => {
+            // SYNCHRONOUS HANDOVER: Close lesson and immediately open corresponding game session
+            setActiveLessonData(null);
+            setActivePlayData({ tierId: secData.parentTierId, section: secData });
+          }}
+        />
       )}
     </div>
   );

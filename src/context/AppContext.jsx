@@ -16,6 +16,9 @@ export const AppProvider = ({ children }) => {
   const [unlockedTiers, setUnlockedTiers] = useState(() => loadState('unlockedTiers', [1])); // Tier 1 unlocked by default
   const [struggleWords, setStruggleWords] = useState(() => loadState('struggleWords', []));
   const [sectionScores, setSectionScores] = useState(() => loadState('sectionScores', {})); // Tracks max score per section/diff
+  const [sectionAccuracy, setSectionAccuracy] = useState(() => loadState('sectionAccuracy', {})); // Tracks max percentage correct
+  const [enablePacing, setEnablePacing] = useState(() => loadState('enablePacing', true)); // Controls rolling window gate
+  const [enableDifficultyGating, setEnableDifficultyGating] = useState(() => loadState('enableDifficultyGating', true)); // Forces Easy->Med->Hard sequence
   const [listenedLessons, setListenedLessons] = useState(() => loadState('listenedLessons', []));
 
   // Parent State
@@ -35,24 +38,34 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('unlockedTiers', JSON.stringify(unlockedTiers));
     localStorage.setItem('struggleWords', JSON.stringify(struggleWords));
     localStorage.setItem('sectionScores', JSON.stringify(sectionScores));
+    localStorage.setItem('sectionAccuracy', JSON.stringify(sectionAccuracy));
+    localStorage.setItem('enablePacing', JSON.stringify(enablePacing));
+    localStorage.setItem('enableDifficultyGating', JSON.stringify(enableDifficultyGating));
     localStorage.setItem('listenedLessons', JSON.stringify(listenedLessons));
     localStorage.setItem('rewards', JSON.stringify(rewards));
     localStorage.setItem('currentGradeLevel', JSON.stringify(currentGradeLevel));
-  }, [studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, listenedLessons, rewards, currentGradeLevel]);
+  }, [studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel]);
 
   const addPoints = (points) => {
     setStudentPoints(prev => prev + points);
   };
 
-  const updateSectionScore = (sectionId, difficulty, newScore) => {
+  const updateSectionScore = (sectionId, difficulty, newScore, accuracyPercent) => {
     const key = `${sectionId}-${difficulty}`;
-    const oldScore = sectionScores[key] || 0;
     
+    // 1. Safeguard & update best accuracy
+    const currentAccuracy = (sectionAccuracy && sectionAccuracy[key]) || 0;
+    if (accuracyPercent > currentAccuracy) {
+      setSectionAccuracy(prev => ({ ...prev, [key]: accuracyPercent }));
+    }
+
+    // 2. Handle score differencing synchronously and non-concurrently
+    const oldScore = (sectionScores && sectionScores[key]) || 0;
     if (newScore > oldScore) {
       const difference = newScore - oldScore;
       addPoints(difference);
       setSectionScores(prev => ({ ...prev, [key]: newScore }));
-      return difference; // Returns points actually awarded
+      return difference;
     }
     return 0;
   };
@@ -82,20 +95,41 @@ export const AppProvider = ({ children }) => {
     setUnlockedTiers([1]);
     setStruggleWords([]);
     setSectionScores({});
+    setSectionAccuracy({});
+  };
+
+  const getSectionStats = (sectionId) => {
+    const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
+    const medAcc = sectionAccuracy[`${sectionId}-medium`] || 0;
+    const hardAcc = sectionAccuracy[`${sectionId}-hard`] || 0;
+    
+    const completionPercent = Math.round((easyAcc + medAcc + hardAcc) / 3);
+    const is100Percent = easyAcc === 100 && medAcc === 100 && hardAcc === 100;
+    
+    // Passed criteria: 90% correctness on ANY difficulty
+    const isPassed = easyAcc >= 90 || medAcc >= 90 || hardAcc >= 90;
+
+    return { easyAcc, medAcc, hardAcc, completionPercent, is100Percent, isPassed };
   };
 
   const isSectionMastered = (sectionId) => {
-    const easyScore = sectionScores[`${sectionId}-easy`] || 0;
-    const medScore = sectionScores[`${sectionId}-medium`] || 0;
-    const hardScore = sectionScores[`${sectionId}-hard`] || 0;
+    return getSectionStats(sectionId).isPassed;
+  };
+
+  const isDifficultyUnlocked = (sectionId, difficulty) => {
+    // Globally disabled by parent -> Everything unlocked
+    if (!enableDifficultyGating) return true;
+    // Easy always open
+    if (difficulty === 'easy') return true;
     
-    // Mastery = 90% of max possible points for ANY difficulty
-    // Max Easy: 100, Max Medium: 200, Max Hard: 300
-    if (easyScore >= 90) return true;
-    if (medScore >= 180) return true;
-    if (hardScore >= 270) return true;
+    // Dynamic checks
+    const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
+    const medAcc = sectionAccuracy[`${sectionId}-medium`] || 0;
     
-    return false;
+    if (difficulty === 'medium') return easyAcc >= 100; // Need 100% easy to access medium
+    if (difficulty === 'hard') return medAcc >= 100;   // Need 100% med to access hard
+    
+    return true;
   };
 
   const markLessonListened = (sectionId) => {
@@ -114,6 +148,10 @@ export const AppProvider = ({ children }) => {
       unlockedTiers, setUnlockedTiers,
       struggleWords, addStruggleWord,
       sectionScores, updateSectionScore,
+      sectionAccuracy, getSectionStats,
+      enablePacing, setEnablePacing,
+      enableDifficultyGating, setEnableDifficultyGating,
+      isDifficultyUnlocked,
       listenedLessons, markLessonListened,
       rewards, setRewards, purchaseReward,
       currentGradeLevel, setCurrentGradeLevel,

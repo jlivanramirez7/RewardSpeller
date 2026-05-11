@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 
 const ParentPortal = () => {
-  const { struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress } = useAppContext();
+  const { struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
@@ -131,7 +131,7 @@ const ParentPortal = () => {
                 e.target.reset();
               }
             }}
-            style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}
+            style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}
           >
             <input 
               name="rewardName" 
@@ -181,6 +181,133 @@ const ParentPortal = () => {
                 );
               })}
             </ul>
+          </div>
+        </div>
+
+        {/* Experience Pacing Configuration */}
+        <div className="glass-panel" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '1rem' }}>Experience Control</h2>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+            Control curriculum accessibility. Active pacing forces linear unlocking through milestones.
+          </p>
+          
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            padding: '1.25rem', 
+            background: 'rgba(255,255,255,0.05)', 
+            borderRadius: '12px',
+            border: '1px solid var(--surface-border)'
+          }}>
+            <div>
+              <h3 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>Adaptive Pacing</h3>
+              <p style={{ fontSize: '0.75rem', color: enablePacing ? 'var(--success-color)' : '#94a3b8' }}>
+                {enablePacing ? '✅ ACTIVE (Max 3 ahead)' : '🔓 OFF (Unlocked Access)'}
+              </p>
+            </div>
+            
+            {/* Theming-matched Toggle Switch */}
+            <label style={{ 
+              position: 'relative', 
+              display: 'inline-block', 
+              width: '52px', 
+              height: '28px',
+              cursor: 'pointer'
+            }}>
+              <input 
+                type="checkbox" 
+                checked={enablePacing}
+                onChange={(e) => setEnablePacing(e.target.checked)}
+                style={{ opacity: 0, width: 0, height: 0 }}
+              />
+              <span style={{
+                position: 'absolute', 
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: enablePacing ? 'var(--accent-color)' : 'rgba(255,255,255,0.15)',
+                transition: '0.3s ease', 
+                borderRadius: '34px',
+                boxShadow: enablePacing ? '0 0 10px rgba(244, 63, 94, 0.4)' : 'none',
+                border: '1px solid rgba(255,255,255,0.1)'
+              }}>
+                <span style={{
+                  position: 'absolute', 
+                  content: '""', 
+                  height: '20px', 
+                  width: '20px', 
+                  left: '4px', 
+                  bottom: '3px',
+                  backgroundColor: 'white', 
+                  transition: '0.3s cubic-bezier(0.2, 1.2, 0.5, 1.2)', 
+                  borderRadius: '50%',
+                  transform: enablePacing ? 'translateX(24px)' : 'translateX(0)',
+                  boxShadow: '0 2px 5px rgba(0,0,0,0.3)'
+                }}></span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        {/* Difficulty Progression Configuration */}
+        <div className="glass-panel" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '1rem' }}>Difficulty Progression</h2>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+            Enforce linear mastery sequence. Students must perfectly master the previous tier to attempt higher complexity modes.
+          </p>
+          
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            padding: '1.25rem', 
+            background: 'rgba(255,255,255,0.05)', 
+            borderRadius: '12px',
+            border: '1px solid var(--surface-border)'
+          }}>
+            <div>
+              <h3 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>Sequential Lock</h3>
+              <p style={{ fontSize: '0.75rem', color: enableDifficultyGating ? 'var(--success-color)' : '#94a3b8' }}>
+                {enableDifficultyGating ? '✅ ACTIVE (E → M → H)' : '🔓 OFF (Full Access)'}
+              </p>
+            </div>
+            
+            <label style={{ 
+              position: 'relative', 
+              display: 'inline-block', 
+              width: '52px', 
+              height: '28px',
+              cursor: 'pointer'
+            }}>
+              <input 
+                type="checkbox" 
+                checked={enableDifficultyGating}
+                onChange={(e) => setEnableDifficultyGating(e.target.checked)}
+                style={{ opacity: 0, width: 0, height: 0 }}
+              />
+              <span style={{
+                position: 'absolute', 
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: enableDifficultyGating ? 'var(--accent-color)' : 'rgba(255,255,255,0.15)',
+                transition: '0.3s ease', 
+                borderRadius: '34px',
+                boxShadow: enableDifficultyGating ? '0 0 10px rgba(244, 63, 94, 0.4)' : 'none',
+                border: '1px solid rgba(255,255,255,0.1)'
+              }}>
+                <span style={{
+                  position: 'absolute', 
+                  content: '""', 
+                  height: '20px', 
+                  width: '20px', 
+                  left: '4px', 
+                  bottom: '3px',
+                  backgroundColor: 'white', 
+                  transition: '0.3s cubic-bezier(0.2, 1.2, 0.5, 1.2)', 
+                  borderRadius: '50%',
+                  transform: enableDifficultyGating ? 'translateX(24px)' : 'translateX(0)',
+                  boxShadow: '0 2px 5px rgba(0,0,0,0.3)'
+                }}></span>
+              </span>
+            </label>
           </div>
         </div>
 

@@ -1,98 +1,87 @@
-# SummerSpellingApp
+# 🚀 SummerSpellingApp
 
-Welcome to the **SummerSpellingApp**! This is a comprehensive, gamified web-based educational platform designed specifically for 4th and 5th-grade students. It transitions children from basic phonetic spelling to true orthographic mastery using a structured "Building Blocks" pedagogical approach.
-
-## 🚀 Project Overview
-
-The app is split into two distinct interfaces:
-1. **Student Portal:** A visually engaging, gamified interface where students take spelling assessments, earn points, and unlock rewards.
-2. **Parent Portal:** A "command center" for parents to track progress, monitor struggle areas, adjust curriculum difficulty, and manage the reward economy.
-
-## 🛠 Tech Stack
-
-- **Frontend Framework:** React (via Vite)
-- **Styling:** Vanilla CSS (Modern glassmorphism UI, CSS variables for theming, custom animations)
-- **Routing:** React Router DOM
-- **State Management:** React Context API (`AppContext`)
-- **Persistence:** LocalStorage (for seamless cross-session saving without a backend)
-- **Accessibility/Audio:** Web Speech API (for Text-to-Speech dictation)
+Welcome to the **SummerSpellingApp**! This is a comprehensive, high-fidelity gamified web educational platform built explicitly to transition students into orthographic mastery using a structured "Building Blocks" pedagogical approach. Combining high-density immersive visual analytics with next-generation neural speech synthesis, it provides a secure, customizable learning track for students and administrative oversight for educators.
 
 ---
 
-## 📚 The Curriculum
+## 🛠️ Technical Overview
 
-The core of the application is a massive, curated word bank consisting of **150 words** (30 per tier). Every single word is equipped with a custom, 4th/5th-grade appropriate **definition** and an **example sentence**.
+### 1. Component Architecture
+The application orchestrates state utilizing modern React deterministic patterns for optimized rendering:
+*   **React Context API (`AppContext`)**: Acts as the central ecosystem nervous system. It synchronously aggregates student performance (scores, accuracy maps, streak metrics) and propagates global persistent settings reliably.
+*   **Singleton Audio Node Pattern**: Consolidates global media operations into a single, persistent HTML5 `Audio` element. This architecture natively circumvents browser security blockades by maintaining explicit user-activation privileges across dynamic component mount cycles.
+*   **DOM Portals for Content Modals**: Critical layout drivers like the Jedi Archive modal and Lightbox expansion containers bypass parent DOM transform isolation by teleporting directly to the global `document.body` via `ReactDOM.createPortal`. This explicitly guarantees 100% absolute viewport centering, impervious to scrolling artifacts.
 
-The curriculum is broken into 5 progressive Tiers:
-
-1. **Tier 1: Complex Vowel Patterns**
-   - *Rule:* Master sophisticated vowel combinations and R-controlled nuances (e.g., 'ei', 'ie').
-   - *Example Words:* neighbor, drought, awkward, turquoise.
-2. **Tier 2: Advanced Morphology**
-   - *Rule:* Use word parts (Latin/Greek roots, prefixes, suffixes) to decode complex terms.
-   - *Example Words:* biography, subterranean, trajectory.
-3. **Tier 3: Multi-syllabic Structural Analysis**
-   - *Rule:* Break down long words using standard syllable division patterns (VC/CV) and identify the schwa sound.
-   - *Example Words:* intelligence, mysterious, calculation.
-4. **Tier 4: Homophones & Confusing Words**
-   - *Rule:* Distinguish between commonly confused words through sentence context.
-   - *Example Words:* principal/principle, stationary/stationery.
-5. **Tier 5: Academic Vocabulary**
-   - *Rule:* Master subject-specific terminology used in Math, Science, and History.
-   - *Example Words:* photosynthesis, denominator, chronological.
+### 2. Dual-Channel High-Fidelity TTS Pipeline
+Our resilient audio subsystem implemented in `ttsService.js` enforces three tiers of zero-failure redundancy:
+*   **Tier 1: Synchronous Gesture Warmup**: Captures initial user click events to silently "prime" the audio context, defeating strict desktop/mobile autoplay policies immediately.
+*   **Tier 2: Pre-Rendered Static Dispatcher**: Probes local caches (`/assets/audio/`) first to deliver zero-latency offline-ready narration streams.
+*   **Tier 3: Dynamic Neural Fallback**: Automatically pivots missing items to the active **Google Cloud Flagship Neural Engine** (`en-US-Journey-F`) using runtime adaptive bearer token detection and throttled request buffering.
+*   **Safety Protocols**: Embedded capped cyclic caches prevent unbounded memory expansion during long continuous sessions, and synchronous async session ID trackers invalidate race condition payloads on instant channel switches.
 
 ---
 
-## 🎮 Game Mechanics
+## 🎮 Gameplay and Mechanics
 
-### Assessment Flow
-Students select an unlocked Tier from their Learning Map and choose a difficulty.
-- **Easy (Copy-Type):** The word remains visible on the screen. (Awards 1 base pt)
-- **Medium (Recall-Type):** The word flashes for 3 seconds, then disappears. (Awards 3 base pts)
-- **Hard (Dictation):** The word is completely hidden. (Awards 30 base pts)
+### 🏛️ The Lesson Interface
+Before triggering assessments, students utilize the immersive **Jedi Archive** built to strengthen spelling retention via multiple cognitive pathways:
+*   **High-Density Visual Banners**: Expanded widescreen canvas featuring adaptive ambient backdrop layers to present lesson artwork natively without cropping.
+*   **Phonetic Glow Highlighters**: Leverages intelligent pattern-detection regex engines to dynamically stratify vocabulary into discrete grouped buckets (e.g., LOGIC GROUP: IE), isolating phonetic nuances with glowing text-shadows.
+*   **Lightbox Overlays**: Seamless full-screen portals that darkens surrounding UI to isolate focus directly onto core anchor visualizations with a single click.
+*   **Autonomous Holocron Audio**: Seamlessly instantiates immersive narrations synchronous with modal mount, locking in audio-visual memory hooks instantly.
 
-### Text-to-Speech (TTS)
-When a word is presented, the app utilizes the browser's TTS engine to dictate:
-`"[Word]. [Definition]. [Sentence]. The word is: [Word]."`
-*The TTS automatically cancels and updates the moment a student skips or moves to a new word to prevent audio overlapping.*
-
-### Retry Logic & Smart Feedback
-If a student misspells a word:
-- **First Mistake:** They receive a "Smart Hint" (e.g., "Don't forget the silent 'e'!" or "Too many letters!"). The audio is replayed, and they get *one* chance to fix it.
-- **Second Mistake:** The word is marked incorrect, the correct spelling is revealed, and the word is logged in the Parent Portal's "Struggle Report". The streak is broken, and the engine moves to the next word.
-
-### Economy Limits (Anti-Grinding)
-To prevent students from playing "Easy" repeatedly to farm points, the app tracks the **Maximum Score** achieved per tier and difficulty.
-- Points are only added to the student's global bank if their newly achieved session score *exceeds* their previous high score for that specific tier.
-- *Example:* If a student scores 300 points on Tier 1 (Hard), and plays it again scoring 300 points, they receive **0 new points**. 
+### 🎯 Dynamic Word Assessment Flow
+Assessments enforce a progressive disclosure curve scaling available visual support inversely with difficulty:
+*   **🟩 Easy (Static Persistence)**: The targeted term remains fixed visibly. Excellent for rote foundational memory reinforcement. *(Awards 1 base point)*
+*   **🟨 Medium (Recall Caching)**: The word appears dynamically for **3 seconds**, forcing instant snapshot recall before vanishing entirely. *(Awards 3 base points)*
+*   **🟥 Hard (Pure Dictation)**: Terms are masked 100% behind visual placeholders. The user relies purely on synchronous text-to-speech dictation. *(Awards 30 base points)*
+*   **Adaptive Smart Logic**: Includes non-punitive hint layers (e.g. analyzing length deltas, detecting missing silent 'e' suffixes) that fire contextual correction advice following first-instance failures rather than forcing instant reset.
 
 ---
 
-## 👨‍👩‍👧 Portals
+## 🔑 Hidden Rules & Game Mathematics
 
-### Student Portal
-- **Learning Map:** Displays all Tiers, their descriptions, and the specific Rule being taught. Tiers unlock progressively.
-- **Rewards Vault:** Students can spend their hard-earned points here. Each reward features a progress bar explicitly showing `[Current Points] / [Target Points] pts` and a percentage.
+### 1. The Points Formulation ($E$)
+Earnings scale non-linearly relative to active sequential accuracy streaks:
+*   **Streak Boost ($M$)**: $M = \min(1 + (S \times 0.1), 2.0)$
+    *   Where $S$ represents continuous correct answers. Maxes at 200% boost.
+*   **Equation**: $E = \text{round}(Base \times M)$
 
-### Parent Portal
-- **Diagnostic Insights & Stats:** 
-  - Shows the total words in the curriculum and the **Maximum Possible Points** a student can mathematically achieve.
-  - **Struggle Report:** A real-time list tracking exactly which words the student misspells and how many times they've missed them.
-- **Curriculum Calibration:** Parents can shift the target Grade Level (3rd, 4th-5th, 6th+), which can be tied to different word banks in future updates.
-- **Reward System Configuration:** Parents have full control over the economy. They can add custom rewards (e.g., "Trip to the Park", "1 Hour Video Games") and set the exact point costs.
+### 2. Anti-Inflationary Economy
+The global wallet secures anti-grinding protocol through distinct **Differential Ledger Accounting**:
+*   $\Delta \text{Wallet} = \max(0, \text{Session Score} - \text{Previous Recorded Max Score})$
+*   *Rule:* Repeating finished lessons on lower difficulty rewards exactly 0 new coins. Students MUST push into higher tiers or perfect their percentages to generate new currency.
+
+### 3. Gating & Unlock Algorithms
+*   **Section Pass Threshold**: Defined globally as $\ge 90\%$ accuracy on **ANY** active difficulty track.
+*   **Tier Unlock Prerequisites**: The final "Tier Mastery Assessment" activates ONLY when 100% of sub-sections meet the $\ge 90\%$ Pass Metric.
+*   **Rolling Acceleration Window**: When pacing is active, students can browse at maximum exactly **3 sections ahead** of their lowest unmastered topic.
 
 ---
 
-## ⚙️ How to Run Locally
+## 👑 Parent Control Center (Administration)
 
-1. Ensure you have [Node.js](https://nodejs.org/) installed.
-2. Open a terminal in the project root directory.
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-5. Open your browser and navigate to `http://localhost:5173/`.
+The operational command center empowers rigorous regulation of state layers:
+*   **Curriculum Calibration**: Instant live routing that remaps the active underlying database between 3rd, 4th-5th, and 6th+ grade target banks.
+*   **Diagnostic Insights & Struggle Ledger**: Real-time ingestion of specific failed submissions enabling targeted parental intervention.
+*   **Admin Config Suite**:
+    *   **Adaptive Pacing Switch**: Toggle enforcing strict linear sequential progression vs. unrestricted full-exploration sandbox mode.
+    *   **Difficulty Progression Hook**: A binary enforcing gate forcing linear completion (Easy → Medium → Hard) requiring 100% perfection before advanced tier visibility.
+    *   **Rewards Economy Forge**: Direct administrative creation of rewards with customizable point-cost requirements.
+
+---
+
+## ⚙️ Operations & Deployment
+
+### ⚡ Static Voice Rendering
+To avoid latency and completely lock the static high-fidelity audio bank permanently, run the following command from root:
+```bash
+node generate_lesson_audio.js "YOUR_GOOGLE_CLOUD_ACCESS_TOKEN"
+```
+*Requires Google Cloud API enabled on destination project.*
+
+### 🚀 Launching Development Environment
+1. Ensure node environment (v18+) is active.
+2. Install dependencies: `npm install`
+3. Start local proxy: `npm run dev`
+4. Navigate to active port: `http://localhost:5173`
