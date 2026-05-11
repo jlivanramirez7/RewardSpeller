@@ -101,10 +101,6 @@ const StudentPortal = () => {
                     <div>
                       <h3 style={{ marginBottom: '0.5rem' }}>Tier {index + 1}: {tier.name}</h3>
                       <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>{tier.description}</p>
-                      <div style={{ background: 'rgba(244, 63, 94, 0.1)', padding: '0.75rem', borderRadius: '6px', borderLeft: '2px solid var(--accent-color)' }}>
-                        <strong style={{ color: 'var(--accent-color)', fontSize: '0.875rem' }}>Rule to Learn:</strong>
-                        <p style={{ color: 'var(--text-primary)', fontSize: '0.875rem', marginTop: '0.25rem' }}>{tier.rule}</p>
-                      </div>
                     </div>
                     <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       {(() => {

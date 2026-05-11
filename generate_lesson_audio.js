@@ -32,16 +32,13 @@ const generateTTS = async (text, voiceType, filename) => {
     return;
   }
 
-  let pitch = 0.0;
   let speakingRate = 0.95; // Core baseline rate
 
   if (voiceType === 'jedi') {
     // Deep, slow mystical narrator voice
-    pitch = -2.5;
     speakingRate = 0.88;
   } else if (voiceType === 'assessment') {
     // Standard clarity rate
-    pitch = 0.0;
     speakingRate = 0.95;
   }
 
@@ -71,11 +68,11 @@ const generateTTS = async (text, voiceType, filename) => {
     const fetchUrl = isBearerToken ? baseUrl : `${baseUrl}?key=${apiKey}`;
     
     const fetchHeaders = { 
-      'Content-Type': 'application/json',
-      'x-goog-user-project': 'secret-bloom-474313-m8' // Explicit user project override
+      'Content-Type': 'application/json'
     };
     if (isBearerToken) {
       fetchHeaders['Authorization'] = `Bearer ${apiKey}`;
+      fetchHeaders['x-goog-user-project'] = 'secret-bloom-474313-m8'; // Apply override only to Bearer contexts
     }
 
     const response = await fetch(fetchUrl, {
