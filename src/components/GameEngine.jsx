@@ -2,8 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { playStaticAudio, playTTS, cancelTTS } from '../services/ttsService';
 
-const GameEngine = ({ tierId, section, onComplete }) => {
-  const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked } = useAppContext();
+const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
+  const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints } = useAppContext();
+  
+  // Dynamically resolve closest unearned goal for real-time motivation (using safe immutable copy)
+  const nextReward = [...(rewards || [])].sort((a, b) => a.cost - b.cost).find(r => r.cost > studentPoints) || rewards?.[rewards?.length - 1];
+  const rewardProgress = nextReward ? Math.min((studentPoints / nextReward.cost) * 100, 100) : 0;
   
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [difficulty, setDifficulty] = useState('easy'); // easy, medium, hard
@@ -44,6 +48,7 @@ const GameEngine = ({ tierId, section, onComplete }) => {
 
   // Cleanup TTS on unmount and mark unmounted
   useEffect(() => {
+    isMountedRef.current = true; // RESTORE mounted state explicitly on mount/remount
     return () => {
       isMountedRef.current = false; // Block trailing timeouts
       cancelTTS();
@@ -54,14 +59,11 @@ const GameEngine = ({ tierId, section, onComplete }) => {
     if (words.length > 0) {
       startNewWord();
     }
-  }, [currentWordIndex, difficulty]);
-
-  const [attemptCount, setAttemptCount] = useState(0);
+  }, [currentWordIndex, difficulty, words.length]);
 
   const startNewWord = () => {
     setUserInput('');
     setFeedback(null);
-    setAttemptCount(0);
     speakWord();
     
     if (difficulty === 'easy') {
@@ -89,71 +91,43 @@ const GameEngine = ({ tierId, section, onComplete }) => {
     e.preventDefault();
     if (!userInput.trim() || feedback) return; // BLOCK if processing
 
-    if (userInput.toLowerCase() === currentWord.toLowerCase()) {
-      // Success
+    const isCorrect = userInput.toLowerCase() === currentWord.toLowerCase();
+    let newSessionScore = sessionScore;
+    let newCorrectCount = sessionCorrectCount;
+
+    if (isCorrect) {
+      // Pass Path
       const multiplier = Math.min(1 + (studentStreak * 0.1), 2); // Max 2x multiplier
       const basePoints = difficulty === 'hard' ? 30 : difficulty === 'medium' ? 3 : 1;
       const earned = Math.round(basePoints * multiplier);
-      const newSessionScore = sessionScore + earned;
+      newSessionScore = sessionScore + earned;
+      newCorrectCount = sessionCorrectCount + 1;
       
       setSessionScore(newSessionScore);
-      const newCorrectCount = sessionCorrectCount + 1;
       setSessionCorrectCount(newCorrectCount);
       setStudentStreak(prev => prev + 1);
       setFeedback({ type: 'success', message: `Awesome! +${earned} session points` });
-      setAttemptCount(0);
-      
-      setTimeout(() => {
-        if (!isMountedRef.current) return;
-        if (currentWordIndex < words.length - 1) {
-          setCurrentWordIndex(prev => prev + 1);
-        } else {
-          const accuracy = Math.round((newCorrectCount / words.length) * 100);
-          const actualPointsAwarded = updateSectionScore(section.id, difficulty, newSessionScore, accuracy);
-          alert(`Section Complete!\n\nAccuracy: ${accuracy}%\nSession Score: ${newSessionScore}\nNew Points Awarded: ${actualPointsAwarded}\n\nKeep practicing on Hard to maximize your points!`);
-          onComplete(); // Finish section assessment
-        }
-      }, 1500);
-      
     } else {
-      // Error
+      // Fail Path: No retries, direct advancement log
       setStudentStreak(0);
       addStruggleWord(currentWord, tierId, 'spelling_error');
-      
-      if (attemptCount === 0) {
-        // First mistake, try again
-        setAttemptCount(1);
-        
-        // Smart feedback basic logic
-        let hint = 'Try again!';
-        if (userInput.length < currentWord.length) {
-          hint = "Looks like you're missing some letters.";
-        } else if (userInput.length > currentWord.length) {
-          hint = "Too many letters!";
-        } else if (currentWord.endsWith('e') && !userInput.endsWith('e')) {
-          hint = "Don't forget the silent 'e' at the end!";
-        }
-
-        setFeedback({ type: 'error', message: hint });
-        speakWord(); // Re-dictate on error
-      } else {
-        // Second mistake, mark wrong and move on
-        setFeedback({ type: 'error', message: `Incorrect. The correct spelling is: ${currentWord}` });
-        speakWord();
-        setAttemptCount(0);
-        setTimeout(() => {
-          if (!isMountedRef.current) return;
-          if (currentWordIndex < words.length - 1) {
-            setCurrentWordIndex(prev => prev + 1);
-          } else {
-            const accuracy = Math.round((sessionCorrectCount / words.length) * 100);
-            const actualPointsAwarded = updateSectionScore(section.id, difficulty, sessionScore, accuracy);
-            alert(`Section Complete!\n\nAccuracy: ${accuracy}%\nSession Score: ${sessionScore}\nNew Points Awarded: ${actualPointsAwarded}\n\nKeep practicing on Hard to maximize your points!`);
-            onComplete();
-          }
-        }, 2000);
-      }
+      setFeedback({ type: 'error', message: `Incorrect. The correct spelling is: ${currentWord}` });
+      speakWord(); // Re-dictate core answer on error
     }
+
+    // Unconditional advancing after 2s
+    setTimeout(() => {
+      if (!isMountedRef.current) return;
+      
+      if (currentWordIndex < words.length - 1) {
+        setCurrentWordIndex(prev => prev + 1);
+      } else {
+        const accuracy = Math.round((newCorrectCount / words.length) * 100);
+        const actualPointsAwarded = updateSectionScore(section.id, difficulty, newSessionScore, accuracy);
+        alert(`Section Complete!\n\nAccuracy: ${accuracy}%\nSession Score: ${newSessionScore}\nNew Points Awarded: ${actualPointsAwarded}\n\nKeep practicing on Hard to maximize your points!`);
+        onComplete();
+      }
+    }, 2000);
   };
 
   if (!section || words.length === 0) return <div>No words loaded.</div>;
@@ -167,6 +141,30 @@ const GameEngine = ({ tierId, section, onComplete }) => {
       
       {/* POINTS REFERENCE SIDEBAR */}
       <div className="glass-panel animate-fade-in" style={{ padding: '1.75rem', width: '280px', borderLeft: '4px solid #fbbf24', background: 'linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))' }}>
+         {nextReward && (
+            <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.75rem', color: '#10b981' }}>
+                    <span style={{ fontSize: '1.25rem' }}>🎁</span>
+                    <h3 style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.9rem', margin: 0 }}>Active Goal</h3>
+                </div>
+                <div style={{ fontSize: '0.9rem', color: 'white', marginBottom: '0.5rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{nextReward.name}</span>
+                    <span style={{ color: '#10b981' }}>{Math.round(rewardProgress)}%</span>
+                </div>
+                <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden', marginBottom: '4px' }}>
+                    <div style={{ 
+                        height: '100%', 
+                        width: `${rewardProgress}%`, 
+                        background: 'linear-gradient(90deg, #10b981, #34d399)', 
+                        transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}></div>
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'right' }}>
+                    {studentPoints} / {nextReward.cost} pts
+                </div>
+            </div>
+         )}
+
          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1rem', color: '#fbbf24' }}>
             <span style={{ fontSize: '1.5rem' }}>💎</span>
             <h3 style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '1rem' }}>Point Values</h3>
@@ -192,6 +190,22 @@ const GameEngine = ({ tierId, section, onComplete }) => {
       </div>
 
       <div className="glass-panel" style={{ padding: '2.5rem', width: '100%', minWidth: '320px', maxWidth: '600px', flex: '1 1 350px', textAlign: 'center', background: 'rgba(15, 23, 42, 0.6)' }}>
+      
+      {tierRule && (
+        <div style={{ 
+            background: 'rgba(244, 63, 94, 0.12)', 
+            padding: '1rem', 
+            borderRadius: '8px', 
+            borderLeft: '4px solid var(--accent-color)', 
+            marginBottom: '1.75rem',
+            textAlign: 'left'
+        }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-color)', fontWeight: 'bold', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>
+               <span>💡 Lesson Rule to Master:</span>
+            </div>
+            <p style={{ color: 'white', margin: 0, fontSize: '0.95rem', lineHeight: '1.4' }}>{tierRule}</p>
+        </div>
+      )}
       
       {/* Controls */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
@@ -243,7 +257,7 @@ const GameEngine = ({ tierId, section, onComplete }) => {
             marginBottom: '1rem',
             outline: 'none'
           }}
-          disabled={feedback?.type === 'success'}
+          disabled={feedback !== null}
         />
         <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={feedback !== null}>
           {feedback ? 'Checking...' : 'Check Spelling'}

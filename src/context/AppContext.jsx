@@ -96,6 +96,7 @@ export const AppProvider = ({ children }) => {
     setStruggleWords([]);
     setSectionScores({});
     setSectionAccuracy({});
+    setListenedLessons([]); // Purge lesson listening history
   };
 
   const getSectionStats = (sectionId) => {
@@ -126,8 +127,8 @@ export const AppProvider = ({ children }) => {
     const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
     const medAcc = sectionAccuracy[`${sectionId}-medium`] || 0;
     
-    if (difficulty === 'medium') return easyAcc >= 100; // Need 100% easy to access medium
-    if (difficulty === 'hard') return medAcc >= 100;   // Need 100% med to access hard
+    if (difficulty === 'medium') return easyAcc >= 90; // Unlocked at 90% mastery
+    if (difficulty === 'hard') return medAcc >= 90;   // Unlocked at 90% mastery
     
     return true;
   };

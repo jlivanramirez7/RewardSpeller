@@ -49,14 +49,11 @@ export const playTTS = async (text, type = 'assessment', onStart, onEnd) => {
   }
 
   let voiceName = 'en-US-Journey-F'; // Direct flagship Neural
-  let pitch = 0;
   let speakingRate = 0.95; // Synced baseline rate
 
   if (type === 'jedi') {
-    pitch = -2.5; 
     speakingRate = 0.88; 
   } else if (type === 'assessment') {
-    pitch = 0.0;
     speakingRate = 0.95;
   }
 

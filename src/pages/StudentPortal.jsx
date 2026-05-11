@@ -9,6 +9,10 @@ const StudentPortal = () => {
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
 
+  // Top-level Global Goal resolution (using safe immutable copy)
+  const nextReward = [...(rewards || [])].sort((a, b) => a.cost - b.cost).find(r => r.cost > studentPoints) || rewards?.[rewards?.length - 1];
+  const rewardProgress = nextReward ? Math.min((studentPoints / nextReward.cost) * 100, 100) : 0;
+
   const handleCompleteSection = () => {
     const sectionData = activePlayData?.section;
     
@@ -34,8 +38,19 @@ const StudentPortal = () => {
           <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Student Portal</h1>
           <p style={{ color: 'var(--text-secondary)' }}>Welcome back! Ready to learn?</p>
         </div>
-        <div style={{ display: 'flex', gap: '1.5rem', textAlign: 'right' }}>
-          <div>
+        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          {nextReward && (
+            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.75rem 1rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', minWidth: '180px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.25rem' }}>
+                <span style={{ color: '#10b981' }}>🎁 {nextReward.name}</span>
+                <span style={{ color: 'white' }}>{Math.round(rewardProgress)}%</span>
+              </div>
+              <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${rewardProgress}%`, background: 'linear-gradient(90deg, #10b981, #34d399)', transition: 'width 0.5s' }} />
+              </div>
+            </div>
+          )}
+          <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Points</div>
             <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fbbf24' }}>{studentPoints}</div>
           </div>
@@ -55,7 +70,12 @@ const StudentPortal = () => {
           >
             ← Back to Map
           </button>
-          <GameEngine tierId={activePlayData.tierId} section={activePlayData.section} onComplete={handleCompleteSection} />
+          <GameEngine 
+            tierId={activePlayData.tierId} 
+            section={activePlayData.section} 
+            onComplete={handleCompleteSection} 
+            tierRule={activePlayData.tierRule} 
+          />
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
@@ -105,7 +125,7 @@ const StudentPortal = () => {
                                 className="btn-secondary"
                                 onClick={() => {
                                   warmupAudio(); // Claim interaction focus for audio!
-                                  setActiveLessonData({ ...section, parentTierId: tier.id });
+                                  setActiveLessonData({ ...section, parentTierId: tier.id, tierRule: tier.rule });
                                 }}
                                 disabled={!isSectionUnlocked}
                                 title="Read Lesson"
@@ -126,7 +146,7 @@ const StudentPortal = () => {
                                 className={isSectionListened ? "btn-primary" : "btn-secondary"} 
                                 onClick={() => {
                                   warmupAudio(); // Trigger audio channel open
-                                  setActivePlayData({ tierId: tier.id, section });
+                                  setActivePlayData({ tierId: tier.id, section, tierRule: tier.rule });
                                 }}
                                 disabled={!isSectionListened || !isSectionUnlocked}
                                 style={{ 
@@ -186,6 +206,7 @@ const StudentPortal = () => {
                           
                           setActivePlayData({ 
                             tierId: tier.id, 
+                            tierRule: tier.rule,
                             section: {
                               id: `tier_${tier.id}_mastery`,
                               name: `Tier ${tier.id} Mastery`,
@@ -294,7 +315,7 @@ const StudentPortal = () => {
           onBeginTrials={(secData) => {
             // SYNCHRONOUS HANDOVER: Close lesson and immediately open corresponding game session
             setActiveLessonData(null);
-            setActivePlayData({ tierId: secData.parentTierId, section: secData });
+            setActivePlayData({ tierId: secData.parentTierId, section: secData, tierRule: secData.tierRule });
           }}
         />
       )}
