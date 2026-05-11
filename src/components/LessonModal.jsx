@@ -15,6 +15,16 @@ const LessonModal = ({ lessonData, onClose, onBeginTrials }) => {
     return () => cancelTTS(); 
   }, [lessonData]);
 
+  // Lock background scrolling when the modal is active to isolate user focus
+  useEffect(() => {
+    const originalStyle = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      document.body.style.overflow = originalStyle || '';
+    };
+  }, []);
+
   // AUTOPLAY: Trigger narration immediately on modal load
   useEffect(() => {
     if (lessonData?.id) {
@@ -272,8 +282,8 @@ const bannerFlexContentStyle = { position: 'relative', zIndex: 2, display: 'flex
 const miniArtFrameStyle = { width: '210px', height: '210px', background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', padding: '0.5rem', boxShadow: '0 15px 25px rgba(0,0,0,0.4)', cursor: 'zoom-in', transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)', flexShrink: 0 };
 const visualBrandingStyle = { position: 'absolute', top: '1.5rem', right: '4rem', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', padding: '0.4rem 0.8rem', borderRadius: '4px', fontSize: '0.6rem', letterSpacing: '1.5px', textTransform: 'uppercase', border: '1px solid #fbbf24', color: '#fbbf24', opacity: 0.8 };
 
-// 📜 NEW SCROLLABLE WORKSPACE
-const mainContentAreaStyle = { flex: 1, overflowY: 'auto', padding: '2rem 2.5rem', display: 'flex', flexDirection: 'column' };
+// 📜 NEW SCROLLABLE WORKSPACE (Standard block flow ensures absolute scroll height calculation parity)
+const mainContentAreaStyle = { flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, padding: '2rem 2.5rem' };
 
 const scriptBlockStyle = { background: 'rgba(255, 255, 255, 0.03)', padding: '1.5rem', borderRadius: '16px', borderLeft: '6px solid #fbbf24', marginBottom: '2rem', fontStyle: 'italic', lineHeight: '1.6', fontSize: '1.05rem', color: 'rgba(255,255,255,0.92)', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.2)' };
 
@@ -287,7 +297,7 @@ const groupHeaderDividerStyle = { padding: '0.8rem 1.5rem', background: 'linear-
 const wordColStyle = { flex: 1, fontSize: '1.4rem', fontWeight: '800', letterSpacing: '1px', color: '#fff' };
 const defColStyle = { flex: 2.5, fontSize: '0.95rem', color: 'rgba(255,255,255,0.85)' };
 
-const controlFooterStyle = { display: 'flex', gap: '2rem', padding: '1.5rem 2.5rem', borderTop: '1px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.15)', zIndex: 5 };
+const controlFooterStyle = { display: 'flex', gap: '2rem', padding: '1.5rem 2.5rem', borderTop: '1px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.15)', zIndex: 5, flexShrink: 0 };
 const closeIconStyles = { position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.08)', border: 'none', color: 'white', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '1.3rem', transition: '0.2s', zIndex: 50 };
 
 const glowSpanStyle = { color: '#fbbf24', textShadow: '0 0 10px rgba(251, 191, 36, 0.9), 0 0 3px white', fontWeight: '900', background: 'rgba(251, 191, 36, 0.1)', padding: '0 2px', borderRadius: '2px' };
