@@ -88,7 +88,8 @@
           ],
           "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
           "imagePath": "/assets/images/tier1_sec1.png",
-          "id": "t1_s1"
+          "id": "t1_s1",
+          "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
         },
         {
           "name": "Section 2",
@@ -147,7 +148,8 @@
           ],
           "lessonScript": "Greetings! When two vowels go walking, the first one does the talking! The 'EE' Vowel Team is a powerful combination. When you place two E's together, they always scream their own name in a long 'E' sound. Think of a computer 'SCREEN' displaying the Death Star plans, or a tiny cave spider trying to 'SQUEEZE' through a block in Minecraft. They will always make the long E sound!",
           "imagePath": "/assets/images/tier1_sec2.png",
-          "id": "t1_s2"
+          "id": "t1_s2",
+          "rule": "When double 'E's team up, they cheer their long 'E' sound together loud and proud!"
         },
         {
           "name": "Section 3",
@@ -206,7 +208,8 @@
           ],
           "lessonScript": "Beware, young learner! The 'EA' Vowel Team is a master of disguise. Sometimes it makes a long 'E' sound, but today we are hunting its dark side: the short 'e' sound! In words like 'SWEAT', 'BREATH', and 'MEADOW', the 'EA' team tricks you by sounding exactly like a single, short 'E'. When you take a deep 'BREATH' before fighting a Creeper, remember that sneaky 'A' is hiding inside!",
           "imagePath": "/assets/images/tier1_sec3.png",
-          "id": "t1_s3"
+          "id": "t1_s3",
+          "rule": "The 'EA' team is a master of disguise! Sometimes they whisper a short 'e' sound instead of speaking their name."
         },
         {
           "name": "Section 4",
@@ -265,7 +268,8 @@
           ],
           "lessonScript": "Listen closely! The 'OU' and 'OW' vowel teams are loud and aggressive. When they combine, they make the 'OW!' sound, like you just stubbed your toe on a piece of bedrock! You will hear it in the middle of words like 'CLOUD' and 'CROWD', or at the end of words like 'PROWL' and 'DROWN'. Never be a 'COWARD' when facing these loud vowels!",
           "imagePath": "/assets/images/tier1_sec4.png",
-          "id": "t1_s4"
+          "id": "t1_s4",
+          "rule": "Loud and brave! Both 'OU' and 'OW' shout 'OW!' together, just like you bumped your funny bone!"
         },
         {
           "name": "Section 5",
@@ -324,7 +328,8 @@
           ],
           "lessonScript": "You have encountered the Bossy R! The letter 'R' is like a strict Republic Commander. When it stands next to a vowel, it completely takes over and changes the sound! 'A' and 'R' combine to make the pirate sound 'AR', like a blaster hitting a 'TARGET'. 'O' and 'R' combine to make 'OR', like standing on the 'BORDER' of the Narnian woods. Listen to the commander!",
           "imagePath": "/assets/images/tier1_sec5.png",
-          "id": "t1_s5"
+          "id": "t1_s5",
+          "rule": "The Bossy R Commander takes over the vowel and marches it to a fun pirate 'AR' or powerful 'OR' sound!"
         },
         {
           "name": "Section 6",
@@ -383,7 +388,8 @@
           ],
           "lessonScript": "Behold the power of the Magic E! When an 'E' sits silently at the end of a word, it uses the force to jump backward over one consonant and make the first vowel say its own name! It turns a short 'a' into a long 'A', like in 'ESCAPE' or 'PIRATE'. It turns a short 'u' into a long 'U', like the 'VOLUME' of your speaker or a magical 'COSTUME'!",
           "imagePath": "/assets/images/tier1_sec6.png",
-          "id": "t1_s6"
+          "id": "t1_s6",
+          "rule": "Two words join forces! Keep their complex vowel sounds protected and strong when they combine!"
         }
       ],
       "lessonScript": "Welcome, young Padawan. I am the Spelling Jedi Master. To master the language, you must first understand the true power of Vowels. Vowels are the energy core of every word! \n\nSometimes, vowels unite to form a 'Vowel Team'. When two vowels go walking, the first one does the talking! For example, 'O' and 'A' unite to make the long O sound in 'BOAT'. 'E' and 'A' unite in 'TEAM'. But beware the tricky 'O' and 'U' team—they can sound like 'ow' in 'OUT' or 'CLOUD'! \n\nThe most important Jedi rule for teams is 'I' before 'E', except after 'C', like in the word 'RECEIPT'! Or when it sounds like a long 'A' as in 'NEIGHBOR' and 'WEIGH'.\n\nOther times, the letter 'R' acts as a dark lord and commands the vowel to change its sound completely! We call this the 'Bossy R'. It turns 'AR' into the sound of a pirate ('CAR'), 'OR' into a choice ('FOR'), and 'ER', 'IR', and 'UR' all into the exact same sound, like a revving engine: 'HER', 'BIRD', and 'TURN'. \n\nFinally, never forget the 'Magic E'. When an 'E' sits silently at the end of a word, it uses the force to jump back over one consonant and make the first vowel say its own name! It turns 'mad' into 'made', and 'cub' into 'cube'! May the vowels be with you.",
@@ -452,7 +458,8 @@
           ],
           "lessonScript": "Today we construct words like a master builder crafting a lightsaber. Our base is the ancient Latin root 'STRUCT', which means 'to build'. If you put 'con' (together) with 'struct', you 'CONSTRUCT' a building! If you put 'de' (down) with 'struct', you 'DESTRUCT' or destroy it! Watch for this powerful building block hiding inside your vocabulary!",
           "imagePath": "/assets/images/tier2_sec1.png",
-          "id": "t2_s1"
+          "id": "t2_s1",
+          "rule": "You are a master builder! The root 'struct' means to build, which is how words construct their meaning!"
         },
         {
           "name": "Section 2",
@@ -511,7 +518,8 @@
           ],
           "lessonScript": "Focus your mind on the Latin root 'PORT'. In the ancient tongue, 'port' means 'to carry'. This is why a space transport ship is called a 'TRANSPORT'—it carries things across the galaxy! If you carry things out of a country, you 'EXPORT' them. If an item is easy to carry in your Minecraft inventory, it is 'PORTABLE'. To master these words, you must carry the root in your memory!",
           "imagePath": "/assets/images/tier2_sec2.png",
-          "id": "t2_s2"
+          "id": "t2_s2",
+          "rule": "Keep moving forward! The root 'port' means to carry, helping you transport words wherever they need to go!"
         },
         {
           "name": "Section 3",
@@ -570,7 +578,8 @@
           ],
           "lessonScript": "We have two powerful Greek roots today: 'TELE' (meaning distance) and 'BIO' (meaning life). If you want to see things at a massive distance, you use a 'TELESCOPE'! If you want to study the life cycle of alien Formic bugs, you study 'BIOLOGY'! Knowing these ancient Greek codes allows you to instantly unlock the meaning of massive, complicated words!",
           "imagePath": "/assets/images/tier2_sec3.png",
-          "id": "t2_s3"
+          "id": "t2_s3",
+          "rule": "Look far and wide! 'Bio' means life and 'tele' means far off—together they help you see the world around you!"
         },
         {
           "name": "Section 4",
@@ -629,7 +638,8 @@
           ],
           "lessonScript": "A prefix is a piece of armor attached to the front of a word. Today we use 'UN-' (meaning 'not') and 'RE-' (meaning 'again'). If Gollum is 'UNHAPPY', it means he is NOT happy! If Steve needs to 'REBUILD' his dirt house, it means he must build it AGAIN! Attach these prefixes to change the entire destiny of your words!",
           "imagePath": "/assets/images/tier2_sec4.png",
-          "id": "t2_s4"
+          "id": "t2_s4",
+          "rule": "Make your mark! The Greek root 'graph' means to write or draw, turning your spelling into a work of art!"
         },
         {
           "name": "Section 5",
@@ -688,7 +698,8 @@
           ],
           "lessonScript": "More prefixes, Padawan! We are studying 'PRE-' (meaning 'before') and 'DIS-' (meaning 'opposite' or 'not'). If you 'PREHEAT' a magical oven, you heat it BEFORE cooking! If you 'DISAGREE' with a Sith Lord, you have the OPPOSITE opinion. Use these prefixes to twist and shape your base words into new weapons!",
           "imagePath": "/assets/images/tier2_sec5.png",
-          "id": "t2_s5"
+          "id": "t2_s5",
+          "rule": "Get ready to transform! 'Pre-' means it comes before, while 'dis-' means the opposite or not—you've got this!"
         },
         {
           "name": "Section 6",
@@ -747,7 +758,8 @@
           ],
           "lessonScript": "A suffix attaches to the end of a word to change its purpose. The suffix '-ABLE' means you can do it—if a map is 'READABLE', you are able to read it! The suffix '-FUL' means full of something. If an Ewok is 'JOYFUL', he is completely full of joy! Look closely at the end of these words to find the suffix!",
           "imagePath": "/assets/images/tier2_sec6.png",
-          "id": "t2_s6"
+          "id": "t2_s6",
+          "rule": "You can do anything! Use '-able' to say something can be done, and '-ful' to fill your words with greatness!"
         }
       ],
       "lessonScript": "Greetings, Padawan. Today, we construct words just like building a lightsaber. Every word has pieces. We have base roots, which hold the core meaning. Many come from ancient Latin, like 'struct' which means 'build' (as in 'structure'), 'port' which means 'carry' (as in 'transport'), or 'form' which means 'shape'. Other roots come from ancient Greek, like 'bio' meaning 'life' ('biology'), 'tele' meaning 'distance' ('telescope'), and 'graph' meaning 'write' ('autograph')!\n\nOnce you have a base, you can attach pieces to it! Pieces at the beginning are called 'Prefixes'. For example, attach 'un-' (meaning 'not') to 'happy' to forge 'unhappy'. Attach 're-' (meaning 'again') to 'build' to get 'rebuild'. The prefix 'pre-' means 'before', like 'preheat'!\n\nPieces at the end are called 'Suffixes'. They change how a word is used. The suffix '-able' means you can do it ('readable'). The suffix '-ful' means full of something ('joyful'). And the tricky '-tion' sounds like 'shun', but it turns an action into a noun, like 'action' or 'creation'! Use the force to build your vocabulary!",
@@ -816,7 +828,8 @@
           ],
           "lessonScript": "Giant words are intimidating, but we can slice them into syllables with a lightsaber! First, the VC/CV rule (Vowel-Consonant/Consonant-Vowel). When two consonants stand between two vowels, like clone troopers standing shoulder-to-shoulder, you slice right between them! Think of the word 'RABBIT'. It is spelled R-A-B-B-I-T. You slice between the B's: RAB-BIT! Do the same for 'TEN-NIS' and 'MAG-NET'!",
           "imagePath": "/assets/images/tier3_sec1.png",
-          "id": "t3_s1"
+          "id": "t3_s1",
+          "rule": "Slice your lightsaber directly between two consonants to split the syllable cores! (Example: RAB-BIT)"
         },
         {
           "name": "Section 2",
@@ -875,7 +888,8 @@
           ],
           "lessonScript": "Next, the V/CV rule (Vowel/Consonant-Vowel), also known as the Tiger rule! When only ONE consonant stands between two vowels, you usually strike your lightsaber BEFORE the consonant. Think of the word 'TIGER'. It is sliced as TI-GER. The first vowel is left open, so it says its long name! Slice words like 'PA-PER' and 'SI-LENT' the exact same way!",
           "imagePath": "/assets/images/tier3_sec2.png",
-          "id": "t3_s2"
+          "id": "t3_s2",
+          "rule": "Strike BEFORE the single consonant to leave the first vowel open, allowing it to shout its powerful long name! (Example: TI-GER)"
         },
         {
           "name": "Section 3",
@@ -934,7 +948,8 @@
           ],
           "lessonScript": "Beware! Sometimes the single consonant rule tricks you. This is the VC/V rule, or the Camel rule! If striking before the consonant makes the word sound wrong, you strike AFTER the consonant, trapping the vowel so it makes a short sound! Think of 'CAMEL'. You slice it as CAM-EL! Apply this strike to words like 'CAB-IN' and 'PLAN-ET'!",
           "imagePath": "/assets/images/tier3_sec3.png",
-          "id": "t3_s3"
+          "id": "t3_s3",
+          "rule": "Trap the rogue vowel by slicing AFTER the single consonant, forcing it into a safe, short sound! (Example: CAM-EL)"
         },
         {
           "name": "Section 4",
@@ -993,7 +1008,8 @@
           ],
           "lessonScript": "You have encountered the dark side of vowels: the Schwa! The Schwa is a lazy vowel sound. When a syllable is not stressed, the vowel gives up and just makes a lazy 'uh' grunt. Today, we hunt the letter 'A' acting as a Schwa. In the word 'ABOUT', the 'A' does not sound like an A; it sounds like 'uh-bout'! Memorize these tricky A-words!",
           "imagePath": "/assets/images/tier3_sec4.png",
-          "id": "t3_s4"
+          "id": "t3_s4",
+          "rule": "The ancient '-LE' portal always captures the consonant right before it to form the final syllable! (Example: TUR-TLE)"
         },
         {
           "name": "Section 5",
@@ -1052,7 +1068,8 @@
           ],
           "lessonScript": "The lazy Schwa returns! This time, it has infected the letters 'E' and 'I'. In the word 'PENCIL', the 'I' does not make an 'i' sound; it makes a lazy 'uh' sound: 'pen-suhl'. In 'LISTEN', the 'E' becomes a Schwa: 'lis-uhn'. Do not let the Schwa trick you into spelling these words with a 'U'!",
           "imagePath": "/assets/images/tier3_sec5.png",
-          "id": "t3_s5"
+          "id": "t3_s5",
+          "rule": "Defeat the lazy Schwa vowel that gives up its true power in unstressed syllables to make a dark 'uh' grunt!"
         },
         {
           "name": "Section 6",
@@ -1111,7 +1128,8 @@
           ],
           "lessonScript": "The final battle with the Schwa! The letters 'O' and 'U' are now making the lazy 'uh' grunt. Think of the word 'CUSTOM'. The 'O' sounds like 'cus-tuhm'! Or the word 'CIRCUS', where the 'U' sounds like 'cir-kuhs'. You must rely entirely on your memory to defeat the Schwa in these tricky words!",
           "imagePath": "/assets/images/tier3_sec6.png",
-          "id": "t3_s6"
+          "id": "t3_s6",
+          "rule": "Fuse two complete base words into a mighty mega-word, then slice exactly where the welding seam meets!"
         }
       ],
       "lessonScript": "Focus your mind, young Padawan! Long words can seem intimidating, like a towering Sith Lord. But we use our Jedi strike to break them into smaller, manageable pieces called syllables! Every single syllable MUST have at least one vowel sound. \n\nClap out the syllables! To know where to slice with your lightsaber, look at the consonants. If you see two consonants between two vowels (VC/CV), strike right between them! For example, 'RABBIT' is sliced into 'RAB-BIT'. If there is only one consonant between vowels, usually you strike before it, like 'TI-GER'. \n\nBut you must beware the ultimate dark side trick: the 'lazy' Schwa vowel sound! When a syllable is unstressed, the vowel gets lazy and loses its true sound. Instead, it just makes a short, grunt sound like 'uh'. For example, the 'A' in 'about' sounds like 'uh-bout'. The 'I' in 'pencil' sounds like 'pen-suhl'. The 'O' in 'custom' sounds like 'cus-tuhm'. You have to memorize which vowel is hiding behind the Schwa! Breaking down the enemy makes even the biggest words easy to conquer!",
@@ -1180,7 +1198,8 @@
           ],
           "lessonScript": "Welcome to the cloning facility! Homophones are words that sound exactly the same, but are spelled differently and mean different things. Today we study 'THEIR', 'THERE', and 'YOU'RE'. 'THEIR' implies ownership ('Their starship'). 'THERE' is a location ('Look over there!'). And 'YOU'RE' is a contraction of 'you are' ('You're a wizard!'). Use the sentence to choose the correct clone!",
           "imagePath": "/assets/images/tier4_sec1.png",
-          "id": "t4_s1"
+          "id": "t4_s1",
+          "rule": "Distinguish possession from contraction or location: use 'here' clues for place (there) and 'is/are' replacement checks for apostrophes."
         },
         {
           "name": "Section 2",
@@ -1239,7 +1258,8 @@
           ],
           "lessonScript": "More clones approach! Never confuse 'WRITE' (to put words on paper with a quill) with 'RIGHT' (the correct answer). Or 'KNEW' (past tense of knowing a spell) with 'NEW' (a brand new wand). If you are looking for the Golden Snitch 'HERE', do not misspell it as 'HEAR' (with your ears)!",
           "imagePath": "/assets/images/tier4_sec2.png",
-          "id": "t4_s2"
+          "id": "t4_s2",
+          "rule": "Apply sensory and quantity cues: remember that you 'hear' with your 'ear', and 'whole' implies the entire item."
         },
         {
           "name": "Section 3",
@@ -1298,7 +1318,8 @@
           ],
           "lessonScript": "The homophone battle continues! Do not feed a wild 'BEAR' with your 'BARE' hands! If you need to stop the Hogwarts Express, you pull the 'BRAKE', you do not 'BREAK' the train! And you use your galleons to 'BUY' chocolate frogs, you do not stand 'BY' the cart! Choose your spelling carefully!",
           "imagePath": "/assets/images/tier4_sec3.png",
-          "id": "t4_s3"
+          "id": "t4_s3",
+          "rule": "Differentiate commerce and sensory actions: isolate purchase verbs ('buy') and monetary units ('cent') from prepositions."
         },
         {
           "name": "Section 4",
@@ -1357,7 +1378,8 @@
           ],
           "lessonScript": "You must use context clues! A 'DEER' is a magical creature, but 'DEAR' is how you start a letter. You use blue 'DYE' to color your Minecraft bed, but if you fall in lava, you 'DIE'. You use 'FLOUR' to bake a cake for Hagrid, but a 'FLOWER' grows in Professor Sprout's greenhouse!",
           "imagePath": "/assets/images/tier4_sec4.png",
-          "id": "t4_s4"
+          "id": "t4_s4",
+          "rule": "Resolve states of nature and behavior: separate the woodland animal ('deer') and coloring ('dye') from affections ('dear')."
         },
         {
           "name": "Section 5",
@@ -1416,7 +1438,8 @@
           ],
           "lessonScript": "More deceptive pairs! You use a healing potion to 'HEAL' your wounds, not your 'HEEL' (the bottom of your foot). You send an owl to deliver your 'MAIL', not a 'MALE' wizard. You eat roasted 'MEAT' in the Great Hall, but you 'MEET' your friends in the common room!",
           "imagePath": "/assets/images/tier4_sec5.png",
-          "id": "t4_s5"
+          "id": "t4_s5",
+          "rule": "Differentiate organic growth and physical form: isolate culinary products ('flour') and parts of the foot ('heel') from blooms."
         },
         {
           "name": "Section 6",
@@ -1475,7 +1498,8 @@
           ],
           "lessonScript": "The final homophone test! You eat a green 'PEAR', but you wear a 'PAIR' of socks. You fly on a magical 'PLANE', but a blank sheet of parchment is 'PLAIN'. You climb the moving 'STAIR', but it is rude to 'STARE' at an Enderman! Master these pairs, and you will never be fooled again!",
           "imagePath": "/assets/images/tier4_sec6.png",
-          "id": "t4_s6"
+          "id": "t4_s6",
+          "rule": "Master silent letters and social categories: separate units of time ('hour') and armored warriors ('knight') from group ownership ('our')."
         }
       ],
       "lessonScript": "Beware, Padawan! You have entered the tricky and deceptive realm of Homophones. These are words that sound exactly the same, like identical clone troopers, but they are spelled differently and have completely different destinies! \n\nThe most famous clones are 'THERE', 'THEIR', and 'THEY'RE'. 'THERE' has the word 'here' inside it, so it means a location ('Go over there'). 'THEIR' implies ownership ('Their starship is fast'). And 'THEY'RE' is just a contraction for 'they are' ('They're going to win'). \n\nWatch out for 'TO', 'TOO', and 'TWO'. 'TO' is a direction ('Go to the ship'). 'TOO' with two O's means 'also' or 'excess' ('Me too!' or 'Too much'). 'TWO' is the number 2!\n\nAnd never confuse 'YOUR' (ownership, like 'your lightsaber') with 'YOU'RE' ('you are'). Or 'ITS' (ownership) with 'IT'S' ('it is'). You must use the context clues in the sentence to uncover the truth and choose the right spelling!",
@@ -1544,7 +1568,8 @@
           ],
           "lessonScript": "Welcome to the Jedi Science Archives! To understand the universe, you must know Biology vocabulary. 'PHOTOSYNTHESIS' is the brilliant process plants use to turn sunlight into pure energy! An 'ECOSYSTEM' is a massive, balanced web of life, like the forest moon of Endor. Master these terms to unlock the secrets of living organisms!",
           "imagePath": "/assets/images/tier5_sec1.png",
-          "id": "t5_s1"
+          "id": "t5_s1",
+          "rule": "Greek roots dominate: 'photo-' (light) and 'eco-' (environment) form compounds, and 'y' acts as short /i/ in the middle."
         },
         {
           "name": "Section 2",
@@ -1603,7 +1628,8 @@
           ],
           "lessonScript": "Now we study Earth Science. The 'ATMOSPHERE' is the vital shield of gas protecting a planet from the cold vacuum of space. 'GRAVITY' is the invisible force pulling you back to the ground when you jump in Minecraft. 'TECTONIC' plates shift beneath our feet to build mountains or cause earthquakes! Study the planets to become a master navigator!",
           "imagePath": "/assets/images/tier5_sec2.png",
-          "id": "t5_s2"
+          "id": "t5_s2",
+          "rule": "Focus on the Greek digraph 'ph' creating the /f/ sound in atmospheric terms, and note terminal 'y' acting as a long /e/."
         },
         {
           "name": "Section 3",
@@ -1662,7 +1688,8 @@
           ],
           "lessonScript": "Mathematics is the universal language of logic! An 'EQUATION' demands absolute balance between two sides. A 'FRACTION' is just a small piece of a whole number, like eating one slice of Bilbo Baggins' cake. To 'MULTIPLY' is to rapidly increase, like cloning an army of droids. Precision is the key to mastering math!",
           "imagePath": "/assets/images/tier5_sec3.png",
-          "id": "t5_s3"
+          "id": "t5_s3",
+          "rule": "Built on Latin roots such as 'fract' (broken), using common '-tion' for /shun/ sound and soft 'c' before 'i'."
         },
         {
           "name": "Section 4",
@@ -1721,7 +1748,8 @@
           ],
           "lessonScript": "Geometry is the architecture of reality! A 'POLYGON' is a shape with straight lines—in fact, the entire Minecraft universe is built from them! The 'PERIMETER' is the absolute outer edge of your base, where you must set up defenses. The 'VOLUME' is how much space is trapped inside a container. Calculate perfectly, or your structures will collapse!",
           "imagePath": "/assets/images/tier5_sec4.png",
-          "id": "t5_s4"
+          "id": "t5_s4",
+          "rule": "Features numerical prefixes (poly-, tri-) and pairs geometric descriptors like twin 'll' in 'parallel' and 'magic e'."
         },
         {
           "name": "Section 5",
@@ -1780,7 +1808,8 @@
           ],
           "lessonScript": "History is the memory of civilization! A 'CIVILIZATION' is a complex society of intelligent beings. The ancient 'PHARAOH' ruled Egypt and commanded the construction of the massive, triangle-shaped 'PYRAMID' tombs. To 'CONQUER' is to take over by force, like the evil Galactic Empire. Learn from the past to protect the future!",
           "imagePath": "/assets/images/tier5_sec5.png",
-          "id": "t5_s5"
+          "id": "t5_s5",
+          "rule": "Derived from ancient artifacts and titles, using unique Greek/Egyptian constructs like 'ao' in 'pharaoh' and 'y' in 'pyramid'."
         },
         {
           "name": "Section 6",
@@ -1839,7 +1868,8 @@
           ],
           "lessonScript": "Our final study: Revolutions! A 'REVOLUTION' is a massive, sudden overthrow of a broken government. A 'CONSTITUTION' is a sacred document of laws outlining how a society should be run. 'LIBERTY' and 'FREEDOM' are the ultimate goals of every rebel fighting against the dark side. Remember these words as you write your own history!",
           "imagePath": "/assets/images/tier5_sec6.png",
-          "id": "t5_s6"
+          "id": "t5_s6",
+          "rule": "Abstract societal nouns rely heavily on Latin suffixation, utilizing '-tion' for action (revolution) and '-ty' for quality."
         }
       ],
       "lessonScript": "Welcome to the Jedi Archives, scholar. Here we study Academic vocabulary—the advanced words used in Science, Math, and History. They appear complex, but they hold immense precision, and mastering them is the mark of a true Jedi Grand Master! \n\nIn Science, words describe how the universe works. For example, 'photosynthesis' is the specific process plants use to turn sunlight into energy. An 'ecosystem' is a community of interacting organisms. \n\nIn Math, words demand absolute logic. An 'equation' requires two sides to be perfectly equal. A 'fraction' represents a part of a whole number. \n\nIn History, words tell the story of humanity. A 'civilization' is a complex human society. A 'revolution' is a massive, sudden change in government or society. \n\nMemorizing these specialized words will help you read textbooks easily, write brilliant essays, and understand the deep knowledge of the archives! Go forth and study, Master Spelling Jedi!",

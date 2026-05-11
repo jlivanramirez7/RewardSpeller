@@ -120,12 +120,36 @@ const StudentPortal = () => {
                           const isSectionUnlocked = isUnlocked && (!enablePacing || sIdx < unlockLimit);
 
                           return (
-                            <div key={section.id} style={{ display: 'flex', gap: '0.5rem', width: '100%', alignItems: 'center' }}>
+                            <div key={section.id} style={{ 
+                              display: 'flex', 
+                              flexDirection: 'column', 
+                              gap: '0.5rem', 
+                              width: '100%',
+                              padding: '1rem',
+                              background: 'rgba(255,255,255,0.02)',
+                              borderRadius: '8px',
+                              border: '1px solid rgba(255,255,255,0.05)',
+                              marginBottom: '0.5rem'
+                            }}>
+                              {/* LOCALIZED SECTION RULE BANNER */}
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'rgba(255,255,255,0.85)', 
+                                background: 'rgba(251, 191, 36, 0.08)', 
+                                padding: '0.5rem 0.75rem', 
+                                borderRadius: '4px', 
+                                borderLeft: '3px solid #fbbf24',
+                                lineHeight: '1.4' 
+                              }}>
+                                <strong style={{ color: '#fbbf24', marginRight: '4px' }}>🎯 Strategy:</strong> {section.rule}
+                              </div>
+                              
+                              <div style={{ display: 'flex', gap: '0.5rem', width: '100%', alignItems: 'center' }}>
                               <button 
                                 className="btn-secondary"
                                 onClick={() => {
                                   warmupAudio(); // Claim interaction focus for audio!
-                                  setActiveLessonData({ ...section, parentTierId: tier.id, tierRule: tier.rule });
+                                  setActiveLessonData({ ...section, parentTierId: tier.id, tierRule: section.rule });
                                 }}
                                 disabled={!isSectionUnlocked}
                                 title="Read Lesson"
@@ -146,7 +170,7 @@ const StudentPortal = () => {
                                 className={isSectionListened ? "btn-primary" : "btn-secondary"} 
                                 onClick={() => {
                                   warmupAudio(); // Trigger audio channel open
-                                  setActivePlayData({ tierId: tier.id, section, tierRule: tier.rule });
+                                  setActivePlayData({ tierId: tier.id, section, tierRule: section.rule });
                                 }}
                                 disabled={!isSectionListened || !isSectionUnlocked}
                                 style={{ 
@@ -184,6 +208,7 @@ const StudentPortal = () => {
                                   <span style={{ opacity: stats.hardAcc === 100 ? 1 : 0.4, color: stats.hardAcc === 100 ? '#10b981' : '#9ca3af' }}>H</span>
                                 </div>
                               </div>
+                              </div>
                             </div>
                           );
                         });
@@ -211,6 +236,7 @@ const StudentPortal = () => {
                               id: `tier_${tier.id}_mastery`,
                               name: `Tier ${tier.id} Mastery`,
                               theme: "Final Boss Assessment",
+                              rule: tier.rule, // Use overarching tier rule for the final boss
                               words: assessmentWords
                             }
                           });
@@ -315,7 +341,7 @@ const StudentPortal = () => {
           onBeginTrials={(secData) => {
             // SYNCHRONOUS HANDOVER: Close lesson and immediately open corresponding game session
             setActiveLessonData(null);
-            setActivePlayData({ tierId: secData.parentTierId, section: secData, tierRule: secData.tierRule });
+            setActivePlayData({ tierId: secData.parentTierId, section: secData, tierRule: secData.rule });
           }}
         />
       )}
