@@ -90,11 +90,11 @@ export const playTTS = async (text, type = 'assessment', onStart, onEnd) => {
     const fetchUrl = isBearerToken ? baseUrl : `${baseUrl}?key=${apiKey}`;
     
     const fetchHeaders = { 
-      'Content-Type': 'application/json',
-      'x-goog-user-project': 'secret-bloom-474313-m8' // Redirect billing/auth to user target
+      'Content-Type': 'application/json'
     };
     if (isBearerToken) {
       fetchHeaders['Authorization'] = `Bearer ${apiKey}`;
+      fetchHeaders['x-goog-user-project'] = 'secret-bloom-474313-m8'; // Explicit override solely for Bearer context
     }
 
     const response = await fetch(fetchUrl, {
