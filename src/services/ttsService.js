@@ -1,3 +1,5 @@
+import { convertTextToSsml } from './ssmlHelper.js';
+
 // Define single persistent Audio node to maintain browser permission state
 let currentAudio = new Audio(); 
 const audioCache = new Map(); // In-memory cache to prevent redundant API calls
@@ -48,13 +50,13 @@ export const playTTS = async (text, type = 'assessment', onStart, onEnd) => {
     return;
   }
 
-  let voiceName = 'en-US-Journey-F'; // Direct flagship Neural
-  let speakingRate = 0.95; // Synced baseline rate
+  let voiceName = 'en-US-Neural2-F'; // Switched to Neural2 for SSML support
+  let ssmlRate = '95%';
 
   if (type === 'jedi') {
-    speakingRate = 0.88; 
+    ssmlRate = '88%'; 
   } else if (type === 'assessment') {
-    speakingRate = 0.95;
+    ssmlRate = '95%';
   }
 
   const cacheKey = `${type}_${text}`;
@@ -102,13 +104,13 @@ export const playTTS = async (text, type = 'assessment', onStart, onEnd) => {
       headers: fetchHeaders,
       body: JSON.stringify({
         input: { 
-          text
+          ssml: convertTextToSsml(text, ssmlRate)
         },
         voice: { 
           languageCode: 'en-US', 
           name: voiceName
         },
-        audioConfig: { audioEncoding: 'MP3', speakingRate },
+        audioConfig: { audioEncoding: 'MP3' },
       })
     });
 

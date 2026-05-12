@@ -5,7 +5,7 @@ import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
 
@@ -101,6 +101,18 @@ const StudentPortal = () => {
                           // Only 3 non-mastered sections available at a time rolling gate (unless user pacing disabled)
                           const isSectionUnlocked = isUnlocked && (!enablePacing || sIdx < unlockLimit);
 
+                          const easyScore = sectionScores[`${section.id}-easy`] || 0;
+                          const medScore = sectionScores[`${section.id}-medium`] || 0;
+                          const hardScore = sectionScores[`${section.id}-hard`] || 0;
+                          const totalSectionScore = easyScore + medScore + hardScore;
+                          // Max score assumes base points: Easy(1) + Med(3) + Hard(30) = 34 per word.
+                          // Streak bonuses may cause actual score to exceed this max.
+                          const maxSectionScore = (section.words?.length || 0) * 34;
+
+                          const isEasyPassed = stats.easyAcc >= 90;
+                          const isMedPassed = stats.medAcc >= 90;
+                          const isHardPassed = stats.hardAcc >= 90;
+
                           return (
                             <div key={section.id} style={{ 
                               display: 'flex', 
@@ -164,7 +176,7 @@ const StudentPortal = () => {
                                   textAlign: 'left'
                                 }}
                               >
-                                {section.name}: {section.theme} {stats.is100Percent ? '👑' : (isSectionMasteredStatus ? '⭐' : (isSectionListened ? '▶' : '🔒 (Listen First)'))}
+                                {section.name}: {section.theme} {isSectionListened ? '▶' : '🔒 (Listen First)'}
                               </button>
                               {/* Progress Display Badge */}
                               <div style={{ 
@@ -184,10 +196,14 @@ const StudentPortal = () => {
                                 <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
                                   <div style={{ height: '100%', width: `${stats.completionPercent}%`, background: stats.completionPercent === 100 ? '#10b981' : 'var(--accent-color)', transition: 'width 0.5s' }}></div>
                                 </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: 'var(--text-secondary)' }}>
+                                  <span>Points</span>
+                                  <span>{totalSectionScore} / {maxSectionScore}</span>
+                                </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px', fontSize: '0.65rem' }}>
-                                  <span style={{ opacity: stats.easyAcc === 100 ? 1 : 0.4, color: stats.easyAcc === 100 ? '#10b981' : '#9ca3af' }}>E</span>
-                                  <span style={{ opacity: stats.medAcc === 100 ? 1 : 0.4, color: stats.medAcc === 100 ? '#10b981' : '#9ca3af' }}>M</span>
-                                  <span style={{ opacity: stats.hardAcc === 100 ? 1 : 0.4, color: stats.hardAcc === 100 ? '#10b981' : '#9ca3af' }}>H</span>
+                                  <span style={{ opacity: isEasyPassed ? 1 : 0.4, color: isEasyPassed ? '#10b981' : '#9ca3af' }}>E{isEasyPassed ? ' ✓' : ''}</span>
+                                  <span style={{ opacity: isMedPassed ? 1 : 0.4, color: isMedPassed ? '#10b981' : '#9ca3af' }}>M{isMedPassed ? ' ✓' : ''}</span>
+                                  <span style={{ opacity: isHardPassed ? 1 : 0.4, color: isHardPassed ? '#10b981' : '#9ca3af' }}>H{isHardPassed ? ' ✓' : ''}</span>
                                 </div>
                               </div>
                               </div>

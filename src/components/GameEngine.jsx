@@ -3,7 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import { playStaticAudio, playTTS, cancelTTS } from '../services/ttsService';
 
 const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
-  const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints } = useAppContext();
+  const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores } = useAppContext();
   
   // Dynamically resolve closest unearned goal for real-time motivation (using safe immutable copy)
   const nextReward = [...(rewards || [])].sort((a, b) => a.cost - b.cost).find(r => r.cost > studentPoints) || rewards?.[rewards?.length - 1];
@@ -32,6 +32,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   const words = shuffledWords;
   const currentWordObj = words[currentWordIndex];
   const currentWord = currentWordObj?.word || '';
+
+
 
   // Text-to-Speech
   const speakWord = () => {
@@ -127,6 +129,12 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   };
 
   if (!section || words.length === 0) return <div>No words loaded.</div>;
+
+  const easyScore = sectionScores[section.id + '-easy'] || 0;
+  const mediumScore = sectionScores[section.id + '-medium'] || 0;
+  const hardScore = sectionScores[section.id + '-hard'] || 0;
+  const totalSectionScore = easyScore + mediumScore + hardScore;
+  const maxPossibleScore = words.length * 34;
 
   // Sequential progression checks
   const isMediumUnlocked = isDifficultyUnlocked(section.id, 'medium');
@@ -263,7 +271,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
 
         {/* Progress */}
         <div style={{ marginTop: '2rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Word {currentWordIndex + 1} of {words.length}
+          Word {currentWordIndex + 1} of {words.length} | Points: {totalSectionScore} / {maxPossibleScore}
         </div>
         
         </div>

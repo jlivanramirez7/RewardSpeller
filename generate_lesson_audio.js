@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { convertTextToSsml } from './src/services/ssmlHelper.js';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,28 +33,27 @@ const generateTTS = async (text, voiceType, filename) => {
     return;
   }
 
-  let speakingRate = 0.95; // Core baseline rate
+  let ssmlRate = '95%';
 
   if (voiceType === 'jedi') {
     // Deep, slow mystical narrator voice
-    speakingRate = 0.88;
+    ssmlRate = '88%';
   } else if (voiceType === 'assessment') {
     // Standard clarity rate
-    speakingRate = 0.95;
+    ssmlRate = '95%';
   }
 
   // High Fidelity Configuration using verified Premium flagship neural engine
   const config = {
     input: { 
-      text
+      ssml: convertTextToSsml(text, ssmlRate)
     },
     voice: { 
       languageCode: 'en-US', 
-      name: 'en-US-Journey-F' // Certified operational without preview allowlisting
+      name: 'en-US-Neural2-F'
     },
     audioConfig: { 
-      audioEncoding: 'MP3', 
-      speakingRate: speakingRate
+      audioEncoding: 'MP3'
     },
   };
 
