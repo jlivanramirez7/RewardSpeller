@@ -5,7 +5,7 @@ import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
 
@@ -44,7 +44,16 @@ const StudentPortal = () => {
           <p style={{ color: 'var(--text-secondary)' }}>Welcome back! Ready to learn?</p>
         </div>
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          
+          <div style={{ 
+            textAlign: 'center', 
+            background: 'rgba(167, 139, 250, 0.15)', 
+            padding: '0.5rem 0.75rem', 
+            borderRadius: '8px', 
+            border: '1px solid rgba(167, 139, 250, 0.3)' 
+          }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Grade</div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#a78bfa' }}>{currentGradeLevel}</div>
+          </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Points</div>
             <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fbbf24' }}>{studentPoints}</div>
