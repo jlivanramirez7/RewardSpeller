@@ -8,11 +8,22 @@ export function escapeSsml(text) {
     .replace(/'/g, '&apos;');
 }
 
-export function convertTextToSsml(text, rate = 'slow') {
+export function convertTextToSsml(text, rate = 'slow', type = 'assessment') {
   if (!text) return '';
   const escaped = escapeSsml(text);
+  
+  let processedText = escaped;
+  if (type === 'jedi') {
+    // Add extra pauses after commas for dramatic effect
+    processedText = processedText.replace(/,\s+/g, ', <break time="300ms"/> ');
+  }
+  
   // Add breaks after sentences (periods, question marks, or exclamation points followed by one or more spaces)
   // Note: This is a simple heuristic and may cause false positives on abbreviations (e.g., "Mr. Smith").
-  const withBreaks = escaped.replace(/([.!?])\s+/g, '$1 <break time="500ms"/> ');
+  const withBreaks = processedText.replace(/([.!?])\s+/g, '$1 <break time="500ms"/> ');
+  
+  if (type === 'jedi') {
+    return `<speak><prosody rate="${rate}" pitch="-1st">${withBreaks.trim()}</prosody></speak>`;
+  }
   return `<speak><prosody rate="${rate}">${withBreaks.trim()}</prosody></speak>`;
 }

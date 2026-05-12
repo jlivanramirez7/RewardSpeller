@@ -114,7 +114,11 @@ export const AppProvider = ({ children }) => {
   };
 
   const isSectionMastered = (sectionId) => {
-    return getSectionStats(sectionId).isPassed;
+    const stats = getSectionStats(sectionId);
+    if (sectionId.toString().includes('mastery')) {
+      return stats.isPassed;
+    }
+    return stats.completionPercent >= 90;
   };
 
   const isDifficultyUnlocked = (sectionId, difficulty) => {

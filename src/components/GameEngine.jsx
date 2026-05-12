@@ -38,9 +38,9 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   // Text-to-Speech
   const speakWord = () => {
     if (!currentWordObj) return;
-    const textToSpeak = `${currentWordObj.word}. ${currentWordObj.definition} ${currentWordObj.sentence} The word is: ${currentWordObj.word}.`;
+    const textToSpeak = `Listen closely, you must. The word is: ${currentWord}. Its meaning, ${currentWordObj.definition || ''} it is. Hear it in a sentence, you will: ${currentWordObj.sentence || ''}. The word, it is ${currentWord}.`;
     // Pattern matched filename: word_apple.mp3
-    const safeWord = currentWordObj.word.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const safeWord = currentWord.toLowerCase().replace(/[^a-z0-9]/g, '');
     const filename = `word_${safeWord}.mp3`;
 
     // Dual-path dispatch: attempts local static playback, failovers automatically if absent.
@@ -134,7 +134,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   const mediumScore = sectionScores[section.id + '-medium'] || 0;
   const hardScore = sectionScores[section.id + '-hard'] || 0;
   const totalSectionScore = easyScore + mediumScore + hardScore;
-  const maxPossibleScore = words.length * 34;
+  const maxPossibleScore = words.length * 68;
 
   // Sequential progression checks
   const isMediumUnlocked = isDifficultyUnlocked(section.id, 'medium');

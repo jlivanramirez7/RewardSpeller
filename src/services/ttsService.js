@@ -104,7 +104,7 @@ export const playTTS = async (text, type = 'assessment', onStart, onEnd) => {
       headers: fetchHeaders,
       body: JSON.stringify({
         input: { 
-          ssml: convertTextToSsml(text, ssmlRate)
+          ssml: convertTextToSsml(text, ssmlRate, type)
         },
         voice: { 
           languageCode: 'en-US', 

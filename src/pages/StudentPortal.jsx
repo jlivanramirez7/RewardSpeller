@@ -91,14 +91,14 @@ const StudentPortal = () => {
                     <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       {(() => {
                         const firstUnmastered = tier.sections.findIndex(sec => !isSectionMastered(sec.id));
-                        const unlockLimit = firstUnmastered === -1 ? 999 : firstUnmastered + 3;
+                        const unlockLimit = firstUnmastered === -1 ? tier.sections.length : firstUnmastered + 1;
 
                         return tier.sections.map((section, sIdx) => {
                           const stats = getSectionStats(section.id);
-                          const isSectionMasteredStatus = stats.isPassed;
+                          const isSectionMasteredStatus = isSectionMastered(section.id);
                           const isSectionListened = listenedLessons.includes(section.id);
                           
-                          // Only 3 non-mastered sections available at a time rolling gate (unless user pacing disabled)
+                          // Only the immediately following unmastered section is playable (unless user pacing disabled)
                           const isSectionUnlocked = isUnlocked && (!enablePacing || sIdx < unlockLimit);
 
                           const easyScore = sectionScores[`${section.id}-easy`] || 0;
@@ -106,8 +106,9 @@ const StudentPortal = () => {
                           const hardScore = sectionScores[`${section.id}-hard`] || 0;
                           const totalSectionScore = easyScore + medScore + hardScore;
                           // Max score assumes base points: Easy(1) + Med(3) + Hard(30) = 34 per word.
-                          // Streak bonuses may cause actual score to exceed this max.
-                          const maxSectionScore = (section.words?.length || 0) * 34;
+                          // Multiplier of 68 accounts for maximum possible points with streak bonuses (2x).
+                          const maxSectionScore = (section.words?.length || 0) * 68;
+                          const pointsPercent = maxSectionScore > 0 ? Math.round((totalSectionScore / maxSectionScore) * 100) : 0;
 
                           const isEasyPassed = stats.easyAcc >= 90;
                           const isMedPassed = stats.medAcc >= 90;
@@ -191,10 +192,10 @@ const StudentPortal = () => {
                               }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'white', fontWeight: 'bold' }}>
                                   <span>Progress</span>
-                                  <span style={{ color: stats.completionPercent === 100 ? '#10b981' : '#fbbf24' }}>{stats.completionPercent}%</span>
+                                  <span style={{ color: pointsPercent === 100 ? '#10b981' : '#fbbf24' }}>{pointsPercent}%</span>
                                 </div>
                                 <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
-                                  <div style={{ height: '100%', width: `${stats.completionPercent}%`, background: stats.completionPercent === 100 ? '#10b981' : 'var(--accent-color)', transition: 'width 0.5s' }}></div>
+                                  <div style={{ height: '100%', width: `${pointsPercent}%`, background: pointsPercent === 100 ? '#10b981' : 'var(--accent-color)', transition: 'width 0.5s' }}></div>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: 'var(--text-secondary)' }}>
                                   <span>Points</span>
