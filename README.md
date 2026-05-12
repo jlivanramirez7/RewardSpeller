@@ -48,6 +48,7 @@ Earnings scale non-linearly relative to active sequential accuracy streaks:
 *   **Streak Boost ($M$)**: $M = \min(1 + (S \times 0.1), 2.0)$
     *   Where $S$ represents continuous correct answers. Maxes at 200% boost.
 *   **Equation**: $E = \text{round}(Base \times M)$
+*   **Perfect Session Override**: Achieving a perfect session (100% accuracy) awards the maximum possible points by setting the Streak Boost ($M$) to its maximum value of $2.0$ for all words in the session, bypassing the standard per-word streak ramp-up.
 
 ### 2. Anti-Inflationary Economy
 The global wallet secures anti-grinding protocol through distinct **Differential Ledger Accounting**:

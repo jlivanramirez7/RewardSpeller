@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { playStaticAudio, cancelTTS } from '../services/ttsService';
+import { calculateFinalSessionScore, DIFFICULTY_POINTS } from '../utils/scoring';
 
 const shuffleArray = (array) => {
   const shuffled = [...array];
@@ -110,7 +111,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     if (isCorrect) {
       // Pass Path
       const multiplier = Math.min(1 + (studentStreak * 0.1), 2); // Max 2x multiplier
-      const basePoints = difficulty === 'hard' ? 30 : difficulty === 'medium' ? 3 : 1;
+      const basePoints = DIFFICULTY_POINTS[difficulty];
       const earned = Math.round(basePoints * multiplier);
       newSessionScore = sessionScore + earned;
       newCorrectCount = sessionCorrectCount + 1;
@@ -134,9 +135,13 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
       if (currentWordIndex < words.length - 1) {
         setCurrentWordIndex(prev => prev + 1);
       } else {
-        const accuracy = Math.round((newCorrectCount / words.length) * 100);
+        const accuracy = (newCorrectCount / words.length) * 100;
+        const isPerfect = newCorrectCount === words.length;
+        
+        newSessionScore = calculateFinalSessionScore(words.length, difficulty, newSessionScore, isPerfect);
+        
         const actualPointsAwarded = updateSectionScore(section.id, difficulty, newSessionScore, accuracy);
-        alert(`Section Complete!\n\nAccuracy: ${accuracy}%\nSession Score: ${newSessionScore}\nNew Points Awarded: ${actualPointsAwarded}\n\nKeep practicing on Hard to maximize your points!`);
+        alert(`Section Complete!\n\nAccuracy: ${Math.round(accuracy)}%\nSession Score: ${newSessionScore}\nNew Points Awarded: ${actualPointsAwarded}\n\nKeep practicing on Hard to maximize your points!`);
         onComplete();
       }
     }, 2000);
@@ -148,10 +153,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   const mediumScore = sectionScores[section.id + '-medium'] || 0;
   const hardScore = sectionScores[section.id + '-hard'] || 0;
   const totalSectionScore = easyScore + mediumScore + hardScore;
-  const maxPossibleScore = words.length * 68;
-  const maxEasyScore = words.length * 2;
-  const maxMediumScore = words.length * 6;
-  const maxHardScore = words.length * 60;
+  const maxEasyScore = words.length * DIFFICULTY_POINTS.easy * 2;
+  const maxMediumScore = words.length * DIFFICULTY_POINTS.medium * 2;
+  const maxHardScore = words.length * DIFFICULTY_POINTS.hard * 2;
+  const maxPossibleScore = maxEasyScore + maxMediumScore + maxHardScore;
 
   const easyProg = maxEasyScore > 0 ? Math.max(0, Math.min((easyScore / maxEasyScore) * 100, 100)) : 0;
   const mediumProg = maxMediumScore > 0 ? Math.max(0, Math.min((mediumScore / maxMediumScore) * 100, 100)) : 0;
