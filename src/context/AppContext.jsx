@@ -3,6 +3,7 @@ import wordBank3rd from '../data/wordBank_3rd.json';
 import wordBank4th from '../data/wordBank_4th.json';
 import wordBank5th from '../data/wordBank_5th.json';
 import wordBank6th from '../data/wordBank_6th.json';
+import { calculateRecommendedDifficulty } from '../utils/difficulty';
 
 const AppContext = createContext();
 
@@ -179,6 +180,10 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  const getRecommendedDifficulty = (sectionId) => {
+    return calculateRecommendedDifficulty(sectionId, sectionAccuracy);
+  };
+
   return (
     <AppContext.Provider value={{
       studentPoints, setStudentPoints, addPoints,
@@ -193,7 +198,7 @@ export const AppProvider = ({ children }) => {
       listenedLessons, markLessonListened,
       rewards, setRewards, purchaseReward,
       currentGradeLevel, setCurrentGradeLevel,
-      tiers, resetProgress, isSectionMastered
+      tiers, resetProgress, isSectionMastered, getRecommendedDifficulty
     }}>
       {children}
     </AppContext.Provider>

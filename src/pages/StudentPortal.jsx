@@ -5,7 +5,7 @@ import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
 
@@ -75,10 +75,12 @@ const StudentPortal = () => {
             ← Back to Map
           </button>
           <GameEngine 
+            key={activePlayData.section.id}
             tierId={activePlayData.tierId} 
             section={activePlayData.section} 
             onComplete={handleCompleteSection} 
             tierRule={activePlayData.tierRule} 
+            initialDifficulty={activePlayData.initialDifficulty}
           />
         </div>
       ) : (
@@ -183,7 +185,8 @@ const StudentPortal = () => {
                                 className={isSectionListened ? "btn-primary" : "btn-secondary"} 
                                 onClick={() => {
                                   warmupAudio(); // Trigger audio channel open
-                                  setActivePlayData({ tierId: tier.id, section, tierRule: section.rule });
+                                  const recommendedDifficulty = getRecommendedDifficulty(section.id);
+                                  setActivePlayData({ tierId: tier.id, section, tierRule: section.rule, initialDifficulty: recommendedDifficulty });
                                 }}
                                 disabled={!isSectionListened || !isSectionUnlocked}
                                 style={{ 
@@ -246,6 +249,7 @@ const StudentPortal = () => {
                           const shuffledAll = [...allWords].sort(() => Math.random() - 0.5);
                           const assessmentWords = shuffledAll.slice(0, 10);
                           
+                          const recommendedDifficulty = getRecommendedDifficulty(`tier_${tier.id}_mastery`);
                           setActivePlayData({ 
                             tierId: tier.id, 
                             tierRule: tier.rule,
@@ -255,7 +259,8 @@ const StudentPortal = () => {
                               theme: "Final Boss Assessment",
                               rule: tier.rule, // Use overarching tier rule for the final boss
                               words: assessmentWords
-                            }
+                            },
+                            initialDifficulty: recommendedDifficulty
                           });
                         };
                         
@@ -358,7 +363,8 @@ const StudentPortal = () => {
           onBeginTrials={(secData) => {
             // SYNCHRONOUS HANDOVER: Close lesson and immediately open corresponding game session
             setActiveLessonData(null);
-            setActivePlayData({ tierId: secData.parentTierId, section: secData, tierRule: secData.rule });
+            const recommendedDifficulty = getRecommendedDifficulty(secData.id);
+            setActivePlayData({ tierId: secData.parentTierId, section: secData, tierRule: secData.rule, initialDifficulty: recommendedDifficulty });
           }}
         />
       )}

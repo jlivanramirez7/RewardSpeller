@@ -12,13 +12,13 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
+const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty = 'easy' }) => {
   const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores } = useAppContext();
   
   // Dynamically resolve closest unearned goal for real-time motivation (using safe immutable copy)
   
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [difficulty, setDifficulty] = useState('easy'); // easy, medium, hard
+  const [difficulty, setDifficulty] = useState(initialDifficulty); // easy, medium, hard
   const [userInput, setUserInput] = useState('');
   const [feedback, setFeedback] = useState(null); // { type: 'success' | 'error', message: string }
   const [showWord, setShowWord] = useState(true);
@@ -32,12 +32,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     section?.words ? shuffleArray(section.words) : []
   );
 
-  const [prevSection, setPrevSection] = useState(section);
-  if (section !== prevSection) {
-    setPrevSection(section);
-    setShuffledWords(section?.words ? shuffleArray(section.words) : []);
-    setCurrentWordIndex(0);
-  }
+
 
   // The word list for the current section
   const words = shuffledWords;
