@@ -1,3 +1,4 @@
+/* global process, Buffer */
 import fs from 'fs';
 import path from 'path';
 import { convertTextToSsml } from './src/services/ssmlHelper.js';

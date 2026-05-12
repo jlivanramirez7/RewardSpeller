@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { playStaticAudio, cancelTTS } from '../services/ttsService';
 
@@ -15,7 +15,6 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores } = useAppContext();
   
   // Dynamically resolve closest unearned goal for real-time motivation (using safe immutable copy)
-  const nextReward = [...(rewards || [])].sort((a, b) => a.cost - b.cost).find(r => r.cost > studentPoints) || rewards?.[rewards?.length - 1];
   
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [difficulty, setDifficulty] = useState('easy'); // easy, medium, hard
@@ -47,7 +46,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
 
 
   // Text-to-Speech
-  const speakWord = () => {
+  const speakWord = useCallback(() => {
     if (!currentWordObj) return;
     const textToSpeak = `Listen closely, you must. The word is: ${currentWord}. Its meaning, ${currentWordObj.definition || ''} it is. Hear it in a sentence, you will: ${currentWordObj.sentence || ''}. The word, it is ${currentWord}.`;
     // Pattern matched filename: word_apple.mp3
@@ -56,7 +55,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
 
     // Dual-path dispatch: attempts local static playback, failovers automatically if absent.
     playStaticAudio(filename, null, null, textToSpeak, 'assessment');
-  };
+  }, [currentWordObj, currentWord, section.id]);
 
   // Cleanup TTS on unmount and mark unmounted
   useEffect(() => {
@@ -67,7 +66,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     };
   }, []);
 
-  const startNewWord = () => {
+  const startNewWord = useCallback(() => {
     setUserInput('');
     setFeedback(null);
     speakWord();
@@ -81,14 +80,14 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     setTimeout(() => {
       if (isMountedRef.current && inputRef.current) inputRef.current.focus();
     }, 50);
-  };
+  }, [difficulty, speakWord]);
 
   useEffect(() => {
     if (words.length > 0) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       startNewWord();
     }
-  }, [currentWordIndex, difficulty, words]);
+  }, [startNewWord, words.length, currentWordIndex]);
 
   const handleDifficultyChange = (e) => {
     setDifficulty(e.target.value);

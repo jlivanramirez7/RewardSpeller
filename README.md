@@ -81,7 +81,27 @@ node generate_lesson_audio.js "YOUR_GOOGLE_CLOUD_ACCESS_TOKEN"
 *Requires Google Cloud API enabled on destination project.*
 
 ### 🚀 Launching Development Environment
-1. Ensure node environment (v18+) is active.
-2. Install dependencies: `npm install`
-3. Start local proxy: `npm run dev`
-4. Navigate to active port: `http://localhost:5173`
+Ensure node environment (v18+) is active and dependencies are installed (`npm install`).
+
+#### 💻 Local Development
+1. Start local server: `npm run dev`
+2. Navigate to active port: `http://localhost:5173`
+
+#### 🌐 Remote Development (SSH)
+If you are developing on a remote virtual environment via SSH, choose one of the following methods to access the app:
+
+**Method 1: SSH Port Forwarding (Recommended)**
+1. Connect to your VM with port forwarding enabled:
+   ```bash
+   ssh -L 5173:localhost:5173 user@ivanramirez.c.googlers.com
+   ```
+2. Start the dev server on the remote machine: `npm run dev`
+3. Access the app locally at: `http://localhost:5173`
+
+**Method 2: Expose App Host**
+1. Start the dev server and expose it to the network:
+   ```bash
+   npm run dev -- --host 0.0.0.0
+   ```
+2. Access the app using your VM's external IP address or hostname: `http://ivanramirez.c.googlers.com:5173`
+   *(Note: Ensure your VM's firewall allows traffic on port 5173)*
