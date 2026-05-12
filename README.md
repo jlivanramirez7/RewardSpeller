@@ -98,10 +98,11 @@ If you are developing on a remote virtual environment via SSH, choose one of the
 2. Start the dev server on the remote machine: `npm run dev`
 3. Access the app locally at: `http://localhost:5173`
 
-**Method 2: Expose App Host**
+**Method 2: Automatic Proxy Redirect (BeyondCorp)**
 1. Start the dev server and expose it to the network:
    ```bash
    npm run dev -- --host 0.0.0.0
    ```
-2. Access the app using your VM's external IP address or hostname: `http://ivanramirez.c.googlers.com:5173`
-   *(Note: Ensure your VM's firewall allows traffic on port 5173)*
+2. Access the app using your Cloudtop hostname: `http://ivanramirez.c.googlers.com:5173`
+   *   **💡 Critical Tip**: You must use **`http://`** (not `https://`) initially. If you have the BeyondCorp extension enabled, it will automatically intercept this request and redirect you to a secure, long-lived Proxy Encoded Name (PEN) URL (e.g., `https://...proxy.googlers.com/`).
+   *   *(Note: Ensure your VM's firewall allows traffic on port 5173)*
