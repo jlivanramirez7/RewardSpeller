@@ -7,6 +7,7 @@ const ParentPortal = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [showResetModal, setShowResetModal] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -323,16 +324,50 @@ const ParentPortal = () => {
         <button 
           className="btn-primary" 
           style={{ background: 'var(--error-color)', color: 'white', border: 'none' }}
-          onClick={() => {
-            if (window.confirm("Are you absolutely sure you want to reset all progress? This cannot be undone!")) {
-              resetProgress();
-              alert("Progress has been reset.");
-            }
-          }}
+          onClick={() => setShowResetModal(true)}
         >
           Reset All Progress
         </button>
       </div>
+
+      {/* Custom Reset Confirmation Modal */}
+      {showResetModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, width: '100%', height: '100%',
+          background: 'rgba(0, 0, 0, 0.7)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          zIndex: 1000
+        }}>
+          <div className="glass-panel" role="dialog" aria-modal="true" style={{
+            padding: '2.5rem', maxWidth: '450px', width: '90%', textAlign: 'center',
+            border: '1px solid rgba(244, 63, 94, 0.4)',
+            boxShadow: '0 0 20px rgba(244, 63, 94, 0.2)',
+            borderTop: '4px solid var(--accent-color)'
+          }}>
+            <h2 style={{ color: 'var(--accent-color)', marginBottom: '1rem' }}>Confirm Reset</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
+              Are you absolutely sure you want to reset all progress? This cannot be undone!
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
+              <button className="btn-secondary" onClick={() => setShowResetModal(false)}>
+                Cancel
+              </button>
+              <button 
+                className="btn-primary" 
+                style={{ background: 'var(--error-color)', color: 'white', border: 'none' }}
+                onClick={() => {
+                  resetProgress();
+                  setShowResetModal(false);
+                }}
+              >
+                Proceed
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

@@ -122,6 +122,14 @@ export const AppProvider = ({ children }) => {
     setSectionScores({});
     setSectionAccuracy({});
     setListenedLessons([]); // Purge lesson listening history
+    
+    localStorage.setItem('studentPoints', JSON.stringify(0));
+    localStorage.setItem('studentStreak', JSON.stringify(0));
+    localStorage.setItem('unlockedTiers', JSON.stringify([]));
+    localStorage.setItem('struggleWords', JSON.stringify([]));
+    localStorage.setItem('sectionScores', JSON.stringify({}));
+    localStorage.setItem('sectionAccuracy', JSON.stringify({}));
+    localStorage.setItem('listenedLessons', JSON.stringify([]));
   };
 
   const getSectionStats = (sectionId) => {
