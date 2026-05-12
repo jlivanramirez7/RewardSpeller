@@ -46,11 +46,11 @@ const generateTTS = async (text, voiceType, filename) => {
   // High Fidelity Configuration using verified Premium flagship neural engine
   const config = {
     input: { 
-      ssml: convertTextToSsml(text, ssmlRate)
+      ssml: convertTextToSsml(text, ssmlRate, voiceType)
     },
     voice: { 
       languageCode: 'en-US', 
-      name: 'en-US-Neural2-F'
+      name: 'en-US-Neural2-D'
     },
     audioConfig: { 
       audioEncoding: 'MP3'

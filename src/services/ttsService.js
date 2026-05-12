@@ -50,7 +50,7 @@ export const playTTS = async (text, type = 'assessment', onStart, onEnd) => {
     return;
   }
 
-  let voiceName = 'en-US-Neural2-F'; // Switched to Neural2 for SSML support
+  let voiceName = 'en-US-Neural2-D'; // Switched to Neural2 for SSML support
   let ssmlRate = '95%';
 
   if (type === 'jedi') {

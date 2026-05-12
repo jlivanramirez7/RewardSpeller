@@ -1,6 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { playStaticAudio, playTTS, cancelTTS } from '../services/ttsService';
+import { playStaticAudio, cancelTTS } from '../services/ttsService';
+
+const shuffleArray = (array) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores } = useAppContext();
@@ -19,14 +28,16 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   const inputRef = useRef(null);
   const isMountedRef = useRef(true); // Lifecycle guard
   
-  const [shuffledWords, setShuffledWords] = useState([]);
-  
-  useEffect(() => {
-    if (section?.words) {
-      setShuffledWords([...section.words].sort(() => Math.random() - 0.5));
-      setCurrentWordIndex(0);
-    }
-  }, [section]);
+  const [shuffledWords, setShuffledWords] = useState(() => 
+    section?.words ? shuffleArray(section.words) : []
+  );
+
+  const [prevSection, setPrevSection] = useState(section);
+  if (section !== prevSection) {
+    setPrevSection(section);
+    setShuffledWords(section?.words ? shuffleArray(section.words) : []);
+    setCurrentWordIndex(0);
+  }
 
   // The word list for the current section
   const words = shuffledWords;
@@ -56,12 +67,6 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (words.length > 0) {
-      startNewWord();
-    }
-  }, [currentWordIndex, difficulty, words.length]);
-
   const startNewWord = () => {
     setUserInput('');
     setFeedback(null);
@@ -78,11 +83,21 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     }, 50);
   };
 
+  useEffect(() => {
+    if (words.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      startNewWord();
+    }
+  }, [currentWordIndex, difficulty, words]);
+
   const handleDifficultyChange = (e) => {
     setDifficulty(e.target.value);
     setSessionScore(0);
     setSessionCorrectCount(0);
     setCurrentWordIndex(0);
+    if (section?.words) {
+      setShuffledWords(shuffleArray(section.words));
+    }
   };
 
   const checkSpelling = (e) => {

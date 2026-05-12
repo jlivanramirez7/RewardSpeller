@@ -22,8 +22,5 @@ export function convertTextToSsml(text, rate = 'slow', type = 'assessment') {
   // Note: This is a simple heuristic and may cause false positives on abbreviations (e.g., "Mr. Smith").
   const withBreaks = processedText.replace(/([.!?])\s+/g, '$1 <break time="500ms"/> ');
   
-  if (type === 'jedi') {
-    return `<speak><prosody rate="${rate}" pitch="-1st">${withBreaks.trim()}</prosody></speak>`;
-  }
   return `<speak><prosody rate="${rate}">${withBreaks.trim()}</prosody></speak>`;
 }
