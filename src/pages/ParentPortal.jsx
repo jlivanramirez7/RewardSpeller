@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
 
 const ParentPortal = () => {
-  const { struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating } = useAppContext();
+  const { 
+    struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
+    studentStreak, unlockedTiers, sectionScores, sectionAccuracy, listenedLessons, restoreProgress
+  } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const fileInputRef = useRef(null);
   const [passwordInput, setPasswordInput] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [showResetModal, setShowResetModal] = useState(false);
@@ -313,6 +317,83 @@ const ParentPortal = () => {
           </div>
         </div>
 
+      </div>
+      {/* Data Management */}
+      <div className="glass-panel" style={{ marginTop: '2rem', padding: '2rem' }}>
+        <h2 style={{ marginBottom: '1rem' }}>Data Management</h2>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+          Backup or restore your child's progress. This is useful if you want to play on a different device or prevent data loss.
+        </p>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button 
+            className="btn-primary" 
+            onClick={() => {
+              const data = {
+                studentPoints,
+                studentStreak,
+                unlockedTiers,
+                struggleWords,
+                sectionScores,
+                sectionAccuracy,
+                enablePacing,
+                enableDifficultyGating,
+                listenedLessons,
+                rewards,
+                currentGradeLevel
+              };
+              const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `spelling_progress_${new Date().toISOString().slice(0, 10)}.json`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }}
+          >
+            Download Progress Backup
+          </button>
+          
+          <button 
+            className="btn-secondary" 
+            onClick={() => fileInputRef.current.click()}
+          >
+            Restore Progress from File
+          </button>
+          <input 
+            ref={fileInputRef}
+            type="file" 
+            accept=".json" 
+            style={{ display: 'none' }} 
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                try {
+                  const data = JSON.parse(event.target.result);
+                  if (window.confirm('Are you sure you want to restore progress? This will overwrite current progress.')) {
+                    restoreProgress(data);
+                    alert('Progress restored successfully!');
+                  }
+                } catch {
+                  alert('Failed to parse backup file. Please make sure it is a valid JSON file.');
+                }
+              };
+              reader.readAsText(file);
+              e.target.value = '';
+            }}
+          />
+          <button
+            className="btn-secondary"
+            style={{ padding: '0.5rem', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            onClick={() => alert('How to find the file: Look in your Downloads folder.\n\nWhere it normally sits: It is downloaded to your local device.\n\nWhat it is normally called: spelling_progress_YYYY-MM-DD.json')}
+            title="Information about backup file"
+          >
+            ℹ️
+          </button>
+        </div>
       </div>
 
       {/* Danger Zone */}

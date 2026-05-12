@@ -43,6 +43,36 @@ export const AppProvider = ({ children }) => {
     }
     return grade;
   });
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const restoreProgress = (data) => {
+    if (Object.keys(data).length > 0) {
+      if (data.studentPoints !== undefined && typeof data.studentPoints === 'number') setStudentPoints(data.studentPoints);
+      if (data.studentStreak !== undefined && typeof data.studentStreak === 'number') setStudentStreak(data.studentStreak);
+      if (data.unlockedTiers !== undefined && Array.isArray(data.unlockedTiers)) setUnlockedTiers(data.unlockedTiers);
+      if (data.struggleWords !== undefined && Array.isArray(data.struggleWords)) setStruggleWords(data.struggleWords);
+      if (data.sectionScores !== undefined && typeof data.sectionScores === 'object' && !Array.isArray(data.sectionScores)) setSectionScores(data.sectionScores);
+      if (data.sectionAccuracy !== undefined && typeof data.sectionAccuracy === 'object' && !Array.isArray(data.sectionAccuracy)) setSectionAccuracy(data.sectionAccuracy);
+      if (data.enablePacing !== undefined && typeof data.enablePacing === 'boolean') setEnablePacing(data.enablePacing);
+      if (data.enableDifficultyGating !== undefined && typeof data.enableDifficultyGating === 'boolean') setEnableDifficultyGating(data.enableDifficultyGating);
+      if (data.listenedLessons !== undefined && Array.isArray(data.listenedLessons)) setListenedLessons(data.listenedLessons);
+      if (data.rewards !== undefined && Array.isArray(data.rewards)) setRewards(data.rewards);
+      if (data.currentGradeLevel !== undefined && typeof data.currentGradeLevel === 'string') setCurrentGradeLevel(data.currentGradeLevel);
+    }
+  };
+
+  useEffect(() => {
+    fetch('/api/load-scores')
+      .then(response => response.json())
+      .then(data => {
+        restoreProgress(data);
+        setIsLoaded(true);
+      })
+      .catch(error => {
+        console.error('Error loading scores:', error);
+        setIsLoaded(true); // Allow saving if load fails
+      });
+  }, []);
 
   // Curriculum Data
   const tiers = useMemo(() => {
@@ -59,6 +89,8 @@ export const AppProvider = ({ children }) => {
 
   // Save to localStorage on change
   useEffect(() => {
+    if (!isLoaded) return;
+
     localStorage.setItem('studentPoints', JSON.stringify(studentPoints));
     localStorage.setItem('studentStreak', JSON.stringify(studentStreak));
     localStorage.setItem('unlockedTiers', JSON.stringify(unlockedTiers));
@@ -70,7 +102,34 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('listenedLessons', JSON.stringify(listenedLessons));
     localStorage.setItem('rewards', JSON.stringify(rewards));
     localStorage.setItem('currentGradeLevel', JSON.stringify(currentGradeLevel));
-  }, [studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel]);
+
+    fetch('/api/save-scores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        studentPoints,
+        studentStreak,
+        unlockedTiers,
+        struggleWords,
+        sectionScores,
+        sectionAccuracy,
+        enablePacing,
+        enableDifficultyGating,
+        listenedLessons,
+        rewards,
+        currentGradeLevel
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) {
+        console.error('Failed to save scores to file');
+      }
+    })
+    .catch(error => console.error('Error saving scores:', error));
+  }, [isLoaded, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel]);
 
   const addPoints = (points) => {
     setStudentPoints(prev => prev + points);
@@ -198,7 +257,7 @@ export const AppProvider = ({ children }) => {
       listenedLessons, markLessonListened,
       rewards, setRewards, purchaseReward,
       currentGradeLevel, setCurrentGradeLevel,
-      tiers, resetProgress, isSectionMastered, getRecommendedDifficulty
+      tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress
     }}>
       {children}
     </AppContext.Provider>
