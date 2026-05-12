@@ -77,8 +77,9 @@ const ParentPortal = () => {
               }}
             >
               <option value="3rd" style={{color: 'black'}}>3rd Grade (Phonetic Focus)</option>
-              <option value="4th-5th" style={{color: 'black'}}>4th-5th Grade (Building Blocks)</option>
-              <option value="6th+" style={{color: 'black'}}>6th+ Grade (Advanced Roots)</option>
+              <option value="4th" style={{color: 'black'}}>4th Grade (Building Blocks)</option>
+              <option value="5th" style={{color: 'black'}}>5th Grade (Advanced Word Study)</option>
+              <option value="6th" style={{color: 'black'}}>6th Grade (Advanced Roots)</option>
             </select>
           </div>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Adjusting this will shift the underlying word banks available in the Student Portal.</p>

@@ -1,0 +1,1914 @@
+{
+  "tiers": [
+    {
+      "id": "g4_t1",
+      "name": "Complex Vowel Patterns",
+      "description": "Master sophisticated vowel combinations and R-controlled nuances.",
+      "rule": "Pay attention to vowel teams like 'ei' and 'ie' (Remember: 'i' before 'e' except after 'c', or when sounding like 'a' as in neighbor and weigh). Also watch out for tricky R-controlled vowels.",
+      "sections": [
+        {
+          "name": "I Before E (Part 1)",
+          "theme": "I Before E",
+          "words": [
+            {
+              "word": "receipt",
+              "definition": "A piece of paper proving you bought something.",
+              "sentence": "Bilbo Baggins asked the dragon Smaug for a receipt after purchasing a single gold coin, which was a terrible idea."
+            },
+            {
+              "word": "piece",
+              "definition": "A part of something larger.",
+              "sentence": "Anakin Skywalker sliced a giant piece of the droid factory pipeline with his lightsaber."
+            },
+            {
+              "word": "neighbor",
+              "definition": "A person living next door or very near to another.",
+              "sentence": "My Minecraft neighbor built a giant beacon that shines directly into my bedroom window."
+            },
+            {
+              "word": "ceiling",
+              "definition": "The overhead inside surface of a room.",
+              "sentence": "The Battle Room ceiling in Ender's Game is completely covered in zero-gravity handholds."
+            },
+            {
+              "word": "believe",
+              "definition": "To accept that something is true.",
+              "sentence": "I cannot believe you tried to mine obsidian with a wooden pickaxe!"
+            },
+            {
+              "word": "weigh",
+              "definition": "To find out how heavy someone or something is.",
+              "sentence": "Hagrid had to weigh the massive dragon egg before it hatched into Norbert."
+            },
+            {
+              "word": "shield",
+              "definition": "A broad piece of armor used for defense.",
+              "sentence": "Captain Rex raised his energy shield just as the droid army opened fire."
+            },
+            {
+              "word": "vein",
+              "definition": "A distinct layer or crack in rock filled with valuable minerals.",
+              "sentence": "I was thrilled to find a massive vein of diamonds while mining deep below the ground."
+            },
+            {
+              "word": "achieve",
+              "definition": "To successfully bring about a result.",
+              "sentence": "Harry Potter had to achieve top marks in Potions to impress Professor Snape."
+            },
+            {
+              "word": "weight",
+              "definition": "A measurement of how heavy an object or person is.",
+              "sentence": "The pure weight of the One Ring made Frodo feel heavier with every step toward Mordor."
+            }
+          ],
+          "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
+          "imagePath": "/assets/images/tier1_sec1.png",
+          "id": "g4_t1_s1",
+          "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
+        },
+        {
+          "name": "I Before E (Part 2)",
+          "theme": "I Before E",
+          "words": [
+            {
+              "word": "fierce",
+              "definition": "Displaying an intense or ferocious aggressiveness.",
+              "sentence": "The White Witch was a fierce warrior, but Aslan was far more powerful."
+            },
+            {
+              "word": "reindeer",
+              "definition": "A large deer with long antlers that lives in cold northern regions.",
+              "sentence": "In Narnia, the White Witch travels in a sled pulled by white reindeer instead of horses."
+            },
+            {
+              "word": "grief",
+              "definition": "Deep sorrow or sadness.",
+              "sentence": "Dumbledore felt great grief when his favorite socks were lost in the laundry."
+            },
+            {
+              "word": "relief",
+              "definition": "A feeling of reassurance and relaxation following release from anxiety.",
+              "sentence": "It was a huge relief when the Minecraft creeper fell into a hole instead of exploding my house."
+            },
+            {
+              "word": "yield",
+              "definition": "To produce or provide, or to give way.",
+              "sentence": "Gandalf told the Balrog that he would not yield the bridge of Khazad-d\u00fbm."
+            },
+            {
+              "word": "receipt",
+              "definition": "A piece of paper proving you bought something.",
+              "sentence": "Bilbo Baggins asked the dragon Smaug for a receipt after purchasing a single gold coin, which was a terrible idea."
+            },
+            {
+              "word": "ceiling",
+              "definition": "The overhead inside surface of a room.",
+              "sentence": "The Battle Room ceiling in Ender's Game is completely covered in zero-gravity handholds."
+            },
+            {
+              "word": "neighbor",
+              "definition": "A person living next door or very near to another.",
+              "sentence": "My Minecraft neighbor built a giant beacon that shines directly into my bedroom window."
+            },
+            {
+              "word": "weigh",
+              "definition": "To find out how heavy someone or something is.",
+              "sentence": "Hagrid had to weigh the massive dragon egg before it hatched into Norbert."
+            },
+            {
+              "word": "vein",
+              "definition": "A distinct layer or crack in rock filled with valuable minerals.",
+              "sentence": "I was thrilled to find a massive vein of diamonds while mining deep below the ground."
+            }
+          ],
+          "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
+          "imagePath": "/assets/images/tier1_sec1.png",
+          "id": "g4_t1_s2",
+          "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
+        },
+        {
+          "name": "EE Vowel Team",
+          "theme": "EE Vowel Team",
+          "words": [
+            {
+              "word": "screen",
+              "definition": "A flat panel or area on an electronic device.",
+              "sentence": "Ender Wiggin stared at his command screen, calculating the Formic fleet's next move."
+            },
+            {
+              "word": "degree",
+              "definition": "A unit of measurement or a level of intensity.",
+              "sentence": "The temperature in the Nether is several thousand degree hotter than the Overworld."
+            },
+            {
+              "word": "squeeze",
+              "definition": "To firmly press from opposite sides.",
+              "sentence": "A giant cave spider tried to squeeze through a one-block gap in my Minecraft base."
+            },
+            {
+              "word": "succeed",
+              "definition": "To achieve the desired aim or result.",
+              "sentence": "If Anakin wants to succeed as a Jedi Master, he needs to sit on the council first."
+            },
+            {
+              "word": "freeze",
+              "definition": "To turn into ice or become completely still.",
+              "sentence": "The White Witch used her magic wand to freeze Mr. Tumnus into a solid block of ice."
+            },
+            {
+              "word": "proceed",
+              "definition": "To begin or continue a course of action.",
+              "sentence": "Dumbledore told Harry to proceed through the trapdoor very carefully."
+            },
+            {
+              "word": "speech",
+              "definition": "A formal address delivered to an audience.",
+              "sentence": "General Grievous gave a very coughing, wheezing speech to the droid army."
+            },
+            {
+              "word": "greedy",
+              "definition": "Having an intense desire for wealth or food.",
+              "sentence": "The greedy dwarves of Erebor dug too deep and found a Balrog."
+            },
+            {
+              "word": "breeze",
+              "definition": "A gentle wind.",
+              "sentence": "A cold breeze swept through the Quidditch pitch as the Dementors arrived."
+            },
+            {
+              "word": "needle",
+              "definition": "A very fine, slender piece of metal used for sewing.",
+              "sentence": "Ahsoka threaded a tiny needle to fix the hole in her Jedi robes."
+            }
+          ],
+          "lessonScript": "Greetings! When two vowels go walking, the first one does the talking! The 'EE' Vowel Team is a powerful combination. When you place two E's together, they always scream their own name in a long 'E' sound. Think of a computer 'SCREEN' displaying the Death Star plans, or a tiny cave spider trying to 'SQUEEZE' through a block in Minecraft. They will always make the long E sound!",
+          "imagePath": "/assets/images/tier1_sec2.png",
+          "id": "g4_t1_s3",
+          "rule": "When double 'E's team up, they cheer their long 'E' sound together loud and proud!"
+        },
+        {
+          "name": "EA Vowel Team",
+          "theme": "EA Vowel Team",
+          "words": [
+            {
+              "word": "sweat",
+              "definition": "Moisture exuded through the pores of the skin.",
+              "sentence": "Steve wiped the sweat from his blocky forehead after fighting three Endermen."
+            },
+            {
+              "word": "breath",
+              "definition": "The air taken into or expelled from the lungs.",
+              "sentence": "Smaug took a deep breath before unleashing a massive torrent of fire."
+            },
+            {
+              "word": "thread",
+              "definition": "A long, thin strand of cotton, nylon, or other fibers.",
+              "sentence": "Hermione used a magical glowing thread to lead Ron out of the maze."
+            },
+            {
+              "word": "spread",
+              "definition": "To open out so as to extend over a large area.",
+              "sentence": "The Formic alien ships began to spread out across the entire galaxy."
+            },
+            {
+              "word": "meadow",
+              "definition": "A piece of grassland.",
+              "sentence": "Lucy stepped out of the wardrobe and found herself not in a room, but in a snowy Narnian meadow."
+            },
+            {
+              "word": "wealth",
+              "definition": "An abundance of valuable possessions or money.",
+              "sentence": "The dragon Smaug slept on top of more wealth than anyone in Middle Earth had ever seen."
+            },
+            {
+              "word": "health",
+              "definition": "The state of being free from illness or injury.",
+              "sentence": "After drinking a Splash Potion of Healing, Steve's health was completely restored."
+            },
+            {
+              "word": "weapon",
+              "definition": "A thing designed or used for inflicting bodily harm.",
+              "sentence": "A diamond sword is the best weapon for defending your Minecraft village."
+            },
+            {
+              "word": "peasant",
+              "definition": "A poor farmer of low social status.",
+              "sentence": "A poor peasant in Narnia offered Aslan a warm bowl of soup."
+            },
+            {
+              "word": "feather",
+              "definition": "One of the flat appendages growing from a bird's skin.",
+              "sentence": "Harry used a white owl feather to write his transfiguration essay."
+            }
+          ],
+          "lessonScript": "Beware, young learner! The 'EA' Vowel Team is a master of disguise. Sometimes it makes a long 'E' sound, but today we are hunting its dark side: the short 'e' sound! In words like 'SWEAT', 'BREATH', and 'MEADOW', the 'EA' team tricks you by sounding exactly like a single, short 'E'. When you take a deep 'BREATH' before fighting a Creeper, remember that sneaky 'A' is hiding inside!",
+          "imagePath": "/assets/images/tier1_sec3.png",
+          "id": "g4_t1_s4",
+          "rule": "The 'EA' team is a master of disguise! Sometimes they whisper a short 'e' sound instead of speaking their name."
+        },
+        {
+          "name": "OU/OW Vowels",
+          "theme": "OU/OW Vowels",
+          "words": [
+            {
+              "word": "cloud",
+              "definition": "A visible mass of condensed water vapor floating in the atmosphere.",
+              "sentence": "A massive, blocky rain cloud formed right over my newly built Minecraft farm."
+            },
+            {
+              "word": "crowd",
+              "definition": "A large number of people gathered together.",
+              "sentence": "The crowd of Hogwarts students cheered wildly when Gryffindor won the Quidditch cup."
+            },
+            {
+              "word": "ground",
+              "definition": "The solid surface of the earth.",
+              "sentence": "The clone troopers hit the ground running as soon as the dropship doors opened."
+            },
+            {
+              "word": "prowl",
+              "definition": "To move stealthily in search of prey.",
+              "sentence": "A pack of wolves began to prowl around the edges of the Shire."
+            },
+            {
+              "word": "bounce",
+              "definition": "To spring back after hitting an object.",
+              "sentence": "In the Battle Room, Ender learned how to bounce off the walls in zero gravity."
+            },
+            {
+              "word": "drown",
+              "definition": "To die through submersion in and inhalation of water.",
+              "sentence": "Make sure you build a boat so you don't drown in the Minecraft ocean biome."
+            },
+            {
+              "word": "amount",
+              "definition": "A quantity of something.",
+              "sentence": "The amount of droids marching toward the Republic base was terrifying."
+            },
+            {
+              "word": "coward",
+              "definition": "A person who lacks the courage to do or endure dangerous things.",
+              "sentence": "Peter Pevensie proved he was no coward when he faced Fenris Ulf the wolf."
+            },
+            {
+              "word": "sprout",
+              "definition": "To begin to grow.",
+              "sentence": "Neville Longbottom planted a magical seed that began to sprout into a biting plant."
+            },
+            {
+              "word": "astound",
+              "definition": "To shock or greatly surprise.",
+              "sentence": "Ender's brilliant tactical moves never failed to astound the military commanders."
+            }
+          ],
+          "lessonScript": "Listen closely! The 'OU' and 'OW' vowel teams are loud and aggressive. When they combine, they make the 'OW!' sound, like you just stubbed your toe on a piece of bedrock! You will hear it in the middle of words like 'CLOUD' and 'CROWD', or at the end of words like 'PROWL' and 'DROWN'. Never be a 'COWARD' when facing these loud vowels!",
+          "imagePath": "/assets/images/tier1_sec4.png",
+          "id": "g4_t1_s5",
+          "rule": "Loud and brave! Both 'OU' and 'OW' shout 'OW!' together, just like you bumped your funny bone!"
+        },
+        {
+          "name": "Bossy R",
+          "theme": "Bossy R",
+          "words": [
+            {
+              "word": "target",
+              "definition": "A person, object, or place selected as the aim of an attack.",
+              "sentence": "The Death Star's primary target was a small rebel base on a distant moon."
+            },
+            {
+              "word": "carbon",
+              "definition": "A chemical element present in all living things.",
+              "sentence": "Han Solo was famously frozen in a block of carbonite, which contains carbon."
+            },
+            {
+              "word": "border",
+              "definition": "A line separating two political or geographical areas.",
+              "sentence": "The White Witch's army lined up along the border of Aslan's camp."
+            },
+            {
+              "word": "normal",
+              "definition": "Conforming to a standard; usual, typical, or expected.",
+              "sentence": "Nothing in the Battle School was normal, especially the zero-gravity games."
+            },
+            {
+              "word": "harbor",
+              "definition": "A place on the coast where vessels may find shelter.",
+              "sentence": "The Elven ships waited in the harbor, ready to sail into the West."
+            },
+            {
+              "word": "pardon",
+              "definition": "To forgive or excuse someone.",
+              "sentence": "Dumbledore decided to pardon Hagrid for accidentally turning a boy into a pig."
+            },
+            {
+              "word": "bargain",
+              "definition": "An agreement between two or more parties as to what each will do.",
+              "sentence": "Bilbo made a risky bargain with Gollum deep in the goblin caves."
+            },
+            {
+              "word": "absorb",
+              "definition": "To take in or soak up.",
+              "sentence": "A sponge block in Minecraft will instantly absorb massive amounts of water."
+            },
+            {
+              "word": "carton",
+              "definition": "A light box or container.",
+              "sentence": "Ron Weasley somehow managed to eat an entire carton of Bertie Bott's Every Flavor Beans."
+            },
+            {
+              "word": "horror",
+              "definition": "An intense feeling of fear, shock, or disgust.",
+              "sentence": "The clone troopers watched in absolute horror as General Grievous ignited four lightsabers."
+            }
+          ],
+          "lessonScript": "You have encountered the Bossy R! The letter 'R' is like a strict Republic Commander. When it stands next to a vowel, it completely takes over and changes the sound! 'A' and 'R' combine to make the pirate sound 'AR', like a blaster hitting a 'TARGET'. 'O' and 'R' combine to make 'OR', like standing on the 'BORDER' of the Narnian woods. Listen to the commander!",
+          "imagePath": "/assets/images/tier1_sec5.png",
+          "id": "g4_t1_s6",
+          "rule": "The Bossy R Commander takes over the vowel and marches it to a fun pirate 'AR' or powerful 'OR' sound!"
+        },
+        {
+          "name": "Magic E",
+          "theme": "Magic E",
+          "words": [
+            {
+              "word": "escape",
+              "definition": "To break free from confinement or control.",
+              "sentence": "Ender had to carefully plan his escape from the heavily guarded command center."
+            },
+            {
+              "word": "volume",
+              "definition": "The amount of space that a substance or object occupies.",
+              "sentence": "Hermione checked out a massive, dusty volume from the Hogwarts restricted section."
+            },
+            {
+              "word": "excuse",
+              "definition": "To forgive someone for a minor fault.",
+              "sentence": "Obi-Wan refused to excuse Anakin for crashing another perfectly good starfighter."
+            },
+            {
+              "word": "admire",
+              "definition": "To regard with respect or warm approval.",
+              "sentence": "You have to admire how perfectly symmetrical my Minecraft dirt mansion is."
+            },
+            {
+              "word": "globe",
+              "definition": "A spherical representation of the earth.",
+              "sentence": "A glowing hologram globe of the galaxy floated in the center of the Jedi Temple."
+            },
+            {
+              "word": "costume",
+              "definition": "A set of clothes in a style typical of a particular country or historical period.",
+              "sentence": "For the Halloween feast, Dumbledore wore a rather silly bat costume."
+            },
+            {
+              "word": "desire",
+              "definition": "A strong feeling of wanting to have something or wishing for something to happen.",
+              "sentence": "The White Witch's only desire was to rule Narnia in an endless winter."
+            },
+            {
+              "word": "enclose",
+              "definition": "To surround or close off on all sides.",
+              "sentence": "I had to enclose my Minecraft chickens in fences so the foxes wouldn't get them."
+            },
+            {
+              "word": "advice",
+              "definition": "Guidance or recommendations offered with regard to prudent future action.",
+              "sentence": "Gandalf always gives excellent advice, even if it is presented as a confusing riddle."
+            },
+            {
+              "word": "pirate",
+              "definition": "A person who attacks and robs ships at sea.",
+              "sentence": "A space pirate tried to steal the Millennium Falcon, but Han Solo caught him."
+            }
+          ],
+          "lessonScript": "Behold the power of the Magic E! When an 'E' sits silently at the end of a word, it uses the force to jump backward over one consonant and make the first vowel say its own name! It turns a short 'a' into a long 'A', like in 'ESCAPE' or 'PIRATE'. It turns a short 'u' into a long 'U', like the 'VOLUME' of your speaker or a magical 'COSTUME'!",
+          "imagePath": "/assets/images/tier1_sec6.png",
+          "id": "g4_t1_s7",
+          "rule": "Two words join forces! Keep their complex vowel sounds protected and strong when they combine!"
+        }
+      ],
+      "lessonScript": "Welcome, young Padawan. I am the Spelling Jedi Master. To master the language, you must first understand the true power of Vowels. Vowels are the energy core of every word! \n\nSometimes, vowels unite to form a 'Vowel Team'. When two vowels go walking, the first one does the talking! For example, 'O' and 'A' unite to make the long O sound in 'BOAT'. 'E' and 'A' unite in 'TEAM'. But beware the tricky 'O' and 'U' team\u2014they can sound like 'ow' in 'OUT' or 'CLOUD'! \n\nThe most important Jedi rule for teams is 'I' before 'E', except after 'C', like in the word 'RECEIPT'! Or when it sounds like a long 'A' as in 'NEIGHBOR' and 'WEIGH'.\n\nOther times, the letter 'R' acts as a dark lord and commands the vowel to change its sound completely! We call this the 'Bossy R'. It turns 'AR' into the sound of a pirate ('CAR'), 'OR' into a choice ('FOR'), and 'ER', 'IR', and 'UR' all into the exact same sound, like a revving engine: 'HER', 'BIRD', and 'TURN'. \n\nFinally, never forget the 'Magic E'. When an 'E' sits silently at the end of a word, it uses the force to jump back over one consonant and make the first vowel say its own name! It turns 'mad' into 'made', and 'cub' into 'cube'! May the vowels be with you.",
+      "lessonImage": "/assets/images/tier1.png"
+    },
+    {
+      "id": "g4_t2",
+      "name": "Advanced Morphology",
+      "description": "Use word parts to decode and spell complex terms through morphological awareness.",
+      "rule": "Look for Latin roots (like 'struct' meaning build) and Greek roots (like 'bio' meaning life or 'tele' meaning distance).",
+      "sections": [
+        {
+          "name": "Root: STRUCT",
+          "theme": "Root: STRUCT",
+          "words": [
+            {
+              "word": "construct",
+              "definition": "To build or erect something.",
+              "sentence": "It takes hours to construct an intricate redstone contraption in Minecraft."
+            },
+            {
+              "word": "destruct",
+              "definition": "To cause intentional damage or destruction.",
+              "sentence": "The droids activated their auto-destruct sequence before the clones could capture them."
+            },
+            {
+              "word": "structure",
+              "definition": "The arrangement of and relations between the parts or elements of something complex.",
+              "sentence": "The Battle Room structure was a giant sphere floating in outer space."
+            },
+            {
+              "word": "instruct",
+              "definition": "To direct or command someone to do something.",
+              "sentence": "Professor McGonagall had to instruct the first years on how to transfigure a match into a needle."
+            },
+            {
+              "word": "obstruct",
+              "definition": "To block an opening, path, road, or clear vision.",
+              "sentence": "The giant troll decided to obstruct the doorway, preventing Harry from leaving."
+            },
+            {
+              "word": "structural",
+              "definition": "Relating to the arrangement of and relations between the parts or elements of a complex whole.",
+              "sentence": "A Creeper explosion caused massive structural damage to my wooden house."
+            },
+            {
+              "word": "instructor",
+              "definition": "A person who teaches something.",
+              "sentence": "Mazer Rackham was the most difficult and brilliant instructor Ender Wiggin ever had."
+            },
+            {
+              "word": "construction",
+              "definition": "The building of something, typically a large structure.",
+              "sentence": "The construction of the Death Star required millions of droids working around the clock."
+            },
+            {
+              "word": "reconstruct",
+              "definition": "To build or form something again after it has been damaged or destroyed.",
+              "sentence": "After the battle, the dwarves had to reconstruct the main gates of Erebor."
+            },
+            {
+              "word": "destructible",
+              "definition": "Able to be destroyed.",
+              "sentence": "Almost every block in Minecraft is destructible, except for Bedrock."
+            }
+          ],
+          "lessonScript": "Today we construct words like a master builder crafting a lightsaber. Our base is the ancient Latin root 'STRUCT', which means 'to build'. If you put 'con' (together) with 'struct', you 'CONSTRUCT' a building! If you put 'de' (down) with 'struct', you 'DESTRUCT' or destroy it! Watch for this powerful building block hiding inside your vocabulary!",
+          "imagePath": "/assets/images/tier2_sec1.png",
+          "id": "g4_t2_s1",
+          "rule": "You are a master builder! The root 'struct' means to build, which is how words construct their meaning!"
+        },
+        {
+          "name": "Root: PORT",
+          "theme": "Root: PORT",
+          "words": [
+            {
+              "word": "transport",
+              "definition": "To take or carry people or goods from one place to another.",
+              "sentence": "The Republic gunship was sent to transport the injured clone troopers off the battlefield."
+            },
+            {
+              "word": "export",
+              "definition": "To send goods or services to another country for sale.",
+              "sentence": "The elves of Mirkwood export their finest wines down the river in barrels."
+            },
+            {
+              "word": "import",
+              "definition": "To bring goods or services into a country from abroad.",
+              "sentence": "Hogwarts had to import special broomsticks from France for the tournament."
+            },
+            {
+              "word": "portable",
+              "definition": "Able to be easily carried or moved.",
+              "sentence": "A shulker box is essentially a portable treasure chest for your Minecraft inventory."
+            },
+            {
+              "word": "report",
+              "definition": "To give a spoken or written account of something.",
+              "sentence": "Ender had to report to the commander's office after winning the zero-gravity battle."
+            },
+            {
+              "word": "support",
+              "definition": "To bear all or part of the weight of something.",
+              "sentence": "The stone pillars of Narnia's great castle support a massive, beautiful roof."
+            },
+            {
+              "word": "reporter",
+              "definition": "A person who reports news or conducts interviews.",
+              "sentence": "Rita Skeeter is an incredibly annoying reporter who writes lies about Harry Potter."
+            },
+            {
+              "word": "deport",
+              "definition": "To expel a foreigner from a country.",
+              "sentence": "The Ministry of Magic threatened to deport the magical creatures if they misbehaved."
+            },
+            {
+              "word": "portfolio",
+              "definition": "A large, thin, flat case for loose sheets of paper such as drawings or maps.",
+              "sentence": "Hermione carried a massive portfolio full of extra homework she requested for fun."
+            },
+            {
+              "word": "teleport",
+              "definition": "To transport across space and distance instantly.",
+              "sentence": "An Enderman will instantly teleport away if you try to hit it with an arrow."
+            }
+          ],
+          "lessonScript": "Focus your mind on the Latin root 'PORT'. In the ancient tongue, 'port' means 'to carry'. This is why a space transport ship is called a 'TRANSPORT'\u2014it carries things across the galaxy! If you carry things out of a country, you 'EXPORT' them. If an item is easy to carry in your Minecraft inventory, it is 'PORTABLE'. To master these words, you must carry the root in your memory!",
+          "imagePath": "/assets/images/tier2_sec2.png",
+          "id": "g4_t2_s2",
+          "rule": "Keep moving forward! The root 'port' means to carry, helping you transport words wherever they need to go!"
+        },
+        {
+          "name": "Roots: TELE/BIO",
+          "theme": "Roots: TELE/BIO",
+          "words": [
+            {
+              "word": "television",
+              "definition": "A system for transmitting visual images and sound that are reproduced on screens.",
+              "sentence": "Arthur Weasley is fascinated by how a muggle television works without magic."
+            },
+            {
+              "word": "biology",
+              "definition": "The study of living organisms.",
+              "sentence": "If Ender's Game had a biology class, they would definitely study the alien Formics."
+            },
+            {
+              "word": "telescope",
+              "definition": "An optical instrument designed to make distant objects appear nearer.",
+              "sentence": "Harry used a brass telescope to study the stars for his Astronomy class."
+            },
+            {
+              "word": "biography",
+              "definition": "An account of someone's life written by someone else.",
+              "sentence": "A wizard wrote a very thick biography detailing the brave deeds of Albus Dumbledore."
+            },
+            {
+              "word": "telegraph",
+              "definition": "A system for transmitting messages from a distance along a wire.",
+              "sentence": "Before magical owls were common, wizards briefly considered using a telegraph."
+            },
+            {
+              "word": "biologist",
+              "definition": "An expert in or student of the branch of science concerning living organisms.",
+              "sentence": "A Narnian biologist would be very confused by a talking beaver."
+            },
+            {
+              "word": "telepathy",
+              "definition": "The supposed communication of thoughts or ideas by means other than the known senses.",
+              "sentence": "The alien bug queens used telepathy to instantly command millions of workers."
+            },
+            {
+              "word": "biosphere",
+              "definition": "The regions of the surface, atmosphere, and hydrosphere of the earth occupied by living organisms.",
+              "sentence": "The lush biosphere of Endor is entirely covered in giant, ancient trees."
+            },
+            {
+              "word": "telephone",
+              "definition": "A system that converts acoustic vibrations to electrical signals in order to transmit sound.",
+              "sentence": "Mr. Weasley tried to use a muggle telephone and ended up shouting at the dial tone."
+            },
+            {
+              "word": "telecommute",
+              "definition": "To work from home, making use of the internet, email, and the telephone.",
+              "sentence": "I wonder if Jedi Masters are allowed to telecommute to the Jedi Council via hologram."
+            }
+          ],
+          "lessonScript": "We have two powerful Greek roots today: 'TELE' (meaning distance) and 'BIO' (meaning life). If you want to see things at a massive distance, you use a 'TELESCOPE'! If you want to study the life cycle of alien Formic bugs, you study 'BIOLOGY'! Knowing these ancient Greek codes allows you to instantly unlock the meaning of massive, complicated words!",
+          "imagePath": "/assets/images/tier2_sec3.png",
+          "id": "g4_t2_s3",
+          "rule": "Look far and wide! 'Bio' means life and 'tele' means far off\u2014together they help you see the world around you!"
+        },
+        {
+          "name": "Prefix: UN/RE",
+          "theme": "Prefix: UN/RE",
+          "words": [
+            {
+              "word": "unhappy",
+              "definition": "Not happy; sad or miserable.",
+              "sentence": "Gollum was very unhappy when he realized Bilbo Baggins had stolen his precious ring."
+            },
+            {
+              "word": "rebuild",
+              "definition": "To build something again after it has been damaged or destroyed.",
+              "sentence": "After the dragon attacked, the villagers had to rebuild their entire wooden town."
+            },
+            {
+              "word": "unusual",
+              "definition": "Not habitually or commonly occurring or done.",
+              "sentence": "It is highly unusual for a 5-year-old child to be admitted to Battle School."
+            },
+            {
+              "word": "replace",
+              "definition": "To take the place of.",
+              "sentence": "Anakin had to replace his robotic arm after it was destroyed in battle."
+            },
+            {
+              "word": "unable",
+              "definition": "Lacking the skill, means, or opportunity to do something.",
+              "sentence": "Ron was completely unable to turn his pet rat into a water goblet."
+            },
+            {
+              "word": "reverse",
+              "definition": "To move backward.",
+              "sentence": "You have to put your Minecraft minecart in reverse if you hit a dead end."
+            },
+            {
+              "word": "unpack",
+              "definition": "To remove the contents of a suitcase, bag, or package.",
+              "sentence": "Ender had no time to unpack his bags before his first simulation battle began."
+            },
+            {
+              "word": "recall",
+              "definition": "To bring a fact, event, or situation back into one's mind.",
+              "sentence": "Dumbledore used a Pensieve to perfectly recall his oldest memories."
+            },
+            {
+              "word": "unreal",
+              "definition": "So strange as to appear imaginary; not seeming real.",
+              "sentence": "The massive floating islands in the Minecraft End dimension look completely unreal."
+            },
+            {
+              "word": "react",
+              "definition": "To respond or behave in a particular way in response to something.",
+              "sentence": "How do you think a Narnian centaur would react to seeing a modern car?"
+            }
+          ],
+          "lessonScript": "A prefix is a piece of armor attached to the front of a word. Today we use 'UN-' (meaning 'not') and 'RE-' (meaning 'again'). If Gollum is 'UNHAPPY', it means he is NOT happy! If Steve needs to 'REBUILD' his dirt house, it means he must build it AGAIN! Attach these prefixes to change the entire destiny of your words!",
+          "imagePath": "/assets/images/tier2_sec4.png",
+          "id": "g4_t2_s4",
+          "rule": "Make your mark! The Greek root 'graph' means to write or draw, turning your spelling into a work of art!"
+        },
+        {
+          "name": "Prefix: PRE/DIS",
+          "theme": "Prefix: PRE/DIS",
+          "words": [
+            {
+              "word": "preheat",
+              "definition": "To heat something beforehand.",
+              "sentence": "Mrs. Weasley cast a quick spell to preheat the magical oven for dinner."
+            },
+            {
+              "word": "discover",
+              "definition": "To find something unexpectedly or in the course of a search.",
+              "sentence": "If you dig straight down in Minecraft, you might discover a massive pool of lava."
+            },
+            {
+              "word": "prepay",
+              "definition": "To pay for something in advance.",
+              "sentence": "The dwarves offered to prepay Bilbo Baggins for his excellent burglary services."
+            },
+            {
+              "word": "disable",
+              "definition": "To put out of action.",
+              "sentence": "R2-D2 used his mechanical arm to slice the computer and disable the shields."
+            },
+            {
+              "word": "predict",
+              "definition": "To say or estimate that a specified thing will happen in the future.",
+              "sentence": "Professor Trelawney loves to predict that terrible things will happen to Harry Potter."
+            },
+            {
+              "word": "disagree",
+              "definition": "To have or express a different opinion.",
+              "sentence": "Ender and his brother Peter disagree on absolutely everything, especially military strategy."
+            },
+            {
+              "word": "prevent",
+              "definition": "To keep something from happening or arising.",
+              "sentence": "The Jedi order tried to prevent the Clone Wars, but they failed."
+            },
+            {
+              "word": "discard",
+              "definition": "To get rid of someone or something as no longer useful or desirable.",
+              "sentence": "Do not discard your diamond pickaxe just because it is almost broken!"
+            },
+            {
+              "word": "preview",
+              "definition": "An inspection or viewing of something before it is bought or becomes generally known.",
+              "sentence": "The Mirror of Erised offered Harry a heartbreaking preview of the family he never had."
+            },
+            {
+              "word": "display",
+              "definition": "To make a prominent exhibition of something in a place where it can be easily seen.",
+              "sentence": "The White Witch loved to display the stone statues of her frozen enemies."
+            }
+          ],
+          "lessonScript": "More prefixes, Padawan! We are studying 'PRE-' (meaning 'before') and 'DIS-' (meaning 'opposite' or 'not'). If you 'PREHEAT' a magical oven, you heat it BEFORE cooking! If you 'DISAGREE' with a Sith Lord, you have the OPPOSITE opinion. Use these prefixes to twist and shape your base words into new weapons!",
+          "imagePath": "/assets/images/tier2_sec5.png",
+          "id": "g4_t2_s5",
+          "rule": "Get ready to transform! 'Pre-' means it comes before, while 'dis-' means the opposite or not\u2014you've got this!"
+        },
+        {
+          "name": "Suffix: ABLE/FUL",
+          "theme": "Suffix: ABLE/FUL",
+          "words": [
+            {
+              "word": "readable",
+              "definition": "Clear enough to read; legible.",
+              "sentence": "The ancient map of the Lonely Mountain was barely readable without moonlight."
+            },
+            {
+              "word": "joyful",
+              "definition": "Feeling, expressing, or causing great pleasure and happiness.",
+              "sentence": "The ewoks threw a joyful celebration after destroying the shield generator."
+            },
+            {
+              "word": "breakable",
+              "definition": "Capable of breaking or being broken easily.",
+              "sentence": "A Minecraft glass block is incredibly breakable if you don't use a Silk Touch tool."
+            },
+            {
+              "word": "hopeful",
+              "definition": "Feeling or inspiring optimism about a future event.",
+              "sentence": "The Narnians were hopeful that Aslan would return to melt the endless winter."
+            },
+            {
+              "word": "likable",
+              "definition": "Pleasant, friendly, and easy to like.",
+              "sentence": "Hagrid is arguably the most likable teacher at Hogwarts, despite his dangerous pets."
+            },
+            {
+              "word": "helpful",
+              "definition": "Giving or ready to give help.",
+              "sentence": "R2-D2 is an incredibly helpful astromech droid when your ship is on fire."
+            },
+            {
+              "word": "valuable",
+              "definition": "Worth a great deal of money.",
+              "sentence": "A single Ender Pearl is highly valuable when you are trying to find the Stronghold."
+            },
+            {
+              "word": "colorful",
+              "definition": "Having much or varied color; bright.",
+              "sentence": "The Hogwarts Great Hall was decorated with a colorful array of floating candles and banners."
+            },
+            {
+              "word": "honorable",
+              "definition": "Deserving of honor and respect.",
+              "sentence": "Captain Rex is known as the most honorable and brave clone trooper in the army."
+            },
+            {
+              "word": "peaceful",
+              "definition": "Free from disturbance; tranquil.",
+              "sentence": "The Shire is a very peaceful place, provided no wizards show up with fireworks."
+            }
+          ],
+          "lessonScript": "A suffix attaches to the end of a word to change its purpose. The suffix '-ABLE' means you can do it\u2014if a map is 'READABLE', you are able to read it! The suffix '-FUL' means full of something. If an Ewok is 'JOYFUL', he is completely full of joy! Look closely at the end of these words to find the suffix!",
+          "imagePath": "/assets/images/tier2_sec6.png",
+          "id": "g4_t2_s6",
+          "rule": "You can do anything! Use '-able' to say something can be done, and '-ful' to fill your words with greatness!"
+        }
+      ],
+      "lessonScript": "Greetings, Padawan. Today, we construct words just like building a lightsaber. Every word has pieces. We have base roots, which hold the core meaning. Many come from ancient Latin, like 'struct' which means 'build' (as in 'structure'), 'port' which means 'carry' (as in 'transport'), or 'form' which means 'shape'. Other roots come from ancient Greek, like 'bio' meaning 'life' ('biology'), 'tele' meaning 'distance' ('telescope'), and 'graph' meaning 'write' ('autograph')!\n\nOnce you have a base, you can attach pieces to it! Pieces at the beginning are called 'Prefixes'. For example, attach 'un-' (meaning 'not') to 'happy' to forge 'unhappy'. Attach 're-' (meaning 'again') to 'build' to get 'rebuild'. The prefix 'pre-' means 'before', like 'preheat'!\n\nPieces at the end are called 'Suffixes'. They change how a word is used. The suffix '-able' means you can do it ('readable'). The suffix '-ful' means full of something ('joyful'). And the tricky '-tion' sounds like 'shun', but it turns an action into a noun, like 'action' or 'creation'! Use the force to build your vocabulary!",
+      "lessonImage": "/assets/images/tier2.png"
+    },
+    {
+      "id": "g4_t3",
+      "name": "Multi-syllabic Structural Analysis",
+      "description": "Break down long words into manageable units using standard syllable division rules.",
+      "rule": "Clap out the syllables! Break long words between consonants (VC/CV) and listen for the 'lazy' schwa vowel sound, which often sounds like 'uh'.",
+      "sections": [
+        {
+          "name": "VC/CV Pattern",
+          "theme": "VC/CV Pattern",
+          "words": [
+            {
+              "word": "rabbit",
+              "definition": "A burrowing, plant-eating mammal with long ears.",
+              "sentence": "Bilbo Baggins ate a roasted rabbit while traveling with the dwarves."
+            },
+            {
+              "word": "tennis",
+              "definition": "A game in which two or four players strike a ball with rackets over a net.",
+              "sentence": "I wonder if clone troopers play tennis in their free time on Kamino."
+            },
+            {
+              "word": "magnet",
+              "definition": "A piece of iron that has its component atoms so ordered that the material exhibits properties of magnetism.",
+              "sentence": "I used a giant redstone magnet to pull the iron golem out of the pit."
+            },
+            {
+              "word": "sudden",
+              "definition": "Occurring or done quickly and unexpectedly.",
+              "sentence": "There was a sudden explosion in the distance as the creepers spawned."
+            },
+            {
+              "word": "hidden",
+              "definition": "Kept out of sight; concealed.",
+              "sentence": "The wardrobe was completely hidden in an empty room of the professor's house."
+            },
+            {
+              "word": "happen",
+              "definition": "To take place; occur.",
+              "sentence": "What do you think will happen if I throw this Ender Pearl into the lava?"
+            },
+            {
+              "word": "traffic",
+              "definition": "Vehicles moving on a road or public highway.",
+              "sentence": "The flying car traffic on Coruscant is absolutely terrifying for Anakin."
+            },
+            {
+              "word": "gossip",
+              "definition": "Casual conversations or reports about other people.",
+              "sentence": "Rita Skeeter loves to spread nasty gossip about Harry Potter in the newspaper."
+            },
+            {
+              "word": "classic",
+              "definition": "Judged over a period of time to be of the highest quality.",
+              "sentence": "Ender's tactic of hiding behind frozen soldiers became a classic Battle Room strategy."
+            },
+            {
+              "word": "fossil",
+              "definition": "The remains or impression of a prehistoric organism preserved in petrified form.",
+              "sentence": "I dug straight down in Minecraft and found a terrifying dinosaur fossil."
+            }
+          ],
+          "lessonScript": "Giant words are intimidating, but we can slice them into syllables with a lightsaber! First, the VC/CV rule (Vowel-Consonant/Consonant-Vowel). When two consonants stand between two vowels, like clone troopers standing shoulder-to-shoulder, you slice right between them! Think of the word 'RABBIT'. It is spelled R-A-B-B-I-T. You slice between the B's: RAB-BIT! Do the same for 'TEN-NIS' and 'MAG-NET'!",
+          "imagePath": "/assets/images/tier3_sec1.png",
+          "id": "g4_t3_s1",
+          "rule": "Slice your lightsaber directly between two consonants to split the syllable cores! (Example: RAB-BIT)"
+        },
+        {
+          "name": "V/CV Pattern",
+          "theme": "V/CV Pattern",
+          "words": [
+            {
+              "word": "tiger",
+              "definition": "A very large solitary cat with a yellow-orange coat and dark stripes.",
+              "sentence": "I spawned a tiger in Minecraft using a mod, and it immediately ate my pet chicken."
+            },
+            {
+              "word": "paper",
+              "definition": "Material manufactured in thin sheets from the pulp of wood.",
+              "sentence": "Hermione Granger used three entire rolls of parchment paper for her potions essay."
+            },
+            {
+              "word": "silent",
+              "definition": "Not making or accompanied by any sound.",
+              "sentence": "The Endermen are mostly silent until you look them right in the eyes."
+            },
+            {
+              "word": "basic",
+              "definition": "Forming an essential foundation or starting point.",
+              "sentence": "Building a dirt hut is the most basic survival strategy on your first Minecraft night."
+            },
+            {
+              "word": "music",
+              "definition": "Vocal or instrumental sounds combined in such a way as to produce beauty of form, harmony, and expression of emotion.",
+              "sentence": "The music playing in the Mos Eisley Cantina was incredibly catchy and strange."
+            },
+            {
+              "word": "human",
+              "definition": "Relating to or characteristic of people or human beings.",
+              "sentence": "Aslan warned the White Witch that a human child had arrived in Narnia."
+            },
+            {
+              "word": "local",
+              "definition": "Relating to a particular area or neighborhood.",
+              "sentence": "The local villagers of Tatooine were terrified of the Tusken Raiders."
+            },
+            {
+              "word": "total",
+              "definition": "Comprising the whole number or amount.",
+              "sentence": "The total number of battle droids attacking the Republic base was in the millions."
+            },
+            {
+              "word": "pilot",
+              "definition": "A person who operates the flying controls of an aircraft.",
+              "sentence": "Anakin Skywalker is famously known as the best starfighter pilot in the galaxy."
+            },
+            {
+              "word": "focus",
+              "definition": "The center of interest or activity.",
+              "sentence": "Ender Wiggin had to focus entirely on the simulation monitor to defeat the alien queens."
+            }
+          ],
+          "lessonScript": "Next, the V/CV rule (Vowel/Consonant-Vowel), also known as the Tiger rule! When only ONE consonant stands between two vowels, you usually strike your lightsaber BEFORE the consonant. Think of the word 'TIGER'. It is sliced as TI-GER. The first vowel is left open, so it says its long name! Slice words like 'PA-PER' and 'SI-LENT' the exact same way!",
+          "imagePath": "/assets/images/tier3_sec2.png",
+          "id": "g4_t3_s2",
+          "rule": "Strike BEFORE the single consonant to leave the first vowel open, allowing it to shout its powerful long name! (Example: TI-GER)"
+        },
+        {
+          "name": "VC/V Pattern",
+          "theme": "VC/V Pattern",
+          "words": [
+            {
+              "word": "camel",
+              "definition": "A large, long-necked mammal with a humped back.",
+              "sentence": "You can ride a camel through the desert biomes in the latest Minecraft update."
+            },
+            {
+              "word": "level",
+              "definition": "A horizontal plane or line.",
+              "sentence": "In Minecraft, you need to reach level 30 to use the best enchantments on your diamond sword."
+            },
+            {
+              "word": "limit",
+              "definition": "A point or level beyond which something does not or may not extend.",
+              "sentence": "There is absolutely no limit to the amount of food a Hobbit can eat in one day."
+            },
+            {
+              "word": "solid",
+              "definition": "Firm and stable in shape; not liquid or fluid.",
+              "sentence": "The doors of the Chamber of Secrets were made of solid, enchanted stone."
+            },
+            {
+              "word": "model",
+              "definition": "A three-dimensional representation of a person or thing.",
+              "sentence": "Peter Pevensie built a tiny wooden model of the Narnian castle of Cair Paravel."
+            },
+            {
+              "word": "cabin",
+              "definition": "A small shelter or house, made of wood and situated in a wild or remote area.",
+              "sentence": "Hagrid lives in a cozy, slightly dangerous wooden cabin on the edge of the Forbidden Forest."
+            },
+            {
+              "word": "finish",
+              "definition": "To bring a task or activity to an end.",
+              "sentence": "Ender was desperate to finish the final simulation so he could finally go to sleep."
+            },
+            {
+              "word": "robin",
+              "definition": "A small bird with a red breast.",
+              "sentence": "A tiny red robin landed on the wardrobe just before Lucy entered Narnia."
+            },
+            {
+              "word": "modern",
+              "definition": "Relating to the present or recent times.",
+              "sentence": "Mr. Weasley finds modern muggle technology absolutely fascinating and entirely confusing."
+            },
+            {
+              "word": "planet",
+              "definition": "A celestial body moving in an elliptical orbit around a star.",
+              "sentence": "The clone army was deployed to defend a jungle planet located in the Outer Rim."
+            }
+          ],
+          "lessonScript": "Beware! Sometimes the single consonant rule tricks you. This is the VC/V rule, or the Camel rule! If striking before the consonant makes the word sound wrong, you strike AFTER the consonant, trapping the vowel so it makes a short sound! Think of 'CAMEL'. You slice it as CAM-EL! Apply this strike to words like 'CAB-IN' and 'PLAN-ET'!",
+          "imagePath": "/assets/images/tier3_sec3.png",
+          "id": "g4_t3_s3",
+          "rule": "Trap the rogue vowel by slicing AFTER the single consonant, forcing it into a safe, short sound! (Example: CAM-EL)"
+        },
+        {
+          "name": "Schwa A",
+          "theme": "Schwa A",
+          "words": [
+            {
+              "word": "about",
+              "definition": "On the subject of; concerning.",
+              "sentence": "Dumbledore refused to talk about what truly happened to Voldemort that night."
+            },
+            {
+              "word": "across",
+              "definition": "From one side to the other of something with clear limits.",
+              "sentence": "The clone troopers charged across the dusty battlefield, firing their blasters."
+            },
+            {
+              "word": "afraid",
+              "definition": "Feeling fear or anxiety.",
+              "sentence": "Ron Weasley is absolutely terrified and deeply afraid of giant spiders."
+            },
+            {
+              "word": "alone",
+              "definition": "Having no one else present.",
+              "sentence": "Ender Wiggin realized he was entirely alone in the final battle simulation."
+            },
+            {
+              "word": "apart",
+              "definition": "Separated by a distance.",
+              "sentence": "The Creeper explosion blew the front half of my Minecraft house completely apart."
+            },
+            {
+              "word": "around",
+              "definition": "Located or situated on every side.",
+              "sentence": "The Battle Room was spherical, meaning zero-gravity troops could float completely around you."
+            },
+            {
+              "word": "awake",
+              "definition": "Not asleep.",
+              "sentence": "Harry Potter lay perfectly awake in his bed, listening to the sounds of the castle."
+            },
+            {
+              "word": "asleep",
+              "definition": "In a state of sleep.",
+              "sentence": "The dragon Smaug was fast asleep on a massive pile of stolen dwarven gold."
+            },
+            {
+              "word": "agree",
+              "definition": "To have the same opinion about something.",
+              "sentence": "Obi-Wan and Anakin rarely agree on the safest way to land a spaceship."
+            },
+            {
+              "word": "away",
+              "definition": "To or at a distance from a particular place, person, or thing.",
+              "sentence": "The Enderman teleported away the exact second I tried to hit it with a diamond sword."
+            }
+          ],
+          "lessonScript": "You have encountered the dark side of vowels: the Schwa! The Schwa is a lazy vowel sound. When a syllable is not stressed, the vowel gives up and just makes a lazy 'uh' grunt. Today, we hunt the letter 'A' acting as a Schwa. In the word 'ABOUT', the 'A' does not sound like an A; it sounds like 'uh-bout'! Memorize these tricky A-words!",
+          "imagePath": "/assets/images/tier3_sec4.png",
+          "id": "g4_t3_s4",
+          "rule": "The ancient '-LE' portal always captures the consonant right before it to form the final syllable! (Example: TUR-TLE)"
+        },
+        {
+          "name": "Schwa E & I",
+          "theme": "Schwa E & I",
+          "words": [
+            {
+              "word": "pencil",
+              "definition": "An instrument for writing or drawing.",
+              "sentence": "Hermione thinks using a muggle pencil is much less elegant than using a quill."
+            },
+            {
+              "word": "open",
+              "definition": "Allowing access, passage, or a view through an empty space.",
+              "sentence": "You must never open the doors to the Nether without a full set of iron armor."
+            },
+            {
+              "word": "listen",
+              "definition": "To give one's attention to a sound.",
+              "sentence": "Gandalf told the dwarves to listen very carefully to the sounds echoing in the goblin caves."
+            },
+            {
+              "word": "taken",
+              "definition": "To reach for and hold.",
+              "sentence": "The One Ring had been taken from Gollum's cave by a very sneaky little Hobbit."
+            },
+            {
+              "word": "frozen",
+              "definition": "Turned into ice.",
+              "sentence": "The White Witch's castle was completely filled with the frozen statues of her enemies."
+            },
+            {
+              "word": "broken",
+              "definition": "Having been fractured or damaged and no longer in one piece.",
+              "sentence": "Anakin's lightsaber was badly broken after the duel in the droid factory."
+            },
+            {
+              "word": "spoken",
+              "definition": "Uttered in words.",
+              "sentence": "The ancient magic of Narnia was spoken into existence by Aslan the lion."
+            },
+            {
+              "word": "given",
+              "definition": "To present voluntarily and without expecting compensation.",
+              "sentence": "Harry was given a mysterious invisibility cloak for his very first Christmas at Hogwarts."
+            },
+            {
+              "word": "evil",
+              "definition": "Profoundly immoral and malevolent.",
+              "sentence": "The dark wizard Lord Voldemort is the most evil villain in the magical world."
+            },
+            {
+              "word": "fossil",
+              "definition": "The remains or impression of a prehistoric organism preserved in petrified form.",
+              "sentence": "I dug straight down in Minecraft and found a terrifying dinosaur fossil."
+            }
+          ],
+          "lessonScript": "The lazy Schwa returns! This time, it has infected the letters 'E' and 'I'. In the word 'PENCIL', the 'I' does not make an 'i' sound; it makes a lazy 'uh' sound: 'pen-suhl'. In 'LISTEN', the 'E' becomes a Schwa: 'lis-uhn'. Do not let the Schwa trick you into spelling these words with a 'U'!",
+          "imagePath": "/assets/images/tier3_sec5.png",
+          "id": "g4_t3_s5",
+          "rule": "Defeat the lazy Schwa vowel that gives up its true power in unstressed syllables to make a dark 'uh' grunt!"
+        },
+        {
+          "name": "Schwa O & U",
+          "theme": "Schwa O & U",
+          "words": [
+            {
+              "word": "custom",
+              "definition": "A traditional and widely accepted way of behaving or doing something specific to a particular society.",
+              "sentence": "It is a Hobbit custom to eat at least six meals every single day without fail."
+            },
+            {
+              "word": "button",
+              "definition": "A small disk or knob sewn onto a garment, or pushed to operate a machine.",
+              "sentence": "I accidentally pressed the redstone button and blew up my entire Minecraft base."
+            },
+            {
+              "word": "bottom",
+              "definition": "The lowest point or part of something.",
+              "sentence": "At the very bottom of the Minecraft world, you will find unbreakable bedrock."
+            },
+            {
+              "word": "cotton",
+              "definition": "A soft white fibrous substance that surrounds the seeds of a tropical plant.",
+              "sentence": "Dobby the house elf wore a dirty pillowcase made of old, worn-out cotton."
+            },
+            {
+              "word": "ribbon",
+              "definition": "A long, narrow strip of fabric.",
+              "sentence": "Hermione tied her massive spellbook together with a thick, purple velvet ribbon."
+            },
+            {
+              "word": "dragon",
+              "definition": "A mythical monster like a giant reptile.",
+              "sentence": "Smaug is a massive, terrifying, fire-breathing dragon who stole the Lonely Mountain."
+            },
+            {
+              "word": "wagon",
+              "definition": "A vehicle used for transporting goods or another specified purpose.",
+              "sentence": "Gandalf arrived in the Shire driving a wooden wagon loaded with spectacular fireworks."
+            },
+            {
+              "word": "upon",
+              "definition": "More formal term for on.",
+              "sentence": "Once upon a time, four children climbed into a wardrobe and discovered a magical land."
+            },
+            {
+              "word": "circus",
+              "definition": "A traveling company of acrobats, clowns, and other entertainers.",
+              "sentence": "Fred and George Weasley turned the Hogwarts Great Hall into a chaotic magical circus."
+            },
+            {
+              "word": "campus",
+              "definition": "The grounds and buildings of a university or college.",
+              "sentence": "The Hogwarts campus is a massive Scottish castle surrounded by a dark, forbidden forest."
+            }
+          ],
+          "lessonScript": "The final battle with the Schwa! The letters 'O' and 'U' are now making the lazy 'uh' grunt. Think of the word 'CUSTOM'. The 'O' sounds like 'cus-tuhm'! Or the word 'CIRCUS', where the 'U' sounds like 'cir-kuhs'. You must rely entirely on your memory to defeat the Schwa in these tricky words!",
+          "imagePath": "/assets/images/tier3_sec6.png",
+          "id": "g4_t3_s6",
+          "rule": "Fuse two complete base words into a mighty mega-word, then slice exactly where the welding seam meets!"
+        }
+      ],
+      "lessonScript": "Focus your mind, young Padawan! Long words can seem intimidating, like a towering Sith Lord. But we use our Jedi strike to break them into smaller, manageable pieces called syllables! Every single syllable MUST have at least one vowel sound. \n\nClap out the syllables! To know where to slice with your lightsaber, look at the consonants. If you see two consonants between two vowels (VC/CV), strike right between them! For example, 'RABBIT' is sliced into 'RAB-BIT'. If there is only one consonant between vowels, usually you strike before it, like 'TI-GER'. \n\nBut you must beware the ultimate dark side trick: the 'lazy' Schwa vowel sound! When a syllable is unstressed, the vowel gets lazy and loses its true sound. Instead, it just makes a short, grunt sound like 'uh'. For example, the 'A' in 'about' sounds like 'uh-bout'. The 'I' in 'pencil' sounds like 'pen-suhl'. The 'O' in 'custom' sounds like 'cus-tuhm'. You have to memorize which vowel is hiding behind the Schwa! Breaking down the enemy makes even the biggest words easy to conquer!",
+      "lessonImage": "/assets/images/tier3.png"
+    },
+    {
+      "id": "g4_t4",
+      "name": "Homophones & Confusing Words",
+      "description": "Distinguish between commonly confused words through context and specific orthographic patterns.",
+      "rule": "Homophones sound the same but are spelled differently and mean different things. Use the meaning of the sentence to choose the right spelling.",
+      "sections": [
+        {
+          "name": "Homophones 1",
+          "theme": "Homophones 1",
+          "words": [
+            {
+              "word": "their",
+              "definition": "Belonging to or associated with the people or things previously mentioned.",
+              "sentence": "The clone troopers polished their white armor before the massive battle on Geonosis."
+            },
+            {
+              "word": "there",
+              "definition": "In, at, or to that place or position.",
+              "sentence": "Look over there! An Enderman just stole a dirt block from my house!"
+            },
+            {
+              "word": "your",
+              "definition": "Belonging to or associated with the person or people that the speaker is addressing.",
+              "sentence": "Do not forget your diamond sword when we travel into the treacherous Nether."
+            },
+            {
+              "word": "youre",
+              "definition": "Contraction of you are.",
+              "sentence": "If you think you can defeat a Sith Lord, you're absolutely out of your mind."
+            },
+            {
+              "word": "its",
+              "definition": "Belonging to or associated with a thing previously mentioned.",
+              "sentence": "The Millennium Falcon fired its laser cannons directly at the Imperial Star Destroyer."
+            },
+            {
+              "word": "too",
+              "definition": "To a higher degree than is desirable, permissible, or possible; excessively.",
+              "sentence": "Ron ate way too many chocolate frogs and felt incredibly sick during potions class."
+            },
+            {
+              "word": "two",
+              "definition": "Equivalent to the sum of one and one.",
+              "sentence": "Anakin Skywalker bravely dueled two Sith Lords at the exact same time."
+            },
+            {
+              "word": "knot",
+              "definition": "A fastening made by tying a piece of string, rope, or something similar.",
+              "sentence": "Hagrid tied a massive knot in the thick rope to keep the Hippogriff safely secured."
+            },
+            {
+              "word": "not",
+              "definition": "Used with an auxiliary verb or 'be' to form the negative.",
+              "sentence": "Ender Wiggin is not a typical child; he is a highly trained military tactical genius."
+            },
+            {
+              "word": "right",
+              "definition": "Morally good, justified, or acceptable.",
+              "sentence": "Hermione is absolutely obsessed with always having the right answer in class."
+            }
+          ],
+          "lessonScript": "Welcome to the cloning facility! Homophones are words that sound exactly the same, but are spelled differently and mean different things. Today we study 'THEIR', 'THERE', and 'YOU'RE'. 'THEIR' implies ownership ('Their starship'). 'THERE' is a location ('Look over there!'). And 'YOU'RE' is a contraction of 'you are' ('You're a wizard!'). Use the sentence to choose the correct clone!",
+          "imagePath": "/assets/images/tier4_sec1.png",
+          "id": "g4_t4_s1",
+          "rule": "Distinguish possession from contraction or location: use 'here' clues for place (there) and 'is/are' replacement checks for apostrophes."
+        },
+        {
+          "name": "Homophones 2",
+          "theme": "Homophones 2",
+          "words": [
+            {
+              "word": "write",
+              "definition": "To mark on a surface with a pen, pencil, or similar implement.",
+              "sentence": "Harry had to write 'I must not tell lies' repeatedly with a cursed magical quill."
+            },
+            {
+              "word": "knew",
+              "definition": "To be aware of through observation, inquiry, or information.",
+              "sentence": "Gandalf knew exactly where the secret door to the Lonely Mountain was hidden."
+            },
+            {
+              "word": "new",
+              "definition": "Not existing before; made, introduced, or discovered recently.",
+              "sentence": "I just crafted a brand new diamond pickaxe to mine this obsidian block."
+            },
+            {
+              "word": "hear",
+              "definition": "To perceive with the ear the sound made by someone or something.",
+              "sentence": "Ender could hear the enemy fleet approaching through the silence of the simulation."
+            },
+            {
+              "word": "here",
+              "definition": "In, at, or to this place or position.",
+              "sentence": "Come over here and look at this massive pile of dwarven gold!"
+            },
+            {
+              "word": "hole",
+              "definition": "A hollow place in a solid body or surface.",
+              "sentence": "In a hole in the ground there lived a hobbit."
+            },
+            {
+              "word": "whole",
+              "definition": "All of; entire.",
+              "sentence": "Ron managed to stuff a whole chicken leg into his mouth at the Welcome Feast."
+            },
+            {
+              "word": "peace",
+              "definition": "Freedom from disturbance; tranquility.",
+              "sentence": "The Jedi order acts as the guardians of peace and justice in the Galactic Republic."
+            },
+            {
+              "word": "piece",
+              "definition": "A portion of an object or of material.",
+              "sentence": "A tiny piece of the broken lightsaber crystal fell to the factory floor."
+            },
+            {
+              "word": "bare",
+              "definition": "Not clothed or covered.",
+              "sentence": "The trees in Narnia were completely bare during the White Witch's endless winter."
+            }
+          ],
+          "lessonScript": "More clones approach! Never confuse 'WRITE' (to put words on paper with a quill) with 'RIGHT' (the correct answer). Or 'KNEW' (past tense of knowing a spell) with 'NEW' (a brand new wand). If you are looking for the Golden Snitch 'HERE', do not misspell it as 'HEAR' (with your ears)!",
+          "imagePath": "/assets/images/tier4_sec2.png",
+          "id": "g4_t4_s2",
+          "rule": "Apply sensory and quantity cues: remember that you 'hear' with your 'ear', and 'whole' implies the entire item."
+        },
+        {
+          "name": "Homophones 3",
+          "theme": "Homophones 3",
+          "words": [
+            {
+              "word": "bear",
+              "definition": "A large, heavy, mammal that walks on the soles of its feet.",
+              "sentence": "Beorn is a massive skin-changer who can transform into a giant, ferocious bear."
+            },
+            {
+              "word": "brake",
+              "definition": "A device for slowing or stopping a moving vehicle.",
+              "sentence": "The Hogwarts Express slammed on the brake as the terrifying Dementors boarded the train."
+            },
+            {
+              "word": "break",
+              "definition": "Separate or cause to separate into pieces as a result of a blow, shock, or strain.",
+              "sentence": "You must use a wooden pickaxe to break stone, otherwise it drops nothing!"
+            },
+            {
+              "word": "buy",
+              "definition": "Obtain in exchange for payment.",
+              "sentence": "Harry used his gold galleons to buy every single piece of candy on the trolley."
+            },
+            {
+              "word": "by",
+              "definition": "Identifying the agent performing an action.",
+              "sentence": "The rebel base was completely destroyed by the massive laser beam from the Death Star."
+            },
+            {
+              "word": "cell",
+              "definition": "A small room in which a prisoner is locked up.",
+              "sentence": "Princess Leia was locked in a dark cell deep inside the terrifying Death Star."
+            },
+            {
+              "word": "sell",
+              "definition": "Give or hand over in exchange for money.",
+              "sentence": "I tried to sell thirty stacks of dirt blocks to a Minecraft villager, but he refused."
+            },
+            {
+              "word": "cent",
+              "definition": "A monetary unit of the US, Canada, and various other countries, equal to one hundredth of a dollar.",
+              "sentence": "The goblin banker sneered, stating that a single galleon is worth far more than a cent."
+            },
+            {
+              "word": "scent",
+              "definition": "A distinctive-smelling odor.",
+              "sentence": "The fearsome wolf Fenris Ulf caught the scent of the Pevensie children in the snow."
+            },
+            {
+              "word": "sent",
+              "definition": "Arranged for something to go or be taken to another place.",
+              "sentence": "The Jedi Council sent Obi-Wan Kenobi to track down the mysterious bounty hunter."
+            }
+          ],
+          "lessonScript": "The homophone battle continues! Do not feed a wild 'BEAR' with your 'BARE' hands! If you need to stop the Hogwarts Express, you pull the 'BRAKE', you do not 'BREAK' the train! And you use your galleons to 'BUY' chocolate frogs, you do not stand 'BY' the cart! Choose your spelling carefully!",
+          "imagePath": "/assets/images/tier4_sec3.png",
+          "id": "g4_t4_s3",
+          "rule": "Differentiate commerce and sensory actions: isolate purchase verbs ('buy') and monetary units ('cent') from prepositions."
+        },
+        {
+          "name": "Homophones 4",
+          "theme": "Homophones 4",
+          "words": [
+            {
+              "word": "dear",
+              "definition": "Regarded with deep affection.",
+              "sentence": "My dear Frodo, rings of power are not things to be toyed with lightly."
+            },
+            {
+              "word": "deer",
+              "definition": "A hoofed grazing or browsing animal.",
+              "sentence": "A beautiful, silver magical deer Patronus galloped across the dark lake."
+            },
+            {
+              "word": "die",
+              "definition": "To stop living.",
+              "sentence": "If your health bar drops to zero in Minecraft, your character will die and drop items."
+            },
+            {
+              "word": "dye",
+              "definition": "A natural or synthetic substance used to add a color to or change the color of something.",
+              "sentence": "I used blue lapis lazuli dye to color my Minecraft bed a bright, vibrant blue."
+            },
+            {
+              "word": "fair",
+              "definition": "In accordance with the rules or standards; legitimate.",
+              "sentence": "Ender Wiggin quickly realized that the zero-gravity battle simulations were completely not fair."
+            },
+            {
+              "word": "fare",
+              "definition": "The money a passenger on public transportation has to pay.",
+              "sentence": "Harry paid the fare to ride the chaotic, violently bouncing Knight Bus through London."
+            },
+            {
+              "word": "flour",
+              "definition": "A powder obtained by grinding grain.",
+              "sentence": "Mrs. Weasley accidentally spilled a massive bag of baking flour all over Ron's head."
+            },
+            {
+              "word": "flower",
+              "definition": "The seed-bearing part of a plant.",
+              "sentence": "Neville Longbottom proudly showed off a very rare, slightly terrifying magical flower."
+            },
+            {
+              "word": "hair",
+              "definition": "Any of the fine threadlike strands growing from the skin.",
+              "sentence": "Hermione's hair became incredibly bushy and chaotic after the potion exploded in her face."
+            },
+            {
+              "word": "hare",
+              "definition": "A fast-running, long-eared mammal that resembles a large rabbit.",
+              "sentence": "A swift, snowy Narnian hare sprinted across the frozen lake to warn the beavers."
+            }
+          ],
+          "lessonScript": "You must use context clues! A 'DEER' is a magical creature, but 'DEAR' is how you start a letter. You use blue 'DYE' to color your Minecraft bed, but if you fall in lava, you 'DIE'. You use 'FLOUR' to bake a cake for Hagrid, but a 'FLOWER' grows in Professor Sprout's greenhouse!",
+          "imagePath": "/assets/images/tier4_sec4.png",
+          "id": "g4_t4_s4",
+          "rule": "Resolve states of nature and behavior: separate the woodland animal ('deer') and coloring ('dye') from affections ('dear')."
+        },
+        {
+          "name": "Homophones 5",
+          "theme": "Homophones 5",
+          "words": [
+            {
+              "word": "heal",
+              "definition": "Cause a wound, injury, or person to become sound or healthy again.",
+              "sentence": "Lucy used her magical cordial to heal her brother Edmund after the great battle."
+            },
+            {
+              "word": "heel",
+              "definition": "The back part of the foot below the ankle.",
+              "sentence": "Anakin tripped over the heel of his boot while running from the terrifying droidekas."
+            },
+            {
+              "word": "hour",
+              "definition": "A period of time equal to a twenty-fourth part of a day.",
+              "sentence": "Ender spent a full hour practicing his laser shots in the dark, zero-gravity Battle Room."
+            },
+            {
+              "word": "our",
+              "definition": "Belonging to or associated with the speaker and one or more other people.",
+              "sentence": "Our Minecraft server was completely ruined when someone spawned a massive Wither boss."
+            },
+            {
+              "word": "knight",
+              "definition": "A man who served his sovereign or lord as a mounted soldier in armor.",
+              "sentence": "Harry commanded a massive, stone wizard chess knight to attack the opposing queen."
+            },
+            {
+              "word": "night",
+              "definition": "The period of darkness in each twenty-four hours.",
+              "sentence": "You should never go exploring in the Minecraft overworld at night without a sword."
+            },
+            {
+              "word": "mail",
+              "definition": "Letters and packages conveyed by the postal system.",
+              "sentence": "Harry received his mail via a massive flock of snowy owls flying into the Great Hall."
+            },
+            {
+              "word": "male",
+              "definition": "Of or denoting the sex that produces small, typically motile gametes.",
+              "sentence": "A male lion, specifically Aslan, is the true and rightful ruler of all Narnia."
+            },
+            {
+              "word": "meat",
+              "definition": "The flesh of an animal as food.",
+              "sentence": "The hungry dwarves devoured an entire table full of roasted meat and fresh bread."
+            },
+            {
+              "word": "meet",
+              "definition": "Come into the presence or company of someone by chance or arrangement.",
+              "sentence": "Luke Skywalker traveled to the swamp planet Dagobah to meet the legendary Jedi Master Yoda."
+            }
+          ],
+          "lessonScript": "More deceptive pairs! You use a healing potion to 'HEAL' your wounds, not your 'HEEL' (the bottom of your foot). You send an owl to deliver your 'MAIL', not a 'MALE' wizard. You eat roasted 'MEAT' in the Great Hall, but you 'MEET' your friends in the common room!",
+          "imagePath": "/assets/images/tier4_sec5.png",
+          "id": "g4_t4_s5",
+          "rule": "Differentiate organic growth and physical form: isolate culinary products ('flour') and parts of the foot ('heel') from blooms."
+        },
+        {
+          "name": "Homophones 6",
+          "theme": "Homophones 6",
+          "words": [
+            {
+              "word": "pair",
+              "definition": "A set of two things used together or regarded as a unit.",
+              "sentence": "George Weasley gave his brother a pair of Extendable Ears to spy on the meeting."
+            },
+            {
+              "word": "pear",
+              "definition": "A yellowish- or brownish-green edible fruit.",
+              "sentence": "I ate a shiny golden pear to restore my hunger bar in my Minecraft survival world."
+            },
+            {
+              "word": "plain",
+              "definition": "Not decorated or elaborate; simple or ordinary in character.",
+              "sentence": "Bilbo Baggins considered himself a very plain, ordinary hobbit who hated exciting adventures."
+            },
+            {
+              "word": "plane",
+              "definition": "A flat surface on which a straight line joining any two points on it would wholly lie.",
+              "sentence": "The Formic fleet was arranged on a perfect geometric plane in the deep black of space."
+            },
+            {
+              "word": "sail",
+              "definition": "A piece of material extended on a mast to catch the wind and propel a boat.",
+              "sentence": "The majestic Elven ships raised their white sail to travel across the great sea."
+            },
+            {
+              "word": "sale",
+              "definition": "The exchange of a commodity for money.",
+              "sentence": "The Jawa junk dealers held a massive sale on slightly damaged, stolen astromech droids."
+            },
+            {
+              "word": "sea",
+              "definition": "The expanse of salt water that covers most of the earth's surface.",
+              "sentence": "The Dawn Treader was a beautiful Narnian ship that sailed across the vast eastern sea."
+            },
+            {
+              "word": "see",
+              "definition": "Perceive with the eyes; discern visually.",
+              "sentence": "If you look closely into the dark forest, you might see the glowing purple eyes of an Enderman."
+            },
+            {
+              "word": "stair",
+              "definition": "A set of steps leading from one floor of a building to another.",
+              "sentence": "Harry almost tripped when the magical Hogwarts stair suddenly changed direction beneath his feet."
+            },
+            {
+              "word": "stare",
+              "definition": "Look fixedly or vacantly at someone or something with one's eyes wide open.",
+              "sentence": "Do not stare directly at an Enderman, or it will immediately become aggressively hostile."
+            }
+          ],
+          "lessonScript": "The final homophone test! You eat a green 'PEAR', but you wear a 'PAIR' of socks. You fly on a magical 'PLANE', but a blank sheet of parchment is 'PLAIN'. You climb the moving 'STAIR', but it is rude to 'STARE' at an Enderman! Master these pairs, and you will never be fooled again!",
+          "imagePath": "/assets/images/tier4_sec6.png",
+          "id": "g4_t4_s6",
+          "rule": "Master silent letters and social categories: separate units of time ('hour') and armored warriors ('knight') from group ownership ('our')."
+        }
+      ],
+      "lessonScript": "Beware, Padawan! You have entered the tricky and deceptive realm of Homophones. These are words that sound exactly the same, like identical clone troopers, but they are spelled differently and have completely different destinies! \n\nThe most famous clones are 'THERE', 'THEIR', and 'THEY'RE'. 'THERE' has the word 'here' inside it, so it means a location ('Go over there'). 'THEIR' implies ownership ('Their starship is fast'). And 'THEY'RE' is just a contraction for 'they are' ('They're going to win'). \n\nWatch out for 'TO', 'TOO', and 'TWO'. 'TO' is a direction ('Go to the ship'). 'TOO' with two O's means 'also' or 'excess' ('Me too!' or 'Too much'). 'TWO' is the number 2!\n\nAnd never confuse 'YOUR' (ownership, like 'your lightsaber') with 'YOU'RE' ('you are'). Or 'ITS' (ownership) with 'IT'S' ('it is'). You must use the context clues in the sentence to uncover the truth and choose the right spelling!",
+      "lessonImage": "/assets/images/tier4.png"
+    },
+    {
+      "id": "g4_t5",
+      "name": "Academic Vocabulary",
+      "description": "Master the spelling of subject-specific terminology critical for 4th and 5th-grade proficiency.",
+      "rule": "These are specialized words used in Science, Math, and History. Memorizing them will help you read and write better in all subjects.",
+      "sections": [
+        {
+          "name": "Biology",
+          "theme": "Biology",
+          "words": [
+            {
+              "word": "photosynthesis",
+              "definition": "The process by which green plants and some other organisms use sunlight to synthesize foods from carbon dioxide and water.",
+              "sentence": "Minecraft trees somehow grow without needing photosynthesis or sunlight, which makes absolutely no scientific sense."
+            },
+            {
+              "word": "ecosystem",
+              "definition": "A biological community of interacting organisms and their physical environment.",
+              "sentence": "The lush forest moon of Endor has a beautifully balanced, vibrant ecosystem filled with ewoks and giant trees."
+            },
+            {
+              "word": "organism",
+              "definition": "An individual animal, plant, or single-celled life form.",
+              "sentence": "The alien Formics in Ender's Game were an incredibly intelligent, insect-like organism that communicated telepathically."
+            },
+            {
+              "word": "habitat",
+              "definition": "The natural home or environment of an animal, plant, or other organism.",
+              "sentence": "The deep, dark caves of the Misty Mountains are the perfect natural habitat for a creature like Gollum."
+            },
+            {
+              "word": "species",
+              "definition": "A group of living organisms consisting of similar individuals capable of exchanging genes or interbreeding.",
+              "sentence": "The centaurs of the Forbidden Forest are a highly intelligent magical species that despise humans."
+            },
+            {
+              "word": "predator",
+              "definition": "An animal that naturally preys on others.",
+              "sentence": "A Minecraft zombie is a slow, brainless predator that will chase you endlessly through the dark."
+            },
+            {
+              "word": "prey",
+              "definition": "An animal that is hunted and killed by another for food.",
+              "sentence": "The terrified battle droids quickly became the prey of the fierce, lightsaber-wielding Jedi Knights."
+            },
+            {
+              "word": "environment",
+              "definition": "The surroundings or conditions in which a person, animal, or plant lives or operates.",
+              "sentence": "The zero-gravity environment of the Battle Room made traditional military strategy completely useless."
+            },
+            {
+              "word": "adaptation",
+              "definition": "A change or the process of change by which an organism or species becomes better suited to its environment.",
+              "sentence": "A thick coat of white fur is an essential adaptation for survival in the White Witch's frozen Narnia."
+            },
+            {
+              "word": "survival",
+              "definition": "The state or fact of continuing to live or exist, typically in spite of an accident, ordeal, or difficult circumstances.",
+              "sentence": "Harry Potter's survival against the killing curse made him famous throughout the entire wizarding world."
+            }
+          ],
+          "lessonScript": "Welcome to the Jedi Science Archives! To understand the universe, you must know Biology vocabulary. 'PHOTOSYNTHESIS' is the brilliant process plants use to turn sunlight into pure energy! An 'ECOSYSTEM' is a massive, balanced web of life, like the forest moon of Endor. Master these terms to unlock the secrets of living organisms!",
+          "imagePath": "/assets/images/tier5_sec1.png",
+          "id": "g4_t5_s1",
+          "rule": "Greek roots dominate: 'photo-' (light) and 'eco-' (environment) form compounds, and 'y' acts as short /i/ in the middle."
+        },
+        {
+          "name": "Earth Science",
+          "theme": "Earth Science",
+          "words": [
+            {
+              "word": "atmosphere",
+              "definition": "The envelope of gases surrounding the earth or another planet.",
+              "sentence": "The Republic star cruiser violently burned as it crashed through the atmosphere of Coruscant."
+            },
+            {
+              "word": "climate",
+              "definition": "The weather conditions prevailing in an area in general or over a long period.",
+              "sentence": "The climate on the desert planet of Tatooine is incredibly hot, dry, and miserable for a droid."
+            },
+            {
+              "word": "weather",
+              "definition": "The state of the atmosphere at a place and time as regards heat, dryness, sunshine, wind, rain, etc.",
+              "sentence": "Professor Flitwick used a simple charm to instantly change the rainy weather inside the castle."
+            },
+            {
+              "word": "gravity",
+              "definition": "The force that attracts a body toward the center of the earth, or toward any other physical body having mass.",
+              "sentence": "Ender Wiggin learned to push off the walls perfectly when there was absolutely zero gravity in the room."
+            },
+            {
+              "word": "tectonic",
+              "definition": "Relating to the structure of the earth's crust and the large-scale processes which take place within it.",
+              "sentence": "A massive tectonic shift beneath the ocean caused a terrifying tidal wave to strike Narnia."
+            },
+            {
+              "word": "erosion",
+              "definition": "The process of eroding or being eroded by wind, water, or other natural agents.",
+              "sentence": "Thousands of years of wind erosion carved the massive canyons where the pod races are held."
+            },
+            {
+              "word": "mineral",
+              "definition": "A solid inorganic substance of natural occurrence.",
+              "sentence": "Redstone is a highly magical, glowing mineral that can be mined deep underground in Minecraft."
+            },
+            {
+              "word": "galaxy",
+              "definition": "A system of millions or billions of stars, together with gas and dust, held together by gravitational attraction.",
+              "sentence": "The Jedi Knights swore an oath to protect the entire galaxy from the dark side of the force."
+            },
+            {
+              "word": "planet",
+              "definition": "A celestial body moving in an elliptical orbit around a star.",
+              "sentence": "Ender was shocked to discover that the Formic alien planet was mostly covered in barren rock."
+            },
+            {
+              "word": "orbit",
+              "definition": "The curved path of a celestial object or spacecraft around a star, planet, or moon.",
+              "sentence": "The massive, terrifying Death Star slowly moved into a geosynchronous orbit above the rebel base."
+            }
+          ],
+          "lessonScript": "Now we study Earth Science. The 'ATMOSPHERE' is the vital shield of gas protecting a planet from the cold vacuum of space. 'GRAVITY' is the invisible force pulling you back to the ground when you jump in Minecraft. 'TECTONIC' plates shift beneath our feet to build mountains or cause earthquakes! Study the planets to become a master navigator!",
+          "imagePath": "/assets/images/tier5_sec2.png",
+          "id": "g4_t5_s2",
+          "rule": "Focus on the Greek digraph 'ph' creating the /f/ sound in atmospheric terms, and note terminal 'y' acting as a long /e/."
+        },
+        {
+          "name": "Math Operations",
+          "theme": "Math Operations",
+          "words": [
+            {
+              "word": "equation",
+              "definition": "A statement that the values of two mathematical expressions are equal.",
+              "sentence": "Hermione solved the complex arithmancy equation in her head before the teacher even finished writing it."
+            },
+            {
+              "word": "fraction",
+              "definition": "A numerical quantity that is not a whole number.",
+              "sentence": "Bilbo Baggins ate a massive fraction of the cake before the dwarves even arrived at his door."
+            },
+            {
+              "word": "decimal",
+              "definition": "Relating to or denoting a system of numbers and arithmetic based on the number ten, tenth parts, and powers of ten.",
+              "sentence": "A simple error in a single decimal point caused the hyperdrive engine to completely malfunction."
+            },
+            {
+              "word": "multiply",
+              "definition": "Obtain from (a number) another that contains the first number a specified number of times.",
+              "sentence": "If you leave two Minecraft chickens alone in a pen with seeds, they will rapidly multiply."
+            },
+            {
+              "word": "divide",
+              "definition": "Separate or be separated into parts.",
+              "sentence": "The clone commander ordered his troops to divide into two squads and flank the enemy base."
+            },
+            {
+              "word": "subtract",
+              "definition": "Take away (a number or amount) from another to calculate the difference.",
+              "sentence": "If you subtract the amount of candy Ron ate, there is absolutely none left for Harry."
+            },
+            {
+              "word": "addition",
+              "definition": "The action or process of adding something to something else.",
+              "sentence": "The brand new Battle Room simulation was a terrifying addition to Ender's intense daily training."
+            },
+            {
+              "word": "percentage",
+              "definition": "A rate, number, or amount in each hundred.",
+              "sentence": "There is a very low percentage chance that a Creeper will drop a music disc when killed."
+            },
+            {
+              "word": "ratio",
+              "definition": "The quantitative relation between two amounts showing the number of times one value contains or is contained within the other.",
+              "sentence": "The ratio of battle droids to clone troopers was easily one hundred to one on the battlefield."
+            },
+            {
+              "word": "product",
+              "definition": "A quantity obtained by multiplying quantities together.",
+              "sentence": "The Weasley twins' newest magical prank product was a massive, chaotic success in the Gryffindor common room."
+            }
+          ],
+          "lessonScript": "Mathematics is the universal language of logic! An 'EQUATION' demands absolute balance between two sides. A 'FRACTION' is just a small piece of a whole number, like eating one slice of Bilbo Baggins' cake. To 'MULTIPLY' is to rapidly increase, like cloning an army of droids. Precision is the key to mastering math!",
+          "imagePath": "/assets/images/tier5_sec3.png",
+          "id": "g4_t5_s3",
+          "rule": "Built on Latin roots such as 'fract' (broken), using common '-tion' for /shun/ sound and soft 'c' before 'i'."
+        },
+        {
+          "name": "Geometry",
+          "theme": "Geometry",
+          "words": [
+            {
+              "word": "polygon",
+              "definition": "A plane figure with at least three straight sides and angles, and typically five or more.",
+              "sentence": "Almost every single object in the Minecraft universe is made up of a square or rectangular polygon."
+            },
+            {
+              "word": "triangle",
+              "definition": "A plane figure with three straight sides and three angles.",
+              "sentence": "The legendary Deathly Hallows symbol features a vertical line and a circle perfectly enclosed inside a triangle."
+            },
+            {
+              "word": "rectangle",
+              "definition": "A plane figure with four straight sides and four right angles, especially one with unequal adjacent sides.",
+              "sentence": "The door to the magical Narnian wardrobe was shaped like a tall, narrow, intricately carved wooden rectangle."
+            },
+            {
+              "word": "perimeter",
+              "definition": "The continuous line forming the boundary of a closed geometric figure.",
+              "sentence": "General Grievous ordered the battle droids to secure the outer perimeter of the Republic base."
+            },
+            {
+              "word": "area",
+              "definition": "The extent or measurement of a surface or piece of land.",
+              "sentence": "The total surface area of the Battle Room was massive enough to fit three starships inside."
+            },
+            {
+              "word": "volume",
+              "definition": "The amount of space that a substance or object occupies, or that is enclosed within a container.",
+              "sentence": "Hagrid wildly underestimated the massive volume of water a full-grown blast-ended skrewt would drink in a day."
+            },
+            {
+              "word": "parallel",
+              "definition": "Side by side and having the same distance continuously between them.",
+              "sentence": "The two glowing lightsabers clashed in a perfect, parallel block that sent sparks flying everywhere."
+            },
+            {
+              "word": "intersect",
+              "definition": "Divide (something) by passing or lying across it.",
+              "sentence": "Do not let the bright blue laser beams intersect, or the entire ship will violently explode!"
+            },
+            {
+              "word": "angle",
+              "definition": "The space (usually measured in degrees) between two intersecting lines or surfaces at or close to the point where they meet.",
+              "sentence": "Ender calculated the exact angle needed to bounce his laser shot off the wall and hit the enemy."
+            },
+            {
+              "word": "degree",
+              "definition": "A unit of measurement of angles, one three-hundred-and-sixtieth of the circumference of a circle.",
+              "sentence": "The pilot pulled the starfighter into a sharp ninety degree turn to dodge the incoming missile."
+            }
+          ],
+          "lessonScript": "Geometry is the architecture of reality! A 'POLYGON' is a shape with straight lines\u2014in fact, the entire Minecraft universe is built from them! The 'PERIMETER' is the absolute outer edge of your base, where you must set up defenses. The 'VOLUME' is how much space is trapped inside a container. Calculate perfectly, or your structures will collapse!",
+          "imagePath": "/assets/images/tier5_sec4.png",
+          "id": "g4_t5_s4",
+          "rule": "Features numerical prefixes (poly-, tri-) and pairs geometric descriptors like twin 'll' in 'parallel' and 'magic e'."
+        },
+        {
+          "name": "Ancient History",
+          "theme": "Ancient History",
+          "words": [
+            {
+              "word": "civilization",
+              "definition": "The stage of human social and cultural development and organization that is considered most advanced.",
+              "sentence": "The ancient civilization of Narnia was heavily populated by talking animals, fauns, and majestic centaurs."
+            },
+            {
+              "word": "empire",
+              "definition": "An extensive group of states or countries under a single supreme authority.",
+              "sentence": "The evil Galactic Empire built the Death Star to crush the rebellion and rule the galaxy through fear."
+            },
+            {
+              "word": "pharaoh",
+              "definition": "A ruler in ancient Egypt.",
+              "sentence": "The ancient magical tombs underneath the goblin bank of Gringotts look like they belong to an Egyptian pharaoh."
+            },
+            {
+              "word": "pyramid",
+              "definition": "A monumental structure with a square or triangular base and sloping sides that meet in a point at the top.",
+              "sentence": "If you explore the desert biome in Minecraft, you might discover a sandstone pyramid filled with hidden traps."
+            },
+            {
+              "word": "republic",
+              "definition": "A state in which supreme power is held by the people and their elected representatives.",
+              "sentence": "The Grand Army of the Republic was created to defend the galaxy against the Separatist droid invasion."
+            },
+            {
+              "word": "ancient",
+              "definition": "Belonging to the very distant past and no longer in existence.",
+              "sentence": "The dwarves of Erebor dug deep into the mountain to uncover ancient, magical weapons forged centuries ago."
+            },
+            {
+              "word": "artifact",
+              "definition": "An object made by a human being, typically an item of cultural or historical interest.",
+              "sentence": "The Sorting Hat is an incredibly ancient, magical artifact that has lived at Hogwarts for a thousand years."
+            },
+            {
+              "word": "ruin",
+              "definition": "The physical destruction or disintegration of something or the state of disintegrating or being destroyed.",
+              "sentence": "The once beautiful castle of Cair Paravel had fallen into complete ruin after the Pevensie children left."
+            },
+            {
+              "word": "conquer",
+              "definition": "Overcome and take control of (a place or people) by use of military force.",
+              "sentence": "Lord Voldemort's ultimate goal was to completely conquer the magical world and rule it forever."
+            },
+            {
+              "word": "gladiator",
+              "definition": "In ancient Rome, a man trained to fight with weapons against other men or wild animals in an arena.",
+              "sentence": "Ender Wiggin felt like a helpless gladiator fighting for his life in the brutal zero-gravity Battle Room."
+            }
+          ],
+          "lessonScript": "History is the memory of civilization! A 'CIVILIZATION' is a complex society of intelligent beings. The ancient 'PHARAOH' ruled Egypt and commanded the construction of the massive, triangle-shaped 'PYRAMID' tombs. To 'CONQUER' is to take over by force, like the evil Galactic Empire. Learn from the past to protect the future!",
+          "imagePath": "/assets/images/tier5_sec5.png",
+          "id": "g4_t5_s5",
+          "rule": "Derived from ancient artifacts and titles, using unique Greek/Egyptian constructs like 'ao' in 'pharaoh' and 'y' in 'pyramid'."
+        },
+        {
+          "name": "Revolutions",
+          "theme": "Revolutions",
+          "words": [
+            {
+              "word": "revolution",
+              "definition": "A forcible overthrow of a government or social order in favor of a new system.",
+              "sentence": "The rebel alliance started a massive, galaxy-wide revolution to overthrow the evil Galactic Empire."
+            },
+            {
+              "word": "constitution",
+              "definition": "A body of fundamental principles or established precedents according to which a state or other organization is acknowledged to be governed.",
+              "sentence": "Hermione Granger drafted a very strict, magical constitution for her organization defending the rights of house elves."
+            },
+            {
+              "word": "colony",
+              "definition": "A country or area under the full or partial political control of another country, typically a distant one, and occupied by settlers from that country.",
+              "sentence": "The Formic aliens attempted to build an underground colony deep inside a hollowed-out asteroid in space."
+            },
+            {
+              "word": "independence",
+              "definition": "The fact or state of being independent.",
+              "sentence": "The brave Narnians fought a fierce and bloody battle to win their independence from the White Witch."
+            },
+            {
+              "word": "treaty",
+              "definition": "A formally concluded and ratified agreement between countries.",
+              "sentence": "The Elves and Dwarves eventually signed a peace treaty after the terrifying Battle of the Five Armies."
+            },
+            {
+              "word": "patriot",
+              "definition": "A person who vigorously supports their country and is prepared to defend it against enemies or detractors.",
+              "sentence": "Captain Rex was a true patriot who firmly believed in defending the Republic against the Separatist droids."
+            },
+            {
+              "word": "rebellion",
+              "definition": "An act of violent or open resistance to an established government or ruler.",
+              "sentence": "The teenage wizards started a secret rebellion called Dumbledore's Army to fight back against Professor Umbridge."
+            },
+            {
+              "word": "liberty",
+              "definition": "The state of being free within society from oppressive restrictions imposed by authority on one's way of life, behavior, or political views.",
+              "sentence": "Dobby the house elf wept tears of joy when Harry Potter finally granted him his liberty with a sock."
+            },
+            {
+              "word": "freedom",
+              "definition": "The power or right to act, speak, or think as one wants without hindrance or restraint.",
+              "sentence": "Ender Wiggin realized that winning the war was the only possible way to guarantee humanity's ultimate freedom."
+            },
+            {
+              "word": "equality",
+              "definition": "The state of being equal, especially in status, rights, and opportunities.",
+              "sentence": "Aslan the lion treated every single talking beast in Narnia with perfect fairness and absolute equality."
+            }
+          ],
+          "lessonScript": "Our final study: Revolutions! A 'REVOLUTION' is a massive, sudden overthrow of a broken government. A 'CONSTITUTION' is a sacred document of laws outlining how a society should be run. 'LIBERTY' and 'FREEDOM' are the ultimate goals of every rebel fighting against the dark side. Remember these words as you write your own history!",
+          "imagePath": "/assets/images/tier5_sec6.png",
+          "id": "g4_t5_s6",
+          "rule": "Abstract societal nouns rely heavily on Latin suffixation, utilizing '-tion' for action (revolution) and '-ty' for quality."
+        }
+      ],
+      "lessonScript": "Welcome to the Jedi Archives, scholar. Here we study Academic vocabulary\u2014the advanced words used in Science, Math, and History. They appear complex, but they hold immense precision, and mastering them is the mark of a true Jedi Grand Master! \n\nIn Science, words describe how the universe works. For example, 'photosynthesis' is the specific process plants use to turn sunlight into energy. An 'ecosystem' is a community of interacting organisms. \n\nIn Math, words demand absolute logic. An 'equation' requires two sides to be perfectly equal. A 'fraction' represents a part of a whole number. \n\nIn History, words tell the story of humanity. A 'civilization' is a complex human society. A 'revolution' is a massive, sudden change in government or society. \n\nMemorizing these specialized words will help you read textbooks easily, write brilliant essays, and understand the deep knowledge of the archives! Go forth and study, Master Spelling Jedi!",
+      "lessonImage": "/assets/images/tier5.png"
+    }
+  ]
+}

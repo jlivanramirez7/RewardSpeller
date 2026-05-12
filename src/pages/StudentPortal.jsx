@@ -11,17 +11,26 @@ const StudentPortal = () => {
 
   const handleCompleteSection = () => {
     const sectionData = activePlayData?.section;
+    const currentTierId = activePlayData?.tierId;
     
     setActivePlayData(null);
 
     // Auto-unlock next tier if mastery assessment is complete and passed
     if (sectionData && sectionData.id.toString().includes('mastery')) {
-      const currentTierId = activePlayData.tierId;
+      let nextTierId;
+      const match = currentTierId && currentTierId.toString().match(/^(.*_t)(\d+)$/);
+      
+      if (match) {
+        nextTierId = `${match[1]}${parseInt(match[2], 10) + 1}`;
+      } else {
+        nextTierId = parseInt(currentTierId) + 1;
+      }
+
       if (isSectionMastered(sectionData.id)) {
-        if (!unlockedTiers.includes(currentTierId + 1)) {
+        if (!unlockedTiers.includes(nextTierId)) {
           // Safely push next tier ID
-          setUnlockedTiers(prev => [...prev, currentTierId + 1]);
-          alert(`🌟 LEGENDARY! You have mastered Tier ${currentTierId}. Tier ${currentTierId + 1} is now officially unlocked!`);
+          setUnlockedTiers(prev => [...prev, nextTierId]);
+          alert(`🌟 LEGENDARY! You have mastered Tier ${currentTierId}. Tier ${nextTierId} is now officially unlocked!`);
         }
       }
     }
@@ -70,7 +79,7 @@ const StudentPortal = () => {
             <h2 style={{ marginBottom: '1.5rem' }}>Learning Map</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {tiers.map((tier, index) => {
-                const isUnlocked = !enablePacing || unlockedTiers.includes(tier.id);
+                const isUnlocked = !enablePacing || unlockedTiers.includes(tier.id) || index === 0;
                 return (
                   <div 
                     key={tier.id}

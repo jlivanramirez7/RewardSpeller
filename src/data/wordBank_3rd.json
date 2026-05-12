@@ -1,0 +1,254 @@
+{
+  "tiers": [
+    {
+      "id": "g3_t1",
+      "name": "Foundational Vowel Teams",
+      "description": "Master common vowel teams to improve reading and spelling.",
+      "rule": "When two vowels go walking, the first one usually does the talking!",
+      "lessonScript": "Welcome, young apprentice! Today we begin our training in the ways of the Vowel Teams. Just like the Jedi and Padawans working together, or Frodo and Sam on their quest, these vowels join forces to make a single sound. May the Phonics be with you!",
+      "lessonImage": "/assets/images/g3_t1.png",
+      "sections": [
+        {
+          "id": "g3_t1_s1",
+          "name": "AI and AY Words",
+          "theme": "AI and AY",
+          "rule": "The 'ai' team usually appears in the middle of a word, while 'ay' likes to stay at the end.",
+          "lessonScript": "In the pixelated world of Minecraft, you might need to wait for the rain to stop before you go mining. Or maybe you'll take a train to Hogwarts! Let's look at words with 'ai' and 'ay'.",
+          "imagePath": "/assets/images/g3_t1_s1.png",
+          "words": [
+            { "word": "rain", "definition": "Water falling in drops from vapor in the atmosphere.", "sentence": "In Narnia, the gentle rain turned to snow as the White Witch approached." },
+            { "word": "train", "definition": "A connected series of railway cars.", "sentence": "Harry Potter boarded the Hogwarts Express train at platform nine and three-quarters." },
+            { "word": "brain", "definition": "The organ of thought and nervous coordination.", "sentence": "A Creeper in Minecraft doesn't have much of a brain, it just wants to explode!" },
+            { "word": "paint", "definition": "To cover a surface with colored substance.", "sentence": "Gandalf used his staff to paint a glowing rune on Bilbo's door." },
+            { "word": "sail", "definition": "To travel on water in a ship or boat.", "sentence": "Luke Skywalker watched the sand-sail ship glide across the deserts of Tatooine." },
+            { "word": "play", "definition": "To engage in activity for enjoyment and recreation.", "sentence": "Aslan liked to play with the children in the golden sunshine of Narnia." },
+            { "word": "stay", "definition": "To remain in the same place.", "sentence": "Dobby promised to stay and help Harry Potter whenever he needed him." },
+            { "word": "tray", "definition": "A flat board, or plate, for holding or carrying something.", "sentence": "The hobbits placed a tray of delicious cakes on the table for tea." },
+            { "word": "clay", "definition": "A stiff, sticky earth that can be molded when wet.", "sentence": "Steve used clay to make bricks for his new castle in Minecraft." },
+            { "word": "day", "definition": "A period of twenty-four hours.", "sentence": "It was a dark day when Darth Vader revealed the truth to Luke." }
+          ]
+        },
+        {
+          "id": "g3_t1_s2",
+          "name": "EE and EA Words",
+          "theme": "EE and EA",
+          "rule": "Both 'ee' and 'ea' make the long E sound, but they are spelled differently.",
+          "lessonScript": "You might see a giant tree in Minecraft or need to sleep in a bed to skip the night. Let's explore words with 'ee' and 'ea'.",
+          "imagePath": "/assets/images/g3_t1_s2.png",
+          "words": [
+            { "word": "tree", "definition": "A woody perennial plant.", "sentence": "The Ents in Lord of the Rings look like giant walking tree creatures." },
+            { "word": "sleep", "definition": "A condition of body and mind that recurs for several hours every night.", "sentence": "Even a powerful wizard like Dumbledore needs to sleep sometimes." },
+            { "word": "green", "definition": "The color between blue and yellow in the spectrum.", "sentence": "Yoda's green skin was wrinkled with hundreds of years of wisdom." },
+            { "word": "street", "definition": "A public road in a city or town.", "sentence": "Diagon Alley is the most famous street for wizard shopping." },
+            { "word": "meet", "definition": "To come into the presence or company of.", "sentence": "The Hobbits went to meet Aragorn at the Prancing Pony." },
+            { "word": "meat", "definition": "The flesh of an animal used as food.", "sentence": "The Orcs complained when they didn't get any fresh meat to eat." },
+            { "word": "team", "definition": "A group of players forming one side in a game.", "sentence": "Harry joined the Gryffindor Quidditch team as the Seeker." },
+            { "word": "leaf", "definition": "A flattened structure of a higher plant.", "sentence": "A single golden leaf fell from the trees of Lothlórien." },
+            { "word": "read", "definition": "To look at and comprehend the meaning of written words.", "sentence": "Hermione loved to read giant books about ancient magic." },
+            { "word": "seat", "definition": "A thing made or used for sitting on.", "sentence": "The Emperor sat on a cold, metal seat in his throne room." }
+          ]
+        },
+        {
+          "id": "g3_t1_s3",
+          "name": "OA and OW Words",
+          "theme": "OA and OW",
+          "rule": "Both 'oa' and 'ow' can make the long O sound.",
+          "lessonScript": "Imagine crossing a deep river in a boat or watching the wind blow the snow across the Shire. Let's learn words with 'oa' and 'ow'.",
+          "imagePath": "/assets/images/g3_t1_s3.png",
+          "words": [
+            { "word": "boat", "definition": "A small vessel for traveling on water.", "sentence": "Frodo and Sam used a small boat to cross the Great River." },
+            { "word": "coat", "definition": "An outer garment with sleeves.", "sentence": "Lucy found a warm fur coat inside the magical wardrobe." },
+            { "word": "road", "definition": "A wide way leading from one place to another.", "sentence": "The road to Hogwarts was filled with flying owls." },
+            { "word": "goat", "definition": "A hardy domesticated ruminant animal.", "sentence": "In Minecraft, a mountain goat might headbutt you off a cliff!" },
+            { "word": "toad", "definition": "A tailless amphibian with dry warty skin.", "sentence": "Neville Longbottom was always losing his pet toad, Trevor." },
+            { "word": "snow", "definition": "Atmospheric water vapor frozen into ice crystals.", "sentence": "The White Witch made it so it was always winter and never Christmas, with constant snow." },
+            { "word": "blow", "definition": "To create a current of air.", "sentence": "The wind began to blow fiercely as the Millennium Falcon took off." },
+            { "word": "row", "definition": "A number of people or things in a more or less straight line.", "sentence": "The students had to sit in a row during the Hogwarts sorting ceremony." },
+            { "word": "glow", "definition": "To give out steady light without flame.", "sentence": "Frodo's sword, Sting, would glow blue when Orcs were near." },
+            { "word": "grow", "definition": "To increase in size.", "sentence": "Steve watched his wheat crops grow in the Minecraft sun." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g3_t2",
+      "name": "Basic Affixes",
+      "description": "Learn how prefixes and suffixes change the meaning of base words.",
+      "rule": "Look for word parts at the beginning (prefixes) and end (suffixes) to help you decode words.",
+      "lessonScript": "Just as a wizard at Hogwarts adds ingredients to a potion to change its effect, we can add affixes to words to change their meaning. Let's master prefixes and suffixes!",
+      "lessonImage": "/assets/images/g3_t2.png",
+      "sections": [
+        {
+          "id": "g3_t2_s1",
+          "name": "Prefixes un-, re-, dis-",
+          "theme": "Prefixes un-, re-, dis-",
+          "rule": "Prefixes come at the beginning of a word. 'un-' means not, 're-' means again, and 'dis-' means not or opposite of.",
+          "lessonScript": "Gollum was very unhappy to lose his ring. Hermione had to unlock the door with magic. Let's look at words starting with un-, re-, and dis-.",
+          "imagePath": "/assets/images/g3_t2_s1.png",
+          "words": [
+            { "word": "unhappy", "definition": "Not happy.", "sentence": "Gollum was very unhappy when he lost his Precious." },
+            { "word": "unlock", "definition": "To undo the lock of.", "sentence": "Hermione used the Alohomora spell to unlock the forbidden door." },
+            { "word": "remake", "definition": "To make again.", "sentence": "Sauron, the dark lord, wanted to remake the world in his own image." },
+            { "word": "reread", "definition": "To read again.", "sentence": "Obi-Wan had to reread the ancient Jedi texts to find the answer." },
+            { "word": "dislike", "definition": "To not like.", "sentence": "Cats usually dislike water, but Crookshanks was a special cat." },
+            { "word": "disagree", "definition": "To fail to agree.", "sentence": "Legolas and Gimli would often disagree, but they were still best friends." },
+            { "word": "unsafe", "definition": "Not safe.", "sentence": "It was unsafe to travel through the Mines of Moria without a guide." },
+            { "word": "return", "definition": "To come or go back.", "sentence": "The King promised to return and save his people from the White Witch." },
+            { "word": "disobey", "definition": "To fail to obey.", "sentence": "Dobby did not want to disobey his masters, but he had to save Harry." },
+            { "word": "rewrite", "definition": "To write again.", "sentence": "Yoda taught that you cannot rewrite the past, only learn from it." }
+          ]
+        },
+        {
+          "id": "g3_t2_s2",
+          "name": "Suffixes -ful, -less, -ly",
+          "theme": "Suffixes -ful, -less, -ly",
+          "rule": "Suffixes come at the end of a word. '-ful' means full of, '-less' means without, and '-ly' means in a certain way.",
+          "lessonScript": "Sam was a helpful companion to Frodo. Be careful when mining in Minecraft! Let's learn words ending with -ful, -less, and -ly.",
+          "imagePath": "/assets/images/g3_t2_s2.png",
+          "words": [
+            { "word": "helpful", "definition": "Giving or ready to give help.", "sentence": "Sam was a very helpful friend to Frodo on their long journey." },
+            { "word": "careful", "definition": "Making sure of avoiding potential danger.", "sentence": "You must be careful when mining near lava in Minecraft!" },
+            { "word": "mindless", "definition": "Acting or done without justification and with no concern for the consequences.", "sentence": "The zombies in Minecraft seemed mindless as they walked towards the light." },
+            { "word": "hopeless", "definition": "Feeling or causing despair.", "sentence": "The situation seemed hopeless for Frodo when the giant spiders surrounded him." },
+            { "word": "slowly", "definition": "At a slow speed.", "sentence": "The Ents spoke very slowly, taking a long time to say anything." },
+            { "word": "quickly", "definition": "At a fast speed.", "sentence": "The Golden Snitch moved quickly, making it hard for Harry Potter to see." },
+            { "word": "playful", "definition": "Fond of games and amusement.", "sentence": "The Narnian fauns were very playful and loved to dance." },
+            { "word": "fearless", "definition": "Lacking fear.", "sentence": "Eowyn was a fearless warrior who stood up to the Witch-king." },
+            { "word": "gladly", "definition": "With pleasure.", "sentence": "The hobbits gladly accepted another plate of second breakfast." },
+            { "word": "painful", "definition": "Affected with pain.", "sentence": "It was painful for Frodo to carry the heavy burden of the Ring." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g3_t3",
+      "name": "Compound Words & Simple Syllables",
+      "description": "Break down longer words into smaller, manageable parts.",
+      "rule": "Look for two smaller words joined together, or split words between consonants.",
+      "lessonScript": "Just as in Minecraft where you join blocks to make a castle, compound words are two words joined together. And big words can be broken into smaller syllables, like splitting logs for a campfire in the Shire!",
+      "lessonImage": "/assets/images/g3_t3.png",
+      "sections": [
+        {
+          "id": "g3_t3_s1",
+          "name": "Compound Words",
+          "theme": "Compound Words",
+          "rule": "A compound word is made of two smaller words put together.",
+          "lessonScript": "Enjoy the sunshine in the Shire or carry your tools in a backpack in Minecraft. Let's look at compound words.",
+          "imagePath": "/assets/images/g3_t3_s1.png",
+          "words": [
+            { "word": "sunshine", "definition": "Direct sunlight unbroken by cloud.", "sentence": "The sunshine in the Shire was warm and peaceful." },
+            { "word": "butterfly", "definition": "An insect with two pairs of large wings.", "sentence": "A beautiful butterfly landed on Gandalf's hat." },
+            { "word": "popcorn", "definition": "Corn of a variety that bursts open when heated.", "sentence": "Harry wished they had popcorn while watching the exciting Quidditch match." },
+            { "word": "campfire", "definition": "An open-air fire in a camp.", "sentence": "The fellowship sat around a small campfire to keep warm." },
+            { "word": "baseball", "definition": "A game played with a bat and ball by two opposing teams.", "sentence": "The children in Narnia didn't play baseball, but they loved adventure." },
+            { "word": "backpack", "definition": "A bag with shoulder straps.", "sentence": "Steve carried all his tools in his large leather backpack." },
+            { "word": "snowflake", "definition": "A flake of snow.", "sentence": "Lucy caught a single snowflake on her tongue in Narnia." },
+            { "word": "jellyfish", "definition": "A sea creature with a soft, jelly-like body.", "sentence": "A glowing jellyfish looked like something from a Star Wars ocean planet." },
+            { "word": "rainbow", "definition": "A colorful arch in the sky that appears after rain.", "sentence": "A rainbow appeared over Hogwarts castle after the storm passed." },
+            { "word": "toothbrush", "definition": "A brush for cleaning the teeth.", "sentence": "I wonder if Hogwarts students use magic or a toothbrush to clean their teeth?" }
+          ]
+        },
+        {
+          "id": "g3_t3_s2",
+          "name": "Simple Syllables",
+          "theme": "Simple Syllables",
+          "rule": "Break words into smaller parts (syllables) to make them easier to spell.",
+          "lessonScript": "Radagast had a sled pulled by giant rabbit creatures. Winter in Narnia was very long. Let's learn words with simple syllables.",
+          "imagePath": "/assets/images/g3_t3_s2.png",
+          "words": [
+            { "word": "rabbit", "definition": "A small animal with long ears and a short tail.", "sentence": "Radagast the Brown had a sled pulled by giant rabbit creatures." },
+            { "word": "kitten", "definition": "A young cat.", "sentence": "Professor Umbridge had moving pictures of kittens playing on her walls." },
+            { "word": "butter", "definition": "A pale yellow fatty substance made from cream.", "sentence": "The hobbits loved fresh bread with lots of yellow butter." },
+            { "word": "hammer", "definition": "A tool with a heavy metal head.", "sentence": "Gimli used his heavy hammer to smash the Orc's armor." },
+            { "word": "sudden", "definition": "Occurring or done quickly and unexpectedly.", "sentence": "A sudden roar from the Rancor scared everyone in the cave." },
+            { "word": "happen", "definition": "Take place; occur.", "sentence": "Gandalf knew that great things can happen when small people take action." },
+            { "word": "winter", "definition": "The coldest season of the year.", "sentence": "The White Witch made it always winter in Narnia." },
+            { "word": "basket", "definition": "A container used to hold or carry things.", "sentence": "Lucy carried a basket of food for the talking beavers." },
+            { "word": "lesson", "definition": "A period of learning or teaching.", "sentence": "Snape's potions lesson was always very difficult for Harry." },
+            { "word": "problem", "definition": "A matter or situation regarded as unwelcome or harmful.", "sentence": "Decoding the map was a difficult problem for the dwarves." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g3_t4",
+      "name": "Elementary Homophones",
+      "description": "Learn words that sound the same but are spelled differently.",
+      "rule": "Use context clues to choose the correct spelling.",
+      "lessonScript": "Words can be trickier than a Jedi mind trick! Some words sound exactly the same but are spelled differently and mean different things. Let's learn to tell them apart!",
+      "lessonImage": "/assets/images/g3_t4.png",
+      "sections": [
+        {
+          "id": "g3_t4_s1",
+          "name": "Homophones",
+          "theme": "Homophones",
+          "rule": "Listen carefully to the meaning of the sentence to know which word to use.",
+          "lessonScript": "Frodo could see the dark tower, but ships sailed on the sea. Let's learn these tricky words.",
+          "imagePath": "/assets/images/g3_t4_s1.png",
+          "words": [
+            { "word": "see", "definition": "To perceive with the eyes.", "sentence": "Frodo could see the dark tower of Barad-dûr in the distance." },
+            { "word": "sea", "definition": "The expanse of salt water that covers most of the earth.", "sentence": "The grey ships sailed across the sea to the Undying Lands." },
+            { "word": "to", "definition": "Expressing motion in the direction of a particular location.", "sentence": "We are going to Hogwarts to learn magic!" },
+            { "word": "too", "definition": "In addition; also.", "sentence": "Neville wanted to go to the forest too, but he was scared." },
+            { "word": "two", "definition": "Equivalent to the sum of one and one.", "sentence": "There are always two Sith, a master and an apprentice." },
+            { "word": "for", "definition": "With the object or purpose of.", "sentence": "Gimli fought for the honor of his people." },
+            { "word": "four", "definition": "Equivalent to the product of two and two.", "sentence": "The four Pevensie children stepped through the wardrobe into Narnia." },
+            { "word": "by", "definition": "Identifying the agent performing an action.", "sentence": "The Millennium Falcon flew by the exploding planet." },
+            { "word": "buy", "definition": "Obtain in exchange for payment.", "sentence": "Harry used his gold galleons to buy a new wand." },
+            { "word": "know", "definition": "Be aware of through observation, inquiry, or information.", "sentence": "\"I know that there is still good in him,\" Luke said about his father." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g3_t5",
+      "name": "Foundation Academic Vocabulary",
+      "description": "Learn important words used in Math and Science.",
+      "rule": "These special words help you talk about what you learn in school.",
+      "lessonScript": "Even Hogwarts students and Star Wars space travelers need to know math and science! These words help us understand how the world (and the galaxy) works.",
+      "lessonImage": "/assets/images/g3_t5.png",
+      "sections": [
+        {
+          "id": "g3_t5_s1",
+          "name": "Math Terms",
+          "theme": "Math Terms",
+          "rule": "These words help you describe numbers and shapes.",
+          "lessonScript": "Add drops to a potion at Hogwarts or subtract rings from the total that Sauron wants. Let's learn math words.",
+          "imagePath": "/assets/images/g3_t5_s1.png",
+          "words": [
+            { "word": "add", "definition": "Join something to something else.", "sentence": "Hogwarts students need to add the correct number of drops to their potions." },
+            { "word": "subtract", "definition": "Take away from another to calculate the difference.", "sentence": "If you subtract three rings from the nine given to men by Sauron, how many are left?" },
+            { "word": "sum", "definition": "The total amount resulting from the addition of two or more numbers.", "sentence": "The sum of all the gold in Erebor was impossible to count." },
+            { "word": "total", "definition": "Comprising the whole number or amount.", "sentence": "The total number of Orcs in the army was terrifying." },
+            { "word": "fraction", "definition": "A numerical quantity that is not a whole number.", "sentence": "A small fraction of the map was written in moon-letters." },
+            { "word": "measure", "definition": "Ascertain the size, amount, or degree of something.", "sentence": "The Tailor had to measure Peter for his royal Narnian robes." },
+            { "word": "graph", "definition": "A diagram showing the relation between variable quantities.", "sentence": "The graph showed the rising power of Sauron in Mordor." },
+            { "word": "shape", "definition": "The external form or appearance of something.", "sentence": "The One Ring could change its shape to fit the finger of its wearer." },
+            { "word": "equal", "definition": "Being the same in quantity, size, degree, or value.", "sentence": "All the free peoples were equal in their fight against Sauron." },
+            { "word": "pattern", "definition": "A repeated decorative design.", "sentence": "The stars formed a strange pattern in the sky over Hogwarts." }
+          ]
+        },
+        {
+          "id": "g3_t5_s2",
+          "name": "Science Terms",
+          "theme": "Science Terms",
+          "rule": "These words help you describe nature and the universe.",
+          "lessonScript": "Study magical plants or learn about the Force. Let's learn science words.",
+          "imagePath": "/assets/images/g3_t5_s2.png",
+          "words": [
+            { "word": "plant", "definition": "A living organism typically growing in a permanent site.", "sentence": "Professor Sprout at Hogwarts taught the students how to care for the Mandrake plant." },
+            { "word": "animal", "definition": "A living organism that feeds on organic matter.", "sentence": "Aslan was a talking lion, a very special kind of animal." },
+            { "word": "water", "definition": "A colorless, transparent, odorless liquid.", "sentence": "The Black Lake at Hogwarts was filled with dark, mysterious water." },
+            { "word": "solid", "definition": "Firm and stable in shape; not liquid or fluid.", "sentence": "The stone table in Narnia was made of solid rock." },
+            { "word": "liquid", "definition": "A substance that flows freely but is of constant volume.", "sentence": "The Polyjuice potion at Hogwarts was a thick, bubbling liquid." },
+            { "word": "gas", "definition": "An air-like fluid substance which expands freely.", "sentence": "A green gas escaped from Smaug's nostrils." },
+            { "word": "force", "definition": "Strength or energy as an attribute of physical action or movement.", "sentence": "May the Force be with you, young Skywalker." },
+            { "word": "energy", "definition": "The strength and vitality required for sustained physical or mental activity.", "sentence": "Vader's Death Star required a massive amount of energy to fire." },
+            { "word": "planet", "definition": "A celestial body moving in an elliptical orbit around a star.", "sentence": "Tatooine is a desert planet with two suns." },
+            { "word": "space", "definition": "The physical universe beyond the earth's atmosphere.", "sentence": "The Millennium Falcon sped through the deep blackness of space." }
+          ]
+        }
+      ]
+    }
+  ]
+}

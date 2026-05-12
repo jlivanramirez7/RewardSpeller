@@ -1,0 +1,894 @@
+{
+  "tiers": [
+    {
+      "id": "g5_t1",
+      "name": "Advanced Diphthongs & Trigraphs",
+      "description": "Master complex vowel combinations and trigraphs.",
+      "rule": "Pay attention to combinations like 'ough', 'au', and 'aw' that can make unexpected sounds.",
+      "lessonScript": "Welcome, young Padawan! Today we face the tricky 'OUGH' trigraph and complex diphthongs. Just like navigating the Death Star, it can be tough. Stay focused and use the Force to master these sounds!",
+      "lessonImage": "/assets/images/tier1.png",
+      "sections": [
+        {
+          "name": "The Tricky OUGH",
+          "theme": "OUGH Trigraph",
+          "lessonScript": "The 'ough' pattern is a master of disguise! In words like 'THOUGHT', it sounds like 'aw'. But in 'ROUGH', it sounds like 'uff'! Do not let these tricks fool you.",
+          "imagePath": "/assets/images/tier1_sec1.png",
+          "id": "g5_t1_s1",
+          "rule": "The 'ough' pattern can make many different sounds. Group words by their sound to remember them!",
+          "words": [
+            {
+              "word": "although",
+              "definition": "Even though.",
+              "sentence": "Although the Creepers were close, Steve managed to finish building his house."
+            },
+            {
+              "word": "thorough",
+              "definition": "Complete and with regard to every detail.",
+              "sentence": "Hermione gave the Marauder's Map a thorough inspection to find Harry."
+            },
+            {
+              "word": "breakthrough",
+              "definition": "A sudden, dramatic, and important discovery or development.",
+              "sentence": "The Rebel Alliance made a breakthrough in understanding the Death Star's plans."
+            },
+            {
+              "word": "drought",
+              "definition": "A prolonged period of abnormally low rainfall.",
+              "sentence": "The White Witch caused a long drought of joy in Narnia."
+            },
+            {
+              "word": "cough",
+              "definition": "Expel air from the lungs with a sudden sharp sound.",
+              "sentence": "General Grievous had a nasty cough that gave away his position."
+            },
+            {
+              "word": "rough",
+              "definition": "Having an uneven or irregular surface.",
+              "sentence": "The terrain of the Nether is incredibly rough and full of lava."
+            },
+            {
+              "word": "tough",
+              "definition": "Strong enough to withstand adverse conditions.",
+              "sentence": "The outer shell of a shulker box is very tough."
+            },
+            {
+              "word": "brought",
+              "definition": "Past tense of bring.",
+              "sentence": "Gandalf brought news of the Ring to Frodo."
+            },
+            {
+              "word": "thought",
+              "definition": "An idea or opinion produced by thinking.",
+              "sentence": "Harry thought about his parents as he looked into the Mirror of Erised."
+            },
+            {
+              "word": "sought",
+              "definition": "Past tense of seek.",
+              "sentence": "Sauron sought the One Ring throughout Middle-earth."
+            }
+          ]
+        },
+        {
+          "name": "The AU Team",
+          "theme": "AU Diphthong",
+          "lessonScript": "The 'au' team usually makes the sound you hear in 'launch'. Watch out for it in academic and everyday words.",
+          "imagePath": "/assets/images/tier1_sec2.png",
+          "id": "g5_t1_s2",
+          "rule": "The 'au' spelling usually represents the /aw/ sound.",
+          "words": [
+            {
+              "word": "astronaut",
+              "definition": "A person trained to travel in a spacecraft.",
+              "sentence": "Han Solo might not be a typical astronaut, but he is a great pilot."
+            },
+            {
+              "word": "audience",
+              "definition": "The assembled spectators or listeners at a public event.",
+              "sentence": "A large audience of Narnians gathered to hear Aslan speak."
+            },
+            {
+              "word": "authentic",
+              "definition": "Of undisputed origin; genuine.",
+              "sentence": "Aslan is the authentic king of Narnia."
+            },
+            {
+              "word": "automatic",
+              "definition": "Working by itself with little or no human control.",
+              "sentence": "Steve built an automatic farm to harvest wheat in Minecraft."
+            },
+            {
+              "word": "autumn",
+              "definition": "The season after summer and before winter.",
+              "sentence": "The trees in Lothl\u00f3rien turned golden in the autumn."
+            },
+            {
+              "word": "caution",
+              "definition": "Care taken to avoid danger or mistakes.",
+              "sentence": "Luke approached the cave on Dagobah with caution."
+            },
+            {
+              "word": "exhaust",
+              "definition": "Waste gases or air expelled from an engine.",
+              "sentence": "The Millennium Falcon's exhaust port was a target for TIE fighters."
+            },
+            {
+              "word": "applaud",
+              "definition": "Show approval or praise by clapping.",
+              "sentence": "The Hobbits did not applaud Bilbo's sudden disappearance at his party."
+            },
+            {
+              "word": "assault",
+              "definition": "Make a physical attack on.",
+              "sentence": "The Orcs prepared to assault Helm's Deep."
+            },
+            {
+              "word": "auction",
+              "definition": "A public sale in which goods are sold to the highest bidder.",
+              "sentence": "Bilbo's belongings were put up for auction when he was presumed dead."
+            }
+          ]
+        },
+        {
+          "name": "The AW Team",
+          "theme": "AW Diphthong",
+          "lessonScript": "The 'aw' team also makes the /aw/ sound, often at the end of words or before an 'l' or 'n'.",
+          "imagePath": "/assets/images/tier1_sec3.png",
+          "id": "g5_t1_s3",
+          "rule": "Use 'aw' at the end of words or syllables, and before 'l', 'n', or 'k'.",
+          "words": [
+            {
+              "word": "awkward",
+              "definition": "Causing or feeling embarrassment or inconvenience.",
+              "sentence": "Edmund felt awkward when he realized he had been tricked by the White Witch."
+            },
+            {
+              "word": "awesome",
+              "definition": "Extremely impressive or daunting.",
+              "sentence": "The sight of the Argonath was awesome to the Fellowship."
+            },
+            {
+              "word": "crawfish",
+              "definition": "A freshwater crustacean.",
+              "sentence": "Gollum might try to catch a crawfish in the dark pools."
+            },
+            {
+              "word": "drawback",
+              "definition": "A feature that renders something less acceptable.",
+              "sentence": "The only drawback to the invisibility cloak was that it couldn't hide your footsteps."
+            },
+            {
+              "word": "flawless",
+              "definition": "Without any blemishes or imperfections.",
+              "sentence": "Legolas had flawless aim with his bow."
+            },
+            {
+              "word": "jawbreaker",
+              "definition": "A hard spherical candy.",
+              "sentence": "Fred and George invented a jawbreaker that would make your tongue swell."
+            },
+            {
+              "word": "lawless",
+              "definition": "Not governed by laws.",
+              "sentence": "Tatooine is a lawless planet ruled by gangsters."
+            },
+            {
+              "word": "lawmaker",
+              "definition": "A member of a government that makes laws.",
+              "sentence": "Senator Palpatine was a powerful lawmaker before becoming Emperor."
+            },
+            {
+              "word": "sprawl",
+              "definition": "Sit, lie, or fall with one's arms and legs spread out.",
+              "sentence": "The stone table seemed to sprawl in the center of the clearing."
+            },
+            {
+              "word": "withdraw",
+              "definition": "Remove or take away.",
+              "sentence": "Frodo decided to withdraw from the Fellowship to protect them from the Ring."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g5_t2",
+      "name": "Latin Roots (Intermediate)",
+      "description": "Understand words better by learning their Latin roots.",
+      "rule": "Roots like 'spect', 'struct', and 'tract' carry core meanings across many words.",
+      "lessonScript": "Greetings, traveler! Today we construct words like the ancient Dwarves building the great halls of Moria. Our base is ancient Latin roots. Master them, and you unlock the secrets of many complex words!",
+      "lessonImage": "/assets/images/tier2.png",
+      "sections": [
+        {
+          "name": "Root SPECT (To Look)",
+          "theme": "Root SPECT",
+          "lessonScript": "The root 'spect' means to look. Think of spectacles or a spectacle!",
+          "imagePath": "/assets/images/tier2_sec1.png",
+          "id": "g5_t2_s1",
+          "rule": "Words containing 'spect' usually relate to seeing or looking.",
+          "words": [
+            {
+              "word": "inspect",
+              "definition": "Look at closely, typically to assess condition.",
+              "sentence": "Vader arrived to inspect the progress of the new Death Star."
+            },
+            {
+              "word": "respect",
+              "definition": "A feeling of deep admiration for someone.",
+              "sentence": "All free peoples of Middle-earth respect Aragorn as the true king."
+            },
+            {
+              "word": "suspect",
+              "definition": "Have an idea or impression of the existence of something without proof.",
+              "sentence": "Harry began to suspect that Draco Malfoy was a Death Eater."
+            },
+            {
+              "word": "spectacle",
+              "definition": "A visually striking performance or display.",
+              "sentence": "The Triwizard Tournament was a grand spectacle for the wizarding world."
+            },
+            {
+              "word": "spectator",
+              "definition": "A person who watches at a show, game, or other event.",
+              "sentence": "Mr. Beaver was a nervous spectator as the Pevensies met Aslan."
+            },
+            {
+              "word": "spectrum",
+              "definition": "A band of colors, as seen in a rainbow.",
+              "sentence": "The light from the kyber crystal spanned the entire spectrum of blue."
+            },
+            {
+              "word": "spectacular",
+              "definition": "Beautiful in a dramatic and eye-catching way.",
+              "sentence": "The flight of the Hippogriff was a spectacular sight."
+            },
+            {
+              "word": "perspective",
+              "definition": "A particular attitude toward or way of regarding something.",
+              "sentence": "From the perspective of a Hobbit, humans are giants."
+            },
+            {
+              "word": "retrospect",
+              "definition": "A survey or review of a past course of events.",
+              "sentence": "In retrospect, Bilbo realized finding the Ring changed his life forever."
+            },
+            {
+              "word": "inspector",
+              "definition": "An official who ensures that official regulations are obeyed.",
+              "sentence": "Umbridge acted as the High Inspector at Hogwarts."
+            }
+          ]
+        },
+        {
+          "name": "Root STRUCT (To Build)",
+          "theme": "Root STRUCT",
+          "lessonScript": "The root 'struct' means to build. Think of structure or construction!",
+          "imagePath": "/assets/images/tier2_sec2.png",
+          "id": "g5_t2_s2",
+          "rule": "Words containing 'struct' usually relate to building or arranging.",
+          "words": [
+            {
+              "word": "construct",
+              "definition": "To build or erect something.",
+              "sentence": "Steve needed to construct a bridge over the lava river."
+            },
+            {
+              "word": "destruct",
+              "definition": "To cause intentional damage or destruction.",
+              "sentence": "The base was set to self-destruct to keep secrets from the Empire."
+            },
+            {
+              "word": "structure",
+              "definition": "The arrangement of and relations between the parts of something complex.",
+              "sentence": "The ancient structure in the jungle looked like a desert temple."
+            },
+            {
+              "word": "instruct",
+              "definition": "Teach someone a subject or skill.",
+              "sentence": "Obi-Wan began to instruct Luke in the ways of the Force."
+            },
+            {
+              "word": "obstruct",
+              "definition": "To block an opening, path, or clear vision.",
+              "sentence": "The falling rocks threatened to obstruct the path through Moria."
+            },
+            {
+              "word": "structural",
+              "definition": "Relating to the arrangement of parts.",
+              "sentence": "The structural integrity of the Death Star was compromised by the exhaust port."
+            },
+            {
+              "word": "instructor",
+              "definition": "A person who teaches something.",
+              "sentence": "Professor Lupin was an excellent Defense Against the Dark Arts instructor."
+            },
+            {
+              "word": "construction",
+              "definition": "The building of something.",
+              "sentence": "The construction of Orthanc was a feat of great skill."
+            },
+            {
+              "word": "reconstruct",
+              "definition": "Build or analyze again.",
+              "sentence": "The Pevensies helped to reconstruct Narnia after the winter."
+            },
+            {
+              "word": "infrastructure",
+              "definition": "The basic physical and organizational structures needed for operation.",
+              "sentence": "The redstone infrastructure powered the entire Minecraft city."
+            }
+          ]
+        },
+        {
+          "name": "Root TRACT (To Pull)",
+          "theme": "Root TRACT",
+          "lessonScript": "The root 'tract' means to pull or drag. Think of a tractor or attract!",
+          "imagePath": "/assets/images/tier2_sec3.png",
+          "id": "g5_t2_s3",
+          "rule": "Words containing 'tract' usually relate to pulling, drawing, or dragging.",
+          "words": [
+            {
+              "word": "attract",
+              "definition": "Cause to come to a place or participate in a venture.",
+              "sentence": "The light of the Arkenstone seemed to attract all who saw it."
+            },
+            {
+              "word": "distract",
+              "definition": "Prevent someone from giving full attention to something.",
+              "sentence": "The White Witch tried to distract Edmund with Turkish Delight."
+            },
+            {
+              "word": "retract",
+              "definition": "Draw or pull back.",
+              "sentence": "The lightsaber blade would retract into the hilt when turned off."
+            },
+            {
+              "word": "contract",
+              "definition": "A written or spoken agreement.",
+              "sentence": "Bilbo signed a contract with Thorin's company as their burglar."
+            },
+            {
+              "word": "extract",
+              "definition": "Remove or take out, especially by effort or force.",
+              "sentence": "Steve used a pickaxe to extract diamonds from the ore."
+            },
+            {
+              "word": "subtract",
+              "definition": "Take away from another to form a smaller total.",
+              "sentence": "You need to subtract the spent wands from the inventory."
+            },
+            {
+              "word": "tractor",
+              "definition": "A powerful motor vehicle used for pulling heavy loads.",
+              "sentence": "The Death Star used a tractor beam to pull in the Millennium Falcon."
+            },
+            {
+              "word": "traction",
+              "definition": "The action of drawing or pulling something over a surface.",
+              "sentence": "The spider struggled to get traction on the slippery ice in Narnia."
+            },
+            {
+              "word": "abstract",
+              "definition": "Existing in thought or as an idea but not having a physical existence.",
+              "sentence": "The concept of the Force is not abstract; it has real power."
+            },
+            {
+              "word": "protractor",
+              "definition": "An instrument for measuring angles.",
+              "sentence": "Dumbledore probably used a magical protractor to design his devices."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g5_t3",
+      "name": "Polysyllabic Words with Affixes",
+      "description": "Master long words by breaking them into parts.",
+      "rule": "Look for familiar prefixes and suffixes to decode long words.",
+      "lessonScript": "Welcome, adventurer! Long words can be as intimidating as an Ender Dragon, but if you break them down into prefixes, roots, and suffixes, you can defeat them easily!",
+      "lessonImage": "/assets/images/tier3.png",
+      "sections": [
+        {
+          "name": "Prefixes",
+          "theme": "Prefixes",
+          "lessonScript": "Prefixes are added to the beginning of words to change their meaning.",
+          "imagePath": "/assets/images/tier3_sec1.png",
+          "id": "g5_t3_s1",
+          "rule": "Prefixes like un-, inter-, and dis- change the meaning of the base word.",
+          "words": [
+            {
+              "word": "unpredictable",
+              "definition": "Not able to be foreseen or known beforehand.",
+              "sentence": "The behavior of Creepers in Minecraft is completely unpredictable."
+            },
+            {
+              "word": "international",
+              "definition": "Existing, occurring, or carried on between nations.",
+              "sentence": "The Quidditch World Cup was an international event at Hogwarts."
+            },
+            {
+              "word": "disappeared",
+              "definition": "Ceased to be visible.",
+              "sentence": "Frodo disappeared when he put on the One Ring."
+            },
+            {
+              "word": "premature",
+              "definition": "Occurring or done before the usual or proper time.",
+              "sentence": "The melting of the snow seemed premature to the White Witch."
+            },
+            {
+              "word": "misunderstanding",
+              "definition": "A failure to understand something correctly.",
+              "sentence": "A misunderstanding between Thorin and the Elves led to conflict."
+            },
+            {
+              "word": "nonconformist",
+              "definition": "A person whose behavior or views do not conform to prevailing ideas.",
+              "sentence": "Luna Lovegood was a nonconformist who marched to her own beat."
+            },
+            {
+              "word": "supernatural",
+              "definition": "Attributed to some force beyond scientific understanding.",
+              "sentence": "The magic in Narnia is a supernatural power controlled by Aslan."
+            },
+            {
+              "word": "subconscious",
+              "definition": "Of or concerning the part of the mind of which one is not fully aware.",
+              "sentence": "Luke's subconscious was guiding his hand when he shot the torpedo."
+            },
+            {
+              "word": "antiestablishment",
+              "definition": "Against the establishment.",
+              "sentence": "The Rebel Alliance was an antiestablishment movement fighting the Empire."
+            },
+            {
+              "word": "rewrite",
+              "definition": "Write again in a different way.",
+              "sentence": "Hermione had to rewrite her essay after it was ruined by ink."
+            }
+          ]
+        },
+        {
+          "name": "Suffixes",
+          "theme": "Suffixes",
+          "lessonScript": "Suffixes are added to the end of words to change their meaning or part of speech.",
+          "imagePath": "/assets/images/tier3_sec2.png",
+          "id": "g5_t3_s2",
+          "rule": "Suffixes like -tion, -ity, and -ment often create nouns.",
+          "words": [
+            {
+              "word": "communication",
+              "definition": "The imparting or exchanging of information.",
+              "sentence": "Communication with R2-D2 required a translator droid."
+            },
+            {
+              "word": "responsibility",
+              "definition": "The state or fact of having a duty to deal with something.",
+              "sentence": "It was Frodo's responsibility to take the Ring to Mordor."
+            },
+            {
+              "word": "accomplishment",
+              "definition": "Something that has been achieved successfully.",
+              "sentence": "Finding the secret entrance to Erebor was a major accomplishment."
+            },
+            {
+              "word": "information",
+              "definition": "Facts provided or learned about something.",
+              "sentence": "The stolen plans contained vital information about the Death Star."
+            },
+            {
+              "word": "decision",
+              "definition": "A conclusion or resolution reached after consideration.",
+              "sentence": "Lucy made the brave decision to follow the faun Tumnus."
+            },
+            {
+              "word": "excitement",
+              "definition": "A feeling of lively enthusiasm and eagerness.",
+              "sentence": "There was great excitement in the Shire for Bilbo's party."
+            },
+            {
+              "word": "meaningless",
+              "definition": "Having no meaning or significance.",
+              "sentence": "Without Aslan, Narnia would be a meaningless, frozen land."
+            },
+            {
+              "word": "happiness",
+              "definition": "The state of being happy.",
+              "sentence": "Dumbledore believed happiness could be found even in the darkest times."
+            },
+            {
+              "word": "beautiful",
+              "definition": "Pleasing the senses or mind aesthetically.",
+              "sentence": "The city of Minas Tirith was a beautiful sight against the mountains."
+            },
+            {
+              "word": "capability",
+              "definition": "The power or ability to do something.",
+              "sentence": "The Death Star had the capability to destroy an entire planet."
+            }
+          ]
+        },
+        {
+          "name": "Combined Affixes",
+          "theme": "Combined Affixes",
+          "lessonScript": "Some words have both prefixes and suffixes! Peel them off like layers of an onion.",
+          "imagePath": "/assets/images/tier3_sec3.png",
+          "id": "g5_t3_s3",
+          "rule": "Identify the root word first, then look for both prefixes and suffixes.",
+          "words": [
+            {
+              "word": "identification",
+              "definition": "The action or process of identifying someone or something.",
+              "sentence": "The identification of the One Ring was Gandalf's first priority."
+            },
+            {
+              "word": "disappearance",
+              "definition": "An instance of someone or something ceasing to be visible.",
+              "sentence": "The disappearance of the Pevensies from the wardrobe shocked their uncle."
+            },
+            {
+              "word": "representative",
+              "definition": "Typical of a class, group, or body of opinion.",
+              "sentence": "Legolas was the representative of the Elves in the Fellowship."
+            },
+            {
+              "word": "unfortunately",
+              "definition": "It is unfortunate that.",
+              "sentence": "Unfortunately, the bridge collapsed before they could cross the chasm."
+            },
+            {
+              "word": "uncomfortable",
+              "definition": "Causing or feeling slight pain or physical discomfort.",
+              "sentence": "The seats in the Millennium Falcon looked rather uncomfortable."
+            },
+            {
+              "word": "reorganization",
+              "definition": "The act of organizing something again.",
+              "sentence": "The reorganization of the Jedi Order was a difficult task."
+            },
+            {
+              "word": "unpredictability",
+              "definition": "The quality of being unpredictable.",
+              "sentence": "The unpredictability of wild magic caused many problems for Harry."
+            },
+            {
+              "word": "misinterpretation",
+              "definition": "The action of interpreting something wrongly.",
+              "sentence": "A misinterpretation of the prophecy led to many mistakes."
+            },
+            {
+              "word": "transformation",
+              "definition": "A marked change in form, nature, or appearance.",
+              "sentence": "The transformation of Anakin Skywalker into Darth Vader was tragic."
+            },
+            {
+              "word": "disqualification",
+              "definition": "The action of being disqualified.",
+              "sentence": "Rule breaking could lead to disqualification from the Triwizard Tournament."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g5_t4",
+      "name": "Nuanced Homophones & Homographs",
+      "description": "Master words that sound or look alike but have different meanings.",
+      "rule": "Use context clues to determine the correct spelling and meaning.",
+      "lessonScript": "Welcome, detective! Some words are masters of disguise, as deceptive as the White Witch. You must use your wits to tell them apart!",
+      "lessonImage": "/assets/images/tier4.png",
+      "sections": [
+        {
+          "name": "Homophones",
+          "theme": "Homophones",
+          "lessonScript": "Homophones sound the same but are spelled differently and have different meanings.",
+          "imagePath": "/assets/images/tier4_sec1.png",
+          "id": "g5_t4_s1",
+          "rule": "Memorize the spelling that goes with each specific meaning.",
+          "words": [
+            {
+              "word": "affect",
+              "definition": "To influence or make a difference to.",
+              "sentence": "The return of Aslan began to affect the endless winter."
+            },
+            {
+              "word": "effect",
+              "definition": "A change that is a result or consequence of an action.",
+              "sentence": "The effect of the White Witch's spell was finally broken."
+            },
+            {
+              "word": "principal",
+              "definition": "First in order of importance; main.",
+              "sentence": "The principal reason for the quest was to destroy the Ring."
+            },
+            {
+              "word": "principle",
+              "definition": "A fundamental truth or proposition that serves as the foundation for a system of belief.",
+              "sentence": "Obi-Wan lived by the Jedi principle of protecting the weak."
+            },
+            {
+              "word": "stationary",
+              "definition": "Not moving or not intended to be moved.",
+              "sentence": "The Death Star appeared stationary before it began to move into range."
+            },
+            {
+              "word": "stationery",
+              "definition": "Writing materials.",
+              "sentence": "Hermione bought new stationery for the school year at Diagon Alley."
+            },
+            {
+              "word": "complement",
+              "definition": "A thing that completes or brings to perfection.",
+              "sentence": "The ginger beer was a perfect complement to the hobbit feast."
+            },
+            {
+              "word": "compliment",
+              "definition": "A polite expression of praise or admiration.",
+              "sentence": "Gimli gave Galadriel a polite compliment about her hair."
+            },
+            {
+              "word": "capital",
+              "definition": "The most important city or town of a country.",
+              "sentence": "Minas Tirith was the capital of Gondor."
+            },
+            {
+              "word": "capitol",
+              "definition": "A building in which a state legislative body meets.",
+              "sentence": "The Senate met in the grand capitol building on Coruscant."
+            }
+          ]
+        },
+        {
+          "name": "Homographs",
+          "theme": "Homographs",
+          "lessonScript": "Homographs are spelled the same but have different meanings and sometimes different pronunciations.",
+          "imagePath": "/assets/images/tier4_sec2.png",
+          "id": "g5_t4_s2",
+          "rule": "Use context clues to figure out which meaning or pronunciation is intended.",
+          "words": [
+            {
+              "word": "content",
+              "definition": "Satisfied; pleased.",
+              "sentence": "The children were content to stay in Narnia as kings and queens."
+            },
+            {
+              "word": "content",
+              "definition": "The things that are held or included in something.",
+              "sentence": "The content of the chest was just a bunch of rotten flesh in Minecraft."
+            },
+            {
+              "word": "desert",
+              "definition": "A barren area of landscape where little precipitation occurs.",
+              "sentence": "Tatooine is a harsh desert planet with two suns."
+            },
+            {
+              "word": "desert",
+              "definition": "To abandon (a person, cause, or organization) in a way that is considered disloyal.",
+              "sentence": "Aslan promised never to desert Narnia in its time of need."
+            },
+            {
+              "word": "object",
+              "definition": "A material thing that can be seen and touched.",
+              "sentence": "The Golden Snitch was a small, winged object that was hard to catch."
+            },
+            {
+              "word": "object",
+              "definition": "Say something to express one's disapproval of or disagreement with.",
+              "sentence": "Snape began to object to Dumbledore's plans for Harry."
+            },
+            {
+              "word": "minute",
+              "definition": "A period of time equal to sixty seconds.",
+              "sentence": "Steve had only a minute left before his potion ran out."
+            },
+            {
+              "word": "minute",
+              "definition": "Extremely small.",
+              "sentence": "The details on the One Ring were minute and hard to see without fire."
+            },
+            {
+              "word": "project",
+              "definition": "An individual or collaborative enterprise that is carefully planned.",
+              "sentence": "Building the Death Star was the Emperor's favorite project."
+            },
+            {
+              "word": "project",
+              "definition": "Extend outward beyond something else; protrude.",
+              "sentence": "The holographic image seemed to project from R2-D2's projector."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "g5_t5",
+      "name": "Advanced Academic Vocabulary",
+      "description": "Master subject-specific terms for advanced learning.",
+      "rule": "Learn the specific definitions used in academic subjects.",
+      "lessonScript": "Welcome, scholar! To master the advanced subjects at Hogwarts or in the Jedi Temple, you must learn their specific vocabulary. These words are your keys to advanced knowledge!",
+      "lessonImage": "/assets/images/tier5.png",
+      "sections": [
+        {
+          "name": "Science",
+          "theme": "Science",
+          "lessonScript": "Science words help us describe the physical world and how it works.",
+          "imagePath": "/assets/images/tier5_sec1.png",
+          "id": "g5_t5_s1",
+          "rule": "Focus on the precise definitions used in scientific contexts.",
+          "words": [
+            {
+              "word": "ecosystem",
+              "definition": "A biological community of interacting organisms and their physical environment.",
+              "sentence": "The forest moon of Endor has a unique ecosystem."
+            },
+            {
+              "word": "photosynthesis",
+              "definition": "The process by which green plants use sunlight to synthesize foods from carbon dioxide and water.",
+              "sentence": "In Narnia, even the talking trees rely on photosynthesis."
+            },
+            {
+              "word": "hypothesis",
+              "definition": "A proposed explanation made on the basis of limited evidence.",
+              "sentence": "Hermione had a hypothesis about the monster in the Chamber of Secrets."
+            },
+            {
+              "word": "evaporation",
+              "definition": "The process of turning from liquid into vapor.",
+              "sentence": "The heat from the lava caused rapid evaporation of the water block in Minecraft."
+            },
+            {
+              "word": "condensation",
+              "definition": "The conversion of a vapor or gas to a liquid.",
+              "sentence": "Condensation formed on the windows of the Hogwarts Express."
+            },
+            {
+              "word": "respiration",
+              "definition": "The action of breathing.",
+              "sentence": "Darth Vader's mechanical respiration was a chilling sound."
+            },
+            {
+              "word": "gravity",
+              "definition": "The force that attracts a body toward the center of the earth.",
+              "sentence": "The tractor beam seemed to defy gravity by pulling the ship up."
+            },
+            {
+              "word": "molecule",
+              "definition": "A group of atoms bonded together.",
+              "sentence": "A single water molecule contains two hydrogen atoms and one oxygen atom."
+            },
+            {
+              "word": "organism",
+              "definition": "An individual animal, plant, or single-celled life form.",
+              "sentence": "A Creeper is a dangerous organism found in Minecraft."
+            },
+            {
+              "word": "laboratory",
+              "definition": "A room or building equipped for scientific experiments.",
+              "sentence": "Snape's potion classroom was like a dark and spooky laboratory."
+            }
+          ]
+        },
+        {
+          "name": "Social Studies",
+          "theme": "Social Studies",
+          "lessonScript": "Social studies words help us understand history, government, and cultures.",
+          "imagePath": "/assets/images/tier5_sec2.png",
+          "id": "g5_t5_s2",
+          "rule": "Understand how these words apply to societies and governments.",
+          "words": [
+            {
+              "word": "government",
+              "definition": "The governing body of a nation, state, or community.",
+              "sentence": "The government of Narnia was restored to the four Pevensie children."
+            },
+            {
+              "word": "democracy",
+              "definition": "A system of government by the whole population or all the eligible members of a state.",
+              "sentence": "Padm\u00e9 fought to preserve democracy in the Galactic Senate."
+            },
+            {
+              "word": "economy",
+              "definition": "The wealth and resources of a country or region.",
+              "sentence": "The economy of the Shire was based mostly on farming and food."
+            },
+            {
+              "word": "revolution",
+              "definition": "A forcible overthrow of a government or social order in favor of a new system.",
+              "sentence": "The Rebel Alliance started a revolution against the Galactic Empire."
+            },
+            {
+              "word": "civilization",
+              "definition": "The stage of human social development and organization that is considered most advanced.",
+              "sentence": "The ancient civilization of the Dwarves was known for its great stone structures."
+            },
+            {
+              "word": "citizen",
+              "definition": "A native or naturalized inhabitant of a particular town or city.",
+              "sentence": "Every citizen of Narnia rejoiced when Aslan returned."
+            },
+            {
+              "word": "constitution",
+              "definition": "A body of fundamental principles according to which a state is governed.",
+              "sentence": "The laws of Narnia were not written in a constitution, but in the deep magic."
+            },
+            {
+              "word": "culture",
+              "definition": "The customs, arts, social institutions, and achievements of a particular nation or people.",
+              "sentence": "The culture of the Elves involved music, poetry, and love for nature."
+            },
+            {
+              "word": "geography",
+              "definition": "The study of the physical features of the earth.",
+              "sentence": "Gandalf studied the geography of Middle-earth to plan their route."
+            },
+            {
+              "word": "agriculture",
+              "definition": "The practice of farming.",
+              "sentence": "Agriculture was the main occupation of the Hobbits in the Shire."
+            }
+          ]
+        },
+        {
+          "name": "Math & ELA",
+          "theme": "Math & ELA",
+          "lessonScript": "Math and ELA words help us describe shapes, numbers, and literature.",
+          "imagePath": "/assets/images/tier5_sec3.png",
+          "id": "g5_t5_s3",
+          "rule": "Learn terms for shapes and literary devices.",
+          "words": [
+            {
+              "word": "quadrilateral",
+              "definition": "A four-sided figure.",
+              "sentence": "Steve noticed that the top of the crafting table was a quadrilateral."
+            },
+            {
+              "word": "perpendicular",
+              "definition": "At an angle of 90\u00b0 to a given line, plane, or surface.",
+              "sentence": "The walls of the Death Star corridors were perpendicular to the floor."
+            },
+            {
+              "word": "metaphor",
+              "definition": "A figure of speech in which a word or phrase is applied to an object or action to which it is not literally applicable.",
+              "sentence": "Calling the One Ring a 'burden' was a metaphor for its mental weight."
+            },
+            {
+              "word": "alliteration",
+              "definition": "The occurrence of the same letter or sound at the beginning of adjacent or closely connected words.",
+              "sentence": "The phrase 'Silent Steve' uses alliteration."
+            },
+            {
+              "word": "protagonist",
+              "definition": "The leading character in a drama, movie, novel, or other fictional text.",
+              "sentence": "Frodo Baggins is the main protagonist of The Lord of the Rings."
+            },
+            {
+              "word": "antagonist",
+              "definition": "A person who actively opposes or is hostile to someone or something.",
+              "sentence": "Sauron is the ultimate antagonist in Middle-earth."
+            },
+            {
+              "word": "equivalent",
+              "definition": "Equal in value, amount, function, meaning, etc.",
+              "sentence": "One gold ingot is equivalent to nine gold nuggets in Minecraft."
+            },
+            {
+              "word": "denominator",
+              "definition": "The number below the line in a common fraction.",
+              "sentence": "If you have three out of four wands, four is the denominator."
+            },
+            {
+              "word": "perimeter",
+              "definition": "The continuous line forming the boundary of a closed geometric figure.",
+              "sentence": "Steve built a fence along the perimeter of his farm."
+            },
+            {
+              "word": "polygon",
+              "definition": "A plane figure with at least three straight sides and angles.",
+              "sentence": "A triangle is the simplest kind of polygon."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

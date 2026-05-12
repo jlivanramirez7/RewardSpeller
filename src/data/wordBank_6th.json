@@ -1,0 +1,774 @@
+{
+  "tiers": [
+    {
+      "id": "g6_t1",
+      "name": "Greek Roots (Advanced)",
+      "description": "Master advanced Greek roots to unlock scientific and academic vocabulary.",
+      "rule": "Focus on the roots bio- (life), geo- (earth), and photo- (light).",
+      "sections": [
+        {
+          "name": "Life and Living Systems (bio-)",
+          "theme": "The Spark of Life",
+          "words": [
+            {
+              "word": "biology",
+              "definition": "The study of living organisms.",
+              "sentence": "Hermione's advanced knowledge of magical biology helped them identify the properties of the Venomous Tentacula in Herbology."
+            },
+            {
+              "word": "biosphere",
+              "definition": "The regions of the surface and atmosphere of the earth occupied by living organisms.",
+              "sentence": "The lush biosphere of Endor is entirely covered in giant, ancient trees."
+            },
+            {
+              "word": "biodiversity",
+              "definition": "The variety of life in the world or in a particular habitat.",
+              "sentence": "The biodiversity of the Minecraft jungle biome is incredible, with ocelots, parrots, and pandas."
+            },
+            {
+              "word": "biography",
+              "definition": "An account of someone's life written by someone else.",
+              "sentence": "A wizard wrote a very thick biography detailing the brave deeds of Albus Dumbledore."
+            },
+            {
+              "word": "biologist",
+              "definition": "An expert in or student of the branch of science concerning living organisms.",
+              "sentence": "A Narnian biologist would be very confused by a talking beaver."
+            },
+            {
+              "word": "bioluminescent",
+              "definition": "Relating to light emitted by living organisms.",
+              "sentence": "The bioluminescent glow of the glow squids in the deep ocean caves illuminated the player's path."
+            },
+            {
+              "word": "biomass",
+              "definition": "The total mass of organisms in a given area.",
+              "sentence": "The biomass of the Ents was massive, making them look like walking forests."
+            },
+            {
+              "word": "biometrics",
+              "definition": "The measurement and analysis of unique physical or behavioral characteristics.",
+              "sentence": "The Jedi Temple used biometrics to ensure only authorized Jedi could enter the archives."
+            },
+            {
+              "word": "biopsy",
+              "definition": "An examination of tissue removed from a living body to discover the presence of a disease.",
+              "sentence": "Madam Pomfrey performed a quick biopsy on Ron's hand after he was bitten by a dragon."
+            },
+            {
+              "word": "biohazard",
+              "definition": "A biological agent or condition that is a hazard to humans or the environment.",
+              "sentence": "The creeper explosion left a green cloud that looked like a biohazard area."
+            }
+          ],
+          "lessonScript": "Let's start with 'bio-', the root of life. Think of biology, the study of life, or the biosphere, the zone of life on earth. When you see 'bio', think of living things!",
+          "imagePath": "/assets/images/g6_t1_s1.png",
+          "id": "g6_t1_s1",
+          "rule": "Look for 'bio' to find words about life!"
+        },
+        {
+          "name": "Earth and Structures (geo-)",
+          "theme": "The Foundation of Worlds",
+          "words": [
+            {
+              "word": "geology",
+              "definition": "The study of the earth's physical structure and substance.",
+              "sentence": "The dwarves of Erebor had a deep understanding of geology, allowing them to find the Arkenstone."
+            },
+            {
+              "word": "geography",
+              "definition": "The study of the physical features of the earth and its atmosphere.",
+              "sentence": "The geography of Middle-earth is vast, ranging from the Shire to the fires of Mordor."
+            },
+            {
+              "word": "geothermal",
+              "definition": "Relating to or produced by the internal heat of the earth.",
+              "sentence": "Alex discovered a geothermal vent in the Deep Dark, which she used to power her complex redstone contraptions."
+            },
+            {
+              "word": "geode",
+              "definition": "A small cavity in rock lined with crystals or other mineral matter.",
+              "sentence": "I found a massive amethyst geode while mining deep below my Minecraft castle."
+            },
+            {
+              "word": "geocentric",
+              "definition": "Having or representing the earth as the center.",
+              "sentence": "The ancient wizards of Hogwarts believed in a geocentric universe, before they discovered astronomy."
+            },
+            {
+              "word": "geometry",
+              "definition": "The branch of mathematics concerned with the properties and relations of points, lines, surfaces, and solids.",
+              "sentence": "The geometry of the Death Star was a perfect sphere, making it look like a small moon."
+            },
+            {
+              "word": "geophysical",
+              "definition": "Relating to the physics of the earth.",
+              "sentence": "The geophysical forces that created the mountains of Narnia were guided by Aslan's song."
+            },
+            {
+              "word": "geopolitics",
+              "definition": "Politics, especially international relations, as influenced by geographical factors.",
+              "sentence": "The geopolitics of the Star Wars galaxy were thrown into chaos when the Clone Wars began."
+            },
+            {
+              "word": "geomorphic",
+              "definition": "Relating to the form of the landscape or other natural features of the earth's surface.",
+              "sentence": "The geomorphic changes to the landscape after the Balrog's fall were permanent."
+            },
+            {
+              "word": "geographer",
+              "definition": "An expert in the study of the physical features of the earth.",
+              "sentence": "A famous geographer from Gondor mapped the regions of Harad and Rhûn."
+            }
+          ],
+          "lessonScript": "Next is 'geo-', the root of earth. Geology is the study of the earth's structure, and geography maps its surface. When you dig deep in Minecraft, you are exploring the geology of your world!",
+          "imagePath": "/assets/images/g6_t1_s2.png",
+          "id": "g6_t1_s2",
+          "rule": "Think of 'geo' as everything ground and earth!"
+        },
+        {
+          "name": "Light and Energy (photo-)",
+          "theme": "Capturing the Light",
+          "words": [
+            {
+              "word": "photograph",
+              "definition": "A picture made using a camera.",
+              "sentence": "Colin Creevey loved to take a photograph of Harry Potter whenever he got the chance."
+            },
+            {
+              "word": "photosynthesis",
+              "definition": "The process by which green plants use sunlight to synthesize foods from carbon dioxide and water.",
+              "sentence": "Minecraft crops need light to grow, simulating the process of photosynthesis."
+            },
+            {
+              "word": "photon",
+              "definition": "A particle representing a quantum of light or other electromagnetic radiation.",
+              "sentence": "The Death Star's superlaser fired a massive beam of photon energy to destroy Alderaan."
+            },
+            {
+              "word": "photogenic",
+              "definition": "Looking attractive in photographs.",
+              "sentence": "The White Witch was not very photogenic, preferring to freeze people rather than pose."
+            },
+            {
+              "word": "photometer",
+              "definition": "An instrument for measuring the intensity of light.",
+              "sentence": "A Jedi might use a photometer to measure the intensity of a kyber crystal's glow."
+            },
+            {
+              "word": "photonic",
+              "definition": "Relating to photons or the use of light.",
+              "sentence": "The holographic display in the Jedi council chamber was powered by advanced photonic technology."
+            },
+            {
+              "word": "photolysis",
+              "definition": "The decomposition or separation of molecules by the action of light.",
+              "sentence": "In Potions class, students learned that certain ingredients break down via photolysis when exposed to sunlight."
+            },
+            {
+              "word": "photocopy",
+              "definition": "A photographic copy of written or printed material.",
+              "sentence": "Hermione wished she could photocopy the ancient books in the restricted section."
+            },
+            {
+              "word": "photosensitive",
+              "definition": "Responding to light.",
+              "sentence": "Endermen are photosensitive and will teleport away if exposed to bright flash powder."
+            },
+            {
+              "word": "photosphere",
+              "definition": "The luminous visible surface of the sun or a star.",
+              "sentence": "The intense heat of the star's photosphere made it impossible for the Jedi starfighters to get close."
+            }
+          ],
+          "lessonScript": "Finally, 'photo-', the root of light. Photosynthesis is how plants make food from light. A photograph captures light to make an image. Light up your vocabulary with 'photo'!",
+          "imagePath": "/assets/images/g6_t1_s3.png",
+          "id": "g6_t1_s3",
+          "rule": "Shine a light on 'photo' to reveal its meaning!"
+        }
+      ],
+      "lessonScript": "Welcome, young scholar. Today we delve into the ancient roots of language. Greek roots are the building blocks of many advanced words. We will explore roots that deal with life, earth, and light. Master these, and you will unlock the secrets of many scientific texts!",
+      "lessonImage": "/assets/images/g6_tier1.png"
+    },
+    {
+      "id": "g6_t2",
+      "name": "Assimilated Prefixes",
+      "description": "Learn how prefixes change their form to match the root word for easier pronunciation.",
+      "rule": "Watch how in- changes to im-, sub- to suf-/sup-, and con- to com-.",
+      "sections": [
+        {
+          "name": "Shifting Forms (in- to im-)",
+          "theme": "Masters of Disguise",
+          "words": [
+            {
+              "word": "impossible",
+              "definition": "Not able to occur, exist, or be done.",
+              "sentence": "It seemed impossible to destroy the Death Star, but Luke trusted the Force."
+            },
+            {
+              "word": "imperfect",
+              "definition": "Not perfect; faulty or incomplete.",
+              "sentence": "The White Witch's reign was imperfect, as Aslan's return was always a threat."
+            },
+            {
+              "word": "immortal",
+              "definition": "Living forever; never dying or decaying.",
+              "sentence": "The Elves of Middle-earth are immortal and do not die of old age."
+            },
+            {
+              "word": "imbalance",
+              "definition": "A lack of proportion or relation between corresponding things.",
+              "sentence": "The dark side caused a great imbalance in the Force."
+            },
+            {
+              "word": "immature",
+              "definition": "Not fully developed; or behaving in a way that is typical of a child.",
+              "sentence": "Ron's immature behavior often annoyed Hermione during their adventures."
+            },
+            {
+              "word": "impatient",
+              "definition": "Having or showing a tendency to be quickly irritated or provoked.",
+              "sentence": "The impatient dwarf Gimli wanted to charge into the battle immediately."
+            },
+            {
+              "word": "immovable",
+              "definition": "Not able to be moved.",
+              "sentence": "Thorin stood immovable before the gates of Erebor, refusing to share the gold."
+            },
+            {
+              "word": "impeccable",
+              "definition": "In accordance with the highest standards; faultless.",
+              "sentence": "Legolas had impeccable aim with his bow, never missing a target."
+            },
+            {
+              "word": "impractical",
+              "definition": "Not adapted to use or action; not sensible or realistic.",
+              "sentence": "It is impractical to build a massive castle out of dirt in Minecraft if you want it to last."
+            },
+            {
+              "word": "improbable",
+              "definition": "Not likely to be true or to happen.",
+              "sentence": "It was highly improbable that a small hobbit could destroy the One Ring, yet Frodo did."
+            }
+          ],
+          "lessonScript": "Sometimes prefixes change their last letter to blend in with the root word. The prefix 'in-' changes to 'im-' before words starting with p, m, or b. It makes it easier to say 'impossible' than 'in-possible'!",
+          "imagePath": "/assets/images/g6_t2_s1.png",
+          "id": "g6_t2_s1",
+          "rule": "Change 'in' to 'im' before p, m, or b!"
+        },
+        {
+          "name": "Hidden Depths (sub- to suf-, sup-)",
+          "theme": "The Doppelganger Effect",
+          "words": [
+            {
+              "word": "support",
+              "definition": "Bear all or part of the weight of; hold up.",
+              "sentence": "The stone pillars of Narnia's great castle support a massive, beautiful roof."
+            },
+            {
+              "word": "suffer",
+              "definition": "Experience or be subjected to something bad or unpleasant.",
+              "sentence": "The people of Narnia had to suffer through a hundred years of winter."
+            },
+            {
+              "word": "suppress",
+              "definition": "Forcibly put an end to.",
+              "sentence": "The Empire tried to suppress all knowledge of the Jedi Order."
+            },
+            {
+              "word": "suffuse",
+              "definition": "Gradually spread through or over.",
+              "sentence": "A warm glow began to suffuse the Great Hall as the candles were lit."
+            },
+            {
+              "word": "suffice",
+              "definition": "Be enough or adequate.",
+              "sentence": "A single piece of lembas bread will suffice to keep a traveler full for a day."
+            },
+            {
+              "word": "supplement",
+              "definition": "A thing added to something else in order to complete or enhance it.",
+              "sentence": "Hermione used extra books to supplement her studies for the O.W.L.s."
+            },
+            {
+              "word": "supplant",
+              "definition": "Supersede and replace.",
+              "sentence": "Saruman tried to supplant Sauron as the Lord of the Rings, but he failed."
+            },
+            {
+              "word": "supple",
+              "definition": "Bending and moving easily and gracefully; flexible.",
+              "sentence": "The leather of the Jedi robes was supple and allowed for easy movement."
+            },
+            {
+              "word": "supplicant",
+              "definition": "A person who asks for something in a humble way.",
+              "sentence": "A humble supplicant approached Aslan, asking for help for his family."
+            },
+            {
+              "word": "suppose",
+              "definition": "Think or assume that something is true or probable.",
+              "sentence": "I suppose we could try to use a bucket of water to survive the fall in Minecraft."
+            }
+          ],
+          "lessonScript": "The prefix 'sub-' (meaning under) changes to 'suf-' or 'sup-' depending on the first letter of the root. It helps the word flow better off your tongue!",
+          "imagePath": "/assets/images/g6_t2_s2.png",
+          "id": "g6_t2_s2",
+          "rule": "'Sub' changes to match the root, like 'suf' or 'sup'!"
+        },
+        {
+          "name": "Gathering Forces (con- to com-)",
+          "theme": "Stronger Together",
+          "words": [
+            {
+              "word": "combine",
+              "definition": "Join or merge to form a single unit or substance.",
+              "sentence": "You can combine two damaged tools in Minecraft to repair them."
+            },
+            {
+              "word": "commotion",
+              "definition": "A state of confused and noisy disturbance.",
+              "sentence": "There was a great commotion in the Gryffindor common room when Harry caught the Snitch."
+            },
+            {
+              "word": "compass",
+              "definition": "An instrument containing a magnetized pointer that shows the direction of magnetic north.",
+              "sentence": "A compass in Minecraft always points to the world spawn point."
+            },
+            {
+              "word": "compassion",
+              "definition": "Sympathetic pity and concern for the sufferings or misfortunes of others.",
+              "sentence": "Luke showed great compassion toward his father, Darth Vader."
+            },
+            {
+              "word": "compatible",
+              "definition": "Able to exist or occur together without conflict.",
+              "sentence": "The green kyber crystal was compatible with Luke's new lightsaber hilt."
+            },
+            {
+              "word": "compensate",
+              "definition": "Give someone something, typically money, in recognition of loss, suffering, or injury.",
+              "sentence": "The dwarves had to compensate Bilbo for his burglary services."
+            },
+            {
+              "word": "compete",
+              "definition": "Strive to gain or win something by defeating or establishing superiority over others.",
+              "sentence": "Harry had to compete in the dangerous Triwizard Tournament."
+            },
+            {
+              "word": "compile",
+              "definition": "Produce by assembling information collected from other sources.",
+              "sentence": "Hermione wanted to compile a complete history of Hogwarts."
+            },
+            {
+              "word": "complain",
+              "definition": "Express dissatisfaction or annoyance about something.",
+              "sentence": "C-3PO loves to complain about the chances of survival in dangerous situations."
+            },
+            {
+              "word": "complex",
+              "definition": "Consisting of many different and connected parts.",
+              "sentence": "Building a fully functional calculator in Minecraft requires complex redstone wiring."
+            }
+          ],
+          "lessonScript": "The prefix 'con-' (meaning with or together) becomes 'com-' before words starting with b, m, or p. See how they join forces!",
+          "imagePath": "/assets/images/g6_t2_s3.png",
+          "id": "g6_t2_s3",
+          "rule": "Use 'com' instead of 'con' before b, m, and p!"
+        }
+      ],
+      "lessonScript": "Greetings, apprentice. Words can be tricky, and sometimes they change their shape to hide in plain sight. Today, we study 'Assimilated Prefixes'. This happens when a prefix changes its last letter to match the sound of the root word, making it easier to pronounce. Keep your eyes peeled for these shape-shifters!",
+      "lessonImage": "/assets/images/g6_tier2.png"
+    },
+    {
+      "id": "g6_t3",
+      "name": "Complex Syllable Stress & Schwa",
+      "description": "Navigate the rhythm of words, focusing on the schwa sound and stress shifts.",
+      "rule": "Identify the unstressed schwa sound and notice how stress changes word meaning.",
+      "sections": [
+        {
+          "name": "The Elusive Schwa",
+          "theme": "The Silent Whispers",
+          "words": [
+            {
+              "word": "phenomenon",
+              "definition": "A fact or situation that is observed to exist or happen.",
+              "sentence": "Finding a pink sheep in the wild is a rare phenomenon that every Minecraft player hopes to witness."
+            },
+            {
+              "word": "horizon",
+              "definition": "The line at which the earth's surface and the sky appear to meet.",
+              "sentence": "The sun set on the Narnian horizon, signaling the end of a peaceful day."
+            },
+            {
+              "word": "anonymous",
+              "definition": "Not identified by name; of unknown name.",
+              "sentence": "The author of the ancient spellbook in the Hogwarts restricted section remained anonymous."
+            },
+            {
+              "word": "occurrence",
+              "definition": "An incident or event.",
+              "sentence": "An eclipse was a rare occurrence in the Star Wars galaxy."
+            },
+            {
+              "word": "definitive",
+              "definition": "Done or reached decisively and with authority.",
+              "sentence": "Hermione looked for a definitive answer in Hogwarts: A History."
+            },
+            {
+              "word": "vocabulary",
+              "definition": "The body of words used in a particular language.",
+              "sentence": "Gollum had a very strange vocabulary, often referring to himself as 'we'."
+            },
+            {
+              "word": "emphasis",
+              "definition": "Special importance, value, or prominence given to something.",
+              "sentence": "Professor Snape put heavy emphasis on the importance of brewing potions correctly."
+            },
+            {
+              "word": "significant",
+              "definition": "Sufficiently great or important to be worthy of attention.",
+              "sentence": "The discovery of the One Ring was a significant event in the history of Middle-earth."
+            },
+            {
+              "word": "benevolent",
+              "definition": "Well meaning and kindly.",
+              "sentence": "Aslan was a benevolent ruler, bringing joy back to Narnia."
+            },
+            {
+              "word": "sovereign",
+              "definition": "A supreme ruler, especially a monarch.",
+              "sentence": "The King of Gondor was the sovereign ruler of the realm."
+            }
+          ],
+          "lessonScript": "The schwa is the most common vowel sound in English, but it's often hidden! It sounds like a soft 'uh' or 'ih' and happens in the unstressed part of a word, like the 'a' in 'anonymous'. Listen for the whisper!",
+          "imagePath": "/assets/images/g6_t3_s1.png",
+          "id": "g6_t3_s1",
+          "rule": "Listen for the soft 'uh' of the hidden schwa sound!"
+        },
+        {
+          "name": "Shifting Stress",
+          "theme": "The Changing Beats",
+          "words": [
+            {
+              "word": "alternative",
+              "definition": "Available as another possibility.",
+              "sentence": "Flying on a hippogriff is a great alternative to walking to class."
+            },
+            {
+              "word": "photography",
+              "definition": "The art or practice of taking and processing photographs.",
+              "sentence": "Colin Creevey's passion for photography was well known at Hogwarts."
+            },
+            {
+              "word": "magnificent",
+              "definition": "Impressively beautiful, elaborate, or extravagant; striking.",
+              "sentence": "The view of Minas Tirith was magnificent, even from a distance."
+            },
+            {
+              "word": "competitive",
+              "definition": "Relating to or characterized by competition.",
+              "sentence": "Quidditch is a highly competitive sport among the Hogwarts houses."
+            },
+            {
+              "word": "declaration",
+              "definition": "A formal or explicit statement or announcement.",
+              "sentence": "The declaration of the Galactic Empire was met with thunderous applause."
+            },
+            {
+              "word": "explanation",
+              "definition": "A statement or account that makes something clear.",
+              "sentence": "Hermione demanded a logical explanation for Harry's lucky guess in Potions."
+            },
+            {
+              "word": "preparation",
+              "definition": "The action or process of making ready or being made ready for use or consideration.",
+              "sentence": "The preparation for the battle at Helm's Deep took all night."
+            },
+            {
+              "word": "definition",
+              "definition": "A statement of the exact meaning of a word.",
+              "sentence": "The definition of a 'horcrux' was hidden in the darkest books."
+            },
+            {
+              "word": "hypothesis",
+              "definition": "A proposed explanation made on the basis of limited evidence as a starting point for further investigation.",
+              "sentence": "The Jedi formed a hypothesis about the return of the Sith."
+            },
+            {
+              "word": "philosophy",
+              "definition": "The study of the fundamental nature of knowledge, reality, and existence.",
+              "sentence": "The philosophy of the Jedi Order emphasizes peace and detachment."
+            }
+          ],
+          "lessonScript": "Some words change which syllable is stressed when they change form. Notice how 'photo' changes to 'photography'. The beat moves, and so does the vowel sound!",
+          "imagePath": "/assets/images/g6_t3_s2.png",
+          "id": "g6_t3_s2",
+          "rule": "Feel the beat shift as words change their form!"
+        }
+      ],
+      "lessonScript": "Listen to the rhythm of the words! Every word has a beat, a stressed syllable. But it also has unstressed parts where the vowels get lazy and make the 'schwa' sound, like 'uh'. We will also see how stress shifts when words grow!",
+      "lessonImage": "/assets/images/g6_tier3.png"
+    },
+    {
+      "id": "g6_t4",
+      "name": "Shades of Meaning & Context Clues",
+      "description": "Understand precise word choices and use surrounding text to decode meaning.",
+      "rule": "Look for synonyms with different intensities and use context clues to define words.",
+      "sections": [
+        {
+          "name": "Shades of Intensity",
+          "theme": "From Spark to Inferno",
+          "words": [
+            {
+              "word": "minute",
+              "definition": "Extremely small.",
+              "sentence": "The detail on the Minecraft map was minute, showing every single tree."
+            },
+            {
+              "word": "substantial",
+              "definition": "Of considerable importance, size, or value.",
+              "sentence": "A substantial amount of gold was found in the Lonely Mountain."
+            },
+            {
+              "word": "colossal",
+              "definition": "Extremely large.",
+              "sentence": "The fellowship faced a colossal challenge when they encountered the Balrog."
+            },
+            {
+              "word": "formidable",
+              "definition": "Inspiring fear or respect through being impressively large, powerful, intense, or capable.",
+              "sentence": "The Death Star was a formidable weapon, capable of destroying planets."
+            },
+            {
+              "word": "potent",
+              "definition": "Having great power, influence, or effect.",
+              "sentence": "The Draught of Living Death is a very potent sleeping potion."
+            },
+            {
+              "word": "omnipotent",
+              "definition": "Having unlimited power; able to do anything.",
+              "sentence": "The White Witch believed she was omnipotent in Narnia, but she was wrong."
+            },
+            {
+              "word": "apprehensive",
+              "definition": "Anxious or fearful that something bad or unpleasant will happen.",
+              "sentence": "The Pevensie children were apprehensive as they stepped through the wardrobe."
+            },
+            {
+              "word": "petrified",
+              "definition": "So frightened that one is unable to move; terrified.",
+              "sentence": "Hermione was petrified by the Basilisk, but fortunately not killed."
+            },
+            {
+              "word": "astounded",
+              "definition": "Shocked or greatly surprised.",
+              "sentence": "Harry was astounded to learn that he was a wizard."
+            },
+            {
+              "word": "devastated",
+              "definition": "Feeling severe and overwhelming shock or grief.",
+              "sentence": "The Shire was devastated by Saruman's thugs, but the hobbits rebuilt it."
+            }
+          ],
+          "lessonScript": "Not all big things are just 'big'. Some are 'colossal' or 'formidable'. Words have shades of intensity. Choose the right shade to paint a perfect picture in the reader's mind!",
+          "imagePath": "/assets/images/g6_t4_s1.png",
+          "id": "g6_t4_s1",
+          "rule": "Find the perfect shade of word to match the feeling!"
+        },
+        {
+          "name": "Context Clues",
+          "theme": "Decoding the Landscape",
+          "words": [
+            {
+              "word": "precarious",
+              "definition": "Not securely held or in position; dangerously likely to fall or collapse.",
+              "sentence": "Steve stood in a precarious position on the edge of a high cliff in Minecraft."
+            },
+            {
+              "word": "ubiquitous",
+              "definition": "Present, appearing, or found everywhere.",
+              "sentence": "Droids are ubiquitous in the Star Wars galaxy, found on almost every planet."
+            },
+            {
+              "word": "ephemeral",
+              "definition": "Lasting for a very short time.",
+              "sentence": "The beauty of the golden woods of Lothlórien felt almost ephemeral to the mortals."
+            },
+            {
+              "word": "sanction",
+              "definition": "Give official permission or approval for (an action).",
+              "sentence": "The Ministry of Magic did not sanction the use of dark magic."
+            },
+            {
+              "word": "refrain",
+              "definition": "Stop oneself from doing something.",
+              "sentence": "Please refrain from casting spells in the hallways between classes."
+            },
+            {
+              "word": "cleave",
+              "definition": "Split or sever (something), especially along a natural line or grain.",
+              "sentence": "Gimli's axe could cleave a hard stone in two."
+            },
+            {
+              "word": "resolute",
+              "definition": "Admirably purposeful, determined, and unwavering.",
+              "sentence": "Frodo remained resolute in his quest to destroy the One Ring."
+            },
+            {
+              "word": "ambiguous",
+              "definition": "Open to more than one interpretation; having a double meaning.",
+              "sentence": "Professor Trelawney's prophecy was ambiguous, and its meaning was not clear to Harry."
+            },
+            {
+              "word": "lucid",
+              "definition": "Expressed clearly; easy to understand.",
+              "sentence": "After recovering from the dark spell, Theoden was lucid again."
+            },
+            {
+              "word": "enigmatic",
+              "definition": "Difficult to interpret or understand; mysterious.",
+              "sentence": "Aslan's enigmatic warnings left Lucy wondering about the true nature of the battle ahead."
+            }
+          ],
+          "lessonScript": "When you meet a new word, look at the words around it! They are clues that can help you decode the meaning. Be a detective and solve the mystery of the unknown word!",
+          "imagePath": "/assets/images/g6_t4_s2.png",
+          "id": "g6_t4_s2",
+          "rule": "Use the surrounding words as clues to unlock new meanings!"
+        }
+      ],
+      "lessonScript": "Words are like colors. Red can be crimson or pink. In this tier, we look at the 'Shades of Meaning' to find the perfect word. We will also practice being word detectives, using 'Context Clues' to figure out what unknown words mean without a dictionary!",
+      "lessonImage": "/assets/images/g6_tier4.png"
+    },
+    {
+      "id": "g6_t5",
+      "name": "High School Prep Academic Vocabulary",
+      "description": "Master the words you will need for high school level analysis and writing.",
+      "rule": "Focus on words that help you analyze, structure, and evaluate information.",
+      "sections": [
+        {
+          "name": "Analysis and Reasoning",
+          "theme": "The Scholar's Toolkit",
+          "words": [
+            {
+              "word": "analyze",
+              "definition": "Examine methodically and in detail the constitution or structure of something.",
+              "sentence": "Elrond had to analyze the ancient text to understand the danger of the One Ring."
+            },
+            {
+              "word": "synthesize",
+              "definition": "Combine (a number of things) into a coherent whole.",
+              "sentence": "Hermione tried to synthesize the information from three different books."
+            },
+            {
+              "word": "evaluate",
+              "definition": "Form an idea of the amount, number, or value of; assess.",
+              "sentence": "The Pevensie children had to evaluate the situation carefully before deciding to trust the Beavers."
+            },
+            {
+              "word": "formulate",
+              "definition": "Create or devise (a strategy or a proposal).",
+              "sentence": "The Rebel Alliance had to formulate a plan to attack the Death Star."
+            },
+            {
+              "word": "elaborate",
+              "definition": "Develop or present (a theory, policy, or system) in detail.",
+              "sentence": "Dumbledore gave an elaborate explanation of the mirror's powers."
+            },
+            {
+              "word": "infer",
+              "definition": "Deduce or conclude (information) from evidence and reasoning rather than from explicit statements.",
+              "sentence": "From the tracks in the mud, Aragorn could infer that the hobbits were still alive."
+            },
+            {
+              "word": "deduce",
+              "definition": "Arrive at (a fact or a conclusion) by reasoning; draw as a logical conclusion.",
+              "sentence": "Hermione could deduce the location of the secret chamber from the clues."
+            },
+            {
+              "word": "validate",
+              "definition": "Check or prove the validity or accuracy of (something).",
+              "sentence": "The council had to validate the claim that Sauron had returned."
+            },
+            {
+              "word": "corroborate",
+              "definition": "Confirm or give support to (a statement, theory, or finding).",
+              "sentence": "Ron's story was corroborated by the other students who saw the giant spider."
+            },
+            {
+              "word": "critique",
+              "definition": "Evaluate (a theory or practice) in a detailed and analytical way.",
+              "sentence": "The Jedi Council would critique Anakin's impulsive actions after the mission."
+            }
+          ],
+          "lessonScript": "These words are your tools for high school! Words like 'analyze' and 'synthesize' help you talk about how ideas fit together. Practice using them to sound like a true scholar!",
+          "imagePath": "/assets/images/g6_t5_s1.png",
+          "id": "g6_t5_s1",
+          "rule": "Use these words to prove your points in any discussion!"
+        },
+        {
+          "name": "Structure and Function",
+          "theme": "Building the Framework",
+          "words": [
+            {
+              "word": "component",
+              "definition": "A part or element of a larger whole.",
+              "sentence": "A redstone repeater is a vital component in many Minecraft machines."
+            },
+            {
+              "word": "function",
+              "definition": "An activity or purpose natural to or intended for a person or thing.",
+              "sentence": "The primary function of the Death Star was to maintain order through fear."
+            },
+            {
+              "word": "framework",
+              "definition": "An essential supporting structure of a building, vehicle, or object.",
+              "sentence": "The wooden framework of the house was destroyed by a creeper explosion."
+            },
+            {
+              "word": "facilitate",
+              "definition": "Make (an action or process) easy or easier.",
+              "sentence": "The Floo Network helps to facilitate travel between wizarding homes."
+            },
+            {
+              "word": "implement",
+              "definition": "Put (a decision, plan, agreement, etc.) into effect.",
+              "sentence": "The King of Gondor decided to implement new laws to protect the borders."
+            },
+            {
+              "word": "modify",
+              "definition": "Make partial or minor changes to (something), typically so as to improve it.",
+              "sentence": "You can modify your weapons at a smithing table in Minecraft."
+            },
+            {
+              "word": "derive",
+              "definition": "Obtain something from (a specified source).",
+              "sentence": "The wizards of the White Council derive their power from their deep connection to Middle-earth."
+            },
+            {
+              "word": "exceed",
+              "definition": "Be greater in number or size than (a quantity, number, or other measurable thing).",
+              "sentence": "The size of the droid army seemed to exceed all expectations."
+            },
+            {
+              "word": "innovation",
+              "definition": "A new method, idea, product, etc.",
+              "sentence": "The discovery of redstone was a major innovation in the world of Minecraft."
+            },
+            {
+              "word": "perspective",
+              "definition": "A particular attitude toward or way of regarding something; a point of view.",
+              "sentence": "From a certain perspective, what Obi-Wan said was true."
+            }
+          ],
+          "lessonScript": "To build strong arguments, you need words that describe structure. 'Component', 'framework', and 'function' help you explain how things work. Build your vocabulary fortress!",
+          "imagePath": "/assets/images/g6_t5_s2.png",
+          "id": "g6_t5_s2",
+          "rule": "Use structure words to build strong arguments!"
+        }
+      ],
+      "lessonScript": "You are preparing for high school! This tier contains the heavy-hitting 'Academic Vocabulary' used by scholars. Words that help you analyze arguments and describe the structure of ideas. Master these to become a true master of language!",
+      "lessonImage": "/assets/images/g6_tier5.png"
+    }
+  ]
+}

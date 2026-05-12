@@ -1,5 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import wordBankData from '../data/wordBank.json';
+import { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import wordBank3rd from '../data/wordBank_3rd.json';
+import wordBank4th from '../data/wordBank_4th.json';
+import wordBank5th from '../data/wordBank_5th.json';
+import wordBank6th from '../data/wordBank_6th.json';
 
 const AppContext = createContext();
 
@@ -13,7 +16,7 @@ export const AppProvider = ({ children }) => {
   // Student State
   const [studentPoints, setStudentPoints] = useState(() => loadState('studentPoints', 0));
   const [studentStreak, setStudentStreak] = useState(() => loadState('studentStreak', 0));
-  const [unlockedTiers, setUnlockedTiers] = useState(() => loadState('unlockedTiers', [1])); // Tier 1 unlocked by default
+  const [unlockedTiers, setUnlockedTiers] = useState(() => loadState('unlockedTiers', [])); // First tier handled by UI logic
   const [struggleWords, setStruggleWords] = useState(() => loadState('struggleWords', []));
   const [sectionScores, setSectionScores] = useState(() => loadState('sectionScores', {})); // Tracks max score per section/diff
   const [sectionAccuracy, setSectionAccuracy] = useState(() => loadState('sectionAccuracy', {})); // Tracks max percentage correct
@@ -26,10 +29,32 @@ export const AppProvider = ({ children }) => {
     { id: 1, name: '30 mins Screen Time', cost: 500 },
     { id: 2, name: 'Trip to Park', cost: 1000 }
   ]));
-  const [currentGradeLevel, setCurrentGradeLevel] = useState(() => loadState('currentGradeLevel', '4th-5th'));
+  const [currentGradeLevel, setCurrentGradeLevel] = useState(() => {
+    let grade = loadState('currentGradeLevel', '4th');
+    // Fallback for legacy values
+    if (grade === '4th-5th') grade = '4th';
+    if (grade === '6th+') grade = '6th';
+
+    // Validate against allowed values
+    const validGrades = ['3rd', '4th', '5th', '6th'];
+    if (!validGrades.includes(grade)) {
+      grade = '4th';
+    }
+    return grade;
+  });
 
   // Curriculum Data
-  const [tiers] = useState(wordBankData.tiers);
+  const tiers = useMemo(() => {
+    switch (currentGradeLevel) {
+      case '3rd': return wordBank3rd.tiers;
+      case '4th': return wordBank4th.tiers;
+      case '5th': return wordBank5th.tiers;
+      case '6th': return wordBank6th.tiers;
+      default:
+        console.warn(`Unexpected grade level: ${currentGradeLevel}. Defaulting to 4th.`);
+        return wordBank4th.tiers;
+    }
+  }, [currentGradeLevel]);
 
   // Save to localStorage on change
   useEffect(() => {
@@ -92,7 +117,7 @@ export const AppProvider = ({ children }) => {
   const resetProgress = () => {
     setStudentPoints(0);
     setStudentStreak(0);
-    setUnlockedTiers([1]);
+    setUnlockedTiers([]);
     setStruggleWords([]);
     setSectionScores({});
     setSectionAccuracy({});

@@ -6,14 +6,12 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const wordBankPath = path.join(__dirname, 'src', 'data', 'wordBank.json');
+const dataDir = path.join(__dirname, 'src', 'data');
 const audioDir = path.join(__dirname, 'public', 'assets', 'audio');
 
 if (!fs.existsSync(audioDir)) {
   fs.mkdirSync(audioDir, { recursive: true });
 }
-
-const data = JSON.parse(fs.readFileSync(wordBankPath, 'utf8'));
 
 // Usage: node generate_lesson_audio.js <YOUR_GOOGLE_CLOUD_API_KEY> OR pass via environment
 const apiKey = process.argv[2] || process.env.VITE_GOOGLE_TTS_API_KEY;
@@ -98,27 +96,79 @@ const run = async () => {
   console.log("\n🚀 LAUNCHING HIGH-FIDELITY TTS GENERATOR pipeline...");
   console.log("---------------------------------------------------\n");
 
-  // Step 1: Process each section individually
-  for (const tier of data.tiers) {
-    for (const section of tier.sections) {
-      if (section.lessonScript && section.id) {
-        // Naming pattern: lesson_t1_s1.mp3
-        const filename = `lesson_${section.id}.mp3`;
-        await generateTTS(section.lessonScript, 'jedi', filename);
-        // Rate limiting protection
-        await new Promise(r => setTimeout(r, 1000)); 
+  try {
+    const files = fs.readdirSync(dataDir).filter(file => file.startsWith('wordBank_') && file.endsWith('.json'));
+
+    if (files.length === 0) {
+      console.warn("⚠️  Warning: No files matching 'wordBank_*.json' found in", dataDir);
+      return;
+    }
+
+    for (const file of files) {
+      const filePath = path.join(dataDir, file);
+      console.log(`\n📂 Processing file: ${file}`);
+
+      let data;
+      try {
+        data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      } catch (err) {
+        console.error(`❌ Error parsing JSON from ${file}:`, err.message);
+        continue;
       }
-      
-      // Step 2: Process specific individual words inside each section
-      for (const wordObj of section.words) {
-         const speechString = `${wordObj.word}. ${wordObj.definition} ${wordObj.sentence} The word is: ${wordObj.word}.`;
-         // Consistent safe filename regex
-         const safeWord = wordObj.word.toLowerCase().replace(/[^a-z0-9]/g, '');
-         const filename = `word_${safeWord}.mp3`;
-         await generateTTS(speechString, 'assessment', filename);
-         await new Promise(r => setTimeout(r, 1000));
+
+      if (!Array.isArray(data.tiers)) {
+        console.warn(`⚠️  Warning: File ${file} does not contain an array of 'tiers'. Skipping.`);
+        continue;
+      }
+
+      // Step 1: Process each section individually
+      for (const tier of data.tiers) {
+        if (!Array.isArray(tier.sections)) {
+          console.warn(`⚠️  Warning: Tier ${tier.id || 'unknown'} does not contain an array of 'sections'. Skipping.`);
+          continue;
+        }
+        for (const section of tier.sections) {
+          if (!section.id) {
+            console.warn(`⚠️  Warning: A section in tier ${tier.id || 'unknown'} is missing 'id'. Skipping section.`);
+            continue;
+          }
+
+          if (section.lessonScript) {
+            // Naming pattern: lesson_t1_s1.mp3
+            const filename = `lesson_${section.id}.mp3`;
+            await generateTTS(section.lessonScript, 'jedi', filename);
+            // Rate limiting protection
+            await new Promise(r => setTimeout(r, 1000)); 
+          }
+          
+          if (Array.isArray(section.words)) {
+            // Step 2: Process specific individual words inside each section
+            for (const wordObj of section.words) {
+               if (!wordObj.word) {
+                 console.warn(`⚠️  Warning: A word object in section ${section.id} is missing 'word' property. Skipping word.`);
+                 continue;
+               }
+               
+               const definition = wordObj.definition || '';
+               const sentence = wordObj.sentence || '';
+               
+               if (!wordObj.definition || !wordObj.sentence) {
+                 console.warn(`⚠️  Warning: Missing definition or sentence for word '${wordObj.word}' in section ${section.id}.`);
+               }
+               
+               const speechString = `${wordObj.word}. ${definition} ${sentence} The word is: ${wordObj.word}.`;
+               // Consistent safe filename regex
+               const safeWord = wordObj.word.toLowerCase().replace(/[^a-z0-9]/g, '');
+               const filename = `word_${section.id}_${safeWord}.mp3`;
+               await generateTTS(speechString, 'assessment', filename);
+               await new Promise(r => setTimeout(r, 1000));
+            }
+          }
+        }
       }
     }
+  } catch (err) {
+    console.error("💥 Error reading data directory:", err.message);
   }
   
   console.log("\n🎉 PRE-RENDERING PIPELINE COMPLETE! All static audio generated.");

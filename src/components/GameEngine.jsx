@@ -52,7 +52,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     const textToSpeak = `Listen closely, you must. The word is: ${currentWord}. Its meaning, ${currentWordObj.definition || ''} it is. Hear it in a sentence, you will: ${currentWordObj.sentence || ''}. The word, it is ${currentWord}.`;
     // Pattern matched filename: word_apple.mp3
     const safeWord = currentWord.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const filename = `word_${safeWord}.mp3`;
+    const filename = `word_${section.id}_${safeWord}.mp3`;
 
     // Dual-path dispatch: attempts local static playback, failovers automatically if absent.
     playStaticAudio(filename, null, null, textToSpeak, 'assessment');
