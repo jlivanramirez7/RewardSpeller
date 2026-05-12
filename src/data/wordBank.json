@@ -7,7 +7,7 @@
       "rule": "Pay attention to vowel teams like 'ei' and 'ie' (Remember: 'i' before 'e' except after 'c', or when sounding like 'a' as in neighbor and weigh). Also watch out for tricky R-controlled vowels.",
       "sections": [
         {
-          "name": "Section 1 (Part 1)",
+          "name": "I Before E (Part 1)",
           "theme": "I Before E",
           "words": [
             {
@@ -21,6 +21,11 @@
               "sentence": "Anakin Skywalker sliced a giant piece of the droid factory pipeline with his lightsaber."
             },
             {
+              "word": "neighbor",
+              "definition": "A person living next door or very near to another.",
+              "sentence": "My Minecraft neighbor built a giant beacon that shines directly into my bedroom window."
+            },
+            {
               "word": "ceiling",
               "definition": "The overhead inside surface of a room.",
               "sentence": "The Battle Room ceiling in Ender's Game is completely covered in zero-gravity handholds."
@@ -31,9 +36,19 @@
               "sentence": "I cannot believe you tried to mine obsidian with a wooden pickaxe!"
             },
             {
+              "word": "weigh",
+              "definition": "To find out how heavy someone or something is.",
+              "sentence": "Hagrid had to weigh the massive dragon egg before it hatched into Norbert."
+            },
+            {
               "word": "shield",
               "definition": "A broad piece of armor used for defense.",
               "sentence": "Captain Rex raised his energy shield just as the droid army opened fire."
+            },
+            {
+              "word": "vein",
+              "definition": "A distinct layer or crack in rock filled with valuable minerals.",
+              "sentence": "I was thrilled to find a massive vein of diamonds while mining deep below the ground."
             },
             {
               "word": "achieve",
@@ -41,9 +56,29 @@
               "sentence": "Harry Potter had to achieve top marks in Potions to impress Professor Snape."
             },
             {
+              "word": "weight",
+              "definition": "A measurement of how heavy an object or person is.",
+              "sentence": "The pure weight of the One Ring made Frodo feel heavier with every step toward Mordor."
+            }
+          ],
+          "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
+          "imagePath": "/assets/images/tier1_sec1.png",
+          "id": "t1_s1_p1",
+          "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
+        },
+        {
+          "name": "I Before E (Part 2)",
+          "theme": "I Before E",
+          "words": [
+            {
               "word": "fierce",
               "definition": "Displaying an intense or ferocious aggressiveness.",
               "sentence": "The White Witch was a fierce warrior, but Aslan was far more powerful."
+            },
+            {
+              "word": "reindeer",
+              "definition": "A large deer with long antlers that lives in cold northern regions.",
+              "sentence": "In Narnia, the White Witch travels in a sled pulled by white reindeer instead of horses."
             },
             {
               "word": "grief",
@@ -58,18 +93,18 @@
             {
               "word": "yield",
               "definition": "To produce or provide, or to give way.",
-              "sentence": "Gandalf told the Balrog that he would not yield the bridge of Khazad-dûm."
-            }
-          ],
-          "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
-          "imagePath": "/assets/images/tier1_sec1.png",
-          "id": "t1_s1_p1",
-          "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
-        },
-        {
-          "name": "Section 1 (Part 2)",
-          "theme": "I Before E",
-          "words": [
+              "sentence": "Gandalf told the Balrog that he would not yield the bridge of Khazad-d\u00fbm."
+            },
+            {
+              "word": "receipt",
+              "definition": "A piece of paper proving you bought something.",
+              "sentence": "Bilbo Baggins asked the dragon Smaug for a receipt after purchasing a single gold coin, which was a terrible idea."
+            },
+            {
+              "word": "ceiling",
+              "definition": "The overhead inside surface of a room.",
+              "sentence": "The Battle Room ceiling in Ender's Game is completely covered in zero-gravity handholds."
+            },
             {
               "word": "neighbor",
               "definition": "A person living next door or very near to another.",
@@ -84,41 +119,6 @@
               "word": "vein",
               "definition": "A distinct layer or crack in rock filled with valuable minerals.",
               "sentence": "I was thrilled to find a massive vein of diamonds while mining deep below the ground."
-            },
-            {
-              "word": "weight",
-              "definition": "A measurement of how heavy an object or person is.",
-              "sentence": "The pure weight of the One Ring made Frodo feel heavier with every step toward Mordor."
-            },
-            {
-              "word": "reindeer",
-              "definition": "A large deer with long antlers that lives in cold northern regions.",
-              "sentence": "In Narnia, the White Witch travels in a sled pulled by white reindeer instead of horses."
-            },
-            {
-              "word": "neighbor",
-              "definition": "A person living next door or very near to another.",
-              "sentence": "My Minecraft neighbor built a giant beacon that shines directly into my bedroom window."
-            },
-            {
-              "word": "piece",
-              "definition": "A part of something larger.",
-              "sentence": "Anakin Skywalker sliced a giant piece of the droid factory pipeline with his lightsaber."
-            },
-            {
-              "word": "receipt",
-              "definition": "A piece of paper proving you bought something.",
-              "sentence": "Bilbo Baggins asked the dragon Smaug for a receipt after purchasing a single gold coin, which was a terrible idea."
-            },
-            {
-              "word": "weigh",
-              "definition": "To find out how heavy someone or something is.",
-              "sentence": "Hagrid had to weigh the massive dragon egg before it hatched into Norbert."
-            },
-            {
-              "word": "shield",
-              "definition": "A broad piece of armor used for defense.",
-              "sentence": "Captain Rex raised his energy shield just as the droid army opened fire."
             }
           ],
           "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
@@ -127,7 +127,7 @@
           "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
         },
         {
-          "name": "Section 2",
+          "name": "EE Vowel Team",
           "theme": "EE Vowel Team",
           "words": [
             {
@@ -187,7 +187,7 @@
           "rule": "When double 'E's team up, they cheer their long 'E' sound together loud and proud!"
         },
         {
-          "name": "Section 3",
+          "name": "EA Vowel Team",
           "theme": "EA Vowel Team",
           "words": [
             {
@@ -247,7 +247,7 @@
           "rule": "The 'EA' team is a master of disguise! Sometimes they whisper a short 'e' sound instead of speaking their name."
         },
         {
-          "name": "Section 4",
+          "name": "OU/OW Vowels",
           "theme": "OU/OW Vowels",
           "words": [
             {
@@ -256,19 +256,14 @@
               "sentence": "A massive, blocky rain cloud formed right over my newly built Minecraft farm."
             },
             {
-              "word": "ground",
-              "definition": "The solid surface of the earth.",
-              "sentence": "The clone troopers hit the ground running as soon as the dropship doors opened."
-            },
-            {
               "word": "crowd",
               "definition": "A large number of people gathered together.",
               "sentence": "The crowd of Hogwarts students cheered wildly when Gryffindor won the Quidditch cup."
             },
             {
-              "word": "bounce",
-              "definition": "To spring back after hitting an object.",
-              "sentence": "In the Battle Room, Ender learned how to bounce off the walls in zero gravity."
+              "word": "ground",
+              "definition": "The solid surface of the earth.",
+              "sentence": "The clone troopers hit the ground running as soon as the dropship doors opened."
             },
             {
               "word": "prowl",
@@ -276,19 +271,24 @@
               "sentence": "A pack of wolves began to prowl around the edges of the Shire."
             },
             {
+              "word": "bounce",
+              "definition": "To spring back after hitting an object.",
+              "sentence": "In the Battle Room, Ender learned how to bounce off the walls in zero gravity."
+            },
+            {
               "word": "drown",
               "definition": "To die through submersion in and inhalation of water.",
               "sentence": "Make sure you build a boat so you don't drown in the Minecraft ocean biome."
             },
             {
-              "word": "coward",
-              "definition": "A person who lacks the courage to do or endure dangerous things.",
-              "sentence": "Peter Pevensie proved he was no coward when he faced Fenris Ulf the wolf."
-            },
-            {
               "word": "amount",
               "definition": "A quantity of something.",
               "sentence": "The amount of droids marching toward the Republic base was terrifying."
+            },
+            {
+              "word": "coward",
+              "definition": "A person who lacks the courage to do or endure dangerous things.",
+              "sentence": "Peter Pevensie proved he was no coward when he faced Fenris Ulf the wolf."
             },
             {
               "word": "sprout",
@@ -307,7 +307,7 @@
           "rule": "Loud and brave! Both 'OU' and 'OW' shout 'OW!' together, just like you bumped your funny bone!"
         },
         {
-          "name": "Section 5",
+          "name": "Bossy R",
           "theme": "Bossy R",
           "words": [
             {
@@ -367,7 +367,7 @@
           "rule": "The Bossy R Commander takes over the vowel and marches it to a fun pirate 'AR' or powerful 'OR' sound!"
         },
         {
-          "name": "Section 6",
+          "name": "Magic E",
           "theme": "Magic E",
           "words": [
             {
@@ -427,7 +427,7 @@
           "rule": "Two words join forces! Keep their complex vowel sounds protected and strong when they combine!"
         }
       ],
-      "lessonScript": "Welcome, young Padawan. I am the Spelling Jedi Master. To master the language, you must first understand the true power of Vowels. Vowels are the energy core of every word! \n\nSometimes, vowels unite to form a 'Vowel Team'. When two vowels go walking, the first one does the talking! For example, 'O' and 'A' unite to make the long O sound in 'BOAT'. 'E' and 'A' unite in 'TEAM'. But beware the tricky 'O' and 'U' team—they can sound like 'ow' in 'OUT' or 'CLOUD'! \n\nThe most important Jedi rule for teams is 'I' before 'E', except after 'C', like in the word 'RECEIPT'! Or when it sounds like a long 'A' as in 'NEIGHBOR' and 'WEIGH'.\n\nOther times, the letter 'R' acts as a dark lord and commands the vowel to change its sound completely! We call this the 'Bossy R'. It turns 'AR' into the sound of a pirate ('CAR'), 'OR' into a choice ('FOR'), and 'ER', 'IR', and 'UR' all into the exact same sound, like a revving engine: 'HER', 'BIRD', and 'TURN'. \n\nFinally, never forget the 'Magic E'. When an 'E' sits silently at the end of a word, it uses the force to jump back over one consonant and make the first vowel say its own name! It turns 'mad' into 'made', and 'cub' into 'cube'! May the vowels be with you.",
+      "lessonScript": "Welcome, young Padawan. I am the Spelling Jedi Master. To master the language, you must first understand the true power of Vowels. Vowels are the energy core of every word! \n\nSometimes, vowels unite to form a 'Vowel Team'. When two vowels go walking, the first one does the talking! For example, 'O' and 'A' unite to make the long O sound in 'BOAT'. 'E' and 'A' unite in 'TEAM'. But beware the tricky 'O' and 'U' team\u2014they can sound like 'ow' in 'OUT' or 'CLOUD'! \n\nThe most important Jedi rule for teams is 'I' before 'E', except after 'C', like in the word 'RECEIPT'! Or when it sounds like a long 'A' as in 'NEIGHBOR' and 'WEIGH'.\n\nOther times, the letter 'R' acts as a dark lord and commands the vowel to change its sound completely! We call this the 'Bossy R'. It turns 'AR' into the sound of a pirate ('CAR'), 'OR' into a choice ('FOR'), and 'ER', 'IR', and 'UR' all into the exact same sound, like a revving engine: 'HER', 'BIRD', and 'TURN'. \n\nFinally, never forget the 'Magic E'. When an 'E' sits silently at the end of a word, it uses the force to jump back over one consonant and make the first vowel say its own name! It turns 'mad' into 'made', and 'cub' into 'cube'! May the vowels be with you.",
       "lessonImage": "/assets/images/tier1.png"
     },
     {
@@ -437,7 +437,7 @@
       "rule": "Look for Latin roots (like 'struct' meaning build) and Greek roots (like 'bio' meaning life or 'tele' meaning distance).",
       "sections": [
         {
-          "name": "Section 1",
+          "name": "Root: STRUCT",
           "theme": "Root: STRUCT",
           "words": [
             {
@@ -497,7 +497,7 @@
           "rule": "You are a master builder! The root 'struct' means to build, which is how words construct their meaning!"
         },
         {
-          "name": "Section 2",
+          "name": "Root: PORT",
           "theme": "Root: PORT",
           "words": [
             {
@@ -551,13 +551,13 @@
               "sentence": "An Enderman will instantly teleport away if you try to hit it with an arrow."
             }
           ],
-          "lessonScript": "Focus your mind on the Latin root 'PORT'. In the ancient tongue, 'port' means 'to carry'. This is why a space transport ship is called a 'TRANSPORT'—it carries things across the galaxy! If you carry things out of a country, you 'EXPORT' them. If an item is easy to carry in your Minecraft inventory, it is 'PORTABLE'. To master these words, you must carry the root in your memory!",
+          "lessonScript": "Focus your mind on the Latin root 'PORT'. In the ancient tongue, 'port' means 'to carry'. This is why a space transport ship is called a 'TRANSPORT'\u2014it carries things across the galaxy! If you carry things out of a country, you 'EXPORT' them. If an item is easy to carry in your Minecraft inventory, it is 'PORTABLE'. To master these words, you must carry the root in your memory!",
           "imagePath": "/assets/images/tier2_sec2.png",
           "id": "t2_s2",
           "rule": "Keep moving forward! The root 'port' means to carry, helping you transport words wherever they need to go!"
         },
         {
-          "name": "Section 3",
+          "name": "Roots: TELE/BIO",
           "theme": "Roots: TELE/BIO",
           "words": [
             {
@@ -566,14 +566,14 @@
               "sentence": "Arthur Weasley is fascinated by how a muggle television works without magic."
             },
             {
-              "word": "telescope",
-              "definition": "An optical instrument designed to make distant objects appear nearer.",
-              "sentence": "Harry used a brass telescope to study the stars for his Astronomy class."
-            },
-            {
               "word": "biology",
               "definition": "The study of living organisms.",
               "sentence": "If Ender's Game had a biology class, they would definitely study the alien Formics."
+            },
+            {
+              "word": "telescope",
+              "definition": "An optical instrument designed to make distant objects appear nearer.",
+              "sentence": "Harry used a brass telescope to study the stars for his Astronomy class."
             },
             {
               "word": "biography",
@@ -586,14 +586,14 @@
               "sentence": "Before magical owls were common, wizards briefly considered using a telegraph."
             },
             {
-              "word": "telepathy",
-              "definition": "The supposed communication of thoughts or ideas by means other than the known senses.",
-              "sentence": "The alien bug queens used telepathy to instantly command millions of workers."
-            },
-            {
               "word": "biologist",
               "definition": "An expert in or student of the branch of science concerning living organisms.",
               "sentence": "A Narnian biologist would be very confused by a talking beaver."
+            },
+            {
+              "word": "telepathy",
+              "definition": "The supposed communication of thoughts or ideas by means other than the known senses.",
+              "sentence": "The alien bug queens used telepathy to instantly command millions of workers."
             },
             {
               "word": "biosphere",
@@ -614,10 +614,10 @@
           "lessonScript": "We have two powerful Greek roots today: 'TELE' (meaning distance) and 'BIO' (meaning life). If you want to see things at a massive distance, you use a 'TELESCOPE'! If you want to study the life cycle of alien Formic bugs, you study 'BIOLOGY'! Knowing these ancient Greek codes allows you to instantly unlock the meaning of massive, complicated words!",
           "imagePath": "/assets/images/tier2_sec3.png",
           "id": "t2_s3",
-          "rule": "Look far and wide! 'Bio' means life and 'tele' means far off—together they help you see the world around you!"
+          "rule": "Look far and wide! 'Bio' means life and 'tele' means far off\u2014together they help you see the world around you!"
         },
         {
-          "name": "Section 4",
+          "name": "Prefix: UN/RE",
           "theme": "Prefix: UN/RE",
           "words": [
             {
@@ -677,7 +677,7 @@
           "rule": "Make your mark! The Greek root 'graph' means to write or draw, turning your spelling into a work of art!"
         },
         {
-          "name": "Section 5",
+          "name": "Prefix: PRE/DIS",
           "theme": "Prefix: PRE/DIS",
           "words": [
             {
@@ -734,10 +734,10 @@
           "lessonScript": "More prefixes, Padawan! We are studying 'PRE-' (meaning 'before') and 'DIS-' (meaning 'opposite' or 'not'). If you 'PREHEAT' a magical oven, you heat it BEFORE cooking! If you 'DISAGREE' with a Sith Lord, you have the OPPOSITE opinion. Use these prefixes to twist and shape your base words into new weapons!",
           "imagePath": "/assets/images/tier2_sec5.png",
           "id": "t2_s5",
-          "rule": "Get ready to transform! 'Pre-' means it comes before, while 'dis-' means the opposite or not—you've got this!"
+          "rule": "Get ready to transform! 'Pre-' means it comes before, while 'dis-' means the opposite or not\u2014you've got this!"
         },
         {
-          "name": "Section 6",
+          "name": "Suffix: ABLE/FUL",
           "theme": "Suffix: ABLE/FUL",
           "words": [
             {
@@ -791,7 +791,7 @@
               "sentence": "The Shire is a very peaceful place, provided no wizards show up with fireworks."
             }
           ],
-          "lessonScript": "A suffix attaches to the end of a word to change its purpose. The suffix '-ABLE' means you can do it—if a map is 'READABLE', you are able to read it! The suffix '-FUL' means full of something. If an Ewok is 'JOYFUL', he is completely full of joy! Look closely at the end of these words to find the suffix!",
+          "lessonScript": "A suffix attaches to the end of a word to change its purpose. The suffix '-ABLE' means you can do it\u2014if a map is 'READABLE', you are able to read it! The suffix '-FUL' means full of something. If an Ewok is 'JOYFUL', he is completely full of joy! Look closely at the end of these words to find the suffix!",
           "imagePath": "/assets/images/tier2_sec6.png",
           "id": "t2_s6",
           "rule": "You can do anything! Use '-able' to say something can be done, and '-ful' to fill your words with greatness!"
@@ -807,7 +807,7 @@
       "rule": "Clap out the syllables! Break long words between consonants (VC/CV) and listen for the 'lazy' schwa vowel sound, which often sounds like 'uh'.",
       "sections": [
         {
-          "name": "Section 1",
+          "name": "VC/CV Pattern",
           "theme": "VC/CV Pattern",
           "words": [
             {
@@ -867,7 +867,7 @@
           "rule": "Slice your lightsaber directly between two consonants to split the syllable cores! (Example: RAB-BIT)"
         },
         {
-          "name": "Section 2",
+          "name": "V/CV Pattern",
           "theme": "V/CV Pattern",
           "words": [
             {
@@ -927,13 +927,18 @@
           "rule": "Strike BEFORE the single consonant to leave the first vowel open, allowing it to shout its powerful long name! (Example: TI-GER)"
         },
         {
-          "name": "Section 3",
+          "name": "VC/V Pattern",
           "theme": "VC/V Pattern",
           "words": [
             {
               "word": "camel",
               "definition": "A large, long-necked mammal with a humped back.",
               "sentence": "You can ride a camel through the desert biomes in the latest Minecraft update."
+            },
+            {
+              "word": "level",
+              "definition": "A horizontal plane or line.",
+              "sentence": "In Minecraft, you need to reach level 30 to use the best enchantments on your diamond sword."
             },
             {
               "word": "limit",
@@ -954,11 +959,6 @@
               "word": "cabin",
               "definition": "A small shelter or house, made of wood and situated in a wild or remote area.",
               "sentence": "Hagrid lives in a cozy, slightly dangerous wooden cabin on the edge of the Forbidden Forest."
-            },
-            {
-              "word": "level",
-              "definition": "A horizontal plane or line.",
-              "sentence": "In Minecraft, you need to reach level 30 to use the best enchantments on your diamond sword."
             },
             {
               "word": "finish",
@@ -987,7 +987,7 @@
           "rule": "Trap the rogue vowel by slicing AFTER the single consonant, forcing it into a safe, short sound! (Example: CAM-EL)"
         },
         {
-          "name": "Section 4",
+          "name": "Schwa A",
           "theme": "Schwa A",
           "words": [
             {
@@ -1047,7 +1047,7 @@
           "rule": "The ancient '-LE' portal always captures the consonant right before it to form the final syllable! (Example: TUR-TLE)"
         },
         {
-          "name": "Section 5",
+          "name": "Schwa E & I",
           "theme": "Schwa E & I",
           "words": [
             {
@@ -1107,7 +1107,7 @@
           "rule": "Defeat the lazy Schwa vowel that gives up its true power in unstressed syllables to make a dark 'uh' grunt!"
         },
         {
-          "name": "Section 6",
+          "name": "Schwa O & U",
           "theme": "Schwa O & U",
           "words": [
             {
@@ -1177,7 +1177,7 @@
       "rule": "Homophones sound the same but are spelled differently and mean different things. Use the meaning of the sentence to choose the right spelling.",
       "sections": [
         {
-          "name": "Section 1",
+          "name": "Homophones 1",
           "theme": "Homophones 1",
           "words": [
             {
@@ -1237,7 +1237,7 @@
           "rule": "Distinguish possession from contraction or location: use 'here' clues for place (there) and 'is/are' replacement checks for apostrophes."
         },
         {
-          "name": "Section 2",
+          "name": "Homophones 2",
           "theme": "Homophones 2",
           "words": [
             {
@@ -1297,7 +1297,7 @@
           "rule": "Apply sensory and quantity cues: remember that you 'hear' with your 'ear', and 'whole' implies the entire item."
         },
         {
-          "name": "Section 3",
+          "name": "Homophones 3",
           "theme": "Homophones 3",
           "words": [
             {
@@ -1357,7 +1357,7 @@
           "rule": "Differentiate commerce and sensory actions: isolate purchase verbs ('buy') and monetary units ('cent') from prepositions."
         },
         {
-          "name": "Section 4",
+          "name": "Homophones 4",
           "theme": "Homophones 4",
           "words": [
             {
@@ -1417,7 +1417,7 @@
           "rule": "Resolve states of nature and behavior: separate the woodland animal ('deer') and coloring ('dye') from affections ('dear')."
         },
         {
-          "name": "Section 5",
+          "name": "Homophones 5",
           "theme": "Homophones 5",
           "words": [
             {
@@ -1477,7 +1477,7 @@
           "rule": "Differentiate organic growth and physical form: isolate culinary products ('flour') and parts of the foot ('heel') from blooms."
         },
         {
-          "name": "Section 6",
+          "name": "Homophones 6",
           "theme": "Homophones 6",
           "words": [
             {
@@ -1547,7 +1547,7 @@
       "rule": "These are specialized words used in Science, Math, and History. Memorizing them will help you read and write better in all subjects.",
       "sections": [
         {
-          "name": "Section 1",
+          "name": "Biology",
           "theme": "Biology",
           "words": [
             {
@@ -1607,7 +1607,7 @@
           "rule": "Greek roots dominate: 'photo-' (light) and 'eco-' (environment) form compounds, and 'y' acts as short /i/ in the middle."
         },
         {
-          "name": "Section 2",
+          "name": "Earth Science",
           "theme": "Earth Science",
           "words": [
             {
@@ -1667,7 +1667,7 @@
           "rule": "Focus on the Greek digraph 'ph' creating the /f/ sound in atmospheric terms, and note terminal 'y' acting as a long /e/."
         },
         {
-          "name": "Section 3",
+          "name": "Math Operations",
           "theme": "Math Operations",
           "words": [
             {
@@ -1727,7 +1727,7 @@
           "rule": "Built on Latin roots such as 'fract' (broken), using common '-tion' for /shun/ sound and soft 'c' before 'i'."
         },
         {
-          "name": "Section 4",
+          "name": "Geometry",
           "theme": "Geometry",
           "words": [
             {
@@ -1781,13 +1781,13 @@
               "sentence": "The pilot pulled the starfighter into a sharp ninety degree turn to dodge the incoming missile."
             }
           ],
-          "lessonScript": "Geometry is the architecture of reality! A 'POLYGON' is a shape with straight lines—in fact, the entire Minecraft universe is built from them! The 'PERIMETER' is the absolute outer edge of your base, where you must set up defenses. The 'VOLUME' is how much space is trapped inside a container. Calculate perfectly, or your structures will collapse!",
+          "lessonScript": "Geometry is the architecture of reality! A 'POLYGON' is a shape with straight lines\u2014in fact, the entire Minecraft universe is built from them! The 'PERIMETER' is the absolute outer edge of your base, where you must set up defenses. The 'VOLUME' is how much space is trapped inside a container. Calculate perfectly, or your structures will collapse!",
           "imagePath": "/assets/images/tier5_sec4.png",
           "id": "t5_s4",
           "rule": "Features numerical prefixes (poly-, tri-) and pairs geometric descriptors like twin 'll' in 'parallel' and 'magic e'."
         },
         {
-          "name": "Section 5",
+          "name": "Ancient History",
           "theme": "Ancient History",
           "words": [
             {
@@ -1847,7 +1847,7 @@
           "rule": "Derived from ancient artifacts and titles, using unique Greek/Egyptian constructs like 'ao' in 'pharaoh' and 'y' in 'pyramid'."
         },
         {
-          "name": "Section 6",
+          "name": "Revolutions",
           "theme": "Revolutions",
           "words": [
             {
@@ -1907,7 +1907,7 @@
           "rule": "Abstract societal nouns rely heavily on Latin suffixation, utilizing '-tion' for action (revolution) and '-ty' for quality."
         }
       ],
-      "lessonScript": "Welcome to the Jedi Archives, scholar. Here we study Academic vocabulary—the advanced words used in Science, Math, and History. They appear complex, but they hold immense precision, and mastering them is the mark of a true Jedi Grand Master! \n\nIn Science, words describe how the universe works. For example, 'photosynthesis' is the specific process plants use to turn sunlight into energy. An 'ecosystem' is a community of interacting organisms. \n\nIn Math, words demand absolute logic. An 'equation' requires two sides to be perfectly equal. A 'fraction' represents a part of a whole number. \n\nIn History, words tell the story of humanity. A 'civilization' is a complex human society. A 'revolution' is a massive, sudden change in government or society. \n\nMemorizing these specialized words will help you read textbooks easily, write brilliant essays, and understand the deep knowledge of the archives! Go forth and study, Master Spelling Jedi!",
+      "lessonScript": "Welcome to the Jedi Archives, scholar. Here we study Academic vocabulary\u2014the advanced words used in Science, Math, and History. They appear complex, but they hold immense precision, and mastering them is the mark of a true Jedi Grand Master! \n\nIn Science, words describe how the universe works. For example, 'photosynthesis' is the specific process plants use to turn sunlight into energy. An 'ecosystem' is a community of interacting organisms. \n\nIn Math, words demand absolute logic. An 'equation' requires two sides to be perfectly equal. A 'fraction' represents a part of a whole number. \n\nIn History, words tell the story of humanity. A 'civilization' is a complex human society. A 'revolution' is a massive, sudden change in government or society. \n\nMemorizing these specialized words will help you read textbooks easily, write brilliant essays, and understand the deep knowledge of the archives! Go forth and study, Master Spelling Jedi!",
       "lessonImage": "/assets/images/tier5.png"
     }
   ]
