@@ -7,7 +7,7 @@
       "rule": "Pay attention to vowel teams like 'ei' and 'ie' (Remember: 'i' before 'e' except after 'c', or when sounding like 'a' as in neighbor and weigh). Also watch out for tricky R-controlled vowels.",
       "sections": [
         {
-          "name": "Section 1",
+          "name": "Section 1 (Part 1)",
           "theme": "I Before E",
           "words": [
             {
@@ -59,7 +59,17 @@
               "word": "yield",
               "definition": "To produce or provide, or to give way.",
               "sentence": "Gandalf told the Balrog that he would not yield the bridge of Khazad-dûm."
-            },
+            }
+          ],
+          "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
+          "imagePath": "/assets/images/tier1_sec1.png",
+          "id": "t1_s1_p1",
+          "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
+        },
+        {
+          "name": "Section 1 (Part 2)",
+          "theme": "I Before E",
+          "words": [
             {
               "word": "neighbor",
               "definition": "A person living next door or very near to another.",
@@ -84,11 +94,36 @@
               "word": "reindeer",
               "definition": "A large deer with long antlers that lives in cold northern regions.",
               "sentence": "In Narnia, the White Witch travels in a sled pulled by white reindeer instead of horses."
+            },
+            {
+              "word": "neighbor",
+              "definition": "A person living next door or very near to another.",
+              "sentence": "My Minecraft neighbor built a giant beacon that shines directly into my bedroom window."
+            },
+            {
+              "word": "piece",
+              "definition": "A part of something larger.",
+              "sentence": "Anakin Skywalker sliced a giant piece of the droid factory pipeline with his lightsaber."
+            },
+            {
+              "word": "receipt",
+              "definition": "A piece of paper proving you bought something.",
+              "sentence": "Bilbo Baggins asked the dragon Smaug for a receipt after purchasing a single gold coin, which was a terrible idea."
+            },
+            {
+              "word": "weigh",
+              "definition": "To find out how heavy someone or something is.",
+              "sentence": "Hagrid had to weigh the massive dragon egg before it hatched into Norbert."
+            },
+            {
+              "word": "shield",
+              "definition": "A broad piece of armor used for defense.",
+              "sentence": "Captain Rex raised his energy shield just as the droid army opened fire."
             }
           ],
           "lessonScript": "Welcome, Padawan. Today we study the most famous Jedi rule: 'I before E, except after C'! Whenever you hear the long 'E' sound, like in 'PIECE' or 'SHIELD', the 'I' comes first. But if the letter 'C' is right before it, like a dark Sith Lord trying to trick you, the 'E' jumps in front! That is why we spell 'RECEIPT' and 'CEILING' with 'EI'. Memorize this rule to protect yourself from spelling mistakes!",
           "imagePath": "/assets/images/tier1_sec1.png",
-          "id": "t1_s1",
+          "id": "t1_s1_p2",
           "rule": "Put 'I' before 'E' for most words you see! But if you spot a sneaky 'C' in front, flip them to 'E-I' to win!"
         },
         {

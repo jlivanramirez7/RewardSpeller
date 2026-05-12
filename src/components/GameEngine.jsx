@@ -65,11 +65,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
     setFeedback(null);
     speakWord();
     
-    if (difficulty === 'easy') {
+    if (difficulty === 'easy' || difficulty === 'medium') {
       setShowWord(true);
-    } else if (difficulty === 'medium') {
-      setShowWord(true);
-      setTimeout(() => setShowWord(false), 3000); // Hide after 3 seconds
     } else {
       setShowWord(false);
     }
@@ -221,7 +218,12 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
             ref={inputRef}
             type="text" 
             value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
+            onChange={(e) => {
+              setUserInput(e.target.value);
+              if (difficulty === 'medium' && showWord) {
+                setShowWord(false);
+              }
+            }}
             placeholder="Type the word here..."
             style={{
               width: '100%',
