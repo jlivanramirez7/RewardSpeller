@@ -46,13 +46,13 @@ const StudentPortal = () => {
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
           <div style={{ 
             textAlign: 'center', 
-            background: 'rgba(167, 139, 250, 0.15)', 
+            background: 'rgba(0, 180, 216, 0.15)', 
             padding: '0.5rem 0.75rem', 
             borderRadius: '8px', 
-            border: '1px solid rgba(167, 139, 250, 0.3)' 
+            border: '1px solid rgba(0, 180, 216, 0.3)' 
           }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Grade</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#a78bfa' }}>{currentGradeLevel}</div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--accent-cyan)' }}>{currentGradeLevel}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Points</div>
@@ -268,7 +268,7 @@ const StudentPortal = () => {
                               onClick={handleTierMastery}
                               style={{ 
                                 width: '100%', 
-                                background: tierMasteryMastered ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ec4899, #8b5cf6)', 
+                                background: tierMasteryMastered ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #60a5fa, var(--accent-cyan))', 
                                 color: 'white', 
                                 fontWeight: 'bold',
                                 border: tierMasteryMastered ? '2px solid #10b981' : '2px solid #fbbf24',

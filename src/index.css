@@ -1,11 +1,12 @@
 :root {
   /* Color Palette - Vibrant, Modern, Playful */
-  --bg-gradient-start: #1e1b4b; /* deep indigo */
-  --bg-gradient-end: #312e81;
+  --bg-gradient-start: #0B192C;
+  --bg-gradient-end: #1C2541;
+  --accent-cyan: #00B4D8;
   --surface-color: rgba(255, 255, 255, 0.1);
   --surface-border: rgba(255, 255, 255, 0.2);
   --text-primary: #ffffff;
-  --text-secondary: #c7d2fe;
+  --text-secondary: #94a3b8;
   --accent-color: #f43f5e; /* vibrant rose */
   --accent-hover: #e11d48;
   --success-color: #10b981;
@@ -62,7 +63,7 @@ body {
 .nav-brand .logo-text {
   font-size: 1.5rem;
   font-weight: 800;
-  background: linear-gradient(to right, #60a5fa, #c084fc);
+  background: linear-gradient(to right, #60a5fa, var(--accent-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;

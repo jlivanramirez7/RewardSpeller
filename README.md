@@ -11,6 +11,7 @@ The application orchestrates state utilizing modern React deterministic patterns
 *   **React Context API (`AppContext`)**: Acts as the central ecosystem nervous system. It synchronously aggregates student performance (scores, accuracy maps, streak metrics) and propagates global persistent settings reliably.
 *   **Singleton Audio Node Pattern**: Consolidates global media operations into a single, persistent HTML5 `Audio` element. This architecture natively circumvents browser security blockades by maintaining explicit user-activation privileges across dynamic component mount cycles.
 *   **DOM Portals for Content Modals**: Critical layout drivers like the Jedi Archive modal and Lightbox expansion containers bypass parent DOM transform isolation by teleporting directly to the global `document.body` via `ReactDOM.createPortal`. This explicitly guarantees 100% absolute viewport centering, impervious to scrolling artifacts.
+*   **Grade Level Display**: The Student Portal header displays a "Grade" badge showing the current grade level selected by the parent, providing clear context to the student.
 
 ### 2. Dual-Channel High-Fidelity TTS Pipeline
 Our resilient audio subsystem implemented in `ttsService.js` enforces three tiers of zero-failure redundancy:
@@ -29,6 +30,7 @@ Before triggering assessments, students utilize the immersive **Jedi Archive** b
 *   **Phonetic Glow Highlighters**: Leverages intelligent pattern-detection regex engines to dynamically stratify vocabulary into discrete grouped buckets (e.g., LOGIC GROUP: IE), isolating phonetic nuances with glowing text-shadows.
 *   **Lightbox Overlays**: Seamless full-screen portals that darkens surrounding UI to isolate focus directly onto core anchor visualizations with a single click.
 *   **Autonomous Holocron Audio**: Seamlessly instantiates immersive narrations synchronous with modal mount, locking in audio-visual memory hooks instantly.
+*   **🔒 Mandatory Lesson Prerequisite**: Students are gated from playing a section's assessment until they have clicked to listen to the corresponding lesson. The play button is disabled and displays "🔒 (Listen First)" until the lesson is marked as listened.
 
 ### 🎯 Dynamic Word Assessment Flow
 Assessments enforce a progressive disclosure curve scaling available visual support inversely with difficulty:
@@ -55,7 +57,8 @@ The global wallet secures anti-grinding protocol through distinct **Differential
 ### 3. Gating & Unlock Algorithms
 *   **Section Pass Threshold**: Defined globally as $\ge 90\%$ accuracy on **ANY** active difficulty track.
 *   **Tier Unlock Prerequisites**: The final "Tier Mastery Assessment" activates ONLY when 100% of sub-sections meet the $\ge 90\%$ Pass Metric.
-*   **Rolling Acceleration Window**: When pacing is active, students can browse at maximum exactly **3 sections ahead** of their lowest unmastered topic.
+*   **Rolling Acceleration Window**: When pacing is active, students can browse at maximum exactly **1 section ahead** of their lowest unmastered topic.
+*   **Randomized Tier Mastery Assessment**: The Tier Mastery Assessment creates a test by pulling a random subset of 10 words from all sections in that tier.
 
 ---
 
@@ -63,6 +66,7 @@ The global wallet secures anti-grinding protocol through distinct **Differential
 
 The operational command center empowers rigorous regulation of state layers:
 *   **Curriculum Calibration**: Instant live routing that remaps the active underlying database between 3rd, 4th-5th, and 6th+ grade target banks.
+*   **Custom Reset Confirmation Modal**: Features a blurred glassmorphism backdrop and a safe confirmation flow to prevent accidental progress resets.
 *   **Diagnostic Insights & Struggle Ledger**: Real-time ingestion of specific failed submissions enabling targeted parental intervention.
 *   **Admin Config Suite**:
     *   **Adaptive Pacing Switch**: Toggle enforcing strict linear sequential progression vs. unrestricted full-exploration sandbox mode.
@@ -106,3 +110,17 @@ If you are developing on a remote virtual environment via SSH, choose one of the
 2. Access the app using your Cloudtop hostname: `http://ivanramirez.c.googlers.com:5173`
    *   **💡 Critical Tip**: You must use **`http://`** (not `https://`) initially. If you have the BeyondCorp extension enabled, it will automatically intercept this request and redirect you to a secure, long-lived Proxy Encoded Name (PEN) URL (e.g., `https://...proxy.googlers.com/`).
    *   *(Note: Ensure your VM's firewall allows traffic on port 5173)*
+
+---
+
+## 🛠️ Developer Utilities
+
+The project includes several utility scripts in the root directory for managing the word bank and curriculum data:
+*   `fix_wordbank_ids.js`: Ensures all words have unique and consistent IDs.
+*   `inject_pagination.py`: Scripts for managing pagination in the word bank.
+*   `inject_rules.py`: Injects learning rules into the curriculum data.
+*   `refactor_pagination.py`: Refactors pagination logic.
+*   `update_img_paths.js`: Updates image paths in the data files.
+
+> [!NOTE]
+> These scripts currently reference `src/data/wordBank.json`. However, the active curriculum is split into grade-specific files (e.g., `wordBank_3rd.json`, `wordBank_4th.json`, etc.). These scripts may need updating to target the specific grade files.
