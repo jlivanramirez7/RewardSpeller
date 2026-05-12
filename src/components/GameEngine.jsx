@@ -135,6 +135,19 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
   const hardScore = sectionScores[section.id + '-hard'] || 0;
   const totalSectionScore = easyScore + mediumScore + hardScore;
   const maxPossibleScore = words.length * 68;
+  const maxEasyScore = words.length * 2;
+  const maxMediumScore = words.length * 6;
+  const maxHardScore = words.length * 60;
+
+  const easyProg = maxEasyScore > 0 ? Math.max(0, Math.min((easyScore / maxEasyScore) * 100, 100)) : 0;
+  const mediumProg = maxMediumScore > 0 ? Math.max(0, Math.min((mediumScore / maxMediumScore) * 100, 100)) : 0;
+  const hardProg = maxHardScore > 0 ? Math.max(0, Math.min((hardScore / maxHardScore) * 100, 100)) : 0;
+
+  const difficultyConfig = [
+    { label: 'Easy Mode', score: easyScore, max: maxEasyScore, prog: easyProg, color: '#10b981' },
+    { label: 'Medium Mode', score: mediumScore, max: maxMediumScore, prog: mediumProg, color: '#f59e0b' },
+    { label: 'Hard Mode', score: hardScore, max: maxHardScore, prog: hardProg, color: '#ef4444' },
+  ];
 
   // Sequential progression checks
   const isMediumUnlocked = isDifficultyUnlocked(section.id, 'medium');
@@ -272,6 +285,29 @@ const GameEngine = ({ tierId, section, onComplete, tierRule }) => {
         {/* Progress */}
         <div style={{ marginTop: '2rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
           Word {currentWordIndex + 1} of {words.length} | Points: {totalSectionScore} / {maxPossibleScore}
+        </div>
+
+        <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', background: 'rgba(0,0,0,0.2)', padding: '1.25rem', borderRadius: '12px', textAlign: 'left' }}>
+          <h4 style={{ color: 'white', fontSize: '0.9rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', opacity: 0.8 }}>Points Breakdown</h4>
+          
+          {difficultyConfig.map((diff) => (
+            <div key={diff.label}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
+                <span>{diff.label}</span>
+                <span style={{ color: 'white' }}>{diff.score} / {diff.max} pts</span>
+              </div>
+              <div 
+                role="progressbar" 
+                aria-label={diff.label}
+                aria-valuenow={diff.prog} 
+                aria-valuemin="0" 
+                aria-valuemax="100"
+                style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden' }}
+              >
+                <div style={{ height: '100%', width: `${diff.prog}%`, background: diff.color, transition: 'width 0.4s ease-out' }} />
+              </div>
+            </div>
+          ))}
         </div>
         
         </div>
