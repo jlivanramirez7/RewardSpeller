@@ -5,9 +5,17 @@ import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
+
+  if (error) {
+    return <div style={{ color: 'red', padding: '2rem', textAlign: 'center' }}>Error loading student data: {error}</div>;
+  }
+
+  if (!isLoaded) {
+    return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading Student Data...</div>;
+  }
 
   const handleCompleteSection = () => {
     const sectionData = activePlayData?.section;
@@ -245,7 +253,7 @@ const StudentPortal = () => {
                         const handleTierMastery = () => {
                           warmupAudio(); // Prepare audio for end-tier speech
                           let allWords = [];
-                          tier.sections.forEach(s => allWords.push(...s.words));
+                          tier.sections.forEach(s => allWords.push(...(s.words || [])));
                           const shuffledAll = [...allWords].sort(() => Math.random() - 0.5);
                           const assessmentWords = shuffledAll.slice(0, 10);
                           

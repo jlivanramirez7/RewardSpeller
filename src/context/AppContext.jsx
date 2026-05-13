@@ -1,10 +1,9 @@
-import { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useRef } from 'react';
 import wordBank3rd from '../data/wordBank_3rd.json';
 import wordBank4th from '../data/wordBank_4th.json';
 import wordBank5th from '../data/wordBank_5th.json';
 import wordBank6th from '../data/wordBank_6th.json';
 import { calculateRecommendedDifficulty } from '../utils/difficulty';
-import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
 
@@ -47,6 +46,7 @@ export const AppProvider = ({ children }) => {
     return grade;
   });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
   const restoreProgress = (data) => {
     if (Object.keys(data).length > 0) {
@@ -64,29 +64,83 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const { user } = useAuth();
+  const resetProgress = () => {
+    setStudentPoints(0);
+    setStudentStreak(0);
+    setUnlockedTiers([]);
+    setStruggleWords([]);
+    setSectionScores({});
+    setSectionAccuracy({});
+    setListenedLessons([]);
+    setEnablePacing(true);
+    setEnableDifficultyGating(true);
+    setRewards([
+      { id: 1, name: '30 mins Screen Time', cost: 500 },
+      { id: 2, name: 'Trip to Park', cost: 1000 }
+    ]);
+    setCurrentGradeLevel('4th');
+    
+    localStorage.setItem('studentPoints', JSON.stringify(0));
+    localStorage.setItem('studentStreak', JSON.stringify(0));
+    localStorage.setItem('unlockedTiers', JSON.stringify([]));
+    localStorage.setItem('struggleWords', JSON.stringify([]));
+    localStorage.setItem('sectionScores', JSON.stringify({}));
+    localStorage.setItem('sectionAccuracy', JSON.stringify({}));
+    localStorage.setItem('listenedLessons', JSON.stringify([]));
+    localStorage.setItem('enablePacing', JSON.stringify(true));
+    localStorage.setItem('enableDifficultyGating', JSON.stringify(true));
+    localStorage.setItem('rewards', JSON.stringify([
+      { id: 1, name: '30 mins Screen Time', cost: 500 },
+      { id: 2, name: 'Trip to Park', cost: 1000 }
+    ]));
+    localStorage.setItem('currentGradeLevel', JSON.stringify('4th'));
+  };
+
+  const loadedUserUidRef = useRef(null);
+  const { user, db } = useAuth();
 
   useEffect(() => {
+    let ignore = false;
     const loadScores = async () => {
-      if (user) {
+      setIsLoaded(false);
+      setError(null);
+      
+      if (user && loadedUserUidRef.current !== null && user.uid !== loadedUserUidRef.current) {
+        resetProgress();
+      }
+
+      if (user && db) {
         try {
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
+          
+          if (ignore) return;
+
           if (docSnap.exists()) {
             restoreProgress(docSnap.data());
           }
+          loadedUserUidRef.current = user.uid;
           setIsLoaded(true);
         } catch (error) {
           console.error('Error loading scores from Firestore:', error);
-          // Do not set setIsLoaded(true) here to prevent overwriting remote data with defaults on failure
+          if (!ignore) {
+            setError(error.message);
+          }
         }
-      } else {
-        setIsLoaded(true); // No user, mark as loaded to avoid blocking
+      } else if (!user) {
+        if (!ignore) {
+          if (loadedUserUidRef.current !== null) {
+            resetProgress();
+          }
+          loadedUserUidRef.current = null;
+          setIsLoaded(true);
+        }
       }
     };
 
     loadScores();
-  }, [user]);
+    return () => { ignore = true; };
+  }, [user, db]);
 
   // Curriculum Data
   const tiers = useMemo(() => {
@@ -105,6 +159,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     if (!isLoaded) return;
 
+    if (user && user.uid !== loadedUserUidRef.current) {
+      console.warn("Save blocked: current user does not match loaded user");
+      return;
+    }
+
     localStorage.setItem('studentPoints', JSON.stringify(studentPoints));
     localStorage.setItem('studentStreak', JSON.stringify(studentStreak));
     localStorage.setItem('unlockedTiers', JSON.stringify(unlockedTiers));
@@ -118,7 +177,7 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('currentGradeLevel', JSON.stringify(currentGradeLevel));
 
     const saveScores = async () => {
-      if (user) {
+      if (user && db) {
         try {
           const docRef = doc(db, 'users', user.uid);
           await setDoc(docRef, {
@@ -141,7 +200,7 @@ export const AppProvider = ({ children }) => {
     };
 
     saveScores();
-  }, [isLoaded, user, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel]);
+  }, [isLoaded, user, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel, db]);
 
   const addPoints = (points) => {
     setStudentPoints(prev => prev + points);
@@ -186,23 +245,7 @@ export const AppProvider = ({ children }) => {
     return false;
   };
 
-  const resetProgress = () => {
-    setStudentPoints(0);
-    setStudentStreak(0);
-    setUnlockedTiers([]);
-    setStruggleWords([]);
-    setSectionScores({});
-    setSectionAccuracy({});
-    setListenedLessons([]); // Purge lesson listening history
-    
-    localStorage.setItem('studentPoints', JSON.stringify(0));
-    localStorage.setItem('studentStreak', JSON.stringify(0));
-    localStorage.setItem('unlockedTiers', JSON.stringify([]));
-    localStorage.setItem('struggleWords', JSON.stringify([]));
-    localStorage.setItem('sectionScores', JSON.stringify({}));
-    localStorage.setItem('sectionAccuracy', JSON.stringify({}));
-    localStorage.setItem('listenedLessons', JSON.stringify([]));
-  };
+
 
   const getSectionStats = (sectionId) => {
     const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
@@ -269,7 +312,8 @@ export const AppProvider = ({ children }) => {
       listenedLessons, markLessonListened,
       rewards, setRewards, purchaseReward,
       currentGradeLevel, setCurrentGradeLevel,
-      tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress
+      tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
+      isLoaded, error
     }}>
       {children}
     </AppContext.Provider>

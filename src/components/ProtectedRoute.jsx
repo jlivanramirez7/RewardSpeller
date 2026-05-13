@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, db } = useAuth();
   const [approved, setApproved] = useState(false);
   const [checkingApproval, setCheckingApproval] = useState(true);
 
   useEffect(() => {
     let mounted = true;
     const checkApproval = async () => {
-      if (user) {
+      if (user && db) {
         try {
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
@@ -43,7 +42,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
       checkApproval();
     }
     return () => { mounted = false; };
-  }, [user, loading]);
+  }, [user, loading, db]);
 
   if (loading || checkingApproval) {
     return <div>Loading...</div>;

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { db } from '../firebase';
 import { collection, getDocs, query, where, doc, updateDoc, setDoc } from 'firebase/firestore';
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  const { user, db } = useAuth();
   const [requests, setRequests] = useState([]);
   const [metrics, setMetrics] = useState({ totalUsers: 0, totalPoints: 0 });
   const [loading, setLoading] = useState(true);
@@ -43,7 +42,7 @@ const AdminDashboard = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, [user, db]);
 
   const handleApprove = async (requestId, userId, email) => {
     try {

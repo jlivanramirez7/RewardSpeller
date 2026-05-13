@@ -4,7 +4,7 @@ import { useAppContext } from '../context/AppContext';
 const ParentPortal = () => {
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
-    studentStreak, unlockedTiers, sectionScores, sectionAccuracy, listenedLessons, restoreProgress
+    studentStreak, unlockedTiers, sectionScores, sectionAccuracy, listenedLessons, restoreProgress, isLoaded, error
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -60,6 +60,14 @@ const ParentPortal = () => {
         </div>
       </div>
     );
+  }
+
+  if (error) {
+    return <div style={{ color: 'red', padding: '2rem', textAlign: 'center' }}>Error loading configuration data: {error}</div>;
+  }
+
+  if (!isLoaded) {
+    return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading Configuration Data...</div>;
   }
 
   return (

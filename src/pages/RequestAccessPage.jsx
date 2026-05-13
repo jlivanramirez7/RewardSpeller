@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { db } from '../firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const RequestAccessPage = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, db } = useAuth();
   const [reason, setReason] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
