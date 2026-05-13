@@ -31,20 +31,22 @@ if (!fs.existsSync(audioDir)) {
   fs.mkdirSync(audioDir, { recursive: true });
 }
 
-// Usage: node generate_lesson_audio.js <YOUR_GOOGLE_CLOUD_API_KEY> OR pass via environment
-const apiKey = process.argv[2] || process.env.GOOGLE_TTS_API_KEY;
+// Usage: node generate_lesson_audio.js [--force-lessons] <YOUR_GOOGLE_CLOUD_API_KEY> OR pass via environment
+const args = process.argv.slice(2);
+const forceLessons = args.includes('--force-lessons');
+const apiKey = args.find(arg => !arg.startsWith('--')) || process.env.GOOGLE_TTS_API_KEY;
 
 if (!apiKey) {
   console.error("\n❌ ERROR: Google Cloud API Key missing.");
-  console.error("Usage: node generate_lesson_audio.js <API_KEY>");
-  console.error("   OR: GOOGLE_TTS_API_KEY=xxx node generate_lesson_audio.js\n");
+  console.error("Usage: node generate_lesson_audio.js [--force-lessons] <API_KEY>");
+  console.error("   OR: GOOGLE_TTS_API_KEY=xxx node generate_lesson_audio.js [--force-lessons]\n");
   process.exit(1);
 }
 
-const generateTTS = async (text, voiceType, filename) => {
+const generateTTS = async (text, voiceType, filename, forceOverwrite = false) => {
   const filePath = path.join(audioDir, filename);
   
-  if (fs.existsSync(filePath)) {
+  if (!forceOverwrite && fs.existsSync(filePath)) {
     console.log(`⏭️  Skipping: ${filename} (Already Cached)`);
     return;
   }
@@ -154,7 +156,7 @@ const run = async () => {
           if (section.lessonScript) {
             // Naming pattern: lesson_t1_s1.mp3
             const filename = `lesson_${section.id}.mp3`;
-            await generateTTS(section.lessonScript, 'jedi', filename);
+            await generateTTS(section.lessonScript, 'jedi', filename, forceLessons);
             // Rate limiting protection
             await new Promise(r => setTimeout(r, 1000)); 
           }
