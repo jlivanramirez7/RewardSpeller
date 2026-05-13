@@ -6,13 +6,13 @@
       "description": "Master complex vowel combinations and trigraphs.",
       "rule": "Pay attention to combinations like 'ough', 'au', and 'aw' that can make unexpected sounds.",
       "lessonScript": "Welcome, young Padawan! Today we face the tricky 'OUGH' trigraph and complex diphthongs. Just like navigating the Death Star, it can be tough. Stay focused and use the Force to master these sounds!",
-      "lessonImage": "/assets/images/tier1.png",
+      "lessonImage": "/assets/images/g5_tier1.png",
       "sections": [
         {
           "name": "The Tricky OUGH",
           "theme": "OUGH Trigraph",
           "lessonScript": "The 'ough' pattern is a master of disguise! In words like 'THOUGHT', it sounds like 'aw'. But in 'ROUGH', it sounds like 'uff'! Do not let these tricks fool you.",
-          "imagePath": "/assets/images/tier1_sec1.png",
+          "imagePath": "/assets/images/g5_t1_s1.png",
           "id": "g5_t1_s1",
           "rule": "The 'ough' pattern can make many different sounds. Group words by their sound to remember them!",
           "words": [
@@ -72,7 +72,7 @@
           "name": "The AU Team",
           "theme": "AU Diphthong",
           "lessonScript": "The 'au' team usually makes the sound you hear in 'launch'. Watch out for it in academic and everyday words.",
-          "imagePath": "/assets/images/tier1_sec2.png",
+          "imagePath": "/assets/images/g5_t1_s2.png",
           "id": "g5_t1_s2",
           "rule": "The 'au' spelling usually represents the /aw/ sound.",
           "words": [
@@ -99,7 +99,7 @@
             {
               "word": "autumn",
               "definition": "The season after summer and before winter.",
-              "sentence": "The trees in Lothl\u00f3rien turned golden in the autumn."
+              "sentence": "The trees in Lothlórien turned golden in the autumn."
             },
             {
               "word": "caution",
@@ -132,7 +132,7 @@
           "name": "The AW Team",
           "theme": "AW Diphthong",
           "lessonScript": "The 'aw' team also makes the /aw/ sound, often at the end of words or before an 'l' or 'n'.",
-          "imagePath": "/assets/images/tier1_sec3.png",
+          "imagePath": "/assets/images/g5_t1_s3.png",
           "id": "g5_t1_s3",
           "rule": "Use 'aw' at the end of words or syllables, and before 'l', 'n', or 'k'.",
           "words": [
@@ -196,13 +196,13 @@
       "description": "Understand words better by learning their Latin roots.",
       "rule": "Roots like 'spect', 'struct', and 'tract' carry core meanings across many words.",
       "lessonScript": "Greetings, traveler! Today we construct words like the ancient Dwarves building the great halls of Moria. Our base is ancient Latin roots. Master them, and you unlock the secrets of many complex words!",
-      "lessonImage": "/assets/images/tier2.png",
+      "lessonImage": "/assets/images/g5_tier2.png",
       "sections": [
         {
           "name": "Root SPECT (To Look)",
           "theme": "Root SPECT",
           "lessonScript": "The root 'spect' means to look. Think of spectacles or a spectacle!",
-          "imagePath": "/assets/images/tier2_sec1.png",
+          "imagePath": "/assets/images/g5_t2_s1.png",
           "id": "g5_t2_s1",
           "rule": "Words containing 'spect' usually relate to seeing or looking.",
           "words": [
@@ -262,7 +262,7 @@
           "name": "Root STRUCT (To Build)",
           "theme": "Root STRUCT",
           "lessonScript": "The root 'struct' means to build. Think of structure or construction!",
-          "imagePath": "/assets/images/tier2_sec2.png",
+          "imagePath": "/assets/images/g5_t2_s2.png",
           "id": "g5_t2_s2",
           "rule": "Words containing 'struct' usually relate to building or arranging.",
           "words": [
@@ -322,7 +322,7 @@
           "name": "Root TRACT (To Pull)",
           "theme": "Root TRACT",
           "lessonScript": "The root 'tract' means to pull or drag. Think of a tractor or attract!",
-          "imagePath": "/assets/images/tier2_sec3.png",
+          "imagePath": "/assets/images/g5_t2_s3.png",
           "id": "g5_t2_s3",
           "rule": "Words containing 'tract' usually relate to pulling, drawing, or dragging.",
           "words": [
@@ -386,13 +386,13 @@
       "description": "Master long words by breaking them into parts.",
       "rule": "Look for familiar prefixes and suffixes to decode long words.",
       "lessonScript": "Welcome, adventurer! Long words can be as intimidating as an Ender Dragon, but if you break them down into prefixes, roots, and suffixes, you can defeat them easily!",
-      "lessonImage": "/assets/images/tier3.png",
+      "lessonImage": "/assets/images/g5_tier3.png",
       "sections": [
         {
           "name": "Prefixes",
           "theme": "Prefixes",
           "lessonScript": "Prefixes are added to the beginning of words to change their meaning.",
-          "imagePath": "/assets/images/tier3_sec1.png",
+          "imagePath": "/assets/images/g5_t3_s1.png",
           "id": "g5_t3_s1",
           "rule": "Prefixes like un-, inter-, and dis- change the meaning of the base word.",
           "words": [
@@ -452,7 +452,7 @@
           "name": "Suffixes",
           "theme": "Suffixes",
           "lessonScript": "Suffixes are added to the end of words to change their meaning or part of speech.",
-          "imagePath": "/assets/images/tier3_sec2.png",
+          "imagePath": "/assets/images/g5_t3_s2.png",
           "id": "g5_t3_s2",
           "rule": "Suffixes like -tion, -ity, and -ment often create nouns.",
           "words": [
@@ -512,7 +512,7 @@
           "name": "Combined Affixes",
           "theme": "Combined Affixes",
           "lessonScript": "Some words have both prefixes and suffixes! Peel them off like layers of an onion.",
-          "imagePath": "/assets/images/tier3_sec3.png",
+          "imagePath": "/assets/images/g5_t3_s3.png",
           "id": "g5_t3_s3",
           "rule": "Identify the root word first, then look for both prefixes and suffixes.",
           "words": [
@@ -576,13 +576,13 @@
       "description": "Master words that sound or look alike but have different meanings.",
       "rule": "Use context clues to determine the correct spelling and meaning.",
       "lessonScript": "Welcome, detective! Some words are masters of disguise, as deceptive as the White Witch. You must use your wits to tell them apart!",
-      "lessonImage": "/assets/images/tier4.png",
+      "lessonImage": "/assets/images/g5_tier4.png",
       "sections": [
         {
           "name": "Homophones",
           "theme": "Homophones",
           "lessonScript": "Homophones sound the same but are spelled differently and have different meanings.",
-          "imagePath": "/assets/images/tier4_sec1.png",
+          "imagePath": "/assets/images/g5_t4_s1.png",
           "id": "g5_t4_s1",
           "rule": "Memorize the spelling that goes with each specific meaning.",
           "words": [
@@ -642,7 +642,7 @@
           "name": "Homographs",
           "theme": "Homographs",
           "lessonScript": "Homographs are spelled the same but have different meanings and sometimes different pronunciations.",
-          "imagePath": "/assets/images/tier4_sec2.png",
+          "imagePath": "/assets/images/g5_t4_s2.png",
           "id": "g5_t4_s2",
           "rule": "Use context clues to figure out which meaning or pronunciation is intended.",
           "words": [
@@ -706,13 +706,13 @@
       "description": "Master subject-specific terms for advanced learning.",
       "rule": "Learn the specific definitions used in academic subjects.",
       "lessonScript": "Welcome, scholar! To master the advanced subjects at Hogwarts or in the Jedi Temple, you must learn their specific vocabulary. These words are your keys to advanced knowledge!",
-      "lessonImage": "/assets/images/tier5.png",
+      "lessonImage": "/assets/images/g5_tier5.png",
       "sections": [
         {
           "name": "Science",
           "theme": "Science",
           "lessonScript": "Science words help us describe the physical world and how it works.",
-          "imagePath": "/assets/images/tier5_sec1.png",
+          "imagePath": "/assets/images/g5_t5_s1.png",
           "id": "g5_t5_s1",
           "rule": "Focus on the precise definitions used in scientific contexts.",
           "words": [
@@ -772,7 +772,7 @@
           "name": "Social Studies",
           "theme": "Social Studies",
           "lessonScript": "Social studies words help us understand history, government, and cultures.",
-          "imagePath": "/assets/images/tier5_sec2.png",
+          "imagePath": "/assets/images/g5_t5_s2.png",
           "id": "g5_t5_s2",
           "rule": "Understand how these words apply to societies and governments.",
           "words": [
@@ -784,7 +784,7 @@
             {
               "word": "democracy",
               "definition": "A system of government by the whole population or all the eligible members of a state.",
-              "sentence": "Padm\u00e9 fought to preserve democracy in the Galactic Senate."
+              "sentence": "Padmé fought to preserve democracy in the Galactic Senate."
             },
             {
               "word": "economy",
@@ -832,7 +832,7 @@
           "name": "Math & ELA",
           "theme": "Math & ELA",
           "lessonScript": "Math and ELA words help us describe shapes, numbers, and literature.",
-          "imagePath": "/assets/images/tier5_sec3.png",
+          "imagePath": "/assets/images/g5_t5_s3.png",
           "id": "g5_t5_s3",
           "rule": "Learn terms for shapes and literary devices.",
           "words": [
@@ -843,7 +843,7 @@
             },
             {
               "word": "perpendicular",
-              "definition": "At an angle of 90\u00b0 to a given line, plane, or surface.",
+              "definition": "At an angle of 90° to a given line, plane, or surface.",
               "sentence": "The walls of the Death Star corridors were perpendicular to the floor."
             },
             {

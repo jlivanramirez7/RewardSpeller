@@ -6,7 +6,7 @@
       "description": "Master foundational consonant-vowel-consonant words with short vowel sounds.",
       "rule": "Listen for the short crisp vowel sound between two consonants.",
       "lessonScript": "Welcome, young Jedi! Your training starts with the simplest building blocks of the galaxy: CVC words. Just like stacking basic blocks in Minecraft, you can build these words one sound at a time!",
-      "lessonImage": "/assets/images/tier1.png",
+      "lessonImage": "/assets/images/g2_tier1.png",
       "sections": [
         {
           "id": "g2_t1_s1",
@@ -14,18 +14,58 @@
           "theme": "Short A and I",
           "rule": "Short 'a' sounds like the start of 'apple', and short 'i' sounds like the start of 'igloo'.",
           "lessonScript": "In Minecraft, you might use a map to find a pig! Let's practice short A and I words.",
-          "imagePath": "/assets/images/tier1_sec1.png",
+          "imagePath": "/assets/images/g2_t1_s1.png",
           "words": [
-            { "word": "cat", "definition": "A small domesticated furry mammal.", "sentence": "Hermione's pet cat Crookshanks liked to chase spiders at Hogwarts." },
-            { "word": "map", "definition": "A visual representation of an area.", "sentence": "The dwarves used an ancient map to find the Lonely Mountain." },
-            { "word": "bag", "definition": "A container made of flexible material.", "sentence": "Frodo carried the One Ring safely inside his small leather bag." },
-            { "word": "hat", "definition": "A covering for the head.", "sentence": "The Sorting Hat placed Harry Potter into Gryffindor house." },
-            { "word": "sad", "definition": "Feeling or showing sorrow.", "sentence": "Dobby was sad when he was treated poorly by the Malfoys." },
-            { "word": "pig", "definition": "A domesticated hoofed mammal.", "sentence": "Steve fed a carrot to the pink pig in his Minecraft farm." },
-            { "word": "big", "definition": "Of considerable size or extent.", "sentence": "Hagrid is a very big and friendly giant who loves magical creatures." },
-            { "word": "win", "definition": "Be successful or victorious in a contest.", "sentence": "Harry managed to win the Quidditch match by catching the Golden Snitch." },
-            { "word": "sip", "definition": "Drink by taking small mouthfuls.", "sentence": "Yoda took a warm sip of root tea in his swamp home on Dagobah." },
-            { "word": "sit", "definition": "Rest with the body supported by the buttocks.", "sentence": "The hobbits decided to sit on the grassy hill and eat second breakfast." }
+            {
+              "word": "cat",
+              "definition": "A small domesticated furry mammal.",
+              "sentence": "Hermione's pet cat Crookshanks liked to chase spiders at Hogwarts."
+            },
+            {
+              "word": "map",
+              "definition": "A visual representation of an area.",
+              "sentence": "The dwarves used an ancient map to find the Lonely Mountain."
+            },
+            {
+              "word": "bag",
+              "definition": "A container made of flexible material.",
+              "sentence": "Frodo carried the One Ring safely inside his small leather bag."
+            },
+            {
+              "word": "hat",
+              "definition": "A covering for the head.",
+              "sentence": "The Sorting Hat placed Harry Potter into Gryffindor house."
+            },
+            {
+              "word": "sad",
+              "definition": "Feeling or showing sorrow.",
+              "sentence": "Dobby was sad when he was treated poorly by the Malfoys."
+            },
+            {
+              "word": "pig",
+              "definition": "A domesticated hoofed mammal.",
+              "sentence": "Steve fed a carrot to the pink pig in his Minecraft farm."
+            },
+            {
+              "word": "big",
+              "definition": "Of considerable size or extent.",
+              "sentence": "Hagrid is a very big and friendly giant who loves magical creatures."
+            },
+            {
+              "word": "win",
+              "definition": "Be successful or victorious in a contest.",
+              "sentence": "Harry managed to win the Quidditch match by catching the Golden Snitch."
+            },
+            {
+              "word": "sip",
+              "definition": "Drink by taking small mouthfuls.",
+              "sentence": "Yoda took a warm sip of root tea in his swamp home on Dagobah."
+            },
+            {
+              "word": "sit",
+              "definition": "Rest with the body supported by the buttocks.",
+              "sentence": "The hobbits decided to sit on the grassy hill and eat second breakfast."
+            }
           ]
         },
         {
@@ -34,18 +74,58 @@
           "theme": "Short O, U, and E",
           "rule": "Listen closely for the distinct short vowel sounds in the middle of these words.",
           "lessonScript": "When the sun sets in Minecraft, you need to hop into bed! Let's practice short O, U, and E words.",
-          "imagePath": "/assets/images/tier1_sec2.png",
+          "imagePath": "/assets/images/g2_t1_s2.png",
           "words": [
-            { "word": "dog", "definition": "A domesticated carnivorous mammal.", "sentence": "Fang was Hagrid's loyal dog who lived in the wooden hut outside Hogwarts." },
-            { "word": "box", "definition": "A container with a flat base and sides.", "sentence": "Lucy found a carved wooden box inside the magical wardrobe." },
-            { "word": "top", "definition": "The highest point or part of something.", "sentence": "Gandalf stood at the very top of the high tower of Orthanc." },
-            { "word": "sun", "definition": "The star round which the earth orbits.", "sentence": "The twin suns of Tatooine shone brightly over Luke's desert home." },
-            { "word": "run", "definition": "Move at a speed faster than a walk.", "sentence": "You must run fast when a Creeper starts hissing in Minecraft!" },
-            { "word": "cup", "definition": "A small bowl-shaped drinking vessel.", "sentence": "The Triwizard Cup glowed with a mysterious blue magical light." },
-            { "word": "bed", "definition": "A piece of furniture for sleep or rest.", "sentence": "Steve crafted a red bed in Minecraft so he could sleep through the night." },
-            { "word": "red", "definition": "A color at the end of the spectrum next to orange.", "sentence": "Darth Vader's lightsaber glowed with a bright red blade." },
-            { "word": "ten", "definition": "The number equivalent to the product of five and two.", "sentence": "There were ten shiny Galleons resting inside Harry's velvet money bag." },
-            { "word": "leg", "definition": "Each of the limbs on which a person or animal walks.", "sentence": "C-3PO had one silver leg that matched his shiny golden armor plating." }
+            {
+              "word": "dog",
+              "definition": "A domesticated carnivorous mammal.",
+              "sentence": "Fang was Hagrid's loyal dog who lived in the wooden hut outside Hogwarts."
+            },
+            {
+              "word": "box",
+              "definition": "A container with a flat base and sides.",
+              "sentence": "Lucy found a carved wooden box inside the magical wardrobe."
+            },
+            {
+              "word": "top",
+              "definition": "The highest point or part of something.",
+              "sentence": "Gandalf stood at the very top of the high tower of Orthanc."
+            },
+            {
+              "word": "sun",
+              "definition": "The star round which the earth orbits.",
+              "sentence": "The twin suns of Tatooine shone brightly over Luke's desert home."
+            },
+            {
+              "word": "run",
+              "definition": "Move at a speed faster than a walk.",
+              "sentence": "You must run fast when a Creeper starts hissing in Minecraft!"
+            },
+            {
+              "word": "cup",
+              "definition": "A small bowl-shaped drinking vessel.",
+              "sentence": "The Triwizard Cup glowed with a mysterious blue magical light."
+            },
+            {
+              "word": "bed",
+              "definition": "A piece of furniture for sleep or rest.",
+              "sentence": "Steve crafted a red bed in Minecraft so he could sleep through the night."
+            },
+            {
+              "word": "red",
+              "definition": "A color at the end of the spectrum next to orange.",
+              "sentence": "Darth Vader's lightsaber glowed with a bright red blade."
+            },
+            {
+              "word": "ten",
+              "definition": "The number equivalent to the product of five and two.",
+              "sentence": "There were ten shiny Galleons resting inside Harry's velvet money bag."
+            },
+            {
+              "word": "leg",
+              "definition": "Each of the limbs on which a person or animal walks.",
+              "sentence": "C-3PO had one silver leg that matched his shiny golden armor plating."
+            }
           ]
         }
       ]
@@ -56,7 +136,7 @@
       "description": "Learn how silent E at the end of a word makes the vowel say its own name.",
       "rule": "Silent E jumps over one consonant to give all its power to the vowel!",
       "lessonScript": "Silent E is like a secret Jedi Master. It stays silent at the end of the word, but uses the Force to make the middle vowel say its long name!",
-      "lessonImage": "/assets/images/tier2.png",
+      "lessonImage": "/assets/images/g2_tier2.png",
       "sections": [
         {
           "id": "g2_t2_s1",
@@ -64,18 +144,58 @@
           "theme": "Long A and I",
           "rule": "The 'a_e' and 'i_e' patterns make long vowel sounds.",
           "lessonScript": "Bake a cake at Hogwarts or ride a bike across the Shire. Let's look at words with silent E.",
-          "imagePath": "/assets/images/tier2_sec1.png",
+          "imagePath": "/assets/images/g2_t2_s1.png",
           "words": [
-            { "word": "cake", "definition": "A sweet baked food made from dough or batter.", "sentence": "Hagrid baked a large chocolate birthday cake for Harry Potter." },
-            { "word": "game", "definition": "A form of play or sport.", "sentence": "Wizard's Chess is a famous magical game played at Hogwarts." },
-            { "word": "name", "definition": "A word by which a person or thing is known.", "sentence": "Most wizards were too afraid to speak Voldemort's actual name." },
-            { "word": "gate", "definition": "A hinged barrier used to close an opening.", "sentence": "The heavy iron gate of Mordor was guarded by fierce Orcs." },
-            { "word": "wave", "definition": "A ridge of water moving across the surface of a body of water.", "sentence": "A giant wave splashed against the wooden ship sailing to Narnia." },
-            { "word": "bike", "definition": "A bicycle.", "sentence": "The children wished they had a bike to explore the magical forest." },
-            { "word": "kite", "definition": "A toy tethered with a string and flown in the wind.", "sentence": "A colorful kite flew above the green hills of the peaceful Shire." },
-            { "word": "time", "definition": "The indefinite continued progress of existence.", "sentence": "Hermione used a Time-Turner to travel back in time for her classes." },
-            { "word": "five", "definition": "The number equivalent to the sum of two and three.", "sentence": "Five X-wing starfighters zoomed out of the rebel hangar bay." },
-            { "word": "line", "definition": "A long, narrow mark or band.", "sentence": "The Hogwarts students stood in a straight line for the Sorting Ceremony." }
+            {
+              "word": "cake",
+              "definition": "A sweet baked food made from dough or batter.",
+              "sentence": "Hagrid baked a large chocolate birthday cake for Harry Potter."
+            },
+            {
+              "word": "game",
+              "definition": "A form of play or sport.",
+              "sentence": "Wizard's Chess is a famous magical game played at Hogwarts."
+            },
+            {
+              "word": "name",
+              "definition": "A word by which a person or thing is known.",
+              "sentence": "Most wizards were too afraid to speak Voldemort's actual name."
+            },
+            {
+              "word": "gate",
+              "definition": "A hinged barrier used to close an opening.",
+              "sentence": "The heavy iron gate of Mordor was guarded by fierce Orcs."
+            },
+            {
+              "word": "wave",
+              "definition": "A ridge of water moving across the surface of a body of water.",
+              "sentence": "A giant wave splashed against the wooden ship sailing to Narnia."
+            },
+            {
+              "word": "bike",
+              "definition": "A bicycle.",
+              "sentence": "The children wished they had a bike to explore the magical forest."
+            },
+            {
+              "word": "kite",
+              "definition": "A toy tethered with a string and flown in the wind.",
+              "sentence": "A colorful kite flew above the green hills of the peaceful Shire."
+            },
+            {
+              "word": "time",
+              "definition": "The indefinite continued progress of existence.",
+              "sentence": "Hermione used a Time-Turner to travel back in time for her classes."
+            },
+            {
+              "word": "five",
+              "definition": "The number equivalent to the sum of two and three.",
+              "sentence": "Five X-wing starfighters zoomed out of the rebel hangar bay."
+            },
+            {
+              "word": "line",
+              "definition": "A long, narrow mark or band.",
+              "sentence": "The Hogwarts students stood in a straight line for the Sorting Ceremony."
+            }
           ]
         },
         {
@@ -84,18 +204,58 @@
           "theme": "Long O and U",
           "rule": "The 'o_e' and 'u_e' patterns make long vowel sounds.",
           "lessonScript": "Find a cozy home in the Shire or play a flute. Let's master long O and U words.",
-          "imagePath": "/assets/images/tier2_sec2.png",
+          "imagePath": "/assets/images/g2_t2_s2.png",
           "words": [
-            { "word": "home", "definition": "The place where one lives permanently.", "sentence": "Bilbo Baggins loved his cozy underground home in Bag End." },
-            { "word": "rope", "definition": "A length of strong cord made by twisting together strands.", "sentence": "Samwise carried an elven rope that helped them climb down the cliff." },
-            { "word": "hope", "definition": "A feeling of expectation and desire for a certain thing to happen.", "sentence": "A New Hope brought light back to the galaxy during dark times." },
-            { "word": "rose", "definition": "A prickly bush or shrub that bears beautiful fragrant flowers.", "sentence": "A beautiful red rose grew in the courtyard of Hogwarts castle." },
-            { "word": "bone", "definition": "Any of the pieces of hard whitish tissue making up the skeleton.", "sentence": "A Minecraft skeleton dropped a bone when the sun came up." },
-            { "word": "rule", "definition": "One of a set of explicit or understood regulations.", "sentence": "The most important rule at Hogwarts is to never enter the Forbidden Forest." },
-            { "word": "tube", "definition": "A long, hollow cylinder.", "sentence": "Luke floated inside a glass medical healing tube after his rescue." },
-            { "word": "cute", "definition": "Attractive in a pretty or endearing way.", "sentence": "The baby Ewoks on Endor were very cute and loved to eat snacks." },
-            { "word": "tune", "definition": "A melody, especially one that characterizes a certain piece of music.", "sentence": "The faun Tumnus played a magical tune on his flute in Narnia." },
-            { "word": "flute", "definition": "A wind instrument made from a tube with holes.", "sentence": "Quirrell used a wooden flute to lull the three-headed dog to sleep." }
+            {
+              "word": "home",
+              "definition": "The place where one lives permanently.",
+              "sentence": "Bilbo Baggins loved his cozy underground home in Bag End."
+            },
+            {
+              "word": "rope",
+              "definition": "A length of strong cord made by twisting together strands.",
+              "sentence": "Samwise carried an elven rope that helped them climb down the cliff."
+            },
+            {
+              "word": "hope",
+              "definition": "A feeling of expectation and desire for a certain thing to happen.",
+              "sentence": "A New Hope brought light back to the galaxy during dark times."
+            },
+            {
+              "word": "rose",
+              "definition": "A prickly bush or shrub that bears beautiful fragrant flowers.",
+              "sentence": "A beautiful red rose grew in the courtyard of Hogwarts castle."
+            },
+            {
+              "word": "bone",
+              "definition": "Any of the pieces of hard whitish tissue making up the skeleton.",
+              "sentence": "A Minecraft skeleton dropped a bone when the sun came up."
+            },
+            {
+              "word": "rule",
+              "definition": "One of a set of explicit or understood regulations.",
+              "sentence": "The most important rule at Hogwarts is to never enter the Forbidden Forest."
+            },
+            {
+              "word": "tube",
+              "definition": "A long, hollow cylinder.",
+              "sentence": "Luke floated inside a glass medical healing tube after his rescue."
+            },
+            {
+              "word": "cute",
+              "definition": "Attractive in a pretty or endearing way.",
+              "sentence": "The baby Ewoks on Endor were very cute and loved to eat snacks."
+            },
+            {
+              "word": "tune",
+              "definition": "A melody, especially one that characterizes a certain piece of music.",
+              "sentence": "The faun Tumnus played a magical tune on his flute in Narnia."
+            },
+            {
+              "word": "flute",
+              "definition": "A wind instrument made from a tube with holes.",
+              "sentence": "Quirrell used a wooden flute to lull the three-headed dog to sleep."
+            }
           ]
         }
       ]
@@ -106,7 +266,7 @@
       "description": "Master two consonants that blend together or combine to make a single sound.",
       "rule": "Blends keep both sounds, while digraphs (sh, ch, th) make a brand new sound.",
       "lessonScript": "When two consonants team up, they can create powerful combinations! Digraphs like SH and CH make a brand new sound, just like combining iron and wood makes a shield in Minecraft.",
-      "lessonImage": "/assets/images/tier3.png",
+      "lessonImage": "/assets/images/g2_tier3.png",
       "sections": [
         {
           "id": "g2_t3_s1",
@@ -114,18 +274,58 @@
           "theme": "Digraphs",
           "rule": "'sh' sounds like 'shh', 'ch' sounds like 'choo choo', and 'th' is made with your tongue between your teeth.",
           "lessonScript": "Visit a magical shop in Diagon Alley or chat with friends in the Gryffindor common room.",
-          "imagePath": "/assets/images/tier3_sec1.png",
+          "imagePath": "/assets/images/g2_t3_s1.png",
           "words": [
-            { "word": "shop", "definition": "A building or room where goods are sold.", "sentence": "Ollivanders wand shop in Diagon Alley was filled with thousands of boxes." },
-            { "word": "ship", "definition": "A large boat for transporting people or goods by sea.", "sentence": "The majestic Dawn Treader ship sailed across the eastern oceans of Narnia." },
-            { "word": "fish", "definition": "A limbless cold-blooded vertebrate animal with gills and fins.", "sentence": "Gollum liked to catch fresh fish in the dark underground lake." },
-            { "word": "chat", "definition": "Talk in a friendly and informal way.", "sentence": "Harry and Ron loved to chat by the warm fire in Gryffindor Tower." },
-            { "word": "chin", "definition": "The protruding part of the face below the mouth.", "sentence": "Dumbledore had a very long silver beard that reached down from his chin." },
-            { "word": "rich", "definition": "Having a great deal of money or assets.", "sentence": "The dwarves of Erebor were very rich from their vast mines of gold." },
-            { "word": "this", "definition": "Used to identify a specific person or thing close at hand.", "sentence": "\"This is the way,\" said the Mandalorian as he put on his helmet." },
-            { "word": "that", "definition": "Used to identify a specific person or thing observed at a distance.", "sentence": "\"That spaceship is too big to be a space station,\" Obi-Wan said." },
-            { "word": "with", "definition": "Accompanied by another person or thing.", "sentence": "May the Force be with you as you face the trials ahead." },
-            { "word": "path", "definition": "A way or track laid down for walking.", "sentence": "The Hobbits followed a hidden path through the dark woods of the Shire." }
+            {
+              "word": "shop",
+              "definition": "A building or room where goods are sold.",
+              "sentence": "Ollivanders wand shop in Diagon Alley was filled with thousands of boxes."
+            },
+            {
+              "word": "ship",
+              "definition": "A large boat for transporting people or goods by sea.",
+              "sentence": "The majestic Dawn Treader ship sailed across the eastern oceans of Narnia."
+            },
+            {
+              "word": "fish",
+              "definition": "A limbless cold-blooded vertebrate animal with gills and fins.",
+              "sentence": "Gollum liked to catch fresh fish in the dark underground lake."
+            },
+            {
+              "word": "chat",
+              "definition": "Talk in a friendly and informal way.",
+              "sentence": "Harry and Ron loved to chat by the warm fire in Gryffindor Tower."
+            },
+            {
+              "word": "chin",
+              "definition": "The protruding part of the face below the mouth.",
+              "sentence": "Dumbledore had a very long silver beard that reached down from his chin."
+            },
+            {
+              "word": "rich",
+              "definition": "Having a great deal of money or assets.",
+              "sentence": "The dwarves of Erebor were very rich from their vast mines of gold."
+            },
+            {
+              "word": "this",
+              "definition": "Used to identify a specific person or thing close at hand.",
+              "sentence": "\"This is the way,\" said the Mandalorian as he put on his helmet."
+            },
+            {
+              "word": "that",
+              "definition": "Used to identify a specific person or thing observed at a distance.",
+              "sentence": "\"That spaceship is too big to be a space station,\" Obi-Wan said."
+            },
+            {
+              "word": "with",
+              "definition": "Accompanied by another person or thing.",
+              "sentence": "May the Force be with you as you face the trials ahead."
+            },
+            {
+              "word": "path",
+              "definition": "A way or track laid down for walking.",
+              "sentence": "The Hobbits followed a hidden path through the dark woods of the Shire."
+            }
           ]
         },
         {
@@ -134,18 +334,58 @@
           "theme": "Beginning Blends",
           "rule": "Blend the two consonant sounds together smoothly at the start of the word.",
           "lessonScript": "Look up at a shining star above Hogwarts or climb a tall tree in Minecraft.",
-          "imagePath": "/assets/images/tier3_sec2.png",
+          "imagePath": "/assets/images/g2_t3_s2.png",
           "words": [
-            { "word": "star", "definition": "A fixed luminous point in the night sky.", "sentence": "The Death Star was a giant space station capable of destroying planets." },
-            { "word": "stop", "definition": "Come to an end or cease to operate.", "sentence": "Hermione told Ron to stop waving his wand around so carelessly." },
-            { "word": "step", "definition": "Put down one's foot in taking a stride.", "sentence": "Take a brave step through the wardrobe door to enter Narnia." },
-            { "word": "flag", "definition": "A piece of cloth with a special design, used as a symbol.", "sentence": "The red Gryffindor flag fluttered proudly during the Quidditch match." },
-            { "word": "flip", "definition": "Turn over or cause to turn over with a sudden quick movement.", "sentence": "Anakin could flip his starfighter upside down to dodge laser blasts." },
-            { "word": "tree", "definition": "A woody perennial plant with a single trunk.", "sentence": "The Whomping Willow is a very angry tree planted at Hogwarts." },
-            { "word": "trip", "definition": "A journey or excursion.", "sentence": "Frodo set out on a perilous trip to Mount Doom to destroy the Ring." },
-            { "word": "trap", "definition": "A device or enclosure designed to catch and retain animals.", "sentence": "\"It's a trap!\" Admiral Ackbar shouted during the space battle." },
-            { "word": "frog", "definition": "A tailless amphibian with short smooth skin and long hind legs.", "sentence": "Harry ate a magical Chocolate Frog on the train and found Dumbledore's card." },
-            { "word": "club", "definition": "A heavy stick with a thick end, used as a weapon.", "sentence": "The mountain troll swung a giant wooden club in the Hogwarts bathroom." }
+            {
+              "word": "star",
+              "definition": "A fixed luminous point in the night sky.",
+              "sentence": "The Death Star was a giant space station capable of destroying planets."
+            },
+            {
+              "word": "stop",
+              "definition": "Come to an end or cease to operate.",
+              "sentence": "Hermione told Ron to stop waving his wand around so carelessly."
+            },
+            {
+              "word": "step",
+              "definition": "Put down one's foot in taking a stride.",
+              "sentence": "Take a brave step through the wardrobe door to enter Narnia."
+            },
+            {
+              "word": "flag",
+              "definition": "A piece of cloth with a special design, used as a symbol.",
+              "sentence": "The red Gryffindor flag fluttered proudly during the Quidditch match."
+            },
+            {
+              "word": "flip",
+              "definition": "Turn over or cause to turn over with a sudden quick movement.",
+              "sentence": "Anakin could flip his starfighter upside down to dodge laser blasts."
+            },
+            {
+              "word": "tree",
+              "definition": "A woody perennial plant with a single trunk.",
+              "sentence": "The Whomping Willow is a very angry tree planted at Hogwarts."
+            },
+            {
+              "word": "trip",
+              "definition": "A journey or excursion.",
+              "sentence": "Frodo set out on a perilous trip to Mount Doom to destroy the Ring."
+            },
+            {
+              "word": "trap",
+              "definition": "A device or enclosure designed to catch and retain animals.",
+              "sentence": "\"It's a trap!\" Admiral Ackbar shouted during the space battle."
+            },
+            {
+              "word": "frog",
+              "definition": "A tailless amphibian with short smooth skin and long hind legs.",
+              "sentence": "Harry ate a magical Chocolate Frog on the train and found Dumbledore's card."
+            },
+            {
+              "word": "club",
+              "definition": "A heavy stick with a thick end, used as a weapon.",
+              "sentence": "The mountain troll swung a giant wooden club in the Hogwarts bathroom."
+            }
           ]
         }
       ]
@@ -156,7 +396,7 @@
       "description": "Practice essential words that appear frequently in reading and writing.",
       "rule": "Memorize these words by sight, as some do not follow normal phonetic rules.",
       "lessonScript": "These words appear everywhere across the galaxy! You must learn them by heart, just as a wizard memorizes their most trusted spells.",
-      "lessonImage": "/assets/images/tier4.png",
+      "lessonImage": "/assets/images/g2_tier4.png",
       "sections": [
         {
           "id": "g2_t4_s1",
@@ -164,18 +404,58 @@
           "theme": "Sight Words 1",
           "rule": "Practice reading and spelling these common sight words instantly.",
           "lessonScript": "Read these words quickly to unlock the secrets of the Jedi archives.",
-          "imagePath": "/assets/images/tier4_sec1.png",
+          "imagePath": "/assets/images/g2_t4_s1.png",
           "words": [
-            { "word": "the", "definition": "Used to point forward to a following qualifying clause.", "sentence": "The Millennium Falcon is the fastest junk pile in the entire galaxy." },
-            { "word": "and", "definition": "Used to connect words of the same part of speech.", "sentence": "Harry, Ron, and Hermione were the best of friends at Hogwarts." },
-            { "word": "you", "definition": "Used to refer to the person or people being addressed.", "sentence": "\"You are a wizard, Harry,\" Hagrid said with a warm smile." },
-            { "word": "was", "definition": "First and third-person singular past of be.", "sentence": "It was a quiet and peaceful morning in the green hills of the Shire." },
-            { "word": "for", "definition": "In place of or in representation of.", "sentence": "Dobby would do anything for Harry Potter to keep him safe." },
-            { "word": "are", "definition": "Second person singular present and first, second, third person plural present of be.", "sentence": "The droids you are looking for left on a transport ship." },
-            { "word": "they", "definition": "Used to refer to two or more previously mentioned.", "sentence": "They flew on the backs of giant eagles to escape the fiery mountain." },
-            { "word": "said", "definition": "Past and past participle of say.", "sentence": "\"Use the Force, Luke,\" whispered Obi-Wan's voice." },
-            { "word": "have", "definition": "Possess, own, or hold.", "sentence": "The Jedi Knights have glowing lightsabers to defend the galaxy." },
-            { "word": "from", "definition": "Indicating the point in space at which a journey, motion, or action starts.", "sentence": "The owl arrived from Hogwarts carrying an important letter." }
+            {
+              "word": "the",
+              "definition": "Used to point forward to a following qualifying clause.",
+              "sentence": "The Millennium Falcon is the fastest junk pile in the entire galaxy."
+            },
+            {
+              "word": "and",
+              "definition": "Used to connect words of the same part of speech.",
+              "sentence": "Harry, Ron, and Hermione were the best of friends at Hogwarts."
+            },
+            {
+              "word": "you",
+              "definition": "Used to refer to the person or people being addressed.",
+              "sentence": "\"You are a wizard, Harry,\" Hagrid said with a warm smile."
+            },
+            {
+              "word": "was",
+              "definition": "First and third-person singular past of be.",
+              "sentence": "It was a quiet and peaceful morning in the green hills of the Shire."
+            },
+            {
+              "word": "for",
+              "definition": "In place of or in representation of.",
+              "sentence": "Dobby would do anything for Harry Potter to keep him safe."
+            },
+            {
+              "word": "are",
+              "definition": "Second person singular present and first, second, third person plural present of be.",
+              "sentence": "The droids you are looking for left on a transport ship."
+            },
+            {
+              "word": "they",
+              "definition": "Used to refer to two or more previously mentioned.",
+              "sentence": "They flew on the backs of giant eagles to escape the fiery mountain."
+            },
+            {
+              "word": "said",
+              "definition": "Past and past participle of say.",
+              "sentence": "\"Use the Force, Luke,\" whispered Obi-Wan's voice."
+            },
+            {
+              "word": "have",
+              "definition": "Possess, own, or hold.",
+              "sentence": "The Jedi Knights have glowing lightsabers to defend the galaxy."
+            },
+            {
+              "word": "from",
+              "definition": "Indicating the point in space at which a journey, motion, or action starts.",
+              "sentence": "The owl arrived from Hogwarts carrying an important letter."
+            }
           ]
         },
         {
@@ -184,18 +464,58 @@
           "theme": "Sight Words 2",
           "rule": "Practice reading and spelling these common sight words instantly.",
           "lessonScript": "Master these words to read your spellbooks smoothly without stopping.",
-          "imagePath": "/assets/images/tier4_sec2.png",
+          "imagePath": "/assets/images/g2_t4_s2.png",
           "words": [
-            { "word": "what", "definition": "Asking for information specifying something.", "sentence": "What kind of magical creature is hiding inside Hagrid's giant pocket?" },
-            { "word": "were", "definition": "Second person singular past, plural past, and past subjunctive of be.", "sentence": "The Pevensie children were amazed when they saw talking animals in Narnia." },
-            { "word": "when", "definition": "At what time or period.", "sentence": "When the sun rises in Minecraft, the skeletons catch on fire." },
-            { "word": "your", "definition": "Belonging to or associated with the person or people that the speaker is addressing.", "sentence": "Remember your Jedi training when you face Darth Vader." },
-            { "word": "come", "definition": "Move or travel toward or into a place thought of as near.", "sentence": "Come inside the cozy Hobbit hole and enjoy some warm tea." },
-            { "word": "some", "definition": "An unspecified amount or number of.", "sentence": "Bilbo shared some of his finest seed cake with Gandalf." },
-            { "word": "does", "definition": "Third person singular present of do.", "sentence": "How does the Sorting Hat know exactly which house to pick?" },
-            { "word": "goes", "definition": "Third person singular present of go.", "sentence": "The Hogwarts Express goes through beautiful green hills on its way to school." },
-            { "word": "been", "definition": "Past participle of be.", "sentence": "The One Ring had been lost at the bottom of the river for centuries." },
-            { "word": "many", "definition": "A large number of.", "sentence": "There are many dangerous traps hidden inside the ancient pyramid." }
+            {
+              "word": "what",
+              "definition": "Asking for information specifying something.",
+              "sentence": "What kind of magical creature is hiding inside Hagrid's giant pocket?"
+            },
+            {
+              "word": "were",
+              "definition": "Second person singular past, plural past, and past subjunctive of be.",
+              "sentence": "The Pevensie children were amazed when they saw talking animals in Narnia."
+            },
+            {
+              "word": "when",
+              "definition": "At what time or period.",
+              "sentence": "When the sun rises in Minecraft, the skeletons catch on fire."
+            },
+            {
+              "word": "your",
+              "definition": "Belonging to or associated with the person or people that the speaker is addressing.",
+              "sentence": "Remember your Jedi training when you face Darth Vader."
+            },
+            {
+              "word": "come",
+              "definition": "Move or travel toward or into a place thought of as near.",
+              "sentence": "Come inside the cozy Hobbit hole and enjoy some warm tea."
+            },
+            {
+              "word": "some",
+              "definition": "An unspecified amount or number of.",
+              "sentence": "Bilbo shared some of his finest seed cake with Gandalf."
+            },
+            {
+              "word": "does",
+              "definition": "Third person singular present of do.",
+              "sentence": "How does the Sorting Hat know exactly which house to pick?"
+            },
+            {
+              "word": "goes",
+              "definition": "Third person singular present of go.",
+              "sentence": "The Hogwarts Express goes through beautiful green hills on its way to school."
+            },
+            {
+              "word": "been",
+              "definition": "Past participle of be.",
+              "sentence": "The One Ring had been lost at the bottom of the river for centuries."
+            },
+            {
+              "word": "many",
+              "definition": "A large number of.",
+              "sentence": "There are many dangerous traps hidden inside the ancient pyramid."
+            }
           ]
         }
       ]
@@ -206,7 +526,7 @@
       "description": "Learn foundational math and science terms used in elementary learning.",
       "rule": "These words help you describe numbers, nature, and science concepts.",
       "lessonScript": "Even in the farthest reaches of space, math and science rule the galaxy! Master these academic words to understand the physical universe.",
-      "lessonImage": "/assets/images/tier5.png",
+      "lessonImage": "/assets/images/g2_tier5.png",
       "sections": [
         {
           "id": "g2_t5_s1",
@@ -214,18 +534,58 @@
           "theme": "Math Terms",
           "rule": "Use these words to talk about counting, adding, and measuring.",
           "lessonScript": "Count your Galleons or measure ingredients for potions class.",
-          "imagePath": "/assets/images/tier5_sec1.png",
+          "imagePath": "/assets/images/g2_t5_s1.png",
           "words": [
-            { "word": "add", "definition": "Join something to something else so as to increase the size, number, or amount.", "sentence": "In potions class, you must add three crushed beetle eyes to the cauldron." },
-            { "word": "plus", "definition": "With the addition of.", "sentence": "Two lightsabers plus one blaster equals three weapons." },
-            { "word": "sum", "definition": "The total amount resulting from the addition of two or more numbers.", "sentence": "The sum of all the gold coins in Smaug's mountain was massive." },
-            { "word": "size", "definition": "The relative extent of something; a thing's overall dimensions or magnitude.", "sentence": "The giant spider Aragog was the size of a small house!" },
-            { "word": "inch", "definition": "A unit of linear measure equal to one twelfth of a foot.", "sentence": "Harry's wand was exactly eleven inches long and made of holly." },
-            { "word": "foot", "definition": "A unit of linear measure equal to twelve inches.", "sentence": "The tall Enderman in Minecraft was over nine feet high." },
-            { "word": "part", "definition": "Some but not all of something.", "sentence": "Only part of the secret map was visible under the moonlight." },
-            { "word": "half", "definition": "Either of two equal or corresponding parts into which something is or can be divided.", "sentence": "Bilbo gave half of his bread to his dwarf friends." },
-            { "word": "time", "definition": "The indefinite continued progress of existence and events.", "sentence": "It was time for the Millennium Falcon to jump to hyperspace." },
-            { "word": "pair", "definition": "A set of two things used together or regarded as a unit.", "sentence": "Dobby wore a mismatched pair of colorful knitted socks." }
+            {
+              "word": "add",
+              "definition": "Join something to something else so as to increase the size, number, or amount.",
+              "sentence": "In potions class, you must add three crushed beetle eyes to the cauldron."
+            },
+            {
+              "word": "plus",
+              "definition": "With the addition of.",
+              "sentence": "Two lightsabers plus one blaster equals three weapons."
+            },
+            {
+              "word": "sum",
+              "definition": "The total amount resulting from the addition of two or more numbers.",
+              "sentence": "The sum of all the gold coins in Smaug's mountain was massive."
+            },
+            {
+              "word": "size",
+              "definition": "The relative extent of something; a thing's overall dimensions or magnitude.",
+              "sentence": "The giant spider Aragog was the size of a small house!"
+            },
+            {
+              "word": "inch",
+              "definition": "A unit of linear measure equal to one twelfth of a foot.",
+              "sentence": "Harry's wand was exactly eleven inches long and made of holly."
+            },
+            {
+              "word": "foot",
+              "definition": "A unit of linear measure equal to twelve inches.",
+              "sentence": "The tall Enderman in Minecraft was over nine feet high."
+            },
+            {
+              "word": "part",
+              "definition": "Some but not all of something.",
+              "sentence": "Only part of the secret map was visible under the moonlight."
+            },
+            {
+              "word": "half",
+              "definition": "Either of two equal or corresponding parts into which something is or can be divided.",
+              "sentence": "Bilbo gave half of his bread to his dwarf friends."
+            },
+            {
+              "word": "time",
+              "definition": "The indefinite continued progress of existence and events.",
+              "sentence": "It was time for the Millennium Falcon to jump to hyperspace."
+            },
+            {
+              "word": "pair",
+              "definition": "A set of two things used together or regarded as a unit.",
+              "sentence": "Dobby wore a mismatched pair of colorful knitted socks."
+            }
           ]
         },
         {
@@ -234,18 +594,58 @@
           "theme": "Science Terms",
           "rule": "Use these words to explore nature, earth, and living things.",
           "lessonScript": "Explore the elements of nature in Narnia or study living plants at Hogwarts.",
-          "imagePath": "/assets/images/tier5_sec2.png",
+          "imagePath": "/assets/images/g2_t5_s2.png",
           "words": [
-            { "word": "rock", "definition": "The solid mineral material forming part of the surface of the earth.", "sentence": "The dwarves mined deep into the solid rock of the mountain." },
-            { "word": "wind", "definition": "The perceptible natural movement of the air.", "sentence": "A cold wind blew across the snowy hills of Narnia." },
-            { "word": "rain", "definition": "Moisture condensed from the atmosphere that falls visibly in separate drops.", "sentence": "Heavy rain pounded against the windows of the Hogwarts castle." },
-            { "word": "moon", "definition": "The natural satellite of the earth.", "sentence": "Professor Lupin was very afraid of the full moon." },
-            { "word": "star", "definition": "A fixed luminous point in the night sky.", "sentence": "A shooting star streaked across the sky above the Jedi Temple." },
-            { "word": "life", "definition": "The condition that distinguishes animals and plants from inorganic matter.", "sentence": "The Force creates and binds all life in the galaxy together." },
-            { "word": "grow", "definition": "Undergo natural development by increasing in size and changing physically.", "sentence": "Magical plants grow very quickly inside the Hogwarts greenhouses." },
-            { "word": "seed", "definition": "A flowering plant's unit of reproduction.", "sentence": "Steve planted a wheat seed in the moist dirt near his house." },
-            { "word": "dirt", "definition": "Soil or earth.", "sentence": "The hobbits had rich dark dirt on their bare feet from walking." },
-            { "word": "tree", "definition": "A woody perennial plant with a single trunk branching out.", "sentence": "The golden leaves of the Lothlórien tree shone beautifully." }
+            {
+              "word": "rock",
+              "definition": "The solid mineral material forming part of the surface of the earth.",
+              "sentence": "The dwarves mined deep into the solid rock of the mountain."
+            },
+            {
+              "word": "wind",
+              "definition": "The perceptible natural movement of the air.",
+              "sentence": "A cold wind blew across the snowy hills of Narnia."
+            },
+            {
+              "word": "rain",
+              "definition": "Moisture condensed from the atmosphere that falls visibly in separate drops.",
+              "sentence": "Heavy rain pounded against the windows of the Hogwarts castle."
+            },
+            {
+              "word": "moon",
+              "definition": "The natural satellite of the earth.",
+              "sentence": "Professor Lupin was very afraid of the full moon."
+            },
+            {
+              "word": "star",
+              "definition": "A fixed luminous point in the night sky.",
+              "sentence": "A shooting star streaked across the sky above the Jedi Temple."
+            },
+            {
+              "word": "life",
+              "definition": "The condition that distinguishes animals and plants from inorganic matter.",
+              "sentence": "The Force creates and binds all life in the galaxy together."
+            },
+            {
+              "word": "grow",
+              "definition": "Undergo natural development by increasing in size and changing physically.",
+              "sentence": "Magical plants grow very quickly inside the Hogwarts greenhouses."
+            },
+            {
+              "word": "seed",
+              "definition": "A flowering plant's unit of reproduction.",
+              "sentence": "Steve planted a wheat seed in the moist dirt near his house."
+            },
+            {
+              "word": "dirt",
+              "definition": "Soil or earth.",
+              "sentence": "The hobbits had rich dark dirt on their bare feet from walking."
+            },
+            {
+              "word": "tree",
+              "definition": "A woody perennial plant with a single trunk branching out.",
+              "sentence": "The golden leaves of the Lothlórien tree shone beautifully."
+            }
           ]
         }
       ]
