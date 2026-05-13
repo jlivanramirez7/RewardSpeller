@@ -3,14 +3,14 @@ import { useAuth } from '../context/AuthContext';
 import { collection, getDocs, query, where, doc, updateDoc, setDoc } from 'firebase/firestore';
 
 const AdminDashboard = () => {
-  const { user, db } = useAuth();
+  const { user, db, isAdmin } = useAuth();
   const [requests, setRequests] = useState([]);
   const [metrics, setMetrics] = useState({ totalUsers: 0, totalPoints: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (user && user.email === 'jlivanramirez7@gmail.com') {
+      if (isAdmin) {
         try {
           // Fetch pending requests
           const q = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
     };
 
     fetchData();
-  }, [user, db]);
+  }, [user, db, isAdmin]);
 
   const handleApprove = async (requestId, userId, email) => {
     try {
@@ -79,7 +79,7 @@ const AdminDashboard = () => {
     }
   };
 
-  if (user?.email !== 'jlivanramirez7@gmail.com') {
+  if (!isAdmin) {
     return <div style={{ padding: '2rem', textAlign: 'center' }}>Access Denied. Admins only.</div>;
   }
 

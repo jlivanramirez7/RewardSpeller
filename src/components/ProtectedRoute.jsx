@@ -4,14 +4,22 @@ import { useAuth } from '../context/AuthContext';
 import { doc, getDoc } from 'firebase/firestore';
 
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
-  const { user, loading, db } = useAuth();
+  const { user, loading, db, isAdmin } = useAuth();
   const [approved, setApproved] = useState(false);
   const [checkingApproval, setCheckingApproval] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     let mounted = true;
     const checkApproval = async () => {
       if (user && db) {
+        if (isAdmin) {
+          if (mounted) {
+            setApproved(true);
+            setCheckingApproval(false);
+          }
+          return;
+        }
         try {
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
@@ -25,7 +33,9 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
           }
         } catch (error) {
           console.error("Error checking approval:", error);
-          // Optionally handle error state here
+          if (mounted) {
+            setError("Failed to verify account approval status. Please check your network connection or contact support.");
+          }
         } finally {
           if (mounted) {
             setCheckingApproval(false);
@@ -42,10 +52,14 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
       checkApproval();
     }
     return () => { mounted = false; };
-  }, [user, loading, db]);
+  }, [user, loading, db, isAdmin]);
 
   if (loading || checkingApproval) {
-    return <div>Loading...</div>;
+    return <div style={{ padding: '2rem', textAlign: 'center' }}>Verifying access permissions...</div>;
+  }
+
+  if (error) {
+    return <div style={{ color: 'var(--error-color)', padding: '2rem', textAlign: 'center' }}>{error}</div>;
   }
 
   if (!user) {
@@ -53,13 +67,12 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   }
 
   if (requireAdmin) {
-    // Hardcoded admin for now as per user request
-    if (user.email !== 'jlivanramirez7@gmail.com') {
-      return <Navigate to="/" />; // Redirect non-admins to home
+    if (!isAdmin) {
+      return <Navigate to="/" />;
     }
   }
 
-  if (!approved && user.email !== 'jlivanramirez7@gmail.com') {
+  if (!approved && !isAdmin) {
     return <Navigate to="/request-access" />;
   }
 

@@ -10,13 +10,13 @@ import { Settings, Gamepad2, LogOut } from 'lucide-react';
 
 function App() {
   const location = useLocation();
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
 
   return (
     <div className="app-container">
       <nav className="glass-nav">
         <div className="nav-brand">
-          <span className="logo-text">SummerSpelling</span>
+          <span className="logo-text">RewardSpeller</span>
         </div>
         <div className="nav-links">
           {user && (
@@ -29,7 +29,7 @@ function App() {
                 <Settings size={20} />
                 Parent Portal
               </Link>
-              {user.email === 'jlivanramirez7@gmail.com' && (
+              {isAdmin && (
                 <Link to="/admin" className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`}>
                   Admin
                 </Link>

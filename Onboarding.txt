@@ -1,0 +1,102 @@
+# RewardSpeller (formerly SummerSpelling) - Onboarding & Architecture Guide
+
+Welcome to RewardSpeller! This application is a state-of-the-art, gamified educational platform designed to help elementary and middle school students (Grades 3 through 6) master spelling, orthography, and academic vocabulary. By combining engaging fantasy-themed narratives, rigorous phonics pacing, and a parent-funded reward economy, RewardSpeller turns spelling practice into an exciting daily adventure while combatting the "summer slide."
+
+---
+
+## 1. High-Level Overview & Core Philosophy
+
+RewardSpeller operates on a three-pillar philosophy:
+1. **Rigorous Curriculum:** Structured progression through orthographic rules rather than arbitrary word lists.
+2. **Gamified Motivation:** Immediate feedback loops using points, streaks, and visual tier unlocking.
+3. **Parent-Child Collaboration:** A dedicated Parent Command Center that allows parents to calibrate curriculum, track diagnostic insights, and establish a customized, real-world reward economy.
+
+---
+
+## 2. Curriculum Architecture & Word Selection
+
+The curriculum spans 3rd, 4th, 5th, and 6th-grade standards, meticulously organized into Tiers, Sections, and Lessons.
+
+### Word Selection & Theming
+Words were chosen based on established pedagogical standards for morphological and orthographic awareness (e.g., vowel teams, affixes, Latin/Greek roots, syllable division rules, and subject-specific academic vocabulary). 
+To keep 8-to-12-year-olds highly engaged, every single section and word definition is wrapped in immersive pop-culture and fantasy context sentences (drawing heavily from *Minecraft*, *Star Wars*, *Harry Potter*, *The Lord of the Rings*, and *The Chronicles of Narnia*).
+
+### Tier Progression
+* **3rd Grade:** Foundational Vowel Teams, Basic Affixes (un-, re-, -ful, -less), Compound Words, Elementary Homophones, and Foundational Math/Science Vocabulary.
+* **4th Grade:** Complex Vowel Patterns (I before E, Bossy R, Magic E), Advanced Morphology (struct, port, tele, bio), Syllable Division (VC/CV, Schwa sounds), Confusing Homophones, and Academic Terms (Biology, Geometry, History).
+* **5th Grade:** Advanced Diphthongs & Trigraphs (ough, au, aw), Intermediate Latin Roots (spect, tract), Polysyllabic Affix Stacking, Nuanced Homographs, and Social Studies/Science Terminology.
+* **6th Grade:** Advanced Greek Roots (bio, geo, photo), Assimilated Prefixes (im-, suf-, com-), Syllable Stress Shifts, Shades of Intensity/Context Clues, and High School Prep Vocabulary.
+
+### Mastery Assessments
+At the end of each Tier, once a student masters all constituent sections, a "Final Boss" Tier Mastery Assessment unlocks. This assessment dynamically pools all words from the tier, shuffles them, and presents a 10-word randomized challenge to test true long-term retention. Passing this assessment officially unlocks the next Tier.
+
+---
+
+## 3. Gamified Scoring & The Point System
+
+The point economy is engineered to reward accuracy, consistency, and courage in attempting harder difficulties.
+
+### Difficulty Multipliers
+Points are awarded per correctly spelled word on the first attempt. Base point values scale dramatically with difficulty to encourage students to push beyond Easy mode:
+* **Easy Mode (Copy):** 1 base point per word.
+* **Medium Mode (Recall):** 3 base points per word.
+* **Hard Mode (Dictate):** 30 base points per word.
+
+### The Streak Bonus
+Every consecutive first-attempt correct spelling increments the student's continuous streak (`studentStreak`). The streak multiplier scales from 1.0x up to a maximum 2.0x bonus:
+* Streak 0: 1.0x multiplier.
+* Streak 1: 1.1x multiplier.
+* Streak 5: 1.5x multiplier.
+* Streak 10+: 2.0x multiplier (maximum).
+*Failing a word immediately resets the streak to 0.*
+
+### Perfect Session Override
+If a student completes an entire 10-word session with 100% accuracy on their first attempt, the app applies a retroactive perfect session bonus, doubling the total maximum base points for the entire session.
+
+### Anti-Farming & Score Differencing
+To prevent students from endlessly replaying easy mastered sections to grind points, the engine tracks `sectionScores` (the highest score ever achieved on a specific section and difficulty). When replaying, the app compares the new score against the historical high score. Only the *positive difference* (personal best improvement) is added to the cumulative point total, ensuring points reflect genuine academic progress.
+
+---
+
+## 4. Gameplay Interaction Styles by Difficulty
+
+The learning engine dynamically alters user interaction mechanics across the three difficulty tiers:
+
+* **Easy Mode (Copy - Scaffolding):**
+  * **Visuals:** The correct spelling is fully visible on screen from the start and remains visible while typing.
+  * **Audio:** The word is dictated via Text-to-Speech (TTS) upon loading.
+  * **Progression:** If a mistake is submitted, the app provides gentle visual feedback and automatically advances to the next word after 2 seconds.
+
+* **Medium Mode (Recall - Working Memory):**
+  * **Visuals:** The word is visible initially, but the exact second the student begins typing, the word vanishes and is replaced by hidden placeholder dots (`•`). If the student clears their input field, the word reappears.
+  * **Audio:** Dictated via TTS upon loading.
+  * **Progression:** Submitting an incorrect spelling reveals the word and re-dictates it. The app *does not* auto-advance; the student must successfully type the correct spelling to proceed.
+
+* **Hard Mode (Dictate - Complete Mastery):**
+  * **Visuals:** The word is entirely hidden behind placeholder dots (`•`) from the very beginning. No visual hints are provided.
+  * **Audio:** The student must rely 100% on TTS audio dictation.
+  * **Progression:** Failing displays the correct spelling and re-dictates the word. As soon as the student attempts their retry, the word hides again. Complete accuracy is required to advance.
+
+---
+
+## 5. Parent Dashboard Capabilities & Limitations
+
+The Parent Portal serves as the executive command center for the app.
+
+### What Parents CAN Do:
+1. **Curriculum Calibration:** Instantly switch the active grade level (3rd, 4th, 5th, or 6th) to match their child's needs.
+2. **Student Profile Management:** Input and update the student's name, which dynamically personalizes the Student Portal greeting.
+3. **Diagnostic Insights:** View real-time analytics on "Struggle Words" (specific words the student missed, categorized by error type), accuracy breakdown per difficulty, and overall section completion percentage.
+4. **Pacing & Gating Controls:** 
+   * Toggle *Enable Pacing*: Forces the student to complete sections sequentially (preventing skipping ahead).
+   * Toggle *Enable Difficulty Gating*: Forces the student to achieve 90% accuracy on Easy before unlocking Medium, and 90% on Medium before unlocking Hard.
+5. **Custom Rewards Management (Crucial Economy Feature):** Parents can add, edit, and delete custom rewards that students buy with their earned points.
+   * *Pro-Tip for Parents:* Set up rewards at varying point intervals to maintain short-term and long-term motivation. For example:
+     * **Low Tier (500 pts):** 30 minutes of video game / screen time.
+     * **Medium Tier (1,000 pts):** Trip to the park, baking cookies, or a special ice cream cone they have been asking for.
+     * **High Tier (5,000 pts):** A movie night choice, a pizza party, or a specific toy/LEGO set they covet.
+6. **Danger Zone:** Wipe all student progress to start completely fresh.
+
+### What Parents CANNOT Do:
+1. **No Direct Score Manipulation:** Parents cannot manually alter student point totals, streak counts, or past section scores. Points must be earned legitimately through gameplay.
+2. **No Arbitrary Tier Unlocking:** Parents cannot manually unlock higher curriculum tiers or the Final Boss Mastery Assessments. These gates open strictly when the student demonstrates academic mastery.

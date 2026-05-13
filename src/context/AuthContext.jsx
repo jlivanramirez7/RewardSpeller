@@ -85,7 +85,8 @@ export const AuthProvider = ({ children }) => {
     signInWithGoogle,
     signOut,
     loading,
-    db: dbInstance
+    db: dbInstance,
+    isAdmin: user ? user.email === 'jlivanramirez7@gmail.com' : false
   };
 
   if (error) {

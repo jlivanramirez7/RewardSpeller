@@ -1,6 +1,6 @@
-# 🚀 SummerSpellingApp
+# 🚀 RewardSpeller
 
-Welcome to the **SummerSpellingApp**! This is a comprehensive, high-fidelity gamified web educational platform built explicitly to transition students into orthographic mastery using a structured "Building Blocks" pedagogical approach. Combining high-density immersive visual analytics with next-generation neural speech synthesis, it provides a secure, customizable learning track for students and administrative oversight for educators.
+Welcome to **RewardSpeller**! This is a comprehensive, high-fidelity gamified web educational platform built explicitly to transition students into orthographic mastery using a structured "Building Blocks" pedagogical approach. Combining high-density immersive visual analytics with next-generation neural speech synthesis, it provides a secure, customizable learning track for students and administrative oversight for educators.
 
 ---
 
