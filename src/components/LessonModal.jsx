@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { playStaticAudio, playTTS, cancelTTS } from '../services/ttsService';
+import { playStaticAudio, cancelTTS } from '../services/ttsService';
 import { useAppContext } from '../context/AppContext';
 import { createPortal } from 'react-dom';
 

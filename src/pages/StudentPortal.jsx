@@ -44,6 +44,11 @@ const StudentPortal = () => {
     }
   };
 
+  // Elegant tier visibility rule: show unlocked tiers plus the immediately following locked tier
+  const unlockedIndices = tiers.map((t, idx) => (!enablePacing || unlockedTiers.includes(t.id) || idx === 0) ? idx : -1);
+  const highestUnlockedIndex = Math.max(...unlockedIndices, 0);
+  const visibleTiers = tiers.filter((t, idx) => idx <= highestUnlockedIndex + 1);
+
   return (
     <div className="student-portal animate-fade-in">
       <header className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -97,7 +102,7 @@ const StudentPortal = () => {
           <div className="glass-panel" style={{ padding: '2rem' }}>
             <h2 style={{ marginBottom: '1.5rem' }}>Learning Map</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {tiers.map((tier, index) => {
+              {visibleTiers.map((tier, index) => {
                 const isUnlocked = !enablePacing || unlockedTiers.includes(tier.id) || index === 0;
                 return (
                   <div 

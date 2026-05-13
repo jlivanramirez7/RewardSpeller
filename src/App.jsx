@@ -6,11 +6,13 @@ import RequestAccessPage from './pages/RequestAccessPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
+import { useAppContext } from './context/AppContext';
 import { Settings, Gamepad2, LogOut } from 'lucide-react';
 
 function App() {
   const location = useLocation();
   const { user, signOut, isAdmin } = useAuth();
+  const { activeChildId } = useAppContext();
 
   return (
     <div className="app-container">
@@ -49,7 +51,7 @@ function App() {
           <Route path="/request-access" element={<RequestAccessPage />} />
           <Route path="/" element={
             <ProtectedRoute>
-              <StudentPortal />
+              <StudentPortal key={activeChildId} />
             </ProtectedRoute>
           } />
           <Route path="/parent/*" element={

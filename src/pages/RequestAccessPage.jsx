@@ -95,18 +95,28 @@ const RequestAccessPage = () => {
           <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
             Please sign in with your Google account first so we know who is requesting access.
           </p>
-          <button 
-            className="btn-primary" 
-            onClick={async () => {
-              try {
-                await signInWithGoogle();
-              } catch (err) {
-                console.error("Sign in failed", err);
-              }
-            }}
-          >
-            Sign in with Google to Request Access
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <button 
+              className="btn-primary" 
+              onClick={async () => {
+                try {
+                  await signInWithGoogle();
+                } catch (err) {
+                  console.error("Sign in failed", err);
+                }
+              }}
+              style={{ width: '100%' }}
+            >
+              Sign in with Google to Request Access
+            </button>
+            <button 
+              className="btn-secondary" 
+              onClick={() => navigate('/login')}
+              style={{ width: '100%' }}
+            >
+              ← Back to Login
+            </button>
+          </div>
         </div>
       </div>
     );

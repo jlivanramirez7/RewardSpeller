@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, useMemo, useRef } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import wordBank2nd from '../data/wordBank_2nd.json';
 import wordBank3rd from '../data/wordBank_3rd.json';
 import wordBank4th from '../data/wordBank_4th.json';
 import wordBank5th from '../data/wordBank_5th.json';
@@ -9,96 +10,202 @@ import { useAuth } from './AuthContext';
 
 const AppContext = createContext();
 
+const createDefaultChild = (id, name = '', overrides = {}) => ({
+  id,
+  studentName: name,
+  currentGradeLevel: '4th',
+  studentPoints: 0,
+  studentStreak: 0,
+  unlockedTiers: [],
+  struggleWords: [],
+  sectionScores: {},
+  sectionAccuracy: {},
+  enablePacing: true,
+  enableDifficultyGating: true,
+  listenedLessons: [],
+  rewards: [
+    { id: 1, name: '30 mins Screen Time', cost: 500 },
+    { id: 2, name: 'Trip to Park', cost: 1000 }
+  ],
+  ...overrides
+});
+
 export const AppProvider = ({ children }) => {
-  // Try to load state from localStorage
   const loadState = (key, defaultValue) => {
     const saved = localStorage.getItem(key);
     return saved ? JSON.parse(saved) : defaultValue;
   };
 
-  // Student State
-  const [studentPoints, setStudentPoints] = useState(() => loadState('studentPoints', 0));
-  const [studentStreak, setStudentStreak] = useState(() => loadState('studentStreak', 0));
-  const [unlockedTiers, setUnlockedTiers] = useState(() => loadState('unlockedTiers', [])); // First tier handled by UI logic
-  const [struggleWords, setStruggleWords] = useState(() => loadState('struggleWords', []));
-  const [sectionScores, setSectionScores] = useState(() => loadState('sectionScores', {})); // Tracks max score per section/diff
-  const [sectionAccuracy, setSectionAccuracy] = useState(() => loadState('sectionAccuracy', {})); // Tracks max percentage correct
-  const [enablePacing, setEnablePacing] = useState(() => loadState('enablePacing', true)); // Controls rolling window gate
-  const [enableDifficultyGating, setEnableDifficultyGating] = useState(() => loadState('enableDifficultyGating', true)); // Forces Easy->Med->Hard sequence
-  const [listenedLessons, setListenedLessons] = useState(() => loadState('listenedLessons', []));
-  const [studentName, setStudentName] = useState(() => loadState('studentName', ''));
-
-  // Parent State
-  const [rewards, setRewards] = useState(() => loadState('rewards', [
-    { id: 1, name: '30 mins Screen Time', cost: 500 },
-    { id: 2, name: 'Trip to Park', cost: 1000 }
-  ]));
-  const [currentGradeLevel, setCurrentGradeLevel] = useState(() => {
-    let grade = loadState('currentGradeLevel', '4th');
-    // Fallback for legacy values
-    if (grade === '4th-5th') grade = '4th';
-    if (grade === '6th+') grade = '6th';
-
-    // Validate against allowed values
-    const validGrades = ['3rd', '4th', '5th', '6th'];
-    if (!validGrades.includes(grade)) {
-      grade = '4th';
-    }
-    return grade;
+  const [activeChildId, setActiveChildId] = useState(() => {
+    const saved = localStorage.getItem('activeChildId');
+    return saved || 'child_1';
   });
+
+  const [childrenMap, setChildrenMap] = useState(() => {
+    const savedChildren = localStorage.getItem('children');
+    if (savedChildren) {
+      try {
+        return JSON.parse(savedChildren);
+      } catch (e) {
+        console.error("Error parsing children from localStorage", e);
+      }
+    }
+    // Legacy Migration Fallback
+    const legacyPoints = localStorage.getItem('studentPoints');
+    if (legacyPoints !== null) {
+      let grade = loadState('currentGradeLevel', '4th');
+      if (grade === '4th-5th') grade = '4th';
+      if (grade === '6th+') grade = '6th';
+      const validGrades = ['2nd', '3rd', '4th', '5th', '6th'];
+      if (!validGrades.includes(grade)) grade = '4th';
+
+      const legacyChild = createDefaultChild('child_1', loadState('studentName', ''), {
+        studentPoints: loadState('studentPoints', 0),
+        studentStreak: loadState('studentStreak', 0),
+        unlockedTiers: loadState('unlockedTiers', []),
+        struggleWords: loadState('struggleWords', []),
+        sectionScores: loadState('sectionScores', {}),
+        sectionAccuracy: loadState('sectionAccuracy', {}),
+        enablePacing: loadState('enablePacing', true),
+        enableDifficultyGating: loadState('enableDifficultyGating', true),
+        listenedLessons: loadState('listenedLessons', []),
+        rewards: loadState('rewards', [
+          { id: 1, name: '30 mins Screen Time', cost: 500 },
+          { id: 2, name: 'Trip to Park', cost: 1000 }
+        ]),
+        currentGradeLevel: grade
+      });
+      return { child_1: legacyChild };
+    }
+    return { child_1: createDefaultChild('child_1') };
+  });
+
+  const skipSaveRef = useRef(false);
+
+  const updateActiveChildField = useCallback((field, valueOrUpdater) => {
+    setChildrenMap(prevMap => {
+      const currentActiveId = activeChildId;
+      const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
+      const oldValue = currentChild[field];
+      const newValue = typeof valueOrUpdater === 'function' ? valueOrUpdater(oldValue) : valueOrUpdater;
+
+      if (oldValue === newValue) return prevMap;
+
+      return {
+        ...prevMap,
+        [currentActiveId]: {
+          ...currentChild,
+          [field]: newValue
+        }
+      };
+    });
+  }, [activeChildId]);
+
+  // Proxy setters
+  const setStudentPoints = useCallback((val) => updateActiveChildField('studentPoints', val), [updateActiveChildField]);
+  const setStudentStreak = useCallback((val) => updateActiveChildField('studentStreak', val), [updateActiveChildField]);
+  const setUnlockedTiers = useCallback((val) => updateActiveChildField('unlockedTiers', val), [updateActiveChildField]);
+  const setStruggleWords = useCallback((val) => updateActiveChildField('struggleWords', val), [updateActiveChildField]);
+  const setSectionScores = useCallback((val) => updateActiveChildField('sectionScores', val), [updateActiveChildField]);
+  const setSectionAccuracy = useCallback((val) => updateActiveChildField('sectionAccuracy', val), [updateActiveChildField]);
+  const setEnablePacing = useCallback((val) => updateActiveChildField('enablePacing', val), [updateActiveChildField]);
+  const setEnableDifficultyGating = useCallback((val) => updateActiveChildField('enableDifficultyGating', val), [updateActiveChildField]);
+  const setListenedLessons = useCallback((val) => updateActiveChildField('listenedLessons', val), [updateActiveChildField]);
+  const setRewards = useCallback((val) => updateActiveChildField('rewards', val), [updateActiveChildField]);
+  const setCurrentGradeLevel = useCallback((val) => updateActiveChildField('currentGradeLevel', val), [updateActiveChildField]);
+  const setStudentName = useCallback((val) => updateActiveChildField('studentName', val), [updateActiveChildField]);
+
+  const switchChild = useCallback((id) => {
+    if (childrenMap[id]) {
+      setActiveChildId(id);
+    }
+  }, [childrenMap]);
+
+  const addChild = useCallback((name, gradeLevel = '4th') => {
+    const newId = `child_${Date.now()}`;
+    const newChild = createDefaultChild(newId, name, { currentGradeLevel: gradeLevel });
+    setChildrenMap(prev => ({ ...prev, [newId]: newChild }));
+    setActiveChildId(newId);
+  }, []);
+
+  const deleteChild = useCallback((id) => {
+    setChildrenMap(prev => {
+      const remainingKeys = Object.keys(prev).filter(k => k !== id);
+      if (remainingKeys.length === 0) {
+        return { child_1: createDefaultChild('child_1', 'Student') };
+      }
+      const updated = { ...prev };
+      delete updated[id];
+      return updated;
+    });
+
+    if (activeChildId === id) {
+      let nextActiveId;
+      const remaining = Object.keys(childrenMap).filter(k => k !== id);
+      if (remaining.length > 0) {
+        nextActiveId = remaining[0];
+      } else {
+        nextActiveId = 'child_1';
+      }
+      setActiveChildId(nextActiveId);
+    }
+  }, [childrenMap, activeChildId]);
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
 
-  const restoreProgress = (data) => {
-    if (Object.keys(data).length > 0) {
-      if (data.studentPoints !== undefined && typeof data.studentPoints === 'number') setStudentPoints(data.studentPoints);
-      if (data.studentStreak !== undefined && typeof data.studentStreak === 'number') setStudentStreak(data.studentStreak);
-      if (data.unlockedTiers !== undefined && Array.isArray(data.unlockedTiers)) setUnlockedTiers(data.unlockedTiers);
-      if (data.struggleWords !== undefined && Array.isArray(data.struggleWords)) setStruggleWords(data.struggleWords);
-      if (data.sectionScores !== undefined && typeof data.sectionScores === 'object' && !Array.isArray(data.sectionScores)) setSectionScores(data.sectionScores);
-      if (data.sectionAccuracy !== undefined && typeof data.sectionAccuracy === 'object' && !Array.isArray(data.sectionAccuracy)) setSectionAccuracy(data.sectionAccuracy);
-      if (data.enablePacing !== undefined && typeof data.enablePacing === 'boolean') setEnablePacing(data.enablePacing);
-      if (data.enableDifficultyGating !== undefined && typeof data.enableDifficultyGating === 'boolean') setEnableDifficultyGating(data.enableDifficultyGating);
-      if (data.listenedLessons !== undefined && Array.isArray(data.listenedLessons)) setListenedLessons(data.listenedLessons);
-      if (data.rewards !== undefined && Array.isArray(data.rewards)) setRewards(data.rewards);
-      if (data.currentGradeLevel !== undefined && typeof data.currentGradeLevel === 'string') setCurrentGradeLevel(data.currentGradeLevel);
-      if (data.studentName !== undefined && typeof data.studentName === 'string') setStudentName(data.studentName);
-    }
-  };
+  const restoreProgress = useCallback((data) => {
+    if (!data || Object.keys(data).length === 0) return;
 
-  const resetProgress = () => {
-    setStudentPoints(0);
-    setStudentStreak(0);
-    setUnlockedTiers([]);
-    setStruggleWords([]);
-    setSectionScores({});
-    setSectionAccuracy({});
-    setListenedLessons([]);
-    setEnablePacing(true);
-    setEnableDifficultyGating(true);
-    setRewards([
-      { id: 1, name: '30 mins Screen Time', cost: 500 },
-      { id: 2, name: 'Trip to Park', cost: 1000 }
-    ]);
-    setCurrentGradeLevel('4th');
-    setStudentName('');
-    
-    localStorage.setItem('studentPoints', JSON.stringify(0));
-    localStorage.setItem('studentStreak', JSON.stringify(0));
-    localStorage.setItem('unlockedTiers', JSON.stringify([]));
-    localStorage.setItem('struggleWords', JSON.stringify([]));
-    localStorage.setItem('sectionScores', JSON.stringify({}));
-    localStorage.setItem('sectionAccuracy', JSON.stringify({}));
-    localStorage.setItem('listenedLessons', JSON.stringify([]));
-    localStorage.setItem('enablePacing', JSON.stringify(true));
-    localStorage.setItem('enableDifficultyGating', JSON.stringify(true));
-    localStorage.setItem('rewards', JSON.stringify([
-      { id: 1, name: '30 mins Screen Time', cost: 500 },
-      { id: 2, name: 'Trip to Park', cost: 1000 }
-    ]));
-    localStorage.setItem('currentGradeLevel', JSON.stringify('4th'));
-    localStorage.setItem('studentName', JSON.stringify(''));
-  };
+    skipSaveRef.current = true; // Prevent network write amplification on restore
+
+    if (data.children && typeof data.children === 'object') {
+      const hasChildren = Object.keys(data.children).length > 0;
+      const childrenPayload = hasChildren ? data.children : { child_1: createDefaultChild('child_1') };
+      setChildrenMap(childrenPayload);
+      const active = data.activeChildId || Object.keys(childrenPayload)[0] || 'child_1';
+      setActiveChildId(active);
+    } else {
+      let grade = data.currentGradeLevel ?? '4th';
+      if (grade === '4th-5th') grade = '4th';
+      if (grade === '6th+') grade = '6th';
+      const validGrades = ['2nd', '3rd', '4th', '5th', '6th'];
+      if (!validGrades.includes(grade)) grade = '4th';
+
+      const migratedChild = createDefaultChild('child_1', data.studentName || '', {
+        studentPoints: data.studentPoints ?? 0,
+        studentStreak: data.studentStreak ?? 0,
+        unlockedTiers: data.unlockedTiers ?? [],
+        struggleWords: data.struggleWords ?? [],
+        sectionScores: data.sectionScores ?? {},
+        sectionAccuracy: data.sectionAccuracy ?? {},
+        enablePacing: data.enablePacing ?? true,
+        enableDifficultyGating: data.enableDifficultyGating ?? true,
+        listenedLessons: data.listenedLessons ?? [],
+        rewards: data.rewards ?? [
+          { id: 1, name: '30 mins Screen Time', cost: 500 },
+          { id: 2, name: 'Trip to Park', cost: 1000 }
+        ],
+        currentGradeLevel: grade,
+      });
+      setChildrenMap({ child_1: migratedChild });
+      setActiveChildId('child_1');
+    }
+  }, []);
+
+  const resetProgress = useCallback(() => {
+    setChildrenMap(prev => {
+      const currentId = activeChildId;
+      const currentChild = prev[currentId] || createDefaultChild(currentId);
+      const resetChild = createDefaultChild(currentId, currentChild.studentName, {
+        currentGradeLevel: currentChild.currentGradeLevel,
+        rewards: currentChild.rewards,
+        enablePacing: currentChild.enablePacing ?? true,
+        enableDifficultyGating: currentChild.enableDifficultyGating ?? true
+      });
+      return { ...prev, [currentId]: resetChild };
+    });
+  }, [activeChildId]);
 
   const loadedUserUidRef = useRef(null);
   const { user, db } = useAuth();
@@ -108,16 +215,18 @@ export const AppProvider = ({ children }) => {
     const loadScores = async () => {
       setIsLoaded(false);
       setError(null);
-      
+
       if (user && loadedUserUidRef.current !== null && user.uid !== loadedUserUidRef.current) {
-        resetProgress();
+        skipSaveRef.current = true;
+        setChildrenMap({ child_1: createDefaultChild('child_1') });
+        setActiveChildId('child_1');
       }
 
       if (user && db) {
         try {
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
-          
+
           if (ignore) return;
 
           if (docSnap.exists()) {
@@ -134,7 +243,9 @@ export const AppProvider = ({ children }) => {
       } else if (!user) {
         if (!ignore) {
           if (loadedUserUidRef.current !== null) {
-            resetProgress();
+            skipSaveRef.current = true;
+            setChildrenMap({ child_1: createDefaultChild('child_1') });
+            setActiveChildId('child_1');
           }
           loadedUserUidRef.current = null;
           setIsLoaded(true);
@@ -144,11 +255,18 @@ export const AppProvider = ({ children }) => {
 
     loadScores();
     return () => { ignore = true; };
-  }, [user, db]);
+  }, [user, db, restoreProgress]);
+
+  const activeChild = useMemo(() => {
+    return childrenMap[activeChildId] || createDefaultChild(activeChildId);
+  }, [childrenMap, activeChildId]);
+
+  const currentGradeLevel = activeChild.currentGradeLevel || '4th';
 
   // Curriculum Data
   const tiers = useMemo(() => {
     switch (currentGradeLevel) {
+      case '2nd': return wordBank2nd.tiers;
       case '3rd': return wordBank3rd.tiers;
       case '4th': return wordBank4th.tiers;
       case '5th': return wordBank5th.tiers;
@@ -168,37 +286,22 @@ export const AppProvider = ({ children }) => {
       return;
     }
 
-    localStorage.setItem('studentPoints', JSON.stringify(studentPoints));
-    localStorage.setItem('studentStreak', JSON.stringify(studentStreak));
-    localStorage.setItem('unlockedTiers', JSON.stringify(unlockedTiers));
-    localStorage.setItem('struggleWords', JSON.stringify(struggleWords));
-    localStorage.setItem('sectionScores', JSON.stringify(sectionScores));
-    localStorage.setItem('sectionAccuracy', JSON.stringify(sectionAccuracy));
-    localStorage.setItem('enablePacing', JSON.stringify(enablePacing));
-    localStorage.setItem('enableDifficultyGating', JSON.stringify(enableDifficultyGating));
-    localStorage.setItem('listenedLessons', JSON.stringify(listenedLessons));
-    localStorage.setItem('rewards', JSON.stringify(rewards));
-    localStorage.setItem('currentGradeLevel', JSON.stringify(currentGradeLevel));
-    localStorage.setItem('studentName', JSON.stringify(studentName));
+    localStorage.setItem('activeChildId', activeChildId);
+    localStorage.setItem('children', JSON.stringify(childrenMap));
+
+    if (skipSaveRef.current) {
+      skipSaveRef.current = false;
+      return;
+    }
 
     const saveScores = async () => {
       if (user && db) {
         try {
           const docRef = doc(db, 'users', user.uid);
           await setDoc(docRef, {
-            studentPoints,
-            studentStreak,
-            unlockedTiers,
-            struggleWords,
-            sectionScores,
-            sectionAccuracy,
-            enablePacing,
-            enableDifficultyGating,
-            listenedLessons,
-            rewards,
-            currentGradeLevel,
-            studentName
-          }, { merge: true });
+            activeChildId,
+            children: childrenMap
+          }, { mergeFields: ['activeChildId', 'children'] });
         } catch (error) {
           console.error('Error saving scores to Firestore:', error);
         }
@@ -206,22 +309,68 @@ export const AppProvider = ({ children }) => {
     };
 
     saveScores();
-  }, [isLoaded, user, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel, db, studentName]);
+  }, [isLoaded, user, db, activeChildId, childrenMap]);
 
-  const addPoints = (points) => {
+  // Cross-tab storage sync
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'children' && e.newValue) {
+        try {
+          skipSaveRef.current = true;
+          setChildrenMap(JSON.parse(e.newValue));
+        } catch (err) {
+          console.error('Storage sync parse error', err);
+        }
+      }
+      if (e.key === 'activeChildId' && e.newValue) {
+        skipSaveRef.current = true;
+        setActiveChildId(e.newValue);
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  const addPoints = useCallback((points) => {
     setStudentPoints(prev => prev + points);
-  };
+  }, [setStudentPoints]);
 
-  const updateSectionScore = (sectionId, difficulty, newScore, accuracyPercent) => {
+  const studentPoints = activeChild.studentPoints ?? 0;
+  const studentStreak = activeChild.studentStreak ?? 0;
+  const rawUnlockedTiers = activeChild.unlockedTiers;
+  const unlockedTiers = useMemo(() => rawUnlockedTiers || [], [rawUnlockedTiers]);
+
+  const rawStruggleWords = activeChild.struggleWords;
+  const struggleWords = useMemo(() => rawStruggleWords || [], [rawStruggleWords]);
+
+  const rawSectionScores = activeChild.sectionScores;
+  const sectionScores = useMemo(() => rawSectionScores || {}, [rawSectionScores]);
+
+  const rawSectionAccuracy = activeChild.sectionAccuracy;
+  const sectionAccuracy = useMemo(() => rawSectionAccuracy || {}, [rawSectionAccuracy]);
+
+  const enablePacing = activeChild.enablePacing ?? true;
+  const enableDifficultyGating = activeChild.enableDifficultyGating ?? true;
+
+  const rawListenedLessons = activeChild.listenedLessons;
+  const listenedLessons = useMemo(() => rawListenedLessons || [], [rawListenedLessons]);
+
+  const rawRewards = activeChild.rewards;
+  const rewards = useMemo(() => rawRewards || [
+    { id: 1, name: '30 mins Screen Time', cost: 500 },
+    { id: 2, name: 'Trip to Park', cost: 1000 }
+  ], [rawRewards]);
+
+  const studentName = activeChild.studentName || '';
+
+  const updateSectionScore = useCallback((sectionId, difficulty, newScore, accuracyPercent) => {
     const key = `${sectionId}-${difficulty}`;
     
-    // 1. Safeguard & update best accuracy
     const currentAccuracy = (sectionAccuracy && sectionAccuracy[key]) || 0;
     if (accuracyPercent > currentAccuracy) {
       setSectionAccuracy(prev => ({ ...prev, [key]: accuracyPercent }));
     }
 
-    // 2. Handle score differencing synchronously and non-concurrently
     const oldScore = (sectionScores && sectionScores[key]) || 0;
     if (newScore > oldScore) {
       const difference = newScore - oldScore;
@@ -230,9 +379,9 @@ export const AppProvider = ({ children }) => {
       return difference;
     }
     return 0;
-  };
+  }, [sectionAccuracy, sectionScores, setSectionAccuracy, setSectionScores, addPoints]);
 
-  const addStruggleWord = (word, tierId, errorType) => {
+  const addStruggleWord = useCallback((word, tierId, errorType) => {
     setStruggleWords(prev => {
       const existing = prev.find(w => w.word === word);
       if (existing) {
@@ -240,20 +389,18 @@ export const AppProvider = ({ children }) => {
       }
       return [...prev, { word, tierId, errorType, count: 1 }];
     });
-  };
+  }, [setStruggleWords]);
 
-  const purchaseReward = (rewardId) => {
+  const purchaseReward = useCallback((rewardId) => {
     const reward = rewards.find(r => r.id === rewardId);
     if (reward && studentPoints >= reward.cost) {
       setStudentPoints(prev => prev - reward.cost);
       return true;
     }
     return false;
-  };
+  }, [rewards, studentPoints, setStudentPoints]);
 
-
-
-  const getSectionStats = (sectionId) => {
+  const getSectionStats = useCallback((sectionId) => {
     const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
     const medAcc = sectionAccuracy[`${sectionId}-medium`] || 0;
     const hardAcc = sectionAccuracy[`${sectionId}-hard`] || 0;
@@ -261,67 +408,83 @@ export const AppProvider = ({ children }) => {
     const completionPercent = Math.round((easyAcc + medAcc + hardAcc) / 3);
     const is100Percent = easyAcc === 100 && medAcc === 100 && hardAcc === 100;
     
-    // Passed criteria: 90% correctness on ANY difficulty
     const isPassed = easyAcc >= 90 || medAcc >= 90 || hardAcc >= 90;
 
     return { easyAcc, medAcc, hardAcc, completionPercent, is100Percent, isPassed };
-  };
+  }, [sectionAccuracy]);
 
-  const isSectionMastered = (sectionId) => {
+  const isSectionMastered = useCallback((sectionId) => {
     const stats = getSectionStats(sectionId);
     if (sectionId.toString().includes('mastery')) {
       return stats.isPassed;
     }
     return stats.completionPercent >= 90;
-  };
+  }, [getSectionStats]);
 
-  const isDifficultyUnlocked = (sectionId, difficulty) => {
-    // Globally disabled by parent -> Everything unlocked
+  const isDifficultyUnlocked = useCallback((sectionId, difficulty) => {
     if (!enableDifficultyGating) return true;
-    // Easy always open
     if (difficulty === 'easy') return true;
     
-    // Dynamic checks
     const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
     const medAcc = sectionAccuracy[`${sectionId}-medium`] || 0;
     
-    if (difficulty === 'medium') return easyAcc >= 90; // Unlocked at 90% mastery
-    if (difficulty === 'hard') return medAcc >= 90;   // Unlocked at 90% mastery
+    if (difficulty === 'medium') return easyAcc >= 90;
+    if (difficulty === 'hard') return medAcc >= 90;
     
     return true;
-  };
+  }, [enableDifficultyGating, sectionAccuracy]);
 
-  const markLessonListened = (sectionId) => {
+  const markLessonListened = useCallback((sectionId) => {
     setListenedLessons(prev => {
       if (!prev.includes(sectionId)) {
         return [...prev, sectionId];
       }
       return prev;
     });
-  };
+  }, [setListenedLessons]);
 
-  const getRecommendedDifficulty = (sectionId) => {
+  const getRecommendedDifficulty = useCallback((sectionId) => {
     return calculateRecommendedDifficulty(sectionId, sectionAccuracy);
-  };
+  }, [sectionAccuracy]);
+
+  const contextValue = useMemo(() => ({
+    studentPoints, setStudentPoints, addPoints,
+    studentStreak, setStudentStreak,
+    unlockedTiers, setUnlockedTiers,
+    struggleWords, addStruggleWord,
+    sectionScores, updateSectionScore,
+    sectionAccuracy, getSectionStats,
+    enablePacing, setEnablePacing,
+    enableDifficultyGating, setEnableDifficultyGating,
+    isDifficultyUnlocked,
+    listenedLessons, markLessonListened,
+    rewards, setRewards, purchaseReward,
+    currentGradeLevel, setCurrentGradeLevel,
+    tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
+    isLoaded, error,
+    studentName, setStudentName,
+    childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild
+  }), [
+    studentPoints, setStudentPoints, addPoints,
+    studentStreak, setStudentStreak,
+    unlockedTiers, setUnlockedTiers,
+    struggleWords, addStruggleWord,
+    sectionScores, updateSectionScore,
+    sectionAccuracy, getSectionStats,
+    enablePacing, setEnablePacing,
+    enableDifficultyGating, setEnableDifficultyGating,
+    isDifficultyUnlocked,
+    listenedLessons, markLessonListened,
+    rewards, setRewards, purchaseReward,
+    currentGradeLevel, setCurrentGradeLevel,
+    tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
+    isLoaded, error,
+    studentName, setStudentName,
+    childrenMap, activeChildId, switchChild, addChild, deleteChild
+  ]);
 
   return (
-    <AppContext.Provider value={{
-      studentPoints, setStudentPoints, addPoints,
-      studentStreak, setStudentStreak,
-      unlockedTiers, setUnlockedTiers,
-      struggleWords, addStruggleWord,
-      sectionScores, updateSectionScore,
-      sectionAccuracy, getSectionStats,
-      enablePacing, setEnablePacing,
-      enableDifficultyGating, setEnableDifficultyGating,
-      isDifficultyUnlocked,
-      listenedLessons, markLessonListened,
-      rewards, setRewards, purchaseReward,
-      currentGradeLevel, setCurrentGradeLevel,
-      tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
-      isLoaded, error,
-      studentName, setStudentName
-    }}>
+    <AppContext.Provider value={contextValue}>
       {children}
     </AppContext.Provider>
   );

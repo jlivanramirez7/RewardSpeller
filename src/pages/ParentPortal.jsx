@@ -5,13 +5,17 @@ const ParentPortal = () => {
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
     isLoaded, error,
-    studentName, setStudentName
+    studentName, setStudentName,
+    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [showResetModal, setShowResetModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newChildName, setNewChildName] = useState('');
+  const [newChildGrade, setNewChildGrade] = useState('4th');
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -69,6 +73,74 @@ const ParentPortal = () => {
         <p style={{ color: 'var(--text-secondary)' }}>Command Center: Monitor progress and adjust curriculum.</p>
       </header>
 
+      {/* Student Accounts Management */}
+      <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <h2 style={{ margin: 0 }}>👥 Student Accounts Management</h2>
+          <button className="btn-primary" onClick={() => setShowAddModal(true)}>
+            + Add New Student
+          </button>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
+          {childrenMap && Object.entries(childrenMap).map(([id, child]) => {
+            const isActive = id === activeChildId;
+            return (
+              <div 
+                key={id} 
+                style={{ 
+                  padding: '1.5rem', 
+                  borderRadius: '12px', 
+                  background: isActive ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                  border: isActive ? '2px solid #10b981' : '1px solid var(--surface-border)',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h3 style={{ margin: 0, color: 'white', fontSize: '1.25rem' }}>{child?.studentName || 'Student'}</h3>
+                    {isActive && <span style={{ background: '#10b981', color: 'white', fontSize: '0.7rem', padding: '0.2rem 0.5rem', borderRadius: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>Active</span>}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>Grade: {child?.currentGradeLevel || '4th'}</div>
+                </div>
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#fbbf24', fontWeight: 'bold' }}>
+                  <span>Total Points:</span>
+                  <span>{child?.studentPoints || 0} pts</span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
+                  {!isActive && (
+                    <button 
+                      className="btn-primary" 
+                      style={{ flex: 1, padding: '0.5rem', fontSize: '0.85rem' }}
+                      onClick={() => setActiveChildId(id)}
+                    >
+                      Switch To
+                    </button>
+                  )}
+                  {Object.keys(childrenMap).length > 1 && (
+                    <button 
+                      className="btn-secondary" 
+                      style={{ padding: '0.5rem', fontSize: '0.85rem', borderColor: 'var(--error-color)', color: 'var(--error-color)', marginLeft: isActive ? 'auto' : '0' }}
+                      onClick={() => {
+                        if (window.confirm(`Are you sure you want to delete profile for ${child?.studentName || 'Student'}?`)) {
+                          deleteChild(id);
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
         
         {/* Student Profile */}
@@ -77,7 +149,7 @@ const ParentPortal = () => {
           <div style={{ marginBottom: '1rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Student Name</label>
             <input 
-              key={studentName}
+              key={activeChildId}
               type="text" 
               defaultValue={studentName}
               onBlur={(e) => {
@@ -120,6 +192,7 @@ const ParentPortal = () => {
                 outline: 'none'
               }}
             >
+              <option value="2nd" style={{color: 'black'}}>2nd Grade (Basic Phonics & Sight Words)</option>
               <option value="3rd" style={{color: 'black'}}>3rd Grade (Phonetic Focus)</option>
               <option value="4th" style={{color: 'black'}}>4th Grade (Building Blocks)</option>
               <option value="5th" style={{color: 'black'}}>5th Grade (Advanced Word Study)</option>
@@ -361,16 +434,16 @@ const ParentPortal = () => {
 
       {/* Danger Zone */}
       <div className="glass-panel" style={{ marginTop: '2rem', padding: '2rem', borderLeft: '4px solid var(--error-color)' }}>
-        <h2 style={{ marginBottom: '1rem', color: 'var(--error-color)' }}>Danger Zone</h2>
+        <h2 style={{ marginBottom: '1rem', color: 'var(--error-color)' }}>Reset Selected Student Progress</h2>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-          This will wipe all student points, streak data, struggle words, section high scores, and reset tier unlocking. It cannot be undone.
+          This will wipe all points, streak data, struggle words, section high scores, and reset tier unlocking for the currently selected student profile. Other child accounts are not affected. It cannot be undone.
         </p>
         <button 
           className="btn-primary" 
           style={{ background: 'var(--error-color)', color: 'white', border: 'none' }}
           onClick={() => setShowResetModal(true)}
         >
-          Reset All Progress
+          Reset Profile Progress
         </button>
       </div>
 
@@ -392,7 +465,7 @@ const ParentPortal = () => {
           }}>
             <h2 style={{ color: 'var(--accent-color)', marginBottom: '1rem' }}>Confirm Reset</h2>
             <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
-              Are you absolutely sure you want to reset all progress? This cannot be undone!
+              Are you absolutely sure you want to reset progress for this student profile? This cannot be undone!
             </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
               <button className="btn-secondary" onClick={() => setShowResetModal(false)}>
@@ -409,6 +482,90 @@ const ParentPortal = () => {
                 Proceed
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Student Modal */}
+      {showAddModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, width: '100%', height: '100%',
+          background: 'rgba(0, 0, 0, 0.7)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          zIndex: 1000
+        }}>
+          <div className="glass-panel" role="dialog" aria-modal="true" style={{
+            padding: '2.5rem', maxWidth: '450px', width: '90%', textAlign: 'left',
+            border: '1px solid rgba(16, 185, 129, 0.4)',
+            boxShadow: '0 0 20px rgba(16, 185, 129, 0.2)',
+            borderTop: '4px solid #10b981'
+          }}>
+            <h2 style={{ color: '#10b981', marginBottom: '1.5rem', textAlign: 'center' }}>+ Add New Student Profile</h2>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              if (newChildName.trim()) {
+                addChild(newChildName.trim(), newChildGrade);
+                setNewChildName('');
+                setNewChildGrade('4th');
+                setShowAddModal(false);
+              }
+            }}>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Student Name</label>
+                <input 
+                  type="text" 
+                  value={newChildName}
+                  onChange={(e) => setNewChildName(e.target.value)}
+                  placeholder="Enter name (e.g., Bobby)"
+                  required
+                  maxLength={30}
+                  style={{ 
+                    width: '100%', 
+                    padding: '0.75rem', 
+                    borderRadius: '8px', 
+                    background: 'rgba(0,0,0,0.3)', 
+                    color: 'white',
+                    border: '1px solid var(--surface-border)',
+                    outline: 'none'
+                  }}
+                  autoFocus
+                />
+              </div>
+
+              <div style={{ marginBottom: '2rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Starting Grade Level</label>
+                <select 
+                  value={newChildGrade}
+                  onChange={(e) => setNewChildGrade(e.target.value)}
+                  style={{ 
+                    width: '100%', 
+                    padding: '0.75rem', 
+                    borderRadius: '8px', 
+                    background: 'rgba(0,0,0,0.3)', 
+                    color: 'white',
+                    border: '1px solid var(--surface-border)',
+                    outline: 'none'
+                  }}
+                >
+                  <option value="2nd" style={{color: 'black'}}>2nd Grade (Basic Phonics & Sight Words)</option>
+                  <option value="3rd" style={{color: 'black'}}>3rd Grade (Phonetic Focus)</option>
+                  <option value="4th" style={{color: 'black'}}>4th Grade (Building Blocks)</option>
+                  <option value="5th" style={{color: 'black'}}>5th Grade (Advanced Word Study)</option>
+                  <option value="6th" style={{color: 'black'}}>6th Grade (Advanced Roots)</option>
+                </select>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
+                <button type="button" className="btn-secondary" onClick={() => setShowAddModal(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn-primary" style={{ background: '#10b981', color: 'white', border: 'none' }}>
+                  Create Profile
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

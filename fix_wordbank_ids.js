@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+
 
 const bankPath = '/usr/local/google/home/ivanramirez/.gemini/jetski/scratch/SummerSpelling/src/data/wordBank.json';
 const data = JSON.parse(fs.readFileSync(bankPath, 'utf8'));

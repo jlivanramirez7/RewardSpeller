@@ -15,12 +15,12 @@ if (!fs.existsSync(audioDir)) {
 }
 
 // Usage: node generate_lesson_audio.js <YOUR_GOOGLE_CLOUD_API_KEY> OR pass via environment
-const apiKey = process.argv[2] || process.env.VITE_GOOGLE_TTS_API_KEY;
+const apiKey = process.argv[2] || process.env.GOOGLE_TTS_API_KEY;
 
 if (!apiKey) {
   console.error("\n❌ ERROR: Google Cloud API Key missing.");
   console.error("Usage: node generate_lesson_audio.js <API_KEY>");
-  console.error("   OR: VITE_GOOGLE_TTS_API_KEY=xxx node generate_lesson_audio.js\n");
+  console.error("   OR: GOOGLE_TTS_API_KEY=xxx node generate_lesson_audio.js\n");
   process.exit(1);
 }
 
