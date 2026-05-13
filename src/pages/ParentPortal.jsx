@@ -2,6 +2,14 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
 
+/**
+ * @component ParentPortal
+ * @description Parental administration command center. Manages multi-student profiles,
+ * grade-level curriculum calibration, diagnostic struggle ledgers, custom reward configuration,
+ * adaptive pacing milestones, and secure profile progress resets.
+ *
+ * @returns {React.ReactElement} The parent portal control interface.
+ */
 const ParentPortal = () => {
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
@@ -75,6 +83,8 @@ const ParentPortal = () => {
       </header>
 
       {/* Student Accounts Management */}
+      {/* Student Accounts Management: Renders grid of active and sibling child profiles, */}
+      {/* enabling instant profile switching or permanent profile deletion with legacy fallback safeguards. */}
       <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <h2 style={{ margin: 0 }}>👥 Student Accounts Management</h2>
@@ -176,6 +186,8 @@ const ParentPortal = () => {
         </div>
 
         {/* Curriculum Calibration */}
+        {/* Curriculum Calibration: Select input proxying activeChild.currentGradeLevel. */}
+        {/* Instantly remaps the underlying active word bank loaded in the Student Portal. */}
         <div className="glass-panel" style={{ padding: '2rem' }}>
           <h2 style={{ marginBottom: '1rem' }}>Curriculum Calibration</h2>
           <div style={{ marginBottom: '1rem' }}>
@@ -204,6 +216,8 @@ const ParentPortal = () => {
         </div>
 
         {/* Struggle Report & Stats */}
+        {/* Diagnostic Insights & Struggle Ledger: Aggregates total curriculum words/points */}
+        {/* and displays a real-time ledger of specific terms missed during assessments. */}
         <div className="glass-panel" style={{ padding: '2rem' }}>
           <h2 style={{ marginBottom: '1rem' }}>Diagnostic Insights & Stats</h2>
           
@@ -304,6 +318,8 @@ const ParentPortal = () => {
         </div>
 
         {/* Experience Pacing Configuration */}
+        {/* Adaptive Pacing Switch: Toggles linear milestone progression gating (max 3 sections ahead) */}
+        {/* versus an unrestricted sandbox exploration mode. */}
         <div className="glass-panel" style={{ padding: '2rem' }}>
           <h2 style={{ marginBottom: '1rem' }}>Experience Control</h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
@@ -368,6 +384,8 @@ const ParentPortal = () => {
         </div>
 
         {/* Difficulty Progression Configuration */}
+        {/* Sequential Lock Hook: Gating binary enforcing linear completion sequence (Easy -> Medium -> Hard) */}
+        {/* requiring mastery before unlocking advanced complexity modes. */}
         <div className="glass-panel" style={{ padding: '2rem' }}>
           <h2 style={{ marginBottom: '1rem' }}>Difficulty Progression</h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
@@ -449,6 +467,8 @@ const ParentPortal = () => {
       </div>
 
       {/* Custom Reset Confirmation Modal */}
+      {/* Custom Reset Confirmation Modal: Teleports confirmation dialog via createPortal */}
+      {/* over a blurred glassmorphism backdrop to prevent accidental student progress loss. */}
       {showResetModal && createPortal(
         <div style={{
           position: 'fixed',

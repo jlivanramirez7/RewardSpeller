@@ -5,7 +5,7 @@
       "name": "Foundational Vowel Teams",
       "description": "Master common vowel teams to improve reading and spelling.",
       "rule": "When two vowels go walking, the first one usually does the talking!",
-      "lessonScript": "Welcome, young apprentice! Today we master Vowel Teams. When two vowels go walking, the first one usually does the talking! Like Frodo and Sam joining forces on their quest, these vowels unite to make one powerful sound.",
+      "lessonScript": "Welcome, young apprentice! Today we master Vowel Teams. A vowel team is when two vowels stand side-by-side to create one powerful sound. When two vowels go walking, the first one usually does the talking, shouting its long name! Like Frodo and Sam joining forces on their quest, these vowels unite to overcome any spelling challenge.",
       "lessonImage": "/assets/images/g3_t1.png",
       "sections": [
         {
@@ -13,7 +13,7 @@
           "name": "AI and AY Words",
           "theme": "AI and AY",
           "rule": "The 'ai' team usually appears in the middle of a word, while 'ay' likes to stay at the end.",
-          "lessonScript": "In Minecraft, wait for the 'RAIN' to stop before mining 'CLAY', or board the Hogwarts Express 'TRAIN'! Today we master AI and AY. Notice how 'AI' stays inside words like 'BRAIN' and 'PAINT', while 'AY' loves to 'PLAY' and 'STAY' at the end of 'DAY'. Mnemonic: AI stays inside, AY plays at the end!",
+          "lessonScript": "In Minecraft, wait for the 'RAIN' to stop before mining 'CLAY', or board the Hogwarts Express 'TRAIN'! Today we master AI and AY. Both teams make the long /a/ sound, but why do we use two different spellings? In the English language, words almost never end in the letter 'I'. Therefore, 'AI' is used in the middle of words like 'BRAIN' and 'PAINT', while 'AY' is used at the end of words like 'PLAY' and 'DAY'. Mnemonic: AI stays inside, AY plays at the end!",
           "imagePath": "/assets/images/g3_t1_s1.png",
           "words": [
             {
@@ -195,7 +195,7 @@
       "name": "Basic Affixes",
       "description": "Learn how prefixes and suffixes change the meaning of base words.",
       "rule": "Look for word parts at the beginning (prefixes) and end (suffixes) to help you decode words.",
-      "lessonScript": "Affixes are magical ingredients added to base words! Prefixes attach to the front to change a word's destiny, while Suffixes attach to the end to change its purpose. Master these building blocks to expand your spellbook!",
+      "lessonScript": "Affixes are magical word parts added to a root or base word! A base word is a complete word that can stand alone, like 'help'. Prefixes attach to the front of a base word to change its destiny and meaning. Suffixes attach to the end of a base word to change its grammatical part of speech (like turning an action verb into an adjective). Master these building blocks to expand your spellbook without having to invent new words!",
       "lessonImage": "/assets/images/g3_t2.png",
       "sections": [
         {
@@ -203,7 +203,7 @@
           "name": "Prefixes un-, re-, dis-",
           "theme": "Prefixes un-, re-, dis-",
           "rule": "Prefixes come at the beginning of a word. 'un-' means not, 're-' means again, and 'dis-' means not or opposite of.",
-          "lessonScript": "Gollum was 'UNHAPPY' to lose his ring, Hermione used magic to 'UNLOCK' doors, and Sauron tried to 'REMAKE' the world! Prefixes attach to the front: 'UN-' and 'DIS-' mean opposite or not ('DISLIKE', 'UNSAFE'), while 'RE-' means do it again ('REREAD', 'REWRITE').",
+          "lessonScript": "Gollum was 'UNHAPPY' to lose his ring, Hermione used magic to 'UNLOCK' doors, and Sauron tried to 'REMAKE' the world! Prefixes attach to the front of base words. 'UN-' and 'DIS-' mean 'opposite' or 'not'. For example, adding 'un-' to 'happy' changes the meaning entirely: 'Gollum was happy' vs 'Gollum was unhappy'. The prefix 'RE-' means 'again', so when you 'REREAD' an ancient scroll, you read it a second time!",
           "imagePath": "/assets/images/g3_t2_s1.png",
           "words": [
             {
@@ -263,7 +263,7 @@
           "name": "Suffixes -ful, -less, -ly",
           "theme": "Suffixes -ful, -less, -ly",
           "rule": "Suffixes come at the end of a word. '-ful' means full of, '-less' means without, and '-ly' means in a certain way.",
-          "lessonScript": "Sam was a 'HELPFUL' companion to Frodo, and you must be 'CAREFUL' mining near lava in Minecraft so you don't feel 'PAINFUL' burns! Suffixes attach to the end: '-FUL' means full of, '-LESS' means without ('MINDLESS', 'HOPELESS'), and '-LY' describes how you move ('QUICKLY', 'SLOWLY').",
+          "lessonScript": "Sam was a 'HELPFUL' companion to Frodo, and you must be 'CAREFUL' mining near lava in Minecraft so you don't suffer 'PAINFUL' burns! Suffixes attach to the end of base words. '-FUL' means 'full of'. Let's examine how this changes a word in a sentence: 'Sam wanted to **help** Frodo' ('help' is an action verb). 'Sam was a **helpful** friend' ('helpful' is an adjective describing Sam, meaning he is full of help). Suffixes let you adapt words to fit perfectly into your sentences!",
           "imagePath": "/assets/images/g3_t2_s2.png",
           "words": [
             {
@@ -325,7 +325,7 @@
       "name": "Compound Words & Simple Syllables",
       "description": "Break down longer words into smaller, manageable parts.",
       "rule": "Look for two smaller words joined together, or split words between consonants.",
-      "lessonScript": "Break massive words into manageable blocks! Compound words weld two independent words together like building a Minecraft castle, while multi-syllable words can be split between consonant cores like chopping firewood in the Shire.",
+      "lessonScript": "Break massive words into manageable blocks! Compound words weld two independent, complete base words together like building a Minecraft castle out of stone and wood. Multi-syllable words can be split between consonant cores like chopping firewood in the Shire.",
       "lessonImage": "/assets/images/g3_t3.png",
       "sections": [
         {
@@ -392,7 +392,7 @@
           "id": "g3_t3_s2",
           "name": "Simple Syllables",
           "theme": "Simple Syllables",
-          "rule": "Break words into smaller parts (syllables) to make them easier to spell.",
+          "rule": "Slice directly between double consonants (VC/CV) to break words into simple, manageable syllables!",
           "lessonScript": "Radagast traveled with giant 'RABBIT's, Gimli swung a heavy 'HAMMER', and Narnia suffered an endless 'WINTER'. When spelling multi-syllable words, slice directly between the double consonants (RAB-BIT, KIT-TEN, SUD-DEN, LES-SON). This splits the word into easy, bite-sized pieces!",
           "imagePath": "/assets/images/g3_t3_s2.png",
           "words": [
@@ -455,15 +455,15 @@
       "name": "Elementary Homophones",
       "description": "Learn words that sound the same but are spelled differently.",
       "rule": "Use context clues to choose the correct spelling.",
-      "lessonScript": "Beware the Jedi mind trick of Homophones! Words that sound identical but have completely different spellings and meanings. You must evaluate sentence context clues to choose your correct spelling path.",
+      "lessonScript": "Beware the Jedi mind trick of Homophones! Homophones are words that sound identical when spoken, but have completely different spellings and meanings. You must evaluate sentence context clues to choose your correct spelling path.",
       "lessonImage": "/assets/images/g3_t4.png",
       "sections": [
         {
           "id": "g3_t4_s1",
           "name": "Homophones",
           "theme": "Homophones",
-          "rule": "Listen carefully to the meaning of the sentence to know which word to use.",
-          "lessonScript": "Frodo could 'SEE' the dark tower, while elven ships sailed on the salt 'SEA'. You need 'TWO' galleons 'TO' 'BUY' a wand 'TOO'! Use context clues to know when to write 'FOR' (purpose) versus 'FOUR' (number), or 'BY' (near) versus 'BUY' (purchase). Context is your spelling compass!",
+          "rule": "Listen carefully to the context of the sentence to know exactly which homophone spelling matches the intended meaning.",
+          "lessonScript": "Frodo could 'SEE' (with his eyes) the dark tower, while elven ships sailed on the salt 'SEA' (the ocean). You need 'TWO' (number 2) galleons 'TO' (direction) 'BUY' (purchase) a wand 'TOO' (also)! Use context clues to know when to write 'FOR' (purpose) versus 'FOUR' (number). Context is your spelling compass!",
           "imagePath": "/assets/images/g3_t4_s1.png",
           "words": [
             {

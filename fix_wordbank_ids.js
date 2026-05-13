@@ -1,3 +1,15 @@
+/**
+ * @file fix_wordbank_ids.js
+ * @description Legacy data maintenance utility script. Normalizes section identifier formatting (`tX_sY`)
+ * across legacy monolithic curriculum word bank structures (`src/data/wordBank.json`).
+ *
+ * @example
+ * // Execution syntax:
+ * node fix_wordbank_ids.js
+ *
+ * @note Note that active runtime curriculums are split into grade-specific files (e.g., `wordBank_3rd.json`).
+ */
+
 import fs from 'fs';
 
 

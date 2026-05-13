@@ -3,6 +3,14 @@ import { useAuth } from '../context/AuthContext';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * @component RequestAccessPage
+ * @description Onboarding application interface. Allows authenticated but unapproved users
+ * to submit access requests with optional justification reasons. Polling hooks monitor Firestore
+ * for admin approval transitions.
+ *
+ * @returns {React.ReactElement} The access request submission UI.
+ */
 const RequestAccessPage = () => {
   const { user, signOut, db, signInWithGoogle, loading } = useAuth();
   const [reason, setReason] = useState('');
@@ -10,6 +18,8 @@ const RequestAccessPage = () => {
   const [checking, setChecking] = useState(true);
   const navigate = useNavigate();
 
+  // Asynchronous request status polling hook: Probes Firestore 'access_requests' and 'users' collections
+  // to resolve onboarding application state. Implements mounted guard to prevent memory leaks on navigation.
   useEffect(() => {
     let mounted = true;
     const checkExistingStatus = async () => {

@@ -1,3 +1,10 @@
+/**
+ * @module AppContext
+ * @description Global state ecosystem for RewardSpeller. Manages multi-student profiles,
+ * adaptive pacing gates, sequential difficulty progression locks, diagnostic struggle ledgers,
+ * and reward vault persistence via localStorage and Firestore synchronization.
+ */
+
 import { createContext, useContext, useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import wordBank2nd from '../data/wordBank_2nd.json';
 import wordBank3rd from '../data/wordBank_3rd.json';
@@ -7,6 +14,30 @@ import wordBank6th from '../data/wordBank_6th.json';
 import { calculateRecommendedDifficulty } from '../utils/difficulty';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
+
+/**
+ * @typedef {Object} Reward
+ * @property {number} id - Unique reward identifier.
+ * @property {string} name - Title of the reward (e.g., '30 mins Screen Time').
+ * @property {number} cost - Point cost required to claim the reward.
+ */
+
+/**
+ * @typedef {Object} StudentProfile
+ * @property {string} id - Unique profile identifier (e.g., 'child_1').
+ * @property {string} studentName - Display name of the student.
+ * @property {string} currentGradeLevel - Active curriculum grade ('2nd', '3rd', '4th', '5th', '6th').
+ * @property {number} studentPoints - Total earned reward points.
+ * @property {number} studentStreak - Active continuous correct spelling streak.
+ * @property {string[]} unlockedTiers - Array of unlocked curriculum tier IDs.
+ * @property {Object[]} struggleWords - Array of words identified as diagnostic struggle areas.
+ * @property {Object.<string, number>} sectionScores - Dictionary of high scores per section/difficulty.
+ * @property {Object.<string, number>} sectionAccuracy - Dictionary of accuracy percentages per section/difficulty.
+ * @property {boolean} enablePacing - True if adaptive pacing milestone gates are active.
+ * @property {boolean} enableDifficultyGating - True if sequential difficulty progression locks are active.
+ * @property {string[]} listenedLessons - Array of section IDs whose lesson audio has been listened to.
+ * @property {Reward[]} rewards - Custom rewards available for the student to purchase.
+ */
 
 const AppContext = createContext();
 
@@ -30,7 +61,15 @@ const createDefaultChild = (id, name = '', overrides = {}) => ({
   ...overrides
 });
 
+/**
+ * Global application state provider component.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components requiring application state context access.
+ * @returns {React.ReactElement} Application context provider wrapper.
+ */
 export const AppProvider = ({ children }) => {
+  // Helper function for safe localStorage hydration and JSON parsing.
   const loadState = (key, defaultValue) => {
     const saved = localStorage.getItem(key);
     return saved ? JSON.parse(saved) : defaultValue;
@@ -41,6 +80,8 @@ export const AppProvider = ({ children }) => {
     return saved || 'child_1';
   });
 
+  // Multi-student profiles state dictionary mapping child IDs to StudentProfile objects.
+  // Includes legacy single-student migration fallback parsing to ensure seamless parent account upgrades.
   const [childrenMap, setChildrenMap] = useState(() => {
     const savedChildren = localStorage.getItem('children');
     if (savedChildren) {
@@ -82,6 +123,8 @@ export const AppProvider = ({ children }) => {
 
   const skipSaveRef = useRef(false);
 
+  // Memoized proxy updater: Performs immutable state updates on specific fields
+  // of the currently active student profile, preserving untouched sibling profiles safely.
   const updateActiveChildField = useCallback((field, valueOrUpdater) => {
     setChildrenMap(prevMap => {
       const currentActiveId = activeChildId;
@@ -154,10 +197,11 @@ export const AppProvider = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
 
+  // Firestore synchronization restore method: Hydrates state from cloud snapshot payload.
   const restoreProgress = useCallback((data) => {
     if (!data || Object.keys(data).length === 0) return;
 
-    skipSaveRef.current = true; // Prevent network write amplification on restore
+    skipSaveRef.current = true; // Concurrency guard preventing write amplification on state restore
 
     if (data.children && typeof data.children === 'object') {
       const hasChildren = Object.keys(data.children).length > 0;
@@ -210,6 +254,8 @@ export const AppProvider = ({ children }) => {
   const loadedUserUidRef = useRef(null);
   const { user, db } = useAuth();
 
+  // Asynchronous data loading hook: Queries Firestore for user profile progress on authentication state change.
+  // Implements active user switching protections to discard stale network resolutions if auth user changes during fetch.
   useEffect(() => {
     let ignore = false;
     const loadScores = async () => {
@@ -278,6 +324,8 @@ export const AppProvider = ({ children }) => {
   }, [currentGradeLevel]);
 
   // Save to localStorage and Firestore on change
+  // State persistence hook: Synchronizes local state updates to localStorage and Firestore.
+  // Throttles unnecessary writes using skipSaveRef during hydration phases.
   useEffect(() => {
     if (!isLoaded) return;
 
@@ -312,6 +360,8 @@ export const AppProvider = ({ children }) => {
   }, [isLoaded, user, db, activeChildId, childrenMap]);
 
   // Cross-tab storage sync
+  // Cross-tab synchronization hook: Listens for storage events across browser tabs
+  // to keep multi-student profile switching and point balances perfectly synced in real time.
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === 'children' && e.newValue) {
@@ -363,6 +413,8 @@ export const AppProvider = ({ children }) => {
 
   const studentName = activeChild.studentName || '';
 
+  // Differential ledger accounting method: Updates section high scores and accuracy percentages.
+  // Enforces anti-grinding protocol: awards new points only when previous recorded high scores are beaten.
   const updateSectionScore = useCallback((sectionId, difficulty, newScore, accuracyPercent) => {
     const key = `${sectionId}-${difficulty}`;
     
@@ -490,5 +542,9 @@ export const AppProvider = ({ children }) => {
   );
 };
 
+/**
+ * Custom hook to consume the global application state context.
+ * @returns {Object} Application state, curriculum data, and mutation setters.
+ */
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAppContext = () => useContext(AppContext);

@@ -5,7 +5,7 @@
       "name": "Short Vowels & CVC Words",
       "description": "Master foundational consonant-vowel-consonant words with short vowel sounds.",
       "rule": "Listen for the short crisp vowel sound between two consonants.",
-      "lessonScript": "Welcome, young Padawan! Your training starts with foundational CVC words. Just like stacking basic blocks in Minecraft to build a sturdy shelter before nightfall, you build these words one crisp, short vowel sound at a time. Master the short vowels, and the Force will be with you!",
+      "lessonScript": "Welcome, young Padawan! Your Jedi training begins with foundational CVC (Consonant-Vowel-Consonant) words. To master spelling, you must first understand the difference between vowels and consonants. Vowels (A, E, I, O, U) are open, flowing sounds made with an open mouth—they are the energy core of every word! Consonants are sounds where your lips, teeth, or tongue block the air, like building protective walls. In CVC words, two consonant walls 'close in' or trap the vowel in the middle, forcing it to make a quick, crisp 'short' sound. Just like stacking basic blocks in Minecraft to build a sturdy shelter before nightfall, you build these words one sound at a time. Master the short vowels, and the Force will be with you!",
       "lessonImage": "/assets/images/g2_tier1.png",
       "sections": [
         {
@@ -13,7 +13,7 @@
           "name": "Short A and I Words",
           "theme": "Short A and I",
           "rule": "Short 'a' sounds like the start of 'apple', and short 'i' sounds like the start of 'igloo'.",
-          "lessonScript": "In Minecraft, craft a 'MAP' to find a pink 'PIG', or watch Hermione's 'CAT' Crookshanks 'SIT' on a wizard's 'HAT'. Short 'a' sounds like the crunch of an apple, and short 'i' sounds like an igloo. Keep your vowel sounds short and crisp to 'WIN' the spelling battle!",
+          "lessonScript": "In Minecraft, craft a 'MAP' to find a pink 'PIG', or watch Hermione's 'CAT' Crookshanks 'SIT' on a wizard's 'HAT'. Notice how the consonant letters trap the vowels in the middle! Short 'a' sounds like the crisp crunch of an apple (/a/), and short 'i' sounds like the start of an igloo (/i/). Keep your mouth open just a little for these short, quick vowel sounds to 'WIN' the spelling battle!",
           "imagePath": "/assets/images/g2_t1_s1.png",
           "words": [
             {
@@ -72,8 +72,8 @@
           "id": "g2_t1_s2",
           "name": "Short O, U, and E Words",
           "theme": "Short O, U, and E",
-          "rule": "Listen closely for the distinct short vowel sounds in the middle of these words.",
-          "lessonScript": "As the twin 'SUN's of Tatooine set, you must 'RUN' from Creepers and hop into a red 'BED'! Today we explore short O, U, and E. Listen for the distinct middle sounds in Hagrid's loyal 'DOG', a magical wooden 'BOX' from Narnia, or Darth Vader's 'RED' lightsaber. Mnemonic: shape your mouth like an 'O' for dog, and make a wide grin for red!",
+          "rule": "Listen closely for the distinct short vowel sounds in the middle of these CVC words, like /o/ in dog, /u/ in sun, and /e/ in bed.",
+          "lessonScript": "As the twin 'SUN's of Tatooine set, you must 'RUN' from Creepers and hop into a red 'BED'! Today we explore short O, U, and E. Listen for the distinct middle sounds in Hagrid's loyal 'DOG', a magical wooden 'BOX' from Narnia, or Darth Vader's 'RED' lightsaber. Phonics tip: shape your mouth like a round 'O' for dog, drop your jaw for the /u/ in sun, and make a wide grin for the /e/ in red!",
           "imagePath": "/assets/images/g2_t1_s2.png",
           "words": [
             {
@@ -135,7 +135,7 @@
       "name": "Silent E & Long Vowels",
       "description": "Learn how silent E at the end of a word makes the vowel say its own name.",
       "rule": "Silent E jumps over one consonant to give all its power to the vowel!",
-      "lessonScript": "Behold the power of the silent Magic E! Like a secret Jedi Master hiding in the shadows, the 'E' sits silently at the end of a word, using the Force to jump backward over one consonant and make the middle vowel say its own long name! It transforms 'cap' into 'cape' and 'cub' into 'cube'.",
+      "lessonScript": "Behold the power of the silent Magic E! Like a secret Jedi Master hiding in the shadows, the 'E' sits silently at the very end of a word. It uses the Force to jump backward over one single consonant and gives all its energy to the vowel before it, making that vowel shout its own long name! This magical rule transforms a short vowel word into a long vowel word. For example, adding Magic E turns the hat 'cap' into a hero's 'cape', and a bear 'cub' into a 3D 'cube'.",
       "lessonImage": "/assets/images/g2_tier2.png",
       "sections": [
         {
@@ -143,7 +143,7 @@
           "name": "Long A and I with Silent E",
           "theme": "Long A and I",
           "rule": "The 'a_e' and 'i_e' patterns make long vowel sounds.",
-          "lessonScript": "Welcome to Hogwarts! Today we bake a giant birthday 'CAKE' for Harry and play a wizard chess 'GAME'. Notice how the silent 'E' at the end of 'TIME' and 'BIKE' magically forces the 'I' to shout its name! Mnemonic: When 'E' is at the gate, the vowel says its name!",
+          "lessonScript": "Welcome to Hogwarts! Today we bake a giant birthday 'CAKE' for Harry and play a wizard chess 'GAME'. Notice how the silent 'E' at the end of 'TIME' and 'BIKE' magically forces the letter 'I' to shout its long name! Mnemonic: When 'E' is at the gate, the vowel says its name!",
           "imagePath": "/assets/images/g2_t2_s1.png",
           "words": [
             {
@@ -203,7 +203,7 @@
           "name": "Long O and U with Silent E",
           "theme": "Long O and U",
           "rule": "The 'o_e' and 'u_e' patterns make long vowel sounds.",
-          "lessonScript": "Step into Bilbo's cozy Hobbit 'HOME' or climb down an elven 'ROPE'! Today we master long O and U. The magic E turns a Minecraft skeleton's 'BONE' into a long 'O' sound, and helps Mr. Tumnus play a beautiful 'TUNE' on his 'FLUTE' in Narnia. Remember: silent E gives all its energy to the vowel!",
+          "lessonScript": "Step into Bilbo's cozy Hobbit 'HOME' or climb down an elven 'ROPE'! Today we master long O and U. The magic E turns a Minecraft skeleton's 'BONE' into a long 'O' sound, and helps Mr. Tumnus play a beautiful 'TUNE' on his 'FLUTE' in Narnia. Remember: silent E stays quiet so the main vowel can shine!",
           "imagePath": "/assets/images/g2_t2_s2.png",
           "words": [
             {
@@ -265,7 +265,7 @@
       "name": "Consonant Blends & Digraphs",
       "description": "Master two consonants that blend together or combine to make a single sound.",
       "rule": "Blends keep both sounds, while digraphs (sh, ch, th) make a brand new sound.",
-      "lessonScript": "When two consonant heroes team up, they form powerful alliances! Blends keep both of their original sounds, like 'st' in 'star'. But Digraphs like 'sh', 'ch', and 'th' use magic to fuse together into a brand new sound, just like crafting iron and wood into a shield!",
+      "lessonScript": "When two consonant heroes team up, they form powerful alliances! Consonant Blends keep both of their original sounds when they stand together, like the 'st' in 'star'—you can hear both the /s/ and the /t/. But Digraphs like 'sh', 'ch', and 'th' use magic to fuse together into a brand new single sound, just like crafting iron and wood together to make a shield!",
       "lessonImage": "/assets/images/g2_tier3.png",
       "sections": [
         {
@@ -273,7 +273,7 @@
           "name": "Digraphs sh, ch, th",
           "theme": "Digraphs",
           "rule": "'sh' sounds like 'shh', 'ch' sounds like 'choo choo', and 'th' is made with your tongue between your teeth.",
-          "lessonScript": "Enter Diagon Alley's wand 'SHOP' or sail across Narnia on a majestic 'SHIP'! Today we study Digraphs. 'SH' makes the quiet 'shh' sound, 'CH' makes the cheerful 'chat' sound, and 'TH' guides your 'PATH' through the Shire. Tip: place your tongue between your teeth when saying 'WITH' and 'THIS'!",
+          "lessonScript": "Enter Diagon Alley's wand 'SHOP' or sail across Narnia on a majestic 'SHIP'! Today we study Digraphs. 'SH' makes the quiet 'shh' sound, 'CH' makes the cheerful 'chat' sound, and 'TH' guides your 'PATH' through the Shire. Tip: place your tongue gently between your teeth when saying 'WITH' and 'THIS'!",
           "imagePath": "/assets/images/g2_t3_s1.png",
           "words": [
             {
@@ -333,7 +333,7 @@
           "name": "Beginning Blends st, fl, tr",
           "theme": "Beginning Blends",
           "rule": "Blend the two consonant sounds together smoothly at the start of the word.",
-          "lessonScript": "Look up at the massive Death 'STAR' or climb a Whomping Willow 'TREE'! Today we master consonant blends. When you take a 'STEP' into Narnia or 'FLIP' Anakin's starfighter to dodge a 'TRAP', you hear both consonant sounds blended smoothly together. Listen closely so you don't 'TRIP'!",
+          "lessonScript": "Look up at the massive Death 'STAR' or climb a Whomping Willow 'TREE'! Today we master consonant blends. When you take a 'STEP' into Narnia or 'FLIP' Anakin's starfighter to dodge a 'TRAP', you hear both consonant sounds blended smoothly together. Listen closely to each letter sound so you don't 'TRIP'!",
           "imagePath": "/assets/images/g2_t3_s2.png",
           "words": [
             {
@@ -395,14 +395,14 @@
       "name": "High-Frequency Sight Words",
       "description": "Practice essential words that appear frequently in reading and writing.",
       "rule": "Memorize these words by sight, as some do not follow normal phonetic rules.",
-      "lessonScript": "These legendary words appear everywhere across the galaxy! Some refuse to follow the normal rules of phonics, acting like rebellious space smugglers. You must memorize them by sight and learn them by heart, just as a wizard memorizes their most trusted spells!",
+      "lessonScript": "These legendary words appear everywhere across the galaxy! Some refuse to follow the normal rules of phonics, acting like rebellious space smugglers. We call these 'Sight Words'. You must take a mental snapshot and memorize them by heart, just as a wizard memorizes their most trusted spells!",
       "lessonImage": "/assets/images/g2_tier4.png",
       "sections": [
         {
           "id": "g2_t4_s1",
           "name": "Essential Sight Words Part 1",
           "theme": "Sight Words 1",
-          "rule": "Practice reading and spelling these common sight words instantly.",
+          "rule": "Practice reading and spelling these essential high-frequency sight words instantly by locking their visual patterns into memory.",
           "lessonScript": "Welcome, Padawan! To read the ancient Jedi archives, you must instantly recognize sight words like 'THE', 'YOU', and 'THEY'. When Obi-Wan 'SAID' to use the Force, or when an owl arrives 'FROM' Hogwarts, these words keep the sentence flowing smoothly. Take a mental snapshot of each one!",
           "imagePath": "/assets/images/g2_t4_s1.png",
           "words": [
@@ -462,7 +462,7 @@
           "id": "g2_t4_s2",
           "name": "Essential Sight Words Part 2",
           "theme": "Sight Words 2",
-          "rule": "Practice reading and spelling these common sight words instantly.",
+          "rule": "Master these common sight words by spotting their unique letter combinations and practicing them every day.",
           "lessonScript": "'WHAT' kind of magical creature is in Hagrid's pocket? 'WHEN' the sun rises in Minecraft, 'WHERE' do the skeletons go? Master tricky words like 'COME', 'SOME', and 'BEEN'. Mnemonic: 'COME' and 'SOME' look like 'home' but sound like 'hum'! Memorize them to unlock your spelling magic.",
           "imagePath": "/assets/images/g2_t4_s2.png",
           "words": [
@@ -525,7 +525,7 @@
       "name": "Early Academic & Science/Math Words",
       "description": "Learn foundational math and science terms used in elementary learning.",
       "rule": "These words help you describe numbers, nature, and science concepts.",
-      "lessonScript": "Even in the farthest outer rim of the galaxy, math and science govern the universe! Whether calculating hyperspace jumps on the Millennium Falcon or brewing complex potions at Hogwarts, mastering academic vocabulary is your key to understanding the cosmos.",
+      "lessonScript": "Even in the farthest outer rim of the galaxy, math and science govern the universe! Whether calculating hyperspace jumps on the Millennium Falcon or brewing complex potions at Hogwarts, mastering academic vocabulary words gives you the tools to understand and describe the cosmos.",
       "lessonImage": "/assets/images/g2_tier5.png",
       "sections": [
         {

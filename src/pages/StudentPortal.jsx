@@ -4,6 +4,14 @@ import { warmupAudio } from '../services/ttsService';
 import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 
+/**
+ * @component StudentPortal
+ * @description Primary gamified student dashboard. Renders adaptive learning map tracks,
+ * enforces experience pacing milestones, tracks continuous accuracy streaks, displays point balance ledgers,
+ * instantiates Jedi Archive lesson modals, and manages the rewards redemption vault.
+ *
+ * @returns {React.ReactElement} The student learning workspace UI.
+ */
 const StudentPortal = () => {
   const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
@@ -23,7 +31,8 @@ const StudentPortal = () => {
     
     setActivePlayData(null);
 
-    // Auto-unlock next tier if mastery assessment is complete and passed
+    // Auto-unlock next tier if mastery assessment is complete and passed.
+    // Resolves tier progression string formats dynamically.
     if (sectionData && sectionData.id.toString().includes('mastery')) {
       let nextTierId;
       const match = currentTierId && currentTierId.toString().match(/^(.*_t)(\d+)$/);
@@ -44,7 +53,9 @@ const StudentPortal = () => {
     }
   };
 
-  // Elegant tier visibility rule: show unlocked tiers plus the immediately following locked tier
+  // Elegant tier visibility rule: show unlocked tiers plus the immediately following locked tier.
+  // Pacing gate calculation: Maps unlocked status to tier array indices and filters visible
+  // tiers to ensure students can preview upcoming goals without skipping unmastered prerequisites.
   const unlockedIndices = tiers.map((t, idx) => (!enablePacing || unlockedTiers.includes(t.id) || idx === 0) ? idx : -1);
   const highestUnlockedIndex = Math.max(...unlockedIndices, 0);
   const visibleTiers = tiers.filter((t, idx) => idx <= highestUnlockedIndex + 1);
@@ -131,7 +142,8 @@ const StudentPortal = () => {
                           const isSectionMasteredStatus = isSectionMastered(section.id);
                           const isSectionListened = listenedLessons.includes(section.id);
                           
-                          // Only the immediately following unmastered section is playable (unless user pacing disabled)
+                          // Only the immediately following unmastered section is playable (unless user pacing disabled).
+                          // Gating calculation: Restricts exploration to exactly 1 section ahead of the lowest unmastered topic.
                           const isSectionUnlocked = isUnlocked && (!enablePacing || sIdx < unlockLimit);
 
                           const easyScore = sectionScores[`${section.id}-easy`] || 0;
@@ -259,6 +271,8 @@ const StudentPortal = () => {
                           warmupAudio(); // Prepare audio for end-tier speech
                           let allWords = [];
                           tier.sections.forEach(s => allWords.push(...(s.words || [])));
+                          // Randomized Tier Mastery Assessment: Aggregates all words from sub-sections
+                          // and pulls a shuffled random subset of exactly 10 words to test comprehensive retention.
                           const shuffledAll = [...allWords].sort(() => Math.random() - 0.5);
                           const assessmentWords = shuffledAll.slice(0, 10);
                           

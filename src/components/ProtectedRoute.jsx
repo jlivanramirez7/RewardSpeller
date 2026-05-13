@@ -3,12 +3,24 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { doc, getDoc } from 'firebase/firestore';
 
+/**
+ * @component ProtectedRoute
+ * @description Route guard wrapper that restricts view access based on authentication state,
+ * account approval status in Firestore, and administrative privileges.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components to render if permission checks pass.
+ * @param {boolean} [props.requireAdmin=false] - If true, restricts route strictly to admin users.
+ * @returns {React.ReactElement} The wrapped components or a `<Navigate>` redirect component.
+ */
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
   const { user, loading, db, isAdmin } = useAuth();
   const [approved, setApproved] = useState(false);
   const [checkingApproval, setCheckingApproval] = useState(true);
   const [error, setError] = useState(null);
 
+  // Asynchronous access verification hook: Queries Firestore 'users' collection to verify if 'isApproved' is true.
+  // Utilizes a 'mounted' flag to prevent setting state if the route changes during network fetch.
   useEffect(() => {
     let mounted = true;
     const checkApproval = async () => {

@@ -3,10 +3,19 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 
+/**
+ * @component LoginPage
+ * @description Authentication entry point. Displays options for signing in via Google OAuth
+ * or requesting onboarding access. Implements automatic route redirection based on approval status.
+ *
+ * @returns {React.ReactElement} The login landing page UI.
+ */
 const LoginPage = () => {
   const { user, signInWithGoogle, db, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
 
+  // Auto-redirect checking hook: Evaluates active user session and queries Firestore
+  // to automatically navigate approved users to the student portal or unapproved users to the request page.
   useEffect(() => {
     let mounted = true;
     const checkUser = async () => {

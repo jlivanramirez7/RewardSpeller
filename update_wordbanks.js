@@ -1,3 +1,14 @@
+/**
+ * @file update_wordbanks.js
+ * @description Automated data-engineering utility script. Batch updates `lessonImage` and `imagePath`
+ * properties across active split curriculum JSON files (`wordBank_2nd.json`, `wordBank_5th.json`)
+ * to enforce grade-specific asset naming conventions (`g2_tierX.png`, `g5_tX_sY.png`).
+ *
+ * @example
+ * // Execution syntax:
+ * node update_wordbanks.js
+ */
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

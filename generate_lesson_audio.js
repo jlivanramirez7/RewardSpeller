@@ -1,3 +1,20 @@
+/**
+ * @file generate_lesson_audio.js
+ * @description Offline Text-to-Speech (TTS) pre-rendering automation script. Parses all grade-specific
+ * curriculum word banks (`src/data/wordBank_*.json`) and synthesizes high-fidelity MP3 audio narrations
+ * for lesson scripts and vocabulary dictations using Google Cloud TTS premium neural engines (`en-US-Neural2-D`).
+ * Caches outputs permanently in `/public/assets/audio/` to ensure zero runtime latency and zero recurring cloud costs.
+ *
+ * @example
+ * // Execution syntax:
+ * node generate_lesson_audio.js "<YOUR_OAUTH2_BEARER_TOKEN>"
+ * // OR via environment variable:
+ * GOOGLE_TTS_API_KEY="<YOUR_OAUTH2_BEARER_TOKEN>" node generate_lesson_audio.js
+ *
+ * @prerequisites
+ * Requires Google Cloud API enabled on destination project. Supports standard API keys and OAuth2 Bearer tokens (`ya29.` / `AQ.`).
+ */
+
 /* global process, Buffer */
 import fs from 'fs';
 import path from 'path';

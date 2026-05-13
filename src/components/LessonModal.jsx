@@ -3,19 +3,33 @@ import { playStaticAudio, cancelTTS } from '../services/ttsService';
 import { useAppContext } from '../context/AppContext';
 import { createPortal } from 'react-dom';
 
+/**
+ * @component LessonModal
+ * @description Educational overlay ("Jedi Archive") displaying lesson scripts, phonetic rules,
+ * and vocabulary lists. Includes automatic TTS narration and visual text highlighting for phonic patterns.
+ *
+ * @param {Object} props
+ * @param {Object} props.lessonData - Lesson metadata containing script text, theme, words list, and visual art.
+ * @param {Function} props.onClose - Callback to close the modal and stop active audio narration.
+ * @param {Function} props.onBeginTrials - Callback to transition the user directly into the game engine.
+ * @returns {React.ReactElement} A React Portal rendering the modal over the document body.
+ */
 const LessonModal = ({ lessonData, onClose, onBeginTrials }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isEnlarged, setIsEnlarged] = useState(false); 
   const { markLessonListened } = useAppContext();
 
+  // Autoplay prerequisite tracking: Mark lesson as listened upon modal view
+  // to unlock corresponding game trial assessments.
   useEffect(() => {
     if (lessonData?.id) {
       markLessonListened(lessonData.id);
     }
     return () => cancelTTS(); 
-  }, [lessonData]);
+  }, [lessonData, markLessonListened]);
 
-  // Lock background scrolling when the modal is active to isolate user focus
+  // Focus isolation lock: Disables document body overflow scrolling when the modal
+  // is active to prevent background UI distractions during immersive audio-visual study.
   useEffect(() => {
     const originalStyle = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -39,6 +53,8 @@ const LessonModal = ({ lessonData, onClose, onBeginTrials }) => {
     }
   }, []);
 
+  // Phonetic pattern extraction engine: Parses the active lesson theme string using
+  // heuristic regex rules to isolate orthographic target clusters (IE, EE, Bossy R, Magic E).
   const getHighlightPatterns = (theme = "") => {
     const patterns = [];
     const t = theme.toUpperCase();
@@ -88,6 +104,9 @@ const LessonModal = ({ lessonData, onClose, onBeginTrials }) => {
     });
   };
 
+  // Memoized categorization engine: Groups vocabulary words into distinct phonetic buckets.
+  // Sorts active highlight patterns by descending length so that more specific,
+  // longer phonetic patterns take matching priority over shorter sub-patterns.
   const groupedWords = useMemo(() => {
     const activePatterns = getHighlightPatterns(lessonData?.theme || "");
     const isMagicE = (lessonData?.theme || "").toUpperCase().includes("MAGIC E");

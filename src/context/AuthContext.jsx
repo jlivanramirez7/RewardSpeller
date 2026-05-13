@@ -1,3 +1,9 @@
+/**
+ * @module AuthContext
+ * @description Authentication provider utilizing Firebase Auth and Firestore. Manages user sessions,
+ * Google OAuth popups, server configuration fetching, and administrator role validation.
+ */
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import { getApps, initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut } from 'firebase/auth';
@@ -5,9 +11,29 @@ import { getFirestore } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
+/**
+ * Custom hook to consume the authentication context.
+ *
+ * @returns {{
+ *   user: Object|null,
+ *   signInWithGoogle: Function,
+ *   signOut: Function,
+ *   loading: boolean,
+ *   db: Object|null,
+ *   isAdmin: boolean
+ * }} Authentication session state, Firestore instance, and auth helper functions.
+ */
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
 
+/**
+ * Component providing authentication state across the React component tree.
+ * Dynamically resolves Firebase configuration parameters from backend `/api/config` middleware.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components requiring authentication context access.
+ * @returns {React.ReactElement} Authentication context provider wrapper.
+ */
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,6 +42,8 @@ export const AuthProvider = ({ children }) => {
   const [firebaseInitialized, setFirebaseInitialized] = useState(false);
   const [error, setError] = useState(null);
 
+  // Asynchronous initialization hook: Fetches environment configuration from Express middleware,
+  // maps VITE_ prefixed keys to Firebase config schema, and instantiates Firebase Auth/Firestore singletons.
   useEffect(() => {
     let unsubscribe;
     let isMounted = true;
@@ -69,12 +97,20 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  /**
+   * Initiates Google OAuth popup authentication flow.
+   * @returns {Promise} Promise resolving to the UserCredential upon successful authentication.
+   */
   const signInWithGoogle = () => {
     if (!authInstance) return Promise.reject('Auth not initialized');
     const provider = new GoogleAuthProvider();
     return signInWithPopup(authInstance, provider);
   };
 
+  /**
+   * Signs out the currently authenticated user session.
+   * @returns {Promise} Promise resolving upon successful sign out.
+   */
   const signOut = () => {
     if (!authInstance) return Promise.reject('Auth not initialized');
     return firebaseSignOut(authInstance);

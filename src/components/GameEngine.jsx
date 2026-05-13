@@ -12,10 +12,22 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
+/**
+ * @component GameEngine
+ * @description Interactive spelling assessment workspace. Manages word dictation via Text-to-Speech (TTS),
+ * validates student spelling inputs, maintains session scores with streak multiplier bonuses, and handles
+ * progression across Easy (Copy), Medium (Recall), and Hard (Dictate) difficulty tiers.
+ *
+ * @param {Object} props
+ * @param {string|number} props.tierId - Identifier of the parent curriculum tier.
+ * @param {Object} props.section - Active section object containing vocabulary words, definitions, and sentences.
+ * @param {Function} props.onComplete - Callback triggered when the user completes or masters the section.
+ * @param {string} props.tierRule - Educational spelling rule displayed as a hint to the student.
+ * @param {string} [props.initialDifficulty='easy'] - Starting difficulty mode.
+ * @returns {React.ReactElement} The interactive spelling workspace UI.
+ */
 const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty = 'easy' }) => {
   const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores } = useAppContext();
-  
-  // Dynamically resolve closest unearned goal for real-time motivation (using safe immutable copy)
   
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [difficulty, setDifficulty] = useState(initialDifficulty); // easy, medium, hard
@@ -29,8 +41,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   const [hasFailedCurrentWord, setHasFailedCurrentWord] = useState(false);
   
   const inputRef = useRef(null);
-  const isMountedRef = useRef(true); // Lifecycle guard
+  // Lifecycle guard tracking component unmount to block trailing async state updates
+  const isMountedRef = useRef(true); 
   const advanceTimeoutRef = useRef(null);
+  // Concurrency lock blocking rapid multiple submissions during animation transition delays
   const isProcessingRef = useRef(false);
   
   const [shuffledWords, setShuffledWords] = useState(() => 
@@ -49,7 +63,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   // Text-to-Speech
   const speakWord = useCallback(() => {
     if (!currentWordObj) return;
-    const textToSpeak = `Listen closely, you must. The word is: ${currentWord}. Its meaning, ${currentWordObj.definition || ''} it is. Hear it in a sentence, you will: ${currentWordObj.sentence || ''}. The word, it is ${currentWord}.`;
+    const textToSpeak = `${currentWord}. ${currentWordObj.definition || ''} ${currentWordObj.sentence || ''} The word is: ${currentWord}.`;
     // Pattern matched filename: word_apple.mp3
     const safeWord = currentWord.toLowerCase().replace(/[^a-z0-9]/g, '');
     const filename = `word_${section.id}_${safeWord}.mp3`;
@@ -59,6 +73,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   }, [currentWordObj, currentWord, section.id]);
 
   // Cleanup TTS on unmount and mark unmounted
+  // Lifecycle cleanup guard: Ensures component unmount cancels pending TTS audio
+  // and blocks trailing setTimeout state transitions to prevent memory leaks.
   useEffect(() => {
     isMountedRef.current = true; // RESTORE mounted state explicitly on mount/remount
     return () => {
@@ -138,7 +154,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     let newCorrectCount = sessionCorrectCount;
 
     if (isCorrect) {
-      // Pass Path
+      // Pass Path: Calculate points using a stacking streak multiplier.
+      // Multiplier increases by +0.1 per streak up to a maximum cap of 2.0x bonus.
       if (!hasFailedCurrentWord) {
         const multiplier = Math.min(1 + (studentStreak * 0.1), 2); // Max 2x multiplier
         const basePoints = DIFFICULTY_POINTS[difficulty];

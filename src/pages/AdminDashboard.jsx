@@ -2,12 +2,21 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { collection, getDocs, query, where, doc, updateDoc, setDoc } from 'firebase/firestore';
 
+/**
+ * @component AdminDashboard
+ * @description Administrative operational command center. Enables administrators to review, approve,
+ * or deny pending student/parent access requests and monitors global platform engagement metrics.
+ *
+ * @returns {React.ReactElement} The administrative control interface.
+ */
 const AdminDashboard = () => {
   const { user, db, isAdmin } = useAuth();
   const [requests, setRequests] = useState([]);
   const [metrics, setMetrics] = useState({ totalUsers: 0, totalPoints: 0 });
   const [loading, setLoading] = useState(true);
 
+  // Asynchronous telemetry and requests fetcher hook: Queries Firestore 'access_requests' collection
+  // for pending user onboarding applications and aggregates total points across all user documents.
   useEffect(() => {
     const fetchData = async () => {
       if (isAdmin) {
@@ -44,6 +53,8 @@ const AdminDashboard = () => {
     fetchData();
   }, [user, db, isAdmin]);
 
+  // Approval handler: Atomic mutation updating access request status to 'approved' and creating/updating
+  // the corresponding user document. { merge: true } is critical to prevent overwriting existing student progress.
   const handleApprove = async (requestId, userId, email) => {
     try {
       // Update request status

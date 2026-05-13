@@ -1,3 +1,17 @@
+/**
+ * @file generate_infographics.js
+ * @description Automated canvas generation script utilizing PureImage to pre-render widescreen
+ * PNG infographic cards and thematic tier overview banners across all grade levels (`wordBank_*.json`).
+ * Guarantees zero vertical text overflow by enforcing a 1024x960 canvas and rendering TrueType fonts (`DejaVuSans.ttf`).
+ *
+ * @example
+ * // Execution syntax:
+ * node generate_infographics.js
+ *
+ * @prerequisites
+ * Requires `pureimage` dependency installed and TrueType font accessible at `/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf`.
+ */
+
 import * as PImage from 'pureimage';
 import fs from 'fs';
 import path from 'path';

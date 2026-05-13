@@ -14,10 +14,11 @@ The application orchestrates state utilizing modern React deterministic patterns
 *   **Grade Level Display**: The Student Portal header displays a "Grade" badge showing the current grade level selected by the parent, providing clear context to the student.
 
 ### 2. Dual-Channel High-Fidelity TTS Pipeline
-Our resilient audio subsystem implemented in `ttsService.js` enforces three tiers of zero-failure redundancy:
-*   **Tier 1: Synchronous Gesture Warmup**: Captures initial user click events to silently "prime" the audio context, defeating strict desktop/mobile autoplay policies immediately.
-*   **Tier 2: Pre-Rendered Static Dispatcher**: Probes local caches (`/assets/audio/`) first to deliver zero-latency offline-ready narration streams.
-*   **Tier 3: Dynamic Neural Fallback**: Automatically pivots missing items to the active **Google Cloud Flagship Neural Engine** (`en-US-Journey-F`) using runtime adaptive bearer token detection and throttled request buffering.
+Our resilient audio subsystem implemented in `ttsService.js` enforces three tiers of zero-failure redundancy, maintaining a strict architectural separation between runtime client playback and offline development synthesis:
+*   **Tier 1: Synchronous Gesture Warmup**: Captures initial user click events to silently "prime" the audio context via a 1-sample WAV placeholder, defeating strict desktop/mobile autoplay policies immediately.
+*   **Tier 2: Pre-Rendered Static Dispatcher**: Probes local caches (`/assets/audio/`) first to deliver zero-latency offline-ready narration streams synthesized during pre-rendering development stages.
+*   **Tier 3: Dynamic Native Browser Fallback**: Automatically pivots missing or unreadable audio items to native browser synthesis (`window.speechSynthesis.speak`) as an instant runtime failsafe.
+*   **Google Cloud Flagship Neural Engine (`en-US-Neural2-D`)**: Handled entirely **offline** during development pre-rendering via `generate_lesson_audio.js` (supporting OAuth2 Bearer tokens `ya29.` / `AQ.` or API keys) to eliminate runtime latency and recurring cloud costs.
 *   **Safety Protocols**: Embedded capped cyclic caches prevent unbounded memory expansion during long continuous sessions, and synchronous async session ID trackers invalidate race condition payloads on instant channel switches.
 
 ---
@@ -66,7 +67,7 @@ The global wallet secures anti-grinding protocol through distinct **Differential
 ## 👑 Parent Control Center (Administration)
 
 The operational command center empowers rigorous regulation of state layers:
-*   **Curriculum Calibration**: Instant live routing that remaps the active underlying database between 3rd, 4th-5th, and 6th+ grade target banks.
+*   **Curriculum Calibration**: Instant live routing that remaps the active underlying database between discrete grade levels (`2nd`, `3rd`, `4th`, `5th`, and `6th`), dynamically adjusting vocabulary arrays and phonic difficulty tiers.
 *   **Custom Reset Confirmation Modal**: Features a blurred glassmorphism backdrop and a safe confirmation flow to prevent accidental progress resets.
 *   **Diagnostic Insights & Struggle Ledger**: Real-time ingestion of specific failed submissions enabling targeted parental intervention.
 *   **Admin Config Suite**:
@@ -116,12 +117,28 @@ If you are developing on a remote virtual environment via SSH, choose one of the
 
 ## 🛠️ Developer Utilities
 
-The project includes several utility scripts in the root directory for managing the word bank and curriculum data:
-*   `fix_wordbank_ids.js`: Ensures all words have unique and consistent IDs.
-*   `inject_pagination.py`: Scripts for managing pagination in the word bank.
-*   `inject_rules.py`: Injects learning rules into the curriculum data.
-*   `refactor_pagination.py`: Refactors pagination logic.
-*   `update_img_paths.js`: Updates image paths in the data files.
+The project includes a comprehensive suite of automation and data-engineering utility scripts in the root directory for pre-rendering media assets, injecting pedagogical scripts, and maintaining curriculum data structures:
+
+### 1. Media & Asset Pre-Rendering
+*   **`generate_lesson_audio.js`**: Pre-renders static MP3 audio bundles for all lesson scripts and vocabulary dictations using Google Cloud TTS premium neural engines (`en-US-Neural2-D`). Parses all grade-specific curriculum files (`wordBank_*.json`).
+    *   *Execution Syntax*: `node generate_lesson_audio.js "YOUR_API_KEY"` or `GOOGLE_TTS_API_KEY="xxx" node generate_lesson_audio.js`
+    *   *Prerequisites*: Google Cloud API enabled on project. Supports standard API keys and OAuth2 Bearer tokens (`ya29.` / `AQ.`).
+    *   *Output Destination*: `/public/assets/audio/`
+*   **`generate_infographics.js`**: Automated canvas generation script utilizing PureImage to pre-render widescreen PNG infographic cards and thematic tier overview banners across all grade levels. Enforces 1024x960 canvas dimensions to eliminate vertical text overflow.
+    *   *Execution Syntax*: `node generate_infographics.js`
+    *   *Prerequisites*: `pureimage` package and TrueType font accessible at `/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf`.
+    *   *Output Destination*: `/public/assets/images/`
+
+### 2. Curriculum Script Injection & Asset Mapping
+*   **`upgrade_lesson_scripts.js`**: Programmatic data injection script. Replaces legacy brief lesson texts across grade-specific curriculum files (`wordBank_2nd.json`, `wordBank_3rd.json`, `wordBank_5th.json`, `wordBank_6th.json`) with immersive fantasy storytelling scripts (Minecraft, Star Wars, Harry Potter, LOTR, Narnia) embedded with explicit vocabulary examples, similarity breakdowns, and phonic mnemonic rules.
+    *   *Execution Syntax*: `node upgrade_lesson_scripts.js`
+*   **`update_wordbanks.js`**: Data-engineering utility. Batch updates `lessonImage` and `imagePath` properties across active split curriculum JSON files (`wordBank_2nd.json`, `wordBank_5th.json`) to enforce grade-specific asset naming conventions (`g2_tierX.png`, `g5_tX_sY.png`).
+    *   *Execution Syntax*: `node update_wordbanks.js`
+
+### 3. Legacy Data Maintenance
+*   **`fix_wordbank_ids.js`**: Normalizes section identifier formatting (`tX_sY`) across legacy monolithic curriculum structures (`src/data/wordBank.json`).
+*   **`update_img_paths.js`**: Standardizes section image asset naming patterns (`tierX_secY.png`) across legacy monolithic structures.
+*   **`inject_pagination.py`, `inject_rules.py`, `refactor_pagination.py`**: Python data-engineering scripts for managing learning rules and pagination structures.
 
 > [!NOTE]
-> These scripts currently reference `src/data/wordBank.json`. However, the active curriculum is split into grade-specific files (e.g., `wordBank_3rd.json`, `wordBank_4th.json`, etc.). These scripts may need updating to target the specific grade files.
+> Active runtime curriculums are split into discrete grade-specific files (`wordBank_2nd.json` through `wordBank_6th.json`). Legacy maintenance scripts referencing `src/data/wordBank.json` are retained for archival reference and structural baseline validation.

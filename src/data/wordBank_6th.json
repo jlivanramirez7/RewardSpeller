@@ -61,7 +61,7 @@
               "sentence": "The creeper explosion left a green cloud that looked like a biohazard area."
             }
           ],
-          "lessonScript": "Master 'BIO-', the Greek root of life! Hermione excelled in magical 'BIOLOGY', Endor boasts a lush 'BIOSPHERE', and Minecraft jungles possess incredible 'BIODIVERSITY' (pandas, ocelots). Whether reading Dumbledore's 'BIOGRAPHY' or admiring 'BIOLUMINESCENT' glow squids, BIO signals living systems!",
+          "lessonScript": "Master 'BIO-', the Greek root for 'life'! Hermione excelled in magical 'BIOLOGY' (study of life), Endor boasts a lush 'BIOSPHERE' (sphere of life), and Minecraft jungles possess incredible 'BIODIVERSITY' (diversity of living things). Whether reading Dumbledore's 'BIOGRAPHY' (writing about a life) or admiring 'BIOLUMINESCENT' glow squids, BIO signals living systems!",
           "imagePath": "/assets/images/g6_t1_s1.png",
           "id": "g6_t1_s1",
           "rule": "Look for 'bio' to find words about life!"
@@ -121,7 +121,7 @@
               "sentence": "A famous geographer from Gondor mapped the regions of Harad and Rhûn."
             }
           ],
-          "lessonScript": "Explore 'GEO-', the Greek root of earth! The dwarves of Erebor mastered 'GEOLOGY' to find the Arkenstone, while Gandalf mapped the vast 'GEOGRAPHY' of Middle-earth. In Minecraft, mine deep to find an amethyst 'GEODE' or utilize 'GEOTHERMAL' energy. GEO grounds your spelling in physical earth!",
+          "lessonScript": "Explore 'GEO-', the Greek root for 'earth'! The dwarves of Erebor mastered 'GEOLOGY' (study of the earth's structure) to find the Arkenstone, while Gandalf mapped the vast 'GEOGRAPHY' (writing/mapping the earth) of Middle-earth. In Minecraft, mine deep to find an amethyst 'GEODE' or utilize 'GEOTHERMAL' (earth heat) energy. GEO grounds your spelling in physical earth!",
           "imagePath": "/assets/images/g6_t1_s2.png",
           "id": "g6_t1_s2",
           "rule": "Think of 'geo' as everything ground and earth!"
@@ -181,13 +181,13 @@
               "sentence": "The intense heat of the star's photosphere made it impossible for the Jedi starfighters to get close."
             }
           ],
-          "lessonScript": "Capture 'PHOTO-', the Greek root of light! Colin Creevey snapped a 'PHOTOGRAPH' of Harry, Minecraft crops rely on 'PHOTOSYNTHESIS', and the Death Star superlaser unleashed a massive 'PHOTON' beam. Endermen are 'PHOTOSENSITIVE' and teleport away from bright flashes. PHOTO illuminates light energy!",
+          "lessonScript": "Capture 'PHOTO-', the Greek root for 'light'! Colin Creevey snapped a 'PHOTOGRAPH' (light drawing) of Harry, Minecraft crops rely on 'PHOTOSYNTHESIS' (putting together with light), and the Death Star superlaser unleashed a massive 'PHOTON' (particle of light) beam. Endermen are 'PHOTOSENSITIVE' (sensitive to light) and teleport away from bright flashes.",
           "imagePath": "/assets/images/g6_t1_s3.png",
           "id": "g6_t1_s3",
-          "rule": "Shine a light on 'photo' to reveal its meaning!"
+          "rule": "Illuminate your spelling! The Greek root 'photo-' means light, forming the foundation for optical and energy terms."
         }
       ],
-      "lessonScript": "Delve into the ancient roots of language! Advanced Greek roots are the foundation of scientific vocabulary. Master bio- (life), geo- (earth), and photo- (light) to decode complex academic texts.",
+      "lessonScript": "Delve into the ancient roots of language! Advanced Greek roots form the backbone of scientific and academic vocabulary. By learning roots like bio- (life), geo- (earth), and photo- (light), you gain the power to decode sophisticated academic texts and understand complex scientific concepts instantly.",
       "lessonImage": "/assets/images/g6_tier1.png"
     },
     {
@@ -251,7 +251,7 @@
               "sentence": "It was highly improbable that a small hobbit could destroy the One Ring, yet Frodo did."
             }
           ],
-          "lessonScript": "It seemed 'IMPOSSIBLE' to destroy the Death Star, the Elves are 'IMMORTAL', and the dark side created an 'IMBALANCE' in the Force! To make pronunciation seamless, the prefix 'IN-' (meaning not) assimilates into 'IM-' before roots starting with P, M, or B ('IMPERFECT', 'IMMATURE').",
+          "lessonScript": "It seemed 'IMPOSSIBLE' to destroy the Death Star, the Elves are 'IMMORTAL', and the dark side created an 'IMBALANCE' in the Force! The prefix 'IN-' (meaning 'not') assimilates into 'IM-' before roots starting with P, M, or B. Try saying 'in-possible' fast—your lips naturally close to make an /m/ sound! That is why we spell it 'IMPOSSIBLE'.",
           "imagePath": "/assets/images/g6_t2_s1.png",
           "id": "g6_t2_s1",
           "rule": "Change 'in' to 'im' before p, m, or b!"
@@ -311,7 +311,7 @@
               "sentence": "I suppose we could try to use a bucket of water to survive the fall in Minecraft."
             }
           ],
-          "lessonScript": "The stone pillars of Narnia 'SUPPORT' a massive roof, while the realm had to 'SUFFER' a century of winter as the Empire tried to 'SUPPRESS' the Jedi. The prefix 'SUB-' (meaning under) assimilates into 'SUF-' or 'SUP-' depending on the root ('SUPPLANT', 'SUPPLEMENT'). See how smoothly it glides!",
+          "lessonScript": "The stone pillars of Narnia 'SUPPORT' a massive roof, while the realm had to 'SUFFER' a century of winter as the Empire tried to 'SUPPRESS' the Jedi. The prefix 'SUB-' (meaning 'under') assimilates into 'SUF-' or 'SUP-' depending on the root ('SUPPLANT', 'SUPPLEMENT'). Notice how smoothly your tongue glides from prefix to root!",
           "imagePath": "/assets/images/g6_t2_s2.png",
           "id": "g6_t2_s2",
           "rule": "'Sub' changes to match the root, like 'suf' or 'sup'!"
@@ -371,13 +371,13 @@
               "sentence": "Building a fully functional calculator in Minecraft requires complex redstone wiring."
             }
           ],
-          "lessonScript": "In Minecraft, 'COMBINE' damaged tools to repair them, cause a 'COMMOTION' in Gryffindor Tower, or show 'COMPASSION' like Luke Skywalker! The prefix 'CON-' (meaning together) assimilates into 'COM-' before roots starting with B, M, and P ('COMPETE', 'COMPILE', 'COMPLEX'). Stronger together!",
+          "lessonScript": "In Minecraft, 'COMBINE' damaged tools to repair them, cause a 'COMMOTION' in Gryffindor Tower, or show 'COMPASSION' like Luke Skywalker! The prefix 'CON-' (meaning 'together') assimilates into 'COM-' before roots starting with B, M, and P ('COMPETE', 'COMPILE'). We are stronger together when words flow perfectly!",
           "imagePath": "/assets/images/g6_t2_s3.png",
           "id": "g6_t2_s3",
           "rule": "Use 'com' instead of 'con' before b, m, and p!"
         }
       ],
-      "lessonScript": "Master the art of shape-shifting prefixes! Assimilated prefixes change their final consonant to match the starting letter of the root word, ensuring seamless pronunciation.",
+      "lessonScript": "Master the art of shape-shifting prefixes! Assimilated prefixes are clever word parts that change their final consonant letter to match the starting letter of the root word they attach to. This linguistic evolution happened over centuries to make pronouncing the combined word seamless and natural.",
       "lessonImage": "/assets/images/g6_tier2.png"
     },
     {
@@ -441,7 +441,7 @@
               "sentence": "The King of Gondor was the sovereign ruler of the realm."
             }
           ],
-          "lessonScript": "Finding a pink sheep is a rare 'PHENOMENON', the sun sets on the Narnian 'HORIZON', and the author of dark spellbooks remains 'ANONYMOUS'. The elusive Schwa is a lazy, unstressed vowel sound whispering a soft /uh/ or /ih/ (like the 'a' in 'anonymous' or 'e' in 'SOVEREIGN'). Listen for the whisper!",
+          "lessonScript": "Finding a pink sheep is a rare 'PHENOMENON', the sun sets on the Narnian 'HORIZON', and the author of dark spellbooks remains 'ANONYMOUS'. The elusive Schwa is a lazy, unstressed vowel sound whispering a soft /uh/ or /ih/ (like the 'a' in 'anonymous' or 'e' in 'SOVEREIGN'). Because unstressed vowels lose their crisp sound, you must rely on visual memory to master them!",
           "imagePath": "/assets/images/g6_t3_s1.png",
           "id": "g6_t3_s1",
           "rule": "Listen for the soft 'uh' of the hidden schwa sound!"
@@ -501,13 +501,13 @@
               "sentence": "The philosophy of the Jedi Order emphasizes peace and detachment."
             }
           ],
-          "lessonScript": "Notice how vocal stress shifts when words change form! The beat shifts from 'photo' to 'PHOTOGRAPHY', or from 'compete' to 'COMPETITIVE'. Whether admiring 'MAGNIFICENT' Minas Tirith, reading the 'DECLARATION' of the Empire, or demanding an 'EXPLANATION', feel the rhythmic beat shift!",
+          "lessonScript": "Notice how vocal stress shifts when words change grammatical form! The vocal beat shifts from 'PHO-to' (noun) to 'pho-TOG-ra-phy' (noun indicating the art), or from 'com-PETE' (verb) to 'com-PET-i-tive' (adjective). Whether admiring 'MAGNIFICENT' Minas Tirith or reading the 'DECLARATION' of the Empire, feel the rhythmic beat shift!",
           "imagePath": "/assets/images/g6_t3_s2.png",
           "id": "g6_t3_s2",
-          "rule": "Feel the beat shift as words change their form!"
+          "rule": "Recognize grammatical stress shifts! Spoken syllable stress frequently shifts when a word transforms from a noun to a verb or adjective."
         }
       ],
-      "lessonScript": "Listen to the underlying rhythm of language! Discover the elusive Schwa sound in unstressed syllables, and observe how shifting syllable stress transforms word meaning and function.",
+      "lessonScript": "Listen to the underlying rhythm of language! Discover the elusive Schwa sound in unstressed syllables, and observe how shifting vocal stress across syllables transforms word meaning and grammatical function.",
       "lessonImage": "/assets/images/g6_tier3.png"
     },
     {
@@ -571,10 +571,10 @@
               "sentence": "The Shire was devastated by Saruman's thugs, but the hobbits rebuilt it."
             }
           ],
-          "lessonScript": "Not all big things are merely 'big'. Minecraft map details are 'MINUTE', Erebor held 'SUBSTANTIAL' gold, the Balrog was 'COLOSSAL', and the Death Star was 'FORMIDABLE'! Hermione was 'PETRIFIED' by the Basilisk, and Harry was 'ASTOUNDED'. Master the exact shade of intensity from spark to inferno!",
+          "lessonScript": "Not all big things are merely 'big'. Minecraft map details are 'MINUTE' (tiny), Erebor held 'SUBSTANTIAL' gold, the Balrog was 'COLOSSAL', and the Death Star was 'FORMIDABLE'! Hermione was 'PETRIFIED' (frozen with fear) by the Basilisk, while Harry was 'ASTOUNDED' (shocked). Master exact shades of meaning to make your writing spectacular!",
           "imagePath": "/assets/images/g6_t4_s1.png",
           "id": "g6_t4_s1",
-          "rule": "Find the perfect shade of word to match the feeling!"
+          "rule": "Evaluate synonym intensity! Distinguish closely related vocabulary words by analyzing their precise degree of emotional or physical strength."
         },
         {
           "name": "Context Clues",
@@ -631,13 +631,13 @@
               "sentence": "Aslan's enigmatic warnings left Lucy wondering about the true nature of the battle ahead."
             }
           ],
-          "lessonScript": "When encountering mystery words, analyze surrounding context clues! Steve stood on a 'PRECARIOUS' cliff, droids are 'UBIQUITOUS' across the galaxy, and the beauty of Lothlórien felt 'EPHEMERAL'. Whether Gimli's axe can 'CLEAVE' stone or Frodo remains 'RESOLUTE', let context unlock the meaning!",
+          "lessonScript": "When encountering mystery words, analyze surrounding context clues! Steve stood on a 'PRECARIOUS' (dangerously unstable) cliff, droids are 'UBIQUITOUS' (appearing everywhere) across the galaxy, and the beauty of Lothlórien felt 'EPHEMERAL' (fleeting/short-lived). Let the sentence context unlock the meaning!",
           "imagePath": "/assets/images/g6_t4_s2.png",
           "id": "g6_t4_s2",
           "rule": "Use the surrounding words as clues to unlock new meanings!"
         }
       ],
-      "lessonScript": "Words are like a painter's palette! Discover shades of intensity to choose the exact right word, and become a word detective by using surrounding context clues to decode unfamiliar vocabulary.",
+      "lessonScript": "Words are like a painter's palette! Discover shades of intensity to choose the exact right word for your writing, and become a word detective by using surrounding sentence context clues to decode unfamiliar high school vocabulary.",
       "lessonImage": "/assets/images/g6_tier4.png"
     },
     {
@@ -701,10 +701,10 @@
               "sentence": "The Jedi Council would critique Anakin's impulsive actions after the mission."
             }
           ],
-          "lessonScript": "Master the scholar's analytical toolkit! Elrond must 'ANALYZE' ancient texts, Hermione will 'SYNTHESIZE' library books, and the Rebel Alliance will 'FORMULATE' battle plans. Use powerful verbs like 'EVALUATE', 'ELABORATE', 'INFER', 'DEDUCE', and 'VALIDATE' to craft flawless, high school level essays!",
+          "lessonScript": "Master the scholar's analytical toolkit! Elrond must 'ANALYZE' (examine in detail) ancient texts, Hermione will 'SYNTHESIZE' (combine ideas) library books, and the Rebel Alliance will 'FORMULATE' (create systematically) battle plans. Use powerful analytical verbs like 'EVALUATE', 'ELABORATE', 'INFER', 'DEDUCE', and 'VALIDATE' to craft flawless essays!",
           "imagePath": "/assets/images/g6_t5_s1.png",
           "id": "g6_t5_s1",
-          "rule": "Use these words to prove your points in any discussion!"
+          "rule": "Master academic analytical verbs! These advanced terms are essential for evaluating evidence, breaking down complex arguments, and synthesizing information."
         },
         {
           "name": "Structure and Function",
@@ -761,13 +761,13 @@
               "sentence": "From a certain perspective, what Obi-Wan said was true."
             }
           ],
-          "lessonScript": "Build an unshakeable framework for your arguments! A redstone repeater is a vital 'COMPONENT', the Death Star's 'FUNCTION' was intimidation, and Creeper explosions destroy wooden 'FRAMEWORK's. Use structural terms like 'FACILITATE', 'IMPLEMENT', 'MODIFY', 'DERIVE', and 'INNOVATION' to prove your perspective!",
+          "lessonScript": "Build an unshakeable framework for your arguments! A redstone repeater is a vital 'COMPONENT' (part), the Death Star's 'FUNCTION' was intimidation, and Creeper explosions destroy wooden 'FRAMEWORK's. Use structural academic terms like 'FACILITATE' (make easy), 'IMPLEMENT' (put into action), 'MODIFY' (change), and 'INNOVATION' (new creation) to prove your perspective!",
           "imagePath": "/assets/images/g6_t5_s2.png",
           "id": "g6_t5_s2",
-          "rule": "Use structure words to build strong arguments!"
+          "rule": "Understand structural terminology! Use these high-level concepts to describe how complex systems, frameworks, and operations are constructed and facilitated."
         }
       ],
-      "lessonScript": "Prepare for the rigorous trials of high school! Master the heavy-hitting academic vocabulary used by advanced scholars to analyze arguments, evaluate theories, and describe complex structures.",
+      "lessonScript": "Prepare for the rigorous trials of high school! Master the heavy-hitting academic vocabulary used by advanced scholars to analyze complex arguments, evaluate scientific theories, and describe intricate societal structures.",
       "lessonImage": "/assets/images/g6_tier5.png"
     }
   ]
