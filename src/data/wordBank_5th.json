@@ -5,13 +5,13 @@
       "name": "Advanced Diphthongs & Trigraphs",
       "description": "Master complex vowel combinations and trigraphs.",
       "rule": "Pay attention to combinations like 'ough', 'au', and 'aw' that can make unexpected sounds.",
-      "lessonScript": "Welcome, young Padawan! Today we face the tricky 'OUGH' trigraph and complex diphthongs. Just like navigating the Death Star, it can be tough. Stay focused and use the Force to master these sounds!",
+      "lessonScript": "Welcome, young Padawan! Today we face the deceptive OUGH trigraph and complex diphthongs. Navigating these vowel patterns is as tough as flying through an asteroid field. Use the Force to master their distinct sounds!",
       "lessonImage": "/assets/images/g5_tier1.png",
       "sections": [
         {
           "name": "The Tricky OUGH",
           "theme": "OUGH Trigraph",
-          "lessonScript": "The 'ough' pattern is a master of disguise! In words like 'THOUGHT', it sounds like 'aw'. But in 'ROUGH', it sounds like 'uff'! Do not let these tricks fool you.",
+          "lessonScript": "The 'OUGH' trigraph is a master of disguise! 'ALTHOUGH' Creepers approached, Steve had a 'THOROUGH' 'THOUGHT'. General Grievous had a nasty 'COUGH', and Nether terrain is 'ROUGH' and 'TOUGH'. Mnemonic: Group OUGH words by their sound family—/aw/ in 'BROUGHT' versus /uff/ in 'TOUGH'.",
           "imagePath": "/assets/images/g5_t1_s1.png",
           "id": "g5_t1_s1",
           "rule": "The 'ough' pattern can make many different sounds. Group words by their sound to remember them!",
@@ -71,7 +71,7 @@
         {
           "name": "The AU Team",
           "theme": "AU Diphthong",
-          "lessonScript": "The 'au' team usually makes the sound you hear in 'launch'. Watch out for it in academic and everyday words.",
+          "lessonScript": "Watch Han Solo the 'ASTRONAUT' pilot his ship, join the Narnian 'AUDIENCE' to 'APPLAUD' Aslan the 'AUTHENTIC' king, or build an 'AUTOMATIC' Minecraft farm! The 'AU' team launches the crisp /aw/ sound. Approach the Nether with 'CAUTION' and guard your ship's 'EXHAUST'!",
           "imagePath": "/assets/images/g5_t1_s2.png",
           "id": "g5_t1_s2",
           "rule": "The 'au' spelling usually represents the /aw/ sound.",
@@ -131,7 +131,7 @@
         {
           "name": "The AW Team",
           "theme": "AW Diphthong",
-          "lessonScript": "The 'aw' team also makes the /aw/ sound, often at the end of words or before an 'l' or 'n'.",
+          "lessonScript": "Edmund felt 'AWKWARD' meeting the White Witch, but the Argonath statues were truly 'AWESOME'. Legolas had 'FLAWLESS' aim, while Tatooine remained a 'LAWLESS' realm. The 'AW' team also makes the /aw/ sound, preferring the end of syllables or before L, N, and K ('SPRAWL', 'WITHDRAW').",
           "imagePath": "/assets/images/g5_t1_s3.png",
           "id": "g5_t1_s3",
           "rule": "Use 'aw' at the end of words or syllables, and before 'l', 'n', or 'k'.",
@@ -195,13 +195,13 @@
       "name": "Latin Roots (Intermediate)",
       "description": "Understand words better by learning their Latin roots.",
       "rule": "Roots like 'spect', 'struct', and 'tract' carry core meanings across many words.",
-      "lessonScript": "Greetings, traveler! Today we construct words like the ancient Dwarves building the great halls of Moria. Our base is ancient Latin roots. Master them, and you unlock the secrets of many complex words!",
+      "lessonScript": "Construct words like ancient Dwarves carving the halls of Moria! Latin roots hold the core meaning of advanced vocabulary. Master the base root, and you unlock dozens of complex words.",
       "lessonImage": "/assets/images/g5_tier2.png",
       "sections": [
         {
           "name": "Root SPECT (To Look)",
           "theme": "Root SPECT",
-          "lessonScript": "The root 'spect' means to look. Think of spectacles or a spectacle!",
+          "lessonScript": "Lord Vader arrived to 'INSPECT' the Death Star, while all Middle-earth showed 'RESPECT' to Aragorn. The Triwizard Tournament was a spectacular 'SPECTACLE' for every 'SPECTATOR'. The Latin root 'SPECT' means 'to look or watch'. Keep things in 'PERSPECTIVE' as you examine this root!",
           "imagePath": "/assets/images/g5_t2_s1.png",
           "id": "g5_t2_s1",
           "rule": "Words containing 'spect' usually relate to seeing or looking.",
@@ -261,7 +261,7 @@
         {
           "name": "Root STRUCT (To Build)",
           "theme": "Root STRUCT",
-          "lessonScript": "The root 'struct' means to build. Think of structure or construction!",
+          "lessonScript": "Steve must 'CONSTRUCT' redstone 'INFRASTRUCTURE', while the Death Star activates its self-'DESTRUCT' sequence! Obi-Wan is a master 'INSTRUCTOR' who will 'INSTRUCT' Luke. The Latin root 'STRUCT' means 'to build'. Don't let tricky spelling 'OBSTRUCT' your building progress!",
           "imagePath": "/assets/images/g5_t2_s2.png",
           "id": "g5_t2_s2",
           "rule": "Words containing 'struct' usually relate to building or arranging.",
@@ -321,7 +321,7 @@
         {
           "name": "Root TRACT (To Pull)",
           "theme": "Root TRACT",
-          "lessonScript": "The root 'tract' means to pull or drag. Think of a tractor or attract!",
+          "lessonScript": "The Arkenstone's glow will 'ATTRACT' greedy eyes, the White Witch will 'DISTRACT' Edmund, and Anakin's lightsaber will 'RETRACT'. The Latin root 'TRACT' means 'to drag or pull'. Whether using a 'TRACTOR' beam or signing a 'CONTRACT' with Bilbo, this root pulls your vocabulary together!",
           "imagePath": "/assets/images/g5_t2_s3.png",
           "id": "g5_t2_s3",
           "rule": "Words containing 'tract' usually relate to pulling, drawing, or dragging.",
@@ -385,13 +385,13 @@
       "name": "Polysyllabic Words with Affixes",
       "description": "Master long words by breaking them into parts.",
       "rule": "Look for familiar prefixes and suffixes to decode long words.",
-      "lessonScript": "Welcome, adventurer! Long words can be as intimidating as an Ender Dragon, but if you break them down into prefixes, roots, and suffixes, you can defeat them easily!",
+      "lessonScript": "Defeating massive polysyllabic words is like battling an Ender Dragon! Slice them into prefixes, roots, and suffixes to conquer them easily.",
       "lessonImage": "/assets/images/g5_tier3.png",
       "sections": [
         {
           "name": "Prefixes",
           "theme": "Prefixes",
-          "lessonScript": "Prefixes are added to the beginning of words to change their meaning.",
+          "lessonScript": "Creeper behavior is completely 'UNPREDICTABLE', Frodo 'DISAPPEARED' using the Ring, and Narnia is filled with 'SUPERNATURAL' magic! Prefixes attach to the front: 'UN-', 'DIS-', and 'MIS-' ('MISUNDERSTANDING') flip meaning, while 'INTER-' connects across borders ('INTERNATIONAL').",
           "imagePath": "/assets/images/g5_t3_s1.png",
           "id": "g5_t3_s1",
           "rule": "Prefixes like un-, inter-, and dis- change the meaning of the base word.",
@@ -451,7 +451,7 @@
         {
           "name": "Suffixes",
           "theme": "Suffixes",
-          "lessonScript": "Suffixes are added to the end of words to change their meaning or part of speech.",
+          "lessonScript": "R2-D2 enables galactic 'COMMUNICATION', Frodo bore the heavy 'RESPONSIBILITY', and entering Erebor was a major 'ACCOMPLISHMENT'. Suffixes attach to the end: '-TION', '-ITY', and '-MENT' ('EXCITEMENT') transform active verbs and adjectives into formidable, structured nouns.",
           "imagePath": "/assets/images/g5_t3_s2.png",
           "id": "g5_t3_s2",
           "rule": "Suffixes like -tion, -ity, and -ment often create nouns.",
@@ -511,7 +511,7 @@
         {
           "name": "Combined Affixes",
           "theme": "Combined Affixes",
-          "lessonScript": "Some words have both prefixes and suffixes! Peel them off like layers of an onion.",
+          "lessonScript": "Gandalf focused on the 'IDENTIFICATION' of the Ring, while the Pevensie 'DISAPPEARANCE' shocked their uncle. Anakin's 'TRANSFORMATION' into Vader was tragic. When facing mega-words with combined affixes ('UNPREDICTABILITY', 'MISINTERPRETATION'), peel them off like onion layers to isolate the root!",
           "imagePath": "/assets/images/g5_t3_s3.png",
           "id": "g5_t3_s3",
           "rule": "Identify the root word first, then look for both prefixes and suffixes.",
@@ -575,13 +575,13 @@
       "name": "Nuanced Homophones & Homographs",
       "description": "Master words that sound or look alike but have different meanings.",
       "rule": "Use context clues to determine the correct spelling and meaning.",
-      "lessonScript": "Welcome, detective! Some words are masters of disguise, as deceptive as the White Witch. You must use your wits to tell them apart!",
+      "lessonScript": "Welcome, master detective! Some words are shape-shifters, as deceptive as Sith Lords. Homophones sound alike but differ in spelling, while Homographs share spelling but shift meaning and pronunciation.",
       "lessonImage": "/assets/images/g5_tier4.png",
       "sections": [
         {
           "name": "Homophones",
           "theme": "Homophones",
-          "lessonScript": "Homophones sound the same but are spelled differently and have different meanings.",
+          "lessonScript": "Aslan's return will 'AFFECT' (verb) the winter, breaking its freezing 'EFFECT' (noun). Obi-Wan lived by the 'PRINCIPLE' (rule) of protecting the 'PRINCIPAL' (main) galaxy. The Death Star remained 'STATIONARY' (still) while Hermione bought 'STATIONERY' (paper). Match the spelling to the role!",
           "imagePath": "/assets/images/g5_t4_s1.png",
           "id": "g5_t4_s1",
           "rule": "Memorize the spelling that goes with each specific meaning.",
@@ -641,7 +641,7 @@
         {
           "name": "Homographs",
           "theme": "Homographs",
-          "lessonScript": "Homographs are spelled the same but have different meanings and sometimes different pronunciations.",
+          "lessonScript": "Homographs share exact spelling but split meaning and sound! The Pevensies were 'CONTENT' (happy) with the 'CONTENT' (items) of Narnia. Tatooine is a harsh 'DESERT', but Aslan will never 'DESERT' his people. Steve had one 'MINUTE' (time) to examine the 'MINUTE' (tiny) details of his 'PROJECT'.",
           "imagePath": "/assets/images/g5_t4_s2.png",
           "id": "g5_t4_s2",
           "rule": "Use context clues to figure out which meaning or pronunciation is intended.",
@@ -705,13 +705,13 @@
       "name": "Advanced Academic Vocabulary",
       "description": "Master subject-specific terms for advanced learning.",
       "rule": "Learn the specific definitions used in academic subjects.",
-      "lessonScript": "Welcome, scholar! To master the advanced subjects at Hogwarts or in the Jedi Temple, you must learn their specific vocabulary. These words are your keys to advanced knowledge!",
+      "lessonScript": "Welcome, scholar! To excel at Hogwarts or the Jedi Academy, you must master academic terms. These subject-specific vocabulary words are your keys to advanced knowledge.",
       "lessonImage": "/assets/images/g5_tier5.png",
       "sections": [
         {
           "name": "Science",
           "theme": "Science",
-          "lessonScript": "Science words help us describe the physical world and how it works.",
+          "lessonScript": "Science vocabulary unlocks the physical world! Explore the forest 'ECOSYSTEM' of Endor, understand 'PHOTOSYNTHESIS' in Narnia's talking trees, or test Hermione's 'HYPOTHESIS' in Snape's 'LABORATORY'. Master concepts like 'GRAVITY', 'EVAPORATION', and 'RESPIRATION' to understand living 'ORGANISM's.",
           "imagePath": "/assets/images/g5_t5_s1.png",
           "id": "g5_t5_s1",
           "rule": "Focus on the precise definitions used in scientific contexts.",
@@ -771,7 +771,7 @@
         {
           "name": "Social Studies",
           "theme": "Social Studies",
-          "lessonScript": "Social studies words help us understand history, government, and cultures.",
+          "lessonScript": "Social Studies examines history and culture! Restoring the 'GOVERNMENT' and 'CONSTITUTION' of Narnia, fighting for 'DEMOCRACY' in the Galactic Senate, or studying the farming 'ECONOMY' and 'AGRICULTURE' of the Shire. Understand how 'REVOLUTION' shapes human 'CIVILIZATION'!",
           "imagePath": "/assets/images/g5_t5_s2.png",
           "id": "g5_t5_s2",
           "rule": "Understand how these words apply to societies and governments.",
@@ -831,7 +831,7 @@
         {
           "name": "Math & ELA",
           "theme": "Math & ELA",
-          "lessonScript": "Math and ELA words help us describe shapes, numbers, and literature.",
+          "lessonScript": "Math and ELA vocabulary pairs geometric precision with literary analysis! Steve's crafting table is a 'QUADRILATERAL' with 'PERPENDICULAR' sides and a secure 'PERIMETER'. In ELA, Frodo is our hero 'PROTAGONIST' fighting the evil 'ANTAGONIST' Sauron using 'METAPHOR' and 'ALLITERATION'.",
           "imagePath": "/assets/images/g5_t5_s3.png",
           "id": "g5_t5_s3",
           "rule": "Learn terms for shapes and literary devices.",
