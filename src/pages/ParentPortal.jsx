@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
 
 const ParentPortal = () => {
@@ -448,7 +449,7 @@ const ParentPortal = () => {
       </div>
 
       {/* Custom Reset Confirmation Modal */}
-      {showResetModal && (
+      {showResetModal && createPortal(
         <div style={{
           position: 'fixed',
           top: 0, left: 0, width: '100%', height: '100%',
@@ -483,11 +484,12 @@ const ParentPortal = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Add Student Modal */}
-      {showAddModal && (
+      {showAddModal && createPortal(
         <div style={{
           position: 'fixed',
           top: 0, left: 0, width: '100%', height: '100%',
@@ -567,7 +569,8 @@ const ParentPortal = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>
