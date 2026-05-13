@@ -4,6 +4,9 @@ import wordBank4th from '../data/wordBank_4th.json';
 import wordBank5th from '../data/wordBank_5th.json';
 import wordBank6th from '../data/wordBank_6th.json';
 import { calculateRecommendedDifficulty } from '../utils/difficulty';
+import { db } from '../firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { useAuth } from './AuthContext';
 
 const AppContext = createContext();
 
@@ -61,18 +64,29 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const { user } = useAuth();
+
   useEffect(() => {
-    fetch('/api/load-scores')
-      .then(response => response.json())
-      .then(data => {
-        restoreProgress(data);
-        setIsLoaded(true);
-      })
-      .catch(error => {
-        console.error('Error loading scores:', error);
-        setIsLoaded(true); // Allow saving if load fails
-      });
-  }, []);
+    const loadScores = async () => {
+      if (user) {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            restoreProgress(docSnap.data());
+          }
+          setIsLoaded(true);
+        } catch (error) {
+          console.error('Error loading scores from Firestore:', error);
+          // Do not set setIsLoaded(true) here to prevent overwriting remote data with defaults on failure
+        }
+      } else {
+        setIsLoaded(true); // No user, mark as loaded to avoid blocking
+      }
+    };
+
+    loadScores();
+  }, [user]);
 
   // Curriculum Data
   const tiers = useMemo(() => {
@@ -87,7 +101,7 @@ export const AppProvider = ({ children }) => {
     }
   }, [currentGradeLevel]);
 
-  // Save to localStorage on change
+  // Save to localStorage and Firestore on change
   useEffect(() => {
     if (!isLoaded) return;
 
@@ -103,33 +117,31 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('rewards', JSON.stringify(rewards));
     localStorage.setItem('currentGradeLevel', JSON.stringify(currentGradeLevel));
 
-    fetch('/api/save-scores', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        studentPoints,
-        studentStreak,
-        unlockedTiers,
-        struggleWords,
-        sectionScores,
-        sectionAccuracy,
-        enablePacing,
-        enableDifficultyGating,
-        listenedLessons,
-        rewards,
-        currentGradeLevel
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (!data.success) {
-        console.error('Failed to save scores to file');
+    const saveScores = async () => {
+      if (user) {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          await setDoc(docRef, {
+            studentPoints,
+            studentStreak,
+            unlockedTiers,
+            struggleWords,
+            sectionScores,
+            sectionAccuracy,
+            enablePacing,
+            enableDifficultyGating,
+            listenedLessons,
+            rewards,
+            currentGradeLevel
+          }, { merge: true });
+        } catch (error) {
+          console.error('Error saving scores to Firestore:', error);
+        }
       }
-    })
-    .catch(error => console.error('Error saving scores:', error));
-  }, [isLoaded, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel]);
+    };
+
+    saveScores();
+  }, [isLoaded, user, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel]);
 
   const addPoints = (points) => {
     setStudentPoints(prev => prev + points);

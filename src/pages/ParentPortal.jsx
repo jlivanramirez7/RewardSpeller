@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
 
 const ParentPortal = () => {
@@ -8,6 +8,14 @@ const ParentPortal = () => {
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [storagePath, setStoragePath] = useState('');
+
+  useEffect(() => {
+    fetch('/api/storage-path')
+      .then(res => res.json())
+      .then(data => setStoragePath(data.path))
+      .catch(err => console.error('Failed to fetch storage path:', err));
+  }, []);
   const fileInputRef = useRef(null);
   const [passwordInput, setPasswordInput] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -324,7 +332,12 @@ const ParentPortal = () => {
         <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
           Backup or restore your child's progress. This is useful if you want to play on a different device or prevent data loss.
         </p>
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        {storagePath && (
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.9rem' }}>
+            <strong>Current Memory File:</strong> <code>{storagePath}</code>
+          </p>
+        )}
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
           <button 
             className="btn-primary" 
             onClick={() => {
@@ -359,7 +372,7 @@ const ParentPortal = () => {
             className="btn-secondary" 
             onClick={() => fileInputRef.current.click()}
           >
-            Restore Progress from File
+            Import Progress / Restore from File
           </button>
           <input 
             ref={fileInputRef}
@@ -394,6 +407,9 @@ const ParentPortal = () => {
             ℹ️
           </button>
         </div>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginTop: '1rem' }}>
+          <strong>Tip:</strong> To load progress from a different version of the app, click "Import Progress / Restore from File" and select the <code>saved_scores.json</code> file from that version's folder.
+        </p>
       </div>
 
       {/* Danger Zone */}

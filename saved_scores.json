@@ -1,0 +1,55 @@
+{
+  "studentPoints": 33,
+  "studentStreak": 2,
+  "unlockedTiers": [],
+  "struggleWords": [
+    {
+      "word": "ceiling",
+      "tierId": "g4_t1",
+      "errorType": "spelling_error",
+      "count": 1
+    },
+    {
+      "word": "weight",
+      "tierId": "g4_t1",
+      "errorType": "spelling_error",
+      "count": 1
+    },
+    {
+      "word": "piece",
+      "tierId": "g4_t1",
+      "errorType": "spelling_error",
+      "count": 1
+    },
+    {
+      "word": "receipt",
+      "tierId": "g4_t1",
+      "errorType": "spelling_error",
+      "count": 1
+    }
+  ],
+  "sectionScores": {
+    "g4_t1_s1-medium": 33
+  },
+  "sectionAccuracy": {
+    "g4_t1_s1-medium": 80
+  },
+  "enablePacing": true,
+  "enableDifficultyGating": false,
+  "listenedLessons": [
+    "g4_t1_s1"
+  ],
+  "rewards": [
+    {
+      "id": 1,
+      "name": "30 mins Screen Time",
+      "cost": 500
+    },
+    {
+      "id": 2,
+      "name": "Trip to Park",
+      "cost": 1000
+    }
+  ],
+  "currentGradeLevel": "4th"
+}
