@@ -26,6 +26,7 @@ export const AppProvider = ({ children }) => {
   const [enablePacing, setEnablePacing] = useState(() => loadState('enablePacing', true)); // Controls rolling window gate
   const [enableDifficultyGating, setEnableDifficultyGating] = useState(() => loadState('enableDifficultyGating', true)); // Forces Easy->Med->Hard sequence
   const [listenedLessons, setListenedLessons] = useState(() => loadState('listenedLessons', []));
+  const [studentName, setStudentName] = useState(() => loadState('studentName', ''));
 
   // Parent State
   const [rewards, setRewards] = useState(() => loadState('rewards', [
@@ -61,6 +62,7 @@ export const AppProvider = ({ children }) => {
       if (data.listenedLessons !== undefined && Array.isArray(data.listenedLessons)) setListenedLessons(data.listenedLessons);
       if (data.rewards !== undefined && Array.isArray(data.rewards)) setRewards(data.rewards);
       if (data.currentGradeLevel !== undefined && typeof data.currentGradeLevel === 'string') setCurrentGradeLevel(data.currentGradeLevel);
+      if (data.studentName !== undefined && typeof data.studentName === 'string') setStudentName(data.studentName);
     }
   };
 
@@ -79,6 +81,7 @@ export const AppProvider = ({ children }) => {
       { id: 2, name: 'Trip to Park', cost: 1000 }
     ]);
     setCurrentGradeLevel('4th');
+    setStudentName('');
     
     localStorage.setItem('studentPoints', JSON.stringify(0));
     localStorage.setItem('studentStreak', JSON.stringify(0));
@@ -94,6 +97,7 @@ export const AppProvider = ({ children }) => {
       { id: 2, name: 'Trip to Park', cost: 1000 }
     ]));
     localStorage.setItem('currentGradeLevel', JSON.stringify('4th'));
+    localStorage.setItem('studentName', JSON.stringify(''));
   };
 
   const loadedUserUidRef = useRef(null);
@@ -175,6 +179,7 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('listenedLessons', JSON.stringify(listenedLessons));
     localStorage.setItem('rewards', JSON.stringify(rewards));
     localStorage.setItem('currentGradeLevel', JSON.stringify(currentGradeLevel));
+    localStorage.setItem('studentName', JSON.stringify(studentName));
 
     const saveScores = async () => {
       if (user && db) {
@@ -191,7 +196,8 @@ export const AppProvider = ({ children }) => {
             enableDifficultyGating,
             listenedLessons,
             rewards,
-            currentGradeLevel
+            currentGradeLevel,
+            studentName
           }, { merge: true });
         } catch (error) {
           console.error('Error saving scores to Firestore:', error);
@@ -200,7 +206,7 @@ export const AppProvider = ({ children }) => {
     };
 
     saveScores();
-  }, [isLoaded, user, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel, db]);
+  }, [isLoaded, user, studentPoints, studentStreak, unlockedTiers, struggleWords, sectionScores, sectionAccuracy, enablePacing, enableDifficultyGating, listenedLessons, rewards, currentGradeLevel, db, studentName]);
 
   const addPoints = (points) => {
     setStudentPoints(prev => prev + points);
@@ -313,7 +319,8 @@ export const AppProvider = ({ children }) => {
       rewards, setRewards, purchaseReward,
       currentGradeLevel, setCurrentGradeLevel,
       tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
-      isLoaded, error
+      isLoaded, error,
+      studentName, setStudentName
     }}>
       {children}
     </AppContext.Provider>

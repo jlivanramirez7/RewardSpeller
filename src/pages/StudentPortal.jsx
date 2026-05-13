@@ -5,7 +5,7 @@ import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
 
@@ -49,7 +49,7 @@ const StudentPortal = () => {
       <header className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Student Portal</h1>
-          <p style={{ color: 'var(--text-secondary)' }}>Welcome back! Ready to learn?</p>
+          <p style={{ color: 'var(--text-secondary)' }}>Welcome {studentName && studentName.trim() ? `${studentName.trim()}!` : 'back! Ready to learn?'}</p>
         </div>
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
           <div style={{ 

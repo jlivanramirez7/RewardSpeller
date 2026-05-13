@@ -4,7 +4,8 @@ import { useAppContext } from '../context/AppContext';
 const ParentPortal = () => {
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
-    studentStreak, unlockedTiers, sectionScores, sectionAccuracy, listenedLessons, restoreProgress, isLoaded, error
+    studentStreak, unlockedTiers, sectionScores, sectionAccuracy, listenedLessons, restoreProgress, isLoaded, error,
+    studentName, setStudentName
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -79,6 +80,37 @@ const ParentPortal = () => {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
         
+        {/* Student Profile */}
+        <div className="glass-panel" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '1rem' }}>Student Profile</h2>
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Student Name</label>
+            <input 
+              key={studentName}
+              type="text" 
+              defaultValue={studentName}
+              onBlur={(e) => {
+                const trimmed = e.target.value.trim();
+                if (trimmed !== studentName) {
+                  setStudentName(trimmed);
+                }
+              }}
+              placeholder="Enter student name"
+              maxLength={30}
+              style={{ 
+                width: '100%', 
+                padding: '0.75rem', 
+                borderRadius: '8px', 
+                background: 'rgba(255,255,255,0.1)', 
+                color: 'white',
+                border: '1px solid var(--surface-border)',
+                outline: 'none'
+              }}
+            />
+          </div>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>This name will be displayed in the Student Portal.</p>
+        </div>
+
         {/* Curriculum Calibration */}
         <div className="glass-panel" style={{ padding: '2rem' }}>
           <h2 style={{ marginBottom: '1rem' }}>Curriculum Calibration</h2>
@@ -360,7 +392,8 @@ const ParentPortal = () => {
                 enableDifficultyGating,
                 listenedLessons,
                 rewards,
-                currentGradeLevel
+                currentGradeLevel,
+                studentName
               };
               const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
               const url = URL.createObjectURL(blob);
