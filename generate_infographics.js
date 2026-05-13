@@ -31,7 +31,7 @@ const wrapText = (ctx, text, x, y, maxWidth, lineHeight) => {
 
 const generateImage = async (outputPath, title, subtitle, ruleText, wordsList, gradeColor, isTier = false) => {
   const width = 1024;
-  const height = 768;
+  const height = 960; // Increased height to guarantee zero vertical overflow
   const img = PImage.make(width, height);
   const ctx = img.getContext('2d');
 
@@ -54,10 +54,10 @@ const generateImage = async (outputPath, title, subtitle, ruleText, wordsList, g
   ctx.fillStyle = '#fbbf24'; // amber-400
   ctx.fillRect(14, 170, width - 28, 4);
 
-  // Banner Type Label
+  // Banner Type Label (Stripped emojis for pristine TrueType font rendering)
   ctx.fillStyle = '#fbbf24';
   ctx.font = '16pt DejaVuSans';
-  ctx.fillText(isTier ? '🏛️ CURRICULUM TIER OVERVIEW' : '📖 LESSON INFOGRAPHIC', 50, 55);
+  ctx.fillText(isTier ? 'CURRICULUM TIER OVERVIEW' : 'LESSON INFOGRAPHIC', 50, 55);
 
   // Header Title
   ctx.fillStyle = '#ffffff';
@@ -76,7 +76,7 @@ const generateImage = async (outputPath, title, subtitle, ruleText, wordsList, g
 
   // Rule / Highlight Box
   if (ruleText) {
-    const boxHeight = isTier ? 380 : 200;
+    const boxHeight = isTier ? 380 : 220;
     ctx.fillStyle = '#1e293b'; // slate-800 box
     ctx.fillRect(40, currentY, width - 80, boxHeight);
 
@@ -88,26 +88,22 @@ const generateImage = async (outputPath, title, subtitle, ruleText, wordsList, g
 
     ctx.fillStyle = '#fbbf24';
     ctx.font = '20pt DejaVuSans';
-    ctx.fillText('💡 STRATEGY & CORE RULE:', 70, currentY + 45);
+    ctx.fillText('STRATEGY & CORE RULE:', 70, currentY + 45);
     
     ctx.fillStyle = '#ffffff';
     ctx.font = '18pt DejaVuSans';
-    currentY = wrapText(ctx, ruleText, 70, currentY + 95, width - 140, 30);
+    wrapText(ctx, ruleText, 70, currentY + 95, width - 140, 32);
     
-    if (isTier) {
-      currentY += 100;
-    } else {
-      currentY += 110;
-    }
+    currentY += boxHeight + 40;
   }
 
   // Sample Vocabulary Cards (For Sections)
   if (wordsList && wordsList.length > 0 && !isTier) {
     ctx.fillStyle = '#fbbf24';
     ctx.font = '20pt DejaVuSans';
-    ctx.fillText('🎯 KEY VOCABULARY EXAMPLES:', 50, currentY + 20);
+    ctx.fillText('KEY VOCABULARY EXAMPLES:', 50, currentY);
     
-    currentY += 50;
+    currentY += 40;
     const colWidth = 440;
     const colGap = 30;
     const maxWords = Math.min(wordsList.length, 4);
@@ -117,29 +113,28 @@ const generateImage = async (outputPath, title, subtitle, ruleText, wordsList, g
       const col = i % 2;
       const row = Math.floor(i / 2);
       const cardX = 50 + col * (colWidth + colGap);
-      const cardY = currentY + row * 110;
+      const cardY = currentY + row * 120;
 
       // Card Box
       ctx.fillStyle = '#1e293b';
-      ctx.fillRect(cardX, cardY, colWidth, 95);
+      ctx.fillRect(cardX, cardY, colWidth, 105);
 
       ctx.fillStyle = '#334155';
       ctx.fillRect(cardX, cardY, colWidth, 1);
-      ctx.fillRect(cardX, cardY + 95, colWidth, 1);
-      ctx.fillRect(cardX, cardY, 1, 95);
-      ctx.fillRect(cardX + colWidth, cardY, 1, 95);
+      ctx.fillRect(cardX, cardY + 105, colWidth, 1);
+      ctx.fillRect(cardX, cardY, 1, 105);
+      ctx.fillRect(cardX + colWidth, cardY, 1, 105);
 
       // Word Text
       ctx.fillStyle = '#fbbf24';
       ctx.font = '22pt DejaVuSans';
       ctx.fillText((wObj.word || '').toUpperCase(), cardX + 20, cardY + 35);
 
-      // Definition Text
+      // Definition Text wrapped across two lines cleanly
       ctx.fillStyle = '#cbd5e1';
       ctx.font = '14pt DejaVuSans';
       const defText = wObj.definition || '';
-      const truncatedDef = defText.length > 65 ? defText.substring(0, 62) + '...' : defText;
-      ctx.fillText(truncatedDef, cardX + 20, cardY + 70);
+      wrapText(ctx, defText, cardX + 20, cardY + 65, colWidth - 40, 22);
     }
   }
 
@@ -176,7 +171,8 @@ const run = async () => {
 
     for (const tier of data.tiers) {
       if (tier.lessonImage) {
-        const outPath = path.join(__dirname, 'public', tier.lessonImage.lstrip ? tier.lessonImage.lstrip('/') : tier.lessonImage.replace(/^\/+/, ''));
+        const cleanRel = tier.lessonImage.replace(/^\/+/, '');
+        const outPath = path.join(__dirname, 'public', cleanRel);
         await generateImage(
           outPath,
           `${config.name} - ${tier.name}`,
@@ -191,7 +187,8 @@ const run = async () => {
       if (Array.isArray(tier.sections)) {
         for (const section of tier.sections) {
           if (section.imagePath) {
-            const outPath = path.join(__dirname, 'public', section.imagePath.lstrip ? section.imagePath.lstrip('/') : section.imagePath.replace(/^\/+/, ''));
+            const cleanRel = section.imagePath.replace(/^\/+/, '');
+            const outPath = path.join(__dirname, 'public', cleanRel);
             await generateImage(
               outPath,
               `${config.name} - ${section.name}`,
