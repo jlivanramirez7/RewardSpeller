@@ -91,7 +91,7 @@ const AdminDashboard = () => {
     <div style={{ padding: '2rem' }}>
       <h1>Admin Dashboard</h1>
       
-      <section style={{ marginBottom: '2rem', background: '#f5f5f5', padding: '1rem', borderRadius: '8px' }}>
+      <section style={{ marginBottom: '2rem', background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
         <h2>Metrics</h2>
         <p><strong>Total Users:</strong> {metrics.totalUsers}</p>
         <p><strong>Total Points Earned by All Students:</strong> {metrics.totalPoints}</p>
