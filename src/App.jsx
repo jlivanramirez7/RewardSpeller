@@ -5,14 +5,15 @@ import LoginPage from './pages/LoginPage';
 import RequestAccessPage from './pages/RequestAccessPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import Leaderboard from './components/Leaderboard';
 import { useAuth } from './context/AuthContext';
 import { useAppContext } from './context/AppContext';
-import { Settings, Gamepad2, LogOut } from 'lucide-react';
+import { Settings, Gamepad2, LogOut, Trophy } from 'lucide-react';
 
 function App() {
   const location = useLocation();
   const { user, signOut, isAdmin } = useAuth();
-  const { activeChildId } = useAppContext();
+  const { activeChildId, currentGradeLevel } = useAppContext();
 
   return (
     <div className="app-container">
@@ -26,6 +27,10 @@ function App() {
               <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
                 <Gamepad2 size={20} />
                 Student Portal
+              </Link>
+              <Link to="/leaderboard" className={`nav-link ${location.pathname === '/leaderboard' ? 'active' : ''}`}>
+                <Trophy size={20} />
+                Leaderboard
               </Link>
               <Link to="/parent" className={`nav-link ${location.pathname === '/parent' ? 'active' : ''}`}>
                 <Settings size={20} />
@@ -52,6 +57,11 @@ function App() {
           <Route path="/" element={
             <ProtectedRoute>
               <StudentPortal key={activeChildId} />
+            </ProtectedRoute>
+          } />
+          <Route path="/leaderboard" element={
+            <ProtectedRoute>
+              <Leaderboard currentGradeLevel={currentGradeLevel} />
             </ProtectedRoute>
           } />
           <Route path="/parent/*" element={

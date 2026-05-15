@@ -3,7 +3,6 @@ import { useAppContext } from '../context/AppContext';
 import { warmupAudio } from '../services/ttsService';
 import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
-import Leaderboard from '../components/Leaderboard';
 
 /**
  * @component StudentPortal
@@ -17,7 +16,6 @@ const StudentPortal = () => {
   const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
-  const [activeTab, setActiveTab] = useState('learning');
   const [notification, setNotification] = useState(null);
 
   if (error) {
@@ -148,28 +146,7 @@ const StudentPortal = () => {
           />
         </div>
       ) : (
-        <>
-          {/* TAB NAVIGATION BAR */}
-          <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
-            <button 
-              className={activeTab === 'learning' ? 'btn-primary' : 'btn-secondary'}
-              onClick={() => setActiveTab('learning')}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}
-            >
-              🎮 Learning Map & Rewards
-            </button>
-            <button 
-              className={activeTab === 'leaderboard' ? 'btn-primary' : 'btn-secondary'}
-              onClick={() => setActiveTab('leaderboard')}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}
-            >
-              🏆 Grade {currentGradeLevel} Leaderboard
-            </button>
-          </div>
-
-          {/* TAB CONTENT */}
-          {activeTab === 'learning' ? (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
               
               <div className="glass-panel" style={{ padding: '2rem' }}>
                 <h2 style={{ marginBottom: '1.5rem' }}>Learning Map</h2>
@@ -437,10 +414,6 @@ const StudentPortal = () => {
               </div>
 
             </div>
-          ) : (
-            <Leaderboard currentGradeLevel={currentGradeLevel} />
-          )}
-        </>
       )}
 
       {activeLessonData && (
