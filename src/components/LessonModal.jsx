@@ -51,7 +51,7 @@ const LessonModal = ({ lessonData, onClose, onBeginTrials }) => {
         'jedi'
       );
     }
-  }, []);
+  }, [lessonData?.id, lessonData?.lessonScript]);
 
   // Phonetic pattern extraction engine: Parses the active lesson theme string using
   // heuristic regex rules to isolate orthographic target clusters (IE, EE, Bossy R, Magic E).

@@ -14,6 +14,7 @@ import wordBank6th from '../data/wordBank_6th.json';
 import { calculateRecommendedDifficulty } from '../utils/difficulty';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
+import { generateKidFriendlyName } from '../utils/username';
 
 /**
  * @typedef {Object} Reward
@@ -41,25 +42,45 @@ import { useAuth } from './AuthContext';
 
 const AppContext = createContext();
 
-const createDefaultChild = (id, name = '', overrides = {}) => ({
-  id,
-  studentName: name,
-  currentGradeLevel: '4th',
-  studentPoints: 0,
-  studentStreak: 0,
-  unlockedTiers: [],
-  struggleWords: [],
-  sectionScores: {},
-  sectionAccuracy: {},
-  enablePacing: true,
-  enableDifficultyGating: true,
-  listenedLessons: [],
-  rewards: [
-    { id: 1, name: '30 mins Screen Time', cost: 500 },
-    { id: 2, name: 'Trip to Park', cost: 1000 }
-  ],
-  ...overrides
-});
+// eslint-disable-next-line react-refresh/only-export-components
+export const getISOWeekString = () => {
+  const date = new Date();
+  const target = new Date(date.valueOf());
+  const dayNr = (date.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  const firstThursday = new Date(target.getFullYear(), 0, 4);
+  const dayNrFirstThurs = (firstThursday.getDay() + 6) % 7;
+  firstThursday.setDate(firstThursday.getDate() - dayNrFirstThurs + 3);
+  const week = 1 + Math.round(((target - firstThursday) / 86400000) / 7);
+  return `${target.getFullYear()}-W${week.toString().padStart(2, '0')}`;
+};
+
+const createDefaultChild = (id, name = '', overrides = {}) => {
+  const trimmed = name ? name.trim() : '';
+  const finalName = trimmed !== '' ? trimmed : generateKidFriendlyName(id);
+  return {
+    id,
+    studentName: finalName,
+    currentGradeLevel: '4th',
+    studentPoints: 0,
+    weeklyPoints: 0,
+    usageTime: 0,
+    lastResetWeek: getISOWeekString(),
+    studentStreak: 0,
+    unlockedTiers: [],
+    struggleWords: [],
+    sectionScores: {},
+    sectionAccuracy: {},
+    enablePacing: true,
+    enableDifficultyGating: true,
+    listenedLessons: [],
+    rewards: [
+      { id: 1, name: '30 mins Screen Time', cost: 500 },
+      { id: 2, name: 'Trip to Park', cost: 1000 }
+    ],
+    ...overrides
+  };
+};
 
 /**
  * Global application state provider component.
@@ -83,10 +104,28 @@ export const AppProvider = ({ children }) => {
   // Multi-student profiles state dictionary mapping child IDs to StudentProfile objects.
   // Includes legacy single-student migration fallback parsing to ensure seamless parent account upgrades.
   const [childrenMap, setChildrenMap] = useState(() => {
+    const currentWeek = getISOWeekString();
     const savedChildren = localStorage.getItem('children');
     if (savedChildren) {
       try {
-        return JSON.parse(savedChildren);
+        const parsed = JSON.parse(savedChildren);
+        const validated = {};
+        for (const [childId, childData] of Object.entries(parsed)) {
+          let weeklyPoints = childData.weeklyPoints ?? 0;
+          let lastResetWeek = childData.lastResetWeek || currentWeek;
+          let usageTime = childData.usageTime ?? 0;
+          if (lastResetWeek !== currentWeek) {
+            weeklyPoints = 0;
+            lastResetWeek = currentWeek;
+          }
+          validated[childId] = {
+            ...childData,
+            weeklyPoints,
+            lastResetWeek,
+            usageTime
+          };
+        }
+        return validated;
       } catch (e) {
         console.error("Error parsing children from localStorage", e);
       }
@@ -100,8 +139,19 @@ export const AppProvider = ({ children }) => {
       const validGrades = ['2nd', '3rd', '4th', '5th', '6th'];
       if (!validGrades.includes(grade)) grade = '4th';
 
+      let weeklyPoints = loadState('weeklyPoints', 0);
+      let lastResetWeek = loadState('lastResetWeek', currentWeek);
+      let usageTime = loadState('usageTime', 0);
+      if (lastResetWeek !== currentWeek) {
+        weeklyPoints = 0;
+        lastResetWeek = currentWeek;
+      }
+
       const legacyChild = createDefaultChild('child_1', loadState('studentName', ''), {
         studentPoints: loadState('studentPoints', 0),
+        weeklyPoints,
+        lastResetWeek,
+        usageTime,
         studentStreak: loadState('studentStreak', 0),
         unlockedTiers: loadState('unlockedTiers', []),
         struggleWords: loadState('struggleWords', []),
@@ -203,12 +253,42 @@ export const AppProvider = ({ children }) => {
 
     skipSaveRef.current = true; // Concurrency guard preventing write amplification on state restore
 
+    const currentWeek = getISOWeekString();
+
     if (data.children && typeof data.children === 'object') {
       const hasChildren = Object.keys(data.children).length > 0;
-      const childrenPayload = hasChildren ? data.children : { child_1: createDefaultChild('child_1') };
-      setChildrenMap(childrenPayload);
-      const active = data.activeChildId || Object.keys(childrenPayload)[0] || 'child_1';
-      setActiveChildId(active);
+      if (hasChildren) {
+        const migratedChildren = {};
+        for (const [childId, childData] of Object.entries(data.children)) {
+          let name = childData.studentName ? childData.studentName.trim() : '';
+          if (!name || name.toLowerCase() === 'student') {
+            name = generateKidFriendlyName(childId);
+          }
+          
+          let weeklyPoints = childData.weeklyPoints ?? 0;
+          let lastResetWeek = childData.lastResetWeek || currentWeek;
+          let usageTime = childData.usageTime ?? 0;
+
+          if (lastResetWeek !== currentWeek) {
+            weeklyPoints = 0;
+            lastResetWeek = currentWeek;
+          }
+
+          migratedChildren[childId] = {
+            ...childData,
+            studentName: name,
+            weeklyPoints,
+            lastResetWeek,
+            usageTime
+          };
+        }
+        setChildrenMap(migratedChildren);
+        const active = data.activeChildId || Object.keys(migratedChildren)[0] || 'child_1';
+        setActiveChildId(active);
+      } else {
+        setChildrenMap({ child_1: createDefaultChild('child_1') });
+        setActiveChildId('child_1');
+      }
     } else {
       let grade = data.currentGradeLevel ?? '4th';
       if (grade === '4th-5th') grade = '4th';
@@ -216,8 +296,24 @@ export const AppProvider = ({ children }) => {
       const validGrades = ['2nd', '3rd', '4th', '5th', '6th'];
       if (!validGrades.includes(grade)) grade = '4th';
 
-      const migratedChild = createDefaultChild('child_1', data.studentName || '', {
+      let name = data.studentName ? data.studentName.trim() : '';
+      if (!name || name.toLowerCase() === 'student') {
+        name = generateKidFriendlyName('child_1');
+      }
+
+      let weeklyPoints = data.weeklyPoints ?? 0;
+      let lastResetWeek = data.lastResetWeek || currentWeek;
+      let usageTime = data.usageTime ?? 0;
+      if (lastResetWeek !== currentWeek) {
+        weeklyPoints = 0;
+        lastResetWeek = currentWeek;
+      }
+
+      const migratedChild = createDefaultChild('child_1', name, {
         studentPoints: data.studentPoints ?? 0,
+        weeklyPoints,
+        lastResetWeek,
+        usageTime,
         studentStreak: data.studentStreak ?? 0,
         unlockedTiers: data.unlockedTiers ?? [],
         struggleWords: data.struggleWords ?? [],
@@ -382,10 +478,56 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   const addPoints = useCallback((points) => {
-    setStudentPoints(prev => prev + points);
-  }, [setStudentPoints]);
+    setChildrenMap(prevMap => {
+      const currentActiveId = activeChildId;
+      const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
+      const currentWeek = getISOWeekString();
+      
+      let newWeekly = (currentChild.weeklyPoints ?? 0) + points;
+      let newLastReset = currentChild.lastResetWeek || currentWeek;
+
+      if (currentChild.lastResetWeek !== currentWeek) {
+        newWeekly = points;
+        newLastReset = currentWeek;
+      }
+
+      return {
+        ...prevMap,
+        [currentActiveId]: {
+          ...currentChild,
+          studentPoints: (currentChild.studentPoints ?? 0) + points,
+          weeklyPoints: newWeekly,
+          lastResetWeek: newLastReset
+        }
+      };
+    });
+  }, [activeChildId]);
+
+  const addUsageTime = useCallback((seconds) => {
+    setChildrenMap(prevMap => {
+      const currentActiveId = activeChildId;
+      const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
+      return {
+        ...prevMap,
+        [currentActiveId]: {
+          ...currentChild,
+          usageTime: (currentChild.usageTime ?? 0) + seconds
+        }
+      };
+    });
+  }, [activeChildId]);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    const interval = setInterval(() => {
+      addUsageTime(60);
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [isLoaded, addUsageTime]);
 
   const studentPoints = activeChild.studentPoints ?? 0;
+  const weeklyPoints = activeChild.weeklyPoints ?? 0;
+  const usageTime = activeChild.usageTime ?? 0;
   const studentStreak = activeChild.studentStreak ?? 0;
   const rawUnlockedTiers = activeChild.unlockedTiers;
   const unlockedTiers = useMemo(() => rawUnlockedTiers || [], [rawUnlockedTiers]);
@@ -500,7 +642,7 @@ export const AppProvider = ({ children }) => {
   }, [sectionAccuracy]);
 
   const contextValue = useMemo(() => ({
-    studentPoints, setStudentPoints, addPoints,
+    studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
     unlockedTiers, setUnlockedTiers,
     struggleWords, addStruggleWord,
@@ -517,7 +659,7 @@ export const AppProvider = ({ children }) => {
     studentName, setStudentName,
     childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild
   }), [
-    studentPoints, setStudentPoints, addPoints,
+    studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
     unlockedTiers, setUnlockedTiers,
     struggleWords, addStruggleWord,
