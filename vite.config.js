@@ -3,9 +3,13 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
+import { Resend } from 'resend'
 
 const COPPA_SECRET = process.env.COPPA_JWT_SECRET || 'rewardspeller_coppa_super_secret_key_2026';
 const getCoppaStoragePath = () => path.resolve('coppa_users.json');
+const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_8sBNFkhz_FeG6xx5AQdamd97BaMRrJen5';
+const resend = new Resend(RESEND_API_KEY);
+const SENDER_EMAIL = process.env.COPPA_SENDER_EMAIL || 'privacy@rewardspeller.com';
 
 function signJWT(payload) {
   const header = { alg: 'HS256', typ: 'JWT' };
@@ -38,12 +42,25 @@ function verifyJWT(token) {
 
 async function sendCOPPAEmail(to, subject, textContent) {
   console.log(`\n==================================================`);
-  console.log(`📧 [MOCK EMAIL DISPATCH] -> TO: ${to}`);
+  console.log(`📧 [LIVE EMAIL DISPATCH] -> TO: ${to}`);
   console.log(`🏷️ SUBJECT: ${subject}`);
   console.log(`--------------------------------------------------`);
   console.log(textContent);
   console.log(`==================================================\n`);
-  return { success: true, messageId: `mock-${Date.now()}` };
+  
+  try {
+    const data = await resend.emails.send({
+      from: SENDER_EMAIL,
+      to: [to],
+      subject: subject,
+      text: textContent
+    });
+    console.log(`[RESEND SUCCESS] Email sent successfully! ID: ${data?.id}`);
+    return { success: true, messageId: data?.id || `resend-${Date.now()}` };
+  } catch (err) {
+    console.error(`[RESEND ERROR] Failed to send live email to ${to}:`, err);
+    return { success: false, error: err.message, messageId: `mock-fallback-${Date.now()}` };
+  }
 }
 
 async function getCoppaUsers() {
