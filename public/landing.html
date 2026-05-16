@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RewardSpeller | Gamified Spelling & Orthography Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --accent-color: #f43f5e;
+            --accent-cyan: #00b4d8;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --surface-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* GLASS NAV */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--surface-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--accent-color), #e11d48);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.5);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem 2rem;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-color), var(--warning-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn-primary-lg {
+            background: linear-gradient(135deg, var(--accent-color), #e11d48);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(244, 63, 94, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary-lg:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(244, 63, 94, 0.6);
+        }
+
+        .btn-secondary-lg {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border: 1px solid var(--surface-border);
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary-lg:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* SECTIONS COMMON */
+        .section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto 4rem auto;
+        }
+
+        /* GRID CARDS */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--surface-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* PRICING CARDS */
+        .pricing-card {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--accent-color);
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+        }
+
+        .badge-featured {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--warning-color));
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0 3rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .pricing-features li strong {
+            color: white;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .btn-pricing {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: all 0.2s ease;
+        }
+
+        .btn-pricing-primary {
+            background: linear-gradient(135deg, var(--accent-color), #e11d48);
+            color: white;
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.4);
+        }
+
+        .btn-pricing-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(244, 63, 94, 0.6);
+        }
+
+        .btn-pricing-secondary {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border: 1px solid var(--surface-border);
+        }
+
+        .btn-pricing-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* CONTACT FORM */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--surface-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0b0f19;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--surface-border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#" class="nav-brand">RewardSpeller</a>
+        <div class="nav-links">
+            <a href="#philosophy" class="nav-link">Philosophy</a>
+            <a href="#curriculum" class="nav-link">Curriculum</a>
+            <a href="#rewards" class="nav-link">Rewards System</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="#contact" class="nav-link">Contact Us</a>
+            <a href="/login" class="btn-login">Login</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <h1>Turn Spelling Practice into an <span>Epic Adventure</span></h1>
+        <p>A next-generation gamified educational platform designed to help elementary and middle school students master spelling, orthography, and academic vocabulary through immersive storytelling and parent-backed rewards.</p>
+        <div class="hero-buttons">
+            <a href="#pricing" class="btn-primary-lg">Explore Pricing</a>
+            <a href="/login" class="btn-secondary-lg">Login to Dashboard</a>
+        </div>
+    </header>
+
+    <!-- PHILOSOPHY -->
+    <section id="philosophy" class="section">
+        <h2 class="section-title">Our Learning Philosophy</h2>
+        <p class="section-subtitle">We replace arbitrary word memorization with structured orthographic mastery, spaced repetition, and pop-culture storytelling.</p>
+        
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon">🧠</div>
+                <h3>Spaced Repetition & Rules</h3>
+                <p>Rather than forcing rote memorization, RewardSpeller focuses on underlying orthographic rules (vowel teams, affixes, syllable division). Words are introduced through structured scaffolding, transitioning from visual copying to pure working memory recall.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🧙‍♂️</div>
+                <h3>Immersive Themed Learning</h3>
+                <p>To keep 8-to-12-year-olds deeply engaged, every single lesson and vocabulary definition is wrapped in rich fantasy and pop-culture lore drawing heavily from <em>Minecraft, Star Wars, Harry Potter, The Lord of the Rings,</em> and <em>Narnia</em>.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎧</div>
+                <h3>Neural Audio Dictation</h3>
+                <p>Our platform utilizes high-fidelity Google Cloud Neural Text-to-Speech narration to deliver pristine, natural-sounding dictation. Students develop strong phonetic awareness by connecting visual text directly to professional audio pronunciation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CURRICULUM -->
+    <section id="curriculum" class="section">
+        <h2 class="section-title">State Standards Curriculum</h2>
+        <p class="section-subtitle">Meticulously calibrated across 3rd through 6th-grade state educational benchmarks to combat the summer slide and ensure academic readiness.</p>
+
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3>3rd & 4th Grade Standards</h3>
+                <p>Focuses on foundational vowel teams, complex vowel patterns (I before E, Bossy R, Magic E), basic affixes (un-, re-, -ful, -less), compound words, syllable division rules (VC/CV, Schwa sounds), and introductory math/science academic vocabulary.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏛️</div>
+                <h3>5th & 6th Grade Standards</h3>
+                <p>Advances into complex diphthongs & trigraphs (ough, au, aw), intermediate Latin roots (spect, tract), advanced Greek roots (bio, geo, photo), assimilated prefixes (im-, suf-, com-), syllable stress shifts, and high-school prep vocabulary.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">⚔️</div>
+                <h3>Final Boss Mastery Assessments</h3>
+                <p>At the end of each Tier, a randomized 10-word "Final Boss" assessment evaluates true long-term retention. Students must demonstrate 90%+ accuracy across constituent sections before advancing to higher curriculum tiers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- REWARDS SYSTEM -->
+    <section id="rewards" class="section">
+        <h2 class="section-title">Parent-Funded Rewards Economy</h2>
+        <p class="section-subtitle">Bridging the gap between daily spelling practice and real-world motivation through a fully customizable parental command center.</p>
+
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon">💎</div>
+                <h3>Earn Base Points & Streaks</h3>
+                <p>Students earn points for every correctly spelled word on their first attempt. Points scale dramatically with difficulty (Easy [1pt] → Medium [3pts] → Hard [30pts]), with consecutive correct answers stacking a streak bonus up to a 2.0x multiplier!</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎁</div>
+                <h3>Custom Rewards Vault</h3>
+                <p>Parents define customized real-world incentives inside the Parent Portal (e.g., 30 mins Video Game Time, Trip to the Park, Pizza Night). As students earn points, progress bars fill up toward their coveted goals.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏆</div>
+                <h3>Milestone Achievements</h3>
+                <p>Our non-deducting rewards economy ensures claiming a reward never subtracts points from a student's cumulative hard-earned balance. Once achieved, rewards turn emerald green and display a permanent badge of honor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="section">
+        <h2 class="section-title">Flexible Pricing Plans</h2>
+        <p class="section-subtitle">Choose the perfect plan for your family's educational journey. Upgrade, downgrade, or cancel anytime.</p>
+
+        <div class="grid-3">
+            <!-- FREE -->
+            <div class="card pricing-card">
+                <h3>Free Tier</h3>
+                <p>Essential spelling practice supported by educational sponsors.</p>
+                <div class="price">$0<span> / month</span></div>
+                <ul class="pricing-features">
+                    <li>Full access to core 3rd-6th grade curriculum</li>
+                    <li>Standard Text-to-Speech audio dictation</li>
+                    <li>Basic Parent Portal dashboard</li>
+                    <li><strong>Supported by educational ads</strong></li>
+                </ul>
+                <a href="/login" class="btn-pricing btn-pricing-secondary">Get Started Free</a>
+            </div>
+
+            <!-- ANNUAL (FEATURED) -->
+            <div class="card pricing-card featured">
+                <div class="badge-featured">Best Value</div>
+                <h3>Annual Pass</h3>
+                <p>Our most popular plan. Complete ad-free mastery at a discounted billing rate.</p>
+                <div class="price">$79<span> / year</span></div>
+                <ul class="pricing-features">
+                    <li><strong>100% Ad-Free learning experience</strong></li>
+                    <li>Advanced diagnostic struggle reports & analytics</li>
+                    <li>Unlimited custom rewards configuration</li>
+                    <li>Multi-student profile management</li>
+                    <li>Priority customer support</li>
+                </ul>
+                <a href="/login" class="btn-pricing btn-pricing-primary">Start Annual Pass</a>
+            </div>
+
+            <!-- MONTHLY -->
+            <div class="card pricing-card">
+                <h3>Monthly Pass</h3>
+                <p>Full premium feature access with flexible month-to-month billing.</p>
+                <div class="price">$9<span> / month</span></div>
+                <ul class="pricing-features">
+                    <li><strong>100% Ad-Free learning experience</strong></li>
+                    <li>Advanced diagnostic struggle reports & analytics</li>
+                    <li>Unlimited custom rewards configuration</li>
+                    <li>Flexible month-to-month commitment</li>
+                </ul>
+                <a href="/login" class="btn-pricing btn-pricing-secondary">Start Monthly Pass</a>
+            </div>
+        </div>
+
+        <!-- PREMIUM CUSTOM THEMING -->
+        <div class="card pricing-card featured" style="margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; text-align: center; border-color: var(--accent-cyan);">
+            <div class="badge-featured" style="background: var(--accent-cyan);">Ultimate Experience</div>
+            <h3 style="font-size: 2rem;">Premium Custom Theming</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">The ultimate personalized learning track tailored specifically to your child's unique passions.</p>
+            <div class="price" style="color: var(--accent-cyan);">$149<span> / year</span></div>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem auto;">
+                Does your child love Dinosaurs, Space Exploration, Robotics, Anime, or Deep Sea Diving? Our AI-powered curriculum engine will dynamically re-theme every single lesson, sentence, and visual infographic across the entire platform to match your child's exact personal interests!
+            </p>
+            <a href="/login" class="btn-pricing btn-pricing-primary" style="background: linear-gradient(135deg, var(--accent-cyan), #0077b6); max-width: 300px; margin: 0 auto;">Unlock Custom Theming</a>
+        </div>
+    </section>
+
+    <!-- CONTACT US -->
+    <section id="contact" class="section">
+        <h2 class="section-title">Contact Us</h2>
+        <p class="section-subtitle">Have questions about our curriculum, pricing, or school district licensing? We'd love to hear from you.</p>
+
+        <div class="contact-container">
+            <form onsubmit="event.preventDefault(); alert('Thank you for contacting RewardSpeller support! We will get back to you within 24 hours.'); this.reset();">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email address" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject / Inquiry Type</label>
+                    <select id="subject" class="form-control" style="background: #1e293b;" required>
+                        <option value="parent_support">Parent Account Support</option>
+                        <option value="curriculum_question">Curriculum & Pedagogy Question</option>
+                        <option value="school_licensing">School District & Educator Licensing</option>
+                        <option value="billing">Billing & Subscription</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" class="form-control" placeholder="How can we help you?" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary-lg" style="width: 100%; border: none; cursor: pointer;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <h2 style="font-weight: 900; margin-bottom: 1rem; color: white;">RewardSpeller</h2>
+        <p>Empowering students with orthographic mastery and gamified motivation.</p>
+        <p style="margin-top: 2rem;">&copy; 2026 RewardSpeller Inc. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -106,7 +106,7 @@ const LoginPage = () => {
             onClick={handleRequestAccess}
             style={{ width: '100%' }}
           >
-            Request Access
+            Request Access (Parents)
           </button>
         </div>
       </div>

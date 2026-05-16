@@ -64,16 +64,25 @@ The global wallet secures anti-grinding protocol through distinct **Differential
 
 ---
 
-## 👑 Parent Control Center (Administration)
+## 👑 Parent Control Center & Multi-Student Profiles
 
-The operational command center empowers rigorous regulation of state layers:
-*   **Curriculum Calibration**: Instant live routing that remaps the active underlying database between discrete grade levels (`2nd`, `3rd`, `4th`, `5th`, and `6th`), dynamically adjusting vocabulary arrays and phonic difficulty tiers.
-*   **Custom Reset Confirmation Modal**: Features a blurred glassmorphism backdrop and a safe confirmation flow to prevent accidental progress resets.
+RewardSpeller provides a comprehensive, enterprise-grade parental administration suite designed to manage multi-student learning tracks securely:
+
+### 1. Multi-Student Profiles & Login Flexibility
+Parents can maintain multiple child profiles under a single master parent account (e.g., `jlivanramirez7@gmail.com`). The platform supports two distinct student operational modes:
+*   **Mode A: Shared Device / Parent-Managed Login**: Children do not need their own email accounts. Parents simply log into the Parent Portal, create child profiles (e.g., "Lucas", "Bobby"), and switch between them. Students play directly on the parent's authenticated device session.
+*   **Mode B: Independent Student Email Linking (`@gmail.com`)**: Parents can associate a child's profile with the student's very own personal `@gmail.com` address directly inside the Parent Portal card. 
+    *   *Role Separation (RBAC)*: When a student logs in with their linked `@gmail.com`, the system automatically routes their session to their specific child profile under the parent's master Firestore ledger. Students can access their Learning Map, Leaderboard, and Rewards Vault, but are **strictly blocked** from accessing the Parent Portal or Admin Dashboard.
+
+### 2. Curriculum Calibration & Diagnostics
+*   **Live Grade Routing**: Instantly remap the active underlying database between discrete grade levels (`2nd`, `3rd`, `4th`, `5th`, and `6th`), dynamically adjusting vocabulary arrays and phonic difficulty tiers.
 *   **Diagnostic Insights & Struggle Ledger**: Real-time ingestion of specific failed submissions enabling targeted parental intervention.
-*   **Admin Config Suite**:
-    *   **Adaptive Pacing Switch**: Toggle enforcing strict linear sequential progression vs. unrestricted full-exploration sandbox mode.
-    *   **Difficulty Progression Hook**: A binary enforcing gate forcing linear completion (Easy → Medium → Hard) requiring 100% perfection before advanced tier visibility.
-    *   **Rewards Economy Forge**: Direct administrative creation of rewards with customizable point-cost requirements.
+*   **Custom Reset Confirmation Modal**: Features a blurred glassmorphism backdrop and a safe confirmation flow to prevent accidental progress resets.
+
+### 3. Experience Control Suite
+*   **Adaptive Pacing Switch**: Toggle enforcing strict linear sequential progression (max 3 sections ahead) vs. unrestricted full-exploration sandbox mode.
+*   **Difficulty Progression Hook**: Enforce linear completion (Easy → Medium → Hard) requiring mastery before advanced tier visibility.
+*   **Rewards Economy Forge**: Direct administrative creation of rewards with customizable point-cost requirements.
 
 ---
 
