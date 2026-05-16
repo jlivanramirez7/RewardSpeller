@@ -79,15 +79,19 @@ export const AuthProvider = ({ children }) => {
         setDbInstance(db);
         
         unsubscribe = onAuthStateChanged(auth, async (user) => {
+          console.log(`[AUTH] Auth state changed. User:`, user ? `${user.email} (UID: ${user.uid})` : 'null');
           if (user && db) {
             try {
+              console.log(`[AUTH] Querying student_links collection in Firestore for ${user.email}...`);
               const linkDoc = await getDoc(doc(db, 'student_links', user.email));
               if (isMounted) {
                 if (linkDoc.exists()) {
+                  console.log(`[AUTH] SUCCESS: Student link resolved! Parent UID: ${linkDoc.data().parentUid}, Child ID: ${linkDoc.data().childId}`);
                   setIsStudent(true);
                   setParentUid(linkDoc.data().parentUid);
                   setStudentChildId(linkDoc.data().childId);
                 } else {
+                  console.log(`[AUTH] No student link found for ${user.email}.`);
                   setIsStudent(false);
                   setParentUid(null);
                   setStudentChildId(null);

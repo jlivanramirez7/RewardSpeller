@@ -477,17 +477,23 @@ export const AppProvider = ({ children }) => {
           }, { mergeFields: ['activeChildId', 'children'] });
 
           if (!isStudent && user) {
+            console.log(`[APP CONTEXT] Auto-syncing student links for parent ${user.email}...`);
             Object.entries(childrenMap).forEach(async ([cId, child]) => {
+              console.log(`[APP CONTEXT] Checking child profile ${cId} (${child?.studentName}): studentEmail = "${child?.studentEmail}"`);
               if (child && child.studentEmail && child.studentEmail.trim()) {
                 const email = child.studentEmail.trim();
                 try {
+                  console.log(`[APP CONTEXT] Writing student_links doc for ${email} -> Parent UID: ${user.uid}, Child ID: ${cId}`);
                   await setDoc(doc(db, 'student_links', email), {
                     parentUid: user.uid,
                     childId: cId
                   }, { merge: true });
+                  console.log(`[APP CONTEXT] Successfully auto-synced student_links for ${email}`);
                 } catch (linkErr) {
-                  console.error(`Error auto-syncing student link for ${email}:`, linkErr);
+                  console.error(`[APP CONTEXT] Error auto-syncing student link for ${email}:`, linkErr);
                 }
+              } else {
+                console.log(`[APP CONTEXT] Child ${cId} has no studentEmail set. Skipping auto-sync.`);
               }
             });
           }

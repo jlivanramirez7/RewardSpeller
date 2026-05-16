@@ -14,8 +14,6 @@ const LoginPage = () => {
   const { user, signInWithGoogle, db, loading, isAdmin, isStudent, parentUid } = useAuth();
   const navigate = useNavigate();
 
-  // Auto-redirect checking hook: Evaluates active user session and queries Firestore
-  // to automatically navigate approved users to the student portal or unapproved users to the request page.
   useEffect(() => {
     let mounted = true;
     const checkUser = async () => {
@@ -25,8 +23,10 @@ const LoginPage = () => {
           return;
         }
         try {
+          console.log(`[LOGIN useEffect] Evaluating active session for ${user.email}. isStudent: ${isStudent}, parentUid: ${parentUid}`);
           const targetUid = isStudent ? parentUid : user.uid;
           const docSnap = await getDoc(doc(db, 'users', targetUid));
+          console.log(`[LOGIN useEffect] Target UID ${targetUid} exists: ${docSnap.exists()}, isApproved: ${docSnap.exists() && docSnap.data().isApproved}`);
           if (mounted) {
             if (docSnap.exists() && docSnap.data().isApproved) {
               navigate('/');
@@ -44,30 +44,40 @@ const LoginPage = () => {
   }, [user, db, loading, navigate, isAdmin, isStudent, parentUid]);
 
   const authenticateAndFetchUser = async () => {
+    console.log(`[LOGIN] Initiating Google OAuth popup sign-in...`);
     const result = await signInWithGoogle();
     const authUser = result.user;
+    console.log(`[LOGIN] Successfully authenticated Google user: ${authUser.email} (UID: ${authUser.uid})`);
     
     if (!db) {
       throw new Error("Database connection not established. Please check your network or configuration.");
     }
 
     if (isAdmin || authUser.email === 'jlivanramirez7@gmail.com') {
+      console.log(`[LOGIN] User is Admin/Master Parent. Auto-approving.`);
       return { authUser, isApproved: true };
     }
 
+    console.log(`[LOGIN] Probing student_links collection in Firestore for email: "${authUser.email}"...`);
     let targetUid = authUser.uid;
     try {
       const linkDoc = await getDoc(doc(db, 'student_links', authUser.email));
       if (linkDoc.exists()) {
         targetUid = linkDoc.data().parentUid;
+        console.log(`[LOGIN] SUCCESS: Found student link! Routing approval check to Parent UID: ${targetUid} (Child ID: ${linkDoc.data().childId})`);
+      } else {
+        console.warn(`[LOGIN] WARNING: No student link found in Firestore for "${authUser.email}". Treating as standalone account.`);
+        console.log(`[LOGIN TIP] If this is a student, the parent must log into Parent Portal first and link "${authUser.email}" to the child profile.`);
       }
     } catch (err) {
       console.error("Error checking student link during login:", err);
     }
 
+    console.log(`[LOGIN] Querying users collection for approval status of UID: ${targetUid}...`);
     const docRef = doc(db, 'users', targetUid);
     const docSnap = await getDoc(docRef);
     const isApproved = docSnap.exists() && docSnap.data().isApproved;
+    console.log(`[LOGIN] Approval verification result for UID ${targetUid}: ${isApproved} (Document exists: ${docSnap.exists()})`);
     
     return { authUser, isApproved };
   };

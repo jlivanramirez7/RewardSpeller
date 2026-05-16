@@ -34,11 +34,14 @@ const ProtectedRoute = ({ children, requireAdmin = false, requireParent = false 
         }
         try {
           const targetUid = isStudent ? parentUid : user.uid;
+          console.log(`[PROTECTED ROUTE] Checking approval for user ${user.email}. isStudent: ${isStudent}, targetUid: ${targetUid}`);
           const docRef = doc(db, 'users', targetUid);
           const docSnap = await getDoc(docRef);
           
           if (mounted) {
-            if (docSnap.exists() && docSnap.data().isApproved) {
+            const approvedStatus = docSnap.exists() && docSnap.data().isApproved;
+            console.log(`[PROTECTED ROUTE] Approval verification result for targetUid ${targetUid}: ${approvedStatus} (Doc exists: ${docSnap.exists()})`);
+            if (approvedStatus) {
               setApproved(true);
             } else {
               setApproved(false);
