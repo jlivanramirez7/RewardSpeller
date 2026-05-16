@@ -7,12 +7,11 @@
  *
  * @example
  * // Execution syntax:
- * node generate_lesson_audio.js "<YOUR_OAUTH2_BEARER_TOKEN>"
- * // OR via environment variable:
- * GOOGLE_TTS_API_KEY="<YOUR_OAUTH2_BEARER_TOKEN>" node generate_lesson_audio.js
+ * node generate_lesson_audio.js
+ * // (Requires GOOGLE_TTS_API_KEY set in environment or .env)
  *
  * @prerequisites
- * Requires Google Cloud API enabled on destination project. Supports standard API keys and OAuth2 Bearer tokens (`ya29.` / `AQ.`).
+ * Requires Google Cloud Text-to-Speech API enabled on your project.
  */
 
 /* global process, Buffer */
@@ -78,20 +77,12 @@ const generateTTS = async (text, voiceType, filename, forceOverwrite = false) =>
   try {
     console.log(`🎙️  Synthesizing: ${filename}...`);
     
-    // DYNAMIC AUTH ROUTING: Seamlessly handle standard Keys vs robust OAuth2 Bearer Tokens
-    const isBearerToken = apiKey.startsWith('ya29.') || apiKey.startsWith('AQ.') || apiKey.length > 50;
-    
-    // Remove ?key= parameter if using modern bearer headers to satisfy REST security protocols
     const baseUrl = `https://texttospeech.googleapis.com/v1/text:synthesize`;
-    const fetchUrl = isBearerToken ? baseUrl : `${baseUrl}?key=${apiKey}`;
+    const fetchUrl = `${baseUrl}?key=${apiKey}`;
     
     const fetchHeaders = { 
       'Content-Type': 'application/json'
     };
-    if (isBearerToken) {
-      fetchHeaders['Authorization'] = `Bearer ${apiKey}`;
-      fetchHeaders['x-goog-user-project'] = 'secret-bloom-474313-m8'; // Apply override only to Bearer contexts
-    }
 
     const response = await fetch(fetchUrl, {
       method: 'POST',
