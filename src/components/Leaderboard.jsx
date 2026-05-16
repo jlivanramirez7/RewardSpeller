@@ -17,7 +17,7 @@ import { generateKidFriendlyName } from '../utils/username';
  * @returns {React.ReactElement} Gamified leaderboard UI panel.
  */
 const Leaderboard = ({ currentGradeLevel }) => {
-  const { user, db } = useAuth();
+  const { user, db, isStudent, parentUid } = useAuth();
   const { activeChildId } = useAppContext();
   const [rawStudents, setRawStudents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -212,7 +212,8 @@ const Leaderboard = ({ currentGradeLevel }) => {
             </thead>
             <tbody>
               {leaderboardData.map((student) => {
-                const isCurrentUser = student.userId === user?.uid && student.childId === activeChildId;
+                const targetUserId = isStudent ? parentUid : user?.uid;
+                const isCurrentUser = student.userId === targetUserId && student.childId === activeChildId;
                 const rank = student.rank;
                 
                 let rankBadge = <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)' }}>#{rank}</span>;
