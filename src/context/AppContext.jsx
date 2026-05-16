@@ -475,6 +475,22 @@ export const AppProvider = ({ children }) => {
             activeChildId,
             children: childrenMap
           }, { mergeFields: ['activeChildId', 'children'] });
+
+          if (!isStudent && user) {
+            Object.entries(childrenMap).forEach(async ([cId, child]) => {
+              if (child && child.studentEmail && child.studentEmail.trim()) {
+                const email = child.studentEmail.trim();
+                try {
+                  await setDoc(doc(db, 'student_links', email), {
+                    parentUid: user.uid,
+                    childId: cId
+                  }, { merge: true });
+                } catch (linkErr) {
+                  console.error(`Error auto-syncing student link for ${email}:`, linkErr);
+                }
+              }
+            });
+          }
         } catch (error) {
           console.error('Error saving scores to Firestore:', error);
         }

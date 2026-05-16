@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
  * @returns {React.ReactElement} The access request submission UI.
  */
 const RequestAccessPage = () => {
-  const { user, signOut, db, signInWithGoogle, loading } = useAuth();
+  const { user, signOut, db, signInWithGoogle, loading, isStudent, parentUid } = useAuth();
   const [reason, setReason] = useState('');
   const [requestStatus, setRequestStatus] = useState(null); // 'pending', 'approved', 'denied'
   const [checking, setChecking] = useState(true);
@@ -27,7 +27,8 @@ const RequestAccessPage = () => {
       if (user && db) {
         try {
           // Check if already approved
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          const targetUid = isStudent ? parentUid : user.uid;
+          const userDoc = await getDoc(doc(db, 'users', targetUid));
           if (mounted && userDoc.exists() && userDoc.data().isApproved) {
             setRequestStatus('approved');
             setChecking(false);
@@ -61,7 +62,7 @@ const RequestAccessPage = () => {
       checkExistingStatus();
     }
     return () => { mounted = false; };
-  }, [user, loading, db]);
+  }, [user, loading, db, isStudent, parentUid]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
