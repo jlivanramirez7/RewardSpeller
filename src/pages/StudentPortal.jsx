@@ -13,7 +13,7 @@ import LessonModal from '../components/LessonModal';
  * @returns {React.ReactElement} The student learning workspace UI.
  */
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, purchaseReward, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
   const [notification, setNotification] = useState(null);
@@ -376,8 +376,8 @@ const StudentPortal = () => {
                       <div key={reward.id} style={{ 
                         padding: '1rem', 
                         borderRadius: '8px', 
-                        background: 'rgba(0,0,0,0.2)',
-                        border: '1px solid var(--surface-border)',
+                        background: canAfford ? 'rgba(16, 185, 129, 0.15)' : 'rgba(0,0,0,0.2)',
+                        border: canAfford ? '2px solid #10b981' : '1px solid var(--surface-border)',
                         textAlign: 'center'
                       }}>
                         <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{reward.name}</h3>
@@ -390,23 +390,23 @@ const StudentPortal = () => {
                           <div style={{ height: '100%', width: `${progress}%`, background: canAfford ? 'var(--success-color)' : 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
                         </div>
 
-                        <button 
-                          className={canAfford ? "btn-primary" : "btn-secondary"} 
-                          disabled={!canAfford}
-                          onClick={() => {
-                            if (canAfford) {
-                              purchaseReward(reward.id);
-                              setNotification({
-                                type: 'reward',
-                                message: `You successfully claimed: ${reward.name}!`
-                              });
-                              setTimeout(() => setNotification(null), 5000);
-                            }
-                          }}
-                          style={{ width: '100%' }}
-                        >
-                          {canAfford ? 'Claim Reward' : 'Keep Learning!'}
-                        </button>
+                        {canAfford ? (
+                          <button 
+                            className="btn-primary" 
+                            disabled={true}
+                            style={{ width: '100%', background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', fontWeight: 'bold', border: 'none' }}
+                          >
+                            🏆 COMPLETE
+                          </button>
+                        ) : (
+                          <button 
+                            className="btn-secondary" 
+                            disabled={true}
+                            style={{ width: '100%' }}
+                          >
+                            Keep Learning!
+                          </button>
+                        )}
                       </div>
                     );
                   })}

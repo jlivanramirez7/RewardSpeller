@@ -7,7 +7,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { getApps, initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -41,6 +41,9 @@ export const AuthProvider = ({ children }) => {
   const [dbInstance, setDbInstance] = useState(null);
   const [firebaseInitialized, setFirebaseInitialized] = useState(false);
   const [error, setError] = useState(null);
+  const [isStudent, setIsStudent] = useState(false);
+  const [parentUid, setParentUid] = useState(null);
+  const [studentChildId, setStudentChildId] = useState(null);
 
   // Asynchronous initialization hook: Fetches environment configuration from Express middleware,
   // maps VITE_ prefixed keys to Firebase config schema, and instantiates Firebase Auth/Firestore singletons.
@@ -75,9 +78,40 @@ export const AuthProvider = ({ children }) => {
         setAuthInstance(auth);
         setDbInstance(db);
         
-        unsubscribe = onAuthStateChanged(auth, (user) => {
-          setUser(user);
-          setLoading(false);
+        unsubscribe = onAuthStateChanged(auth, async (user) => {
+          if (user && db) {
+            try {
+              const linkDoc = await getDoc(doc(db, 'student_links', user.email));
+              if (isMounted) {
+                if (linkDoc.exists()) {
+                  setIsStudent(true);
+                  setParentUid(linkDoc.data().parentUid);
+                  setStudentChildId(linkDoc.data().childId);
+                } else {
+                  setIsStudent(false);
+                  setParentUid(null);
+                  setStudentChildId(null);
+                }
+              }
+            } catch (err) {
+              console.error("Error checking student link:", err);
+              if (isMounted) {
+                setIsStudent(false);
+                setParentUid(null);
+                setStudentChildId(null);
+              }
+            }
+          } else {
+            if (isMounted) {
+              setIsStudent(false);
+              setParentUid(null);
+              setStudentChildId(null);
+            }
+          }
+          if (isMounted) {
+            setUser(user);
+            setLoading(false);
+          }
         });
         
         setFirebaseInitialized(true);
@@ -122,7 +156,10 @@ export const AuthProvider = ({ children }) => {
     signOut,
     loading,
     db: dbInstance,
-    isAdmin: user ? user.email === 'jlivanramirez7@gmail.com' : false
+    isAdmin: user ? user.email === 'jlivanramirez7@gmail.com' : false,
+    isStudent,
+    parentUid,
+    studentChildId
   };
 
   if (error) {

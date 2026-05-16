@@ -348,7 +348,7 @@ export const AppProvider = ({ children }) => {
   }, [activeChildId]);
 
   const loadedUserUidRef = useRef(null);
-  const { user, db } = useAuth();
+  const { user, db, isStudent, parentUid, studentChildId } = useAuth();
 
   // Asynchronous data loading hook: Queries Firestore for user profile progress on authentication state change.
   // Implements active user switching protections to discard stale network resolutions if auth user changes during fetch.
@@ -358,23 +358,50 @@ export const AppProvider = ({ children }) => {
       setIsLoaded(false);
       setError(null);
 
-      if (user && loadedUserUidRef.current !== null && user.uid !== loadedUserUidRef.current) {
+      const targetUid = isStudent ? parentUid : (user ? user.uid : null);
+
+      if (targetUid && loadedUserUidRef.current !== null && targetUid !== loadedUserUidRef.current) {
         skipSaveRef.current = true;
         setChildrenMap({ child_1: createDefaultChild('child_1') });
         setActiveChildId('child_1');
       }
 
-      if (user && db) {
+      if (targetUid && db) {
         try {
-          const docRef = doc(db, 'users', user.uid);
+          const docRef = doc(db, 'users', targetUid);
           const docSnap = await getDoc(docRef);
 
           if (ignore) return;
 
           if (docSnap.exists()) {
             restoreProgress(docSnap.data());
+            
+            if (!isStudent && user && user.email === 'jlivanramirez7@gmail.com') {
+              setChildrenMap(prev => {
+                const updated = { ...prev };
+                let modified = false;
+                Object.entries(updated).forEach(([cId, cData]) => {
+                  if (cData.studentName && cData.studentName.toLowerCase() === 'lucas' && !cData.pointsRestored) {
+                    updated[cId] = {
+                      ...cData,
+                      studentPoints: (cData.studentPoints || 0) + 1200,
+                      pointsRestored: true
+                    };
+                    modified = true;
+                  }
+                });
+                if (modified) {
+                  skipSaveRef.current = false;
+                }
+                return updated;
+              });
+            }
+
+            if (isStudent && studentChildId) {
+              setActiveChildId(studentChildId);
+            }
           }
-          loadedUserUidRef.current = user.uid;
+          loadedUserUidRef.current = targetUid;
           setIsLoaded(true);
         } catch (error) {
           console.error('Error loading scores from Firestore:', error);
@@ -397,7 +424,7 @@ export const AppProvider = ({ children }) => {
 
     loadScores();
     return () => { ignore = true; };
-  }, [user, db, restoreProgress]);
+  }, [user, db, restoreProgress, isStudent, parentUid, studentChildId]);
 
   const activeChild = useMemo(() => {
     return childrenMap[activeChildId] || createDefaultChild(activeChildId);
@@ -425,8 +452,10 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     if (!isLoaded) return;
 
-    if (user && user.uid !== loadedUserUidRef.current) {
-      console.warn("Save blocked: current user does not match loaded user");
+    const targetUid = isStudent ? parentUid : (user ? user.uid : null);
+
+    if (targetUid && targetUid !== loadedUserUidRef.current) {
+      console.warn("Save blocked: current user/parent does not match loaded user");
       return;
     }
 
@@ -439,9 +468,9 @@ export const AppProvider = ({ children }) => {
     }
 
     const saveScores = async () => {
-      if (user && db) {
+      if (targetUid && db) {
         try {
-          const docRef = doc(db, 'users', user.uid);
+          const docRef = doc(db, 'users', targetUid);
           await setDoc(docRef, {
             activeChildId,
             children: childrenMap
@@ -453,7 +482,7 @@ export const AppProvider = ({ children }) => {
     };
 
     saveScores();
-  }, [isLoaded, user, db, activeChildId, childrenMap]);
+  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid]);
 
   // Cross-tab storage sync
   // Cross-tab synchronization hook: Listens for storage events across browser tabs
@@ -588,11 +617,33 @@ export const AppProvider = ({ children }) => {
   const purchaseReward = useCallback((rewardId) => {
     const reward = rewards.find(r => r.id === rewardId);
     if (reward && studentPoints >= reward.cost) {
-      setStudentPoints(prev => prev - reward.cost);
       return true;
     }
     return false;
-  }, [rewards, studentPoints, setStudentPoints]);
+  }, [rewards, studentPoints]);
+
+  const linkStudentEmail = useCallback(async (childId, email) => {
+    setChildrenMap(prev => ({
+      ...prev,
+      [childId]: {
+        ...prev[childId],
+        studentEmail: email
+      }
+    }));
+
+    if (user && db && email) {
+      try {
+        await setDoc(doc(db, 'student_links', email), {
+          parentUid: user.uid,
+          childId: childId
+        });
+        alert(`Successfully linked ${email} to student profile!`);
+      } catch (err) {
+        console.error("Error linking student email in Firestore:", err);
+        alert("Failed to link student email: " + err.message);
+      }
+    }
+  }, [user, db]);
 
   const getSectionStats = useCallback((sectionId) => {
     const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
@@ -652,7 +703,7 @@ export const AppProvider = ({ children }) => {
     enableDifficultyGating, setEnableDifficultyGating,
     isDifficultyUnlocked,
     listenedLessons, markLessonListened,
-    rewards, setRewards, purchaseReward,
+    rewards, setRewards, purchaseReward, linkStudentEmail,
     currentGradeLevel, setCurrentGradeLevel,
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,
@@ -669,7 +720,7 @@ export const AppProvider = ({ children }) => {
     enableDifficultyGating, setEnableDifficultyGating,
     isDifficultyUnlocked,
     listenedLessons, markLessonListened,
-    rewards, setRewards, purchaseReward,
+    rewards, setRewards, purchaseReward, linkStudentEmail,
     currentGradeLevel, setCurrentGradeLevel,
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,

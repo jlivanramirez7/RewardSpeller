@@ -12,7 +12,7 @@ import { Settings, Gamepad2, LogOut, Trophy } from 'lucide-react';
 
 function App() {
   const location = useLocation();
-  const { user, signOut, isAdmin } = useAuth();
+  const { user, signOut, isAdmin, isStudent } = useAuth();
   const { activeChildId, currentGradeLevel } = useAppContext();
 
   return (
@@ -32,10 +32,12 @@ function App() {
                 <Trophy size={20} />
                 Leaderboard
               </Link>
-              <Link to="/parent" className={`nav-link ${location.pathname === '/parent' ? 'active' : ''}`}>
-                <Settings size={20} />
-                Parent Portal
-              </Link>
+              {!isStudent && (
+                <Link to="/parent" className={`nav-link ${location.pathname === '/parent' ? 'active' : ''}`}>
+                  <Settings size={20} />
+                  Parent Portal
+                </Link>
+              )}
               {isAdmin && (
                 <Link to="/admin" className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`}>
                   Admin
@@ -65,7 +67,7 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/parent/*" element={
-            <ProtectedRoute>
+            <ProtectedRoute requireParent={true}>
               <ParentPortal />
             </ProtectedRoute>
           } />

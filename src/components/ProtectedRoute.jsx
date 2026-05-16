@@ -13,8 +13,8 @@ import { doc, getDoc } from 'firebase/firestore';
  * @param {boolean} [props.requireAdmin=false] - If true, restricts route strictly to admin users.
  * @returns {React.ReactElement} The wrapped components or a `<Navigate>` redirect component.
  */
-const ProtectedRoute = ({ children, requireAdmin = false }) => {
-  const { user, loading, db, isAdmin } = useAuth();
+const ProtectedRoute = ({ children, requireAdmin = false, requireParent = false }) => {
+  const { user, loading, db, isAdmin, isStudent, parentUid } = useAuth();
   const [approved, setApproved] = useState(false);
   const [checkingApproval, setCheckingApproval] = useState(true);
   const [error, setError] = useState(null);
@@ -33,7 +33,8 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
           return;
         }
         try {
-          const docRef = doc(db, 'users', user.uid);
+          const targetUid = isStudent ? parentUid : user.uid;
+          const docRef = doc(db, 'users', targetUid);
           const docSnap = await getDoc(docRef);
           
           if (mounted) {
@@ -64,7 +65,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
       checkApproval();
     }
     return () => { mounted = false; };
-  }, [user, loading, db, isAdmin]);
+  }, [user, loading, db, isAdmin, isStudent, parentUid]);
 
   if (loading || checkingApproval) {
     return <div style={{ padding: '2rem', textAlign: 'center' }}>Verifying access permissions...</div>;
@@ -80,6 +81,12 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
 
   if (requireAdmin) {
     if (!isAdmin) {
+      return <Navigate to="/" />;
+    }
+  }
+
+  if (requireParent) {
+    if (isStudent) {
       return <Navigate to="/" />;
     }
   }

@@ -14,7 +14,7 @@ const ParentPortal = () => {
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
     isLoaded, error,
-    studentName, setStudentName,
+    studentName, setStudentName, linkStudentEmail,
     childrenMap, activeChildId, setActiveChildId, addChild, deleteChild
   } = useAppContext();
   
@@ -120,6 +120,26 @@ const ParentPortal = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#fbbf24', fontWeight: 'bold' }}>
                   <span>Total Points:</span>
                   <span>{child?.studentPoints || 0} pts</span>
+                </div>
+
+                {/* Student Email Link */}
+                <div style={{ marginTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>Student Email Login (@gmail.com)</label>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <input 
+                      type="email" 
+                      placeholder="student@gmail.com"
+                      defaultValue={child?.studentEmail || ''}
+                      onBlur={(e) => {
+                        const email = e.target.value.trim();
+                        if (email !== (child?.studentEmail || '')) {
+                          linkStudentEmail(id, email);
+                        }
+                      }}
+                      style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--surface-border)', color: 'white', fontSize: '0.8rem' }}
+                    />
+                  </div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Links this profile to student's Google account</div>
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>

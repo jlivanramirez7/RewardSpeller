@@ -309,7 +309,12 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
             
             {/* Controls */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
-              <button className="btn-secondary" onClick={() => speakWord()}>
+              <button className="btn-secondary" onClick={() => {
+                speakWord();
+                setTimeout(() => {
+                  if (isMountedRef.current && inputRef.current) inputRef.current.focus();
+                }, 50);
+              }}>
                 🔊 Hear Word Again
               </button>
               <select 
