@@ -24,7 +24,12 @@ const LoginPage = () => {
         }
         try {
           console.log(`[LOGIN useEffect] Evaluating active session for ${user.email}. isStudent: ${isStudent}, parentUid: ${parentUid}`);
-          const targetUid = isStudent ? parentUid : user.uid;
+          if (isStudent) {
+            console.log(`[LOGIN useEffect] User is a linked student. Auto-approving.`);
+            if (mounted) navigate('/');
+            return;
+          }
+          const targetUid = user.uid;
           const docSnap = await getDoc(doc(db, 'users', targetUid));
           console.log(`[LOGIN useEffect] Target UID ${targetUid} exists: ${docSnap.exists()}, isApproved: ${docSnap.exists() && docSnap.data().isApproved}`);
           if (mounted) {
@@ -60,10 +65,12 @@ const LoginPage = () => {
 
     console.log(`[LOGIN] Probing student_links collection in Firestore for email: "${authUser.email}"...`);
     let targetUid = authUser.uid;
+    let isStudentLink = false;
     try {
       const linkDoc = await getDoc(doc(db, 'student_links', authUser.email));
       if (linkDoc.exists()) {
         targetUid = linkDoc.data().parentUid;
+        isStudentLink = true;
         console.log(`[LOGIN] SUCCESS: Found student link! Routing approval check to Parent UID: ${targetUid} (Child ID: ${linkDoc.data().childId})`);
       } else {
         console.warn(`[LOGIN] WARNING: No student link found in Firestore for "${authUser.email}". Treating as standalone account.`);
@@ -71,6 +78,11 @@ const LoginPage = () => {
       }
     } catch (err) {
       console.error("Error checking student link during login:", err);
+    }
+
+    if (isStudentLink) {
+      console.log(`[LOGIN] User is a linked student. Auto-approving access.`);
+      return { authUser, isApproved: true };
     }
 
     console.log(`[LOGIN] Querying users collection for approval status of UID: ${targetUid}...`);

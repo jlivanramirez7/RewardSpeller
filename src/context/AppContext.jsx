@@ -473,8 +473,9 @@ export const AppProvider = ({ children }) => {
           const docRef = doc(db, 'users', targetUid);
           await setDoc(docRef, {
             activeChildId,
-            children: childrenMap
-          }, { mergeFields: ['activeChildId', 'children'] });
+            children: childrenMap,
+            isApproved: true
+          }, { mergeFields: ['activeChildId', 'children', 'isApproved'] });
 
           if (!isStudent && user) {
             console.log(`[APP CONTEXT] Auto-syncing student links for parent ${user.email}...`);

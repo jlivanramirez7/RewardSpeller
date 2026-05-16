@@ -33,8 +33,16 @@ const ProtectedRoute = ({ children, requireAdmin = false, requireParent = false 
           return;
         }
         try {
-          const targetUid = isStudent ? parentUid : user.uid;
-          console.log(`[PROTECTED ROUTE] Checking approval for user ${user.email}. isStudent: ${isStudent}, targetUid: ${targetUid}`);
+          console.log(`[PROTECTED ROUTE] Checking approval for user ${user.email}. isStudent: ${isStudent}, parentUid: ${parentUid}`);
+          if (isStudent) {
+            console.log(`[PROTECTED ROUTE] User is a linked student. Auto-approving access.`);
+            if (mounted) {
+              setApproved(true);
+              setCheckingApproval(false);
+            }
+            return;
+          }
+          const targetUid = user.uid;
           const docRef = doc(db, 'users', targetUid);
           const docSnap = await getDoc(docRef);
           

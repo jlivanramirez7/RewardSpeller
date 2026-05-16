@@ -26,8 +26,17 @@ const RequestAccessPage = () => {
       if (mounted) setChecking(true);
       if (user && db) {
         try {
+          console.log(`[REQUEST ACCESS] Checking existing status for ${user.email}. isStudent: ${isStudent}`);
+          if (isStudent) {
+            console.log(`[REQUEST ACCESS] User is a linked student. Auto-approving.`);
+            if (mounted) {
+              setRequestStatus('approved');
+              setChecking(false);
+            }
+            return;
+          }
           // Check if already approved
-          const targetUid = isStudent ? parentUid : user.uid;
+          const targetUid = user.uid;
           const userDoc = await getDoc(doc(db, 'users', targetUid));
           if (mounted && userDoc.exists() && userDoc.data().isApproved) {
             setRequestStatus('approved');
