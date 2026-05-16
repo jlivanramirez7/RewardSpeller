@@ -160,11 +160,9 @@ const scoresApiMiddleware = async (req, res, next) => {
   if (req.url.startsWith('/api/coppa-status') && req.method === 'GET') {
     const urlObj = new URL(req.url, `http://${req.headers.host}`);
     const uid = urlObj.searchParams.get('uid');
-    const email = urlObj.searchParams.get('email');
     const users = await getCoppaUsers();
     res.setHeader('Content-Type', 'application/json');
-    const isMaster = email === 'jlivanramirez7@gmail.com' || (users[uid]?.email === 'jlivanramirez7@gmail.com');
-    const consented = isMaster || (users[uid]?.coppa_consented || false);
+    const consented = users[uid]?.coppa_consented || false;
     res.end(JSON.stringify({ coppa_consented: consented }));
     return;
   }
@@ -185,7 +183,7 @@ const scoresApiMiddleware = async (req, res, next) => {
         users[uid] = {
           email,
           uid,
-          coppa_consented: email === 'jlivanramirez7@gmail.com',
+          coppa_consented: false,
           registeredAt: Date.now()
         };
         await saveCoppaUsers(users);

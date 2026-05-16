@@ -683,11 +683,12 @@ export const AppProvider = ({ children }) => {
 
   const registerParentCoppa = useCallback(async (email) => {
     if (!user) return false;
+    const targetUid = isStudent ? parentUid : user.uid;
     try {
       const res = await fetch('/api/register-parent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, uid: user.uid })
+        body: JSON.stringify({ email, uid: targetUid })
       });
       if (res.ok) {
         const data = await res.json();
@@ -698,7 +699,7 @@ export const AppProvider = ({ children }) => {
       console.error("Error registering COPPA parent:", err);
     }
     return false;
-  }, [user]);
+  }, [user, isStudent, parentUid]);
 
   const getSectionStats = useCallback((sectionId) => {
     const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
