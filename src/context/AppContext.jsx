@@ -682,7 +682,7 @@ export const AppProvider = ({ children }) => {
   }, [user, db]);
 
   const registerParentCoppa = useCallback(async (email) => {
-    if (!user) return false;
+    if (!user) return { success: false, error: "User not logged in" };
     const targetUid = isStudent ? parentUid : user.uid;
     try {
       const res = await fetch('/api/register-parent', {
@@ -690,15 +690,17 @@ export const AppProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, uid: targetUid })
       });
+      const data = await res.json();
       if (res.ok) {
-        const data = await res.json();
         setCoppaConsented(data.coppa_consented);
-        return true;
+        return { success: true };
+      } else {
+        return { success: false, error: data.error || "Unknown server error" };
       }
     } catch (err) {
       console.error("Error registering COPPA parent:", err);
+      return { success: false, error: err.message };
     }
-    return false;
   }, [user, isStudent, parentUid]);
 
   const getSectionStats = useCallback((sectionId) => {

@@ -189,16 +189,22 @@ const scoresApiMiddleware = async (req, res, next) => {
         await saveCoppaUsers(users);
       }
 
+      let emailResult = { success: true };
       if (!users[uid].coppa_consented) {
         const token = signJWT({ uid, email, iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + 24 * 3600 });
         const verifyUrl = `http://${req.headers.host}/api/verify-consent?token=${token}`;
         
         const emailText = `Subject: Action Required: Verifiable Parental Consent for RewardSpeller\n\nDear Parent/Guardian,\n\nYou have registered a parent account for RewardSpeller (email: ${email}).\n\nTo comply with the Children's Online Privacy Protection Act (COPPA), we require your explicit verifiable parental consent before your child can access our educational assessment modules or the Jedi Archive.\n\nDATA COLLECTION NOTICE:\nRewardSpeller collects educational performance data (spelling accuracy, struggle words, active learning duration, and engagement streaks) strictly to calibrate your child's individualized learning track and provide diagnostic insights within your Parent Control Center.\n\nPRIVACY GUARANTEE:\nWe pledge that your child's personal and educational data will NEVER be sold, rented, or shared with any third-party advertisers or commercial entities.\n\nTo grant verifiable parental consent and unlock the learning platform, please click the unique, secure verification link below (valid for 24 hours):\n${verifyUrl}\n\nIf you did not request this account, please ignore this email.\n\nSincerely,\nThe RewardSpeller Privacy Team`;
 
-        await sendCOPPAEmail(email, 'Action Required: Verifiable Parental Consent for RewardSpeller', emailText);
+        emailResult = await sendCOPPAEmail(email, 'Action Required: Verifiable Parental Consent for RewardSpeller', emailText);
       }
 
       res.setHeader('Content-Type', 'application/json');
+      if (!emailResult.success) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ error: `Resend API Error: ${emailResult.error}` }));
+        return;
+      }
       res.end(JSON.stringify({ success: true, coppa_consented: users[uid].coppa_consented }));
     } catch (err) {
       res.statusCode = 500;

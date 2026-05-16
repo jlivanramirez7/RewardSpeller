@@ -19,6 +19,7 @@ const StudentPortal = () => {
   const [notification, setNotification] = useState(null);
   const [coppaEmailInput, setCoppaEmailInput] = useState('');
   const [coppaSubmitted, setCoppaSubmitted] = useState(false);
+  const [coppaError, setCoppaError] = useState(null);
 
   if (error) {
     return <div style={{ color: 'red', padding: '2rem', textAlign: 'center' }}>Error loading student data: {error}</div>;
@@ -176,14 +177,24 @@ const StudentPortal = () => {
                     className="btn-primary"
                     onClick={async () => {
                       if (coppaEmailInput.trim()) {
-                        await registerParentCoppa(coppaEmailInput.trim());
-                        setCoppaSubmitted(true);
+                        setCoppaError(null);
+                        const result = await registerParentCoppa(coppaEmailInput.trim());
+                        if (result.success) {
+                          setCoppaSubmitted(true);
+                        } else {
+                          setCoppaError(result.error);
+                        }
                       }
                     }}
                     style={{ width: '100%' }}
                   >
                     Resend Verification Email
                   </button>
+                  {coppaError && (
+                    <div style={{ padding: '1rem', background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+                      ❌ {coppaError}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
