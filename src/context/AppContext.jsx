@@ -349,6 +349,7 @@ export const AppProvider = ({ children }) => {
 
   const loadedUserUidRef = useRef(null);
   const { user, db, isStudent, parentUid, studentChildId } = useAuth();
+  const [coppaConsented, setCoppaConsented] = useState(true);
 
   // Asynchronous data loading hook: Queries Firestore for user profile progress on authentication state change.
   // Implements active user switching protections to discard stale network resolutions if auth user changes during fetch.
@@ -364,6 +365,18 @@ export const AppProvider = ({ children }) => {
         skipSaveRef.current = true;
         setChildrenMap({ child_1: createDefaultChild('child_1') });
         setActiveChildId('child_1');
+      }
+
+      if (targetUid) {
+        try {
+          const coppaRes = await fetch(`/api/coppa-status?uid=${targetUid}&email=${user?.email || ''}`);
+          if (coppaRes.ok) {
+            const coppaData = await coppaRes.json();
+            if (!ignore) setCoppaConsented(coppaData.coppa_consented);
+          }
+        } catch (coppaErr) {
+          console.error("Error fetching COPPA status:", coppaErr);
+        }
       }
 
       if (targetUid && db) {
@@ -668,6 +681,25 @@ export const AppProvider = ({ children }) => {
     }
   }, [user, db]);
 
+  const registerParentCoppa = useCallback(async (email) => {
+    if (!user) return false;
+    try {
+      const res = await fetch('/api/register-parent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, uid: user.uid })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCoppaConsented(data.coppa_consented);
+        return true;
+      }
+    } catch (err) {
+      console.error("Error registering COPPA parent:", err);
+    }
+    return false;
+  }, [user]);
+
   const getSectionStats = useCallback((sectionId) => {
     const easyAcc = sectionAccuracy[`${sectionId}-easy`] || 0;
     const medAcc = sectionAccuracy[`${sectionId}-medium`] || 0;
@@ -726,7 +758,7 @@ export const AppProvider = ({ children }) => {
     enableDifficultyGating, setEnableDifficultyGating,
     isDifficultyUnlocked,
     listenedLessons, markLessonListened,
-    rewards, setRewards, purchaseReward, linkStudentEmail,
+    rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa,
     currentGradeLevel, setCurrentGradeLevel,
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,
@@ -743,7 +775,7 @@ export const AppProvider = ({ children }) => {
     enableDifficultyGating, setEnableDifficultyGating,
     isDifficultyUnlocked,
     listenedLessons, markLessonListened,
-    rewards, setRewards, purchaseReward, linkStudentEmail,
+    rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa,
     currentGradeLevel, setCurrentGradeLevel,
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,

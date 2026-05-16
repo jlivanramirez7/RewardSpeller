@@ -17,7 +17,7 @@ import { createPortal } from 'react-dom';
 const LessonModal = ({ lessonData, onClose, onBeginTrials }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isEnlarged, setIsEnlarged] = useState(false); 
-  const { markLessonListened } = useAppContext();
+  const { markLessonListened, coppaConsented } = useAppContext();
 
   // Autoplay prerequisite tracking: Mark lesson as listened upon modal view
   // to unlock corresponding game trial assessments.
@@ -162,6 +162,10 @@ const LessonModal = ({ lessonData, onClose, onBeginTrials }) => {
   };
 
   const activePatternsList = getHighlightPatterns(lessonData?.theme || "");
+
+  if (coppaConsented === false) {
+    return null;
+  }
 
   return createPortal(
     <>

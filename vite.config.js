@@ -2,6 +2,65 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
+import crypto from 'crypto'
+
+const COPPA_SECRET = process.env.COPPA_JWT_SECRET || 'rewardspeller_coppa_super_secret_key_2026';
+const getCoppaStoragePath = () => path.resolve('coppa_users.json');
+
+function signJWT(payload) {
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const encHeader = Buffer.from(JSON.stringify(header)).toString('base64url');
+  const encPayload = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const signature = crypto
+    .createHmac('sha256', COPPA_SECRET)
+    .update(`${encHeader}.${encPayload}`)
+    .digest('base64url');
+  return `${encHeader}.${encPayload}.${signature}`;
+}
+
+function verifyJWT(token) {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    const [encHeader, encPayload, signature] = parts;
+    const expectedSig = crypto
+      .createHmac('sha256', COPPA_SECRET)
+      .update(`${encHeader}.${encPayload}`)
+      .digest('base64url');
+    if (signature !== expectedSig) return null;
+    const payload = JSON.parse(Buffer.from(encPayload, 'base64url').toString('utf8'));
+    if (payload.exp && Date.now() > payload.exp * 1000) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+async function sendCOPPAEmail(to, subject, textContent) {
+  console.log(`\n==================================================`);
+  console.log(`📧 [MOCK EMAIL DISPATCH] -> TO: ${to}`);
+  console.log(`🏷️ SUBJECT: ${subject}`);
+  console.log(`--------------------------------------------------`);
+  console.log(textContent);
+  console.log(`==================================================\n`);
+  return { success: true, messageId: `mock-${Date.now()}` };
+}
+
+async function getCoppaUsers() {
+  const filePath = getCoppaStoragePath();
+  try {
+    await fs.promises.access(filePath);
+    const data = await fs.promises.readFile(filePath, 'utf8');
+    return JSON.parse(data);
+  } catch {
+    return {};
+  }
+}
+
+async function saveCoppaUsers(data) {
+  const filePath = getCoppaStoragePath();
+  await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2));
+}
 
 function getRequestBody(req, limit = 1024 * 100) { // Default 100KB
   return new Promise((resolve, reject) => {
@@ -78,6 +137,94 @@ const scoresApiMiddleware = async (req, res, next) => {
       VITE_FIREBASE_APP_ID: process.env.VITE_FIREBASE_APP_ID,
       VITE_FIREBASE_MEASUREMENT_ID: process.env.VITE_FIREBASE_MEASUREMENT_ID
     }));
+    return;
+  }
+
+  if (req.url.startsWith('/api/coppa-status') && req.method === 'GET') {
+    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+    const uid = urlObj.searchParams.get('uid');
+    const email = urlObj.searchParams.get('email');
+    const users = await getCoppaUsers();
+    res.setHeader('Content-Type', 'application/json');
+    const isMaster = email === 'jlivanramirez7@gmail.com' || (users[uid]?.email === 'jlivanramirez7@gmail.com');
+    const consented = isMaster || (users[uid]?.coppa_consented || false);
+    res.end(JSON.stringify({ coppa_consented: consented }));
+    return;
+  }
+
+  if (req.url === '/api/register-parent' && req.method === 'POST') {
+    try {
+      const body = await getRequestBody(req);
+      const { email, uid } = body;
+      if (!email || !uid) {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ error: 'Missing email or uid' }));
+        return;
+      }
+
+      const users = await getCoppaUsers();
+      if (!users[uid]) {
+        users[uid] = {
+          email,
+          uid,
+          coppa_consented: email === 'jlivanramirez7@gmail.com',
+          registeredAt: Date.now()
+        };
+        await saveCoppaUsers(users);
+      }
+
+      if (!users[uid].coppa_consented) {
+        const token = signJWT({ uid, email, iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + 24 * 3600 });
+        const verifyUrl = `http://${req.headers.host}/api/verify-consent?token=${token}`;
+        
+        const emailText = `Subject: Action Required: Verifiable Parental Consent for RewardSpeller\n\nDear Parent/Guardian,\n\nYou have registered a parent account for RewardSpeller (email: ${email}).\n\nTo comply with the Children's Online Privacy Protection Act (COPPA), we require your explicit verifiable parental consent before your child can access our educational assessment modules or the Jedi Archive.\n\nDATA COLLECTION NOTICE:\nRewardSpeller collects educational performance data (spelling accuracy, struggle words, active learning duration, and engagement streaks) strictly to calibrate your child's individualized learning track and provide diagnostic insights within your Parent Control Center.\n\nPRIVACY GUARANTEE:\nWe pledge that your child's personal and educational data will NEVER be sold, rented, or shared with any third-party advertisers or commercial entities.\n\nTo grant verifiable parental consent and unlock the learning platform, please click the unique, secure verification link below (valid for 24 hours):\n${verifyUrl}\n\nIf you did not request this account, please ignore this email.\n\nSincerely,\nThe RewardSpeller Privacy Team`;
+
+        await sendCOPPAEmail(email, 'Action Required: Verifiable Parental Consent for RewardSpeller', emailText);
+      }
+
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ success: true, coppa_consented: users[uid].coppa_consented }));
+    } catch (err) {
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  if (req.url.startsWith('/api/verify-consent') && req.method === 'GET') {
+    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+    const token = urlObj.searchParams.get('token');
+    if (!token) {
+      res.statusCode = 400;
+      res.setHeader('Content-Type', 'text/html');
+      res.end('<h1>400 - Missing Token</h1><p>No verification token provided.</p>');
+      return;
+    }
+
+    const payload = verifyJWT(token);
+    if (!payload) {
+      res.statusCode = 400;
+      res.setHeader('Content-Type', 'text/html');
+      res.end('<h1>400 - Invalid or Expired Token</h1><p>Your parental consent link has expired or is invalid. Please log into RewardSpeller to request a new verification email.</p>');
+      return;
+    }
+
+    const users = await getCoppaUsers();
+    if (users[payload.uid]) {
+      users[payload.uid].coppa_consented = true;
+      users[payload.uid].consentedAt = Date.now();
+      await saveCoppaUsers(users);
+
+      const parentUrl = `http://${req.headers.host}/parent`;
+      const emailText = `Subject: Confirmation: Parental Consent Recorded for RewardSpeller\n\nDear Parent/Guardian,\n\nThank you! We have successfully verified and recorded your parental consent for RewardSpeller (account: ${payload.email}).\n\nYour child's educational workspace is now officially unlocked. They can immediately access the Jedi Archive, begin spelling trials, and earn points toward your configured rewards vault.\n\nYou can monitor their real-time diagnostic struggle reports, calibrate curriculum grade levels, and manage custom rewards at any time by accessing your Parent Control Center:\n${parentUrl}\n\nSincerely,\nThe RewardSpeller Privacy Team`;
+
+      await sendCOPPAEmail(payload.email, 'Confirmation: Parental Consent Recorded for RewardSpeller', emailText);
+    }
+
+    res.writeHead(302, { Location: '/?coppa-success=true' });
+    res.end();
     return;
   }
 

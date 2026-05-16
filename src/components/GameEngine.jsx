@@ -27,7 +27,7 @@ const shuffleArray = (array) => {
  * @returns {React.ReactElement} The interactive spelling workspace UI.
  */
 const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty = 'easy' }) => {
-  const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores } = useAppContext();
+  const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores, coppaConsented } = useAppContext();
   
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [difficulty, setDifficulty] = useState(initialDifficulty); // easy, medium, hard
@@ -238,6 +238,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   // Sequential progression checks
   const isMediumUnlocked = isDifficultyUnlocked(section.id, 'medium');
   const isHardUnlocked = isDifficultyUnlocked(section.id, 'hard');
+
+  if (coppaConsented === false) {
+    return <div style={{ padding: '2rem', textAlign: 'center', color: '#f43f5e' }}>COPPA Consent Required.</div>;
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
