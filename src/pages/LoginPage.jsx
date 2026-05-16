@@ -11,7 +11,7 @@ import { doc, getDoc } from 'firebase/firestore';
  * @returns {React.ReactElement} The login landing page UI.
  */
 const LoginPage = () => {
-  const { user, signInWithGoogle, db, loading, isAdmin } = useAuth();
+  const { user, signInWithGoogle, db, loading, isAdmin, isStudent, parentUid } = useAuth();
   const navigate = useNavigate();
 
   // Auto-redirect checking hook: Evaluates active user session and queries Firestore
@@ -25,7 +25,8 @@ const LoginPage = () => {
           return;
         }
         try {
-          const docSnap = await getDoc(doc(db, 'users', user.uid));
+          const targetUid = isStudent ? parentUid : user.uid;
+          const docSnap = await getDoc(doc(db, 'users', targetUid));
           if (mounted) {
             if (docSnap.exists() && docSnap.data().isApproved) {
               navigate('/');
@@ -40,7 +41,7 @@ const LoginPage = () => {
     };
     checkUser();
     return () => { mounted = false; };
-  }, [user, db, loading, navigate, isAdmin]);
+  }, [user, db, loading, navigate, isAdmin, isStudent, parentUid]);
 
   const authenticateAndFetchUser = async () => {
     const result = await signInWithGoogle();
@@ -54,7 +55,17 @@ const LoginPage = () => {
       return { authUser, isApproved: true };
     }
 
-    const docRef = doc(db, 'users', authUser.uid);
+    let targetUid = authUser.uid;
+    try {
+      const linkDoc = await getDoc(doc(db, 'student_links', authUser.email));
+      if (linkDoc.exists()) {
+        targetUid = linkDoc.data().parentUid;
+      }
+    } catch (err) {
+      console.error("Error checking student link during login:", err);
+    }
+
+    const docRef = doc(db, 'users', targetUid);
     const docSnap = await getDoc(docRef);
     const isApproved = docSnap.exists() && docSnap.data().isApproved;
     
