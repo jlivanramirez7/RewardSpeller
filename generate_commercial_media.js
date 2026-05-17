@@ -111,9 +111,19 @@ async function generateAudio() {
   };
 
   try {
-    const response = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`, {
+    const isBearerToken = apiKey.startsWith('ya29.') || apiKey.startsWith('AQ.') || apiKey.length > 50;
+    const baseUrl = `https://texttospeech.googleapis.com/v1/text:synthesize`;
+    const fetchUrl = isBearerToken ? baseUrl : `${baseUrl}?key=${apiKey}`;
+    
+    const fetchHeaders = { 'Content-Type': 'application/json' };
+    if (isBearerToken) {
+      fetchHeaders['Authorization'] = `Bearer ${apiKey}`;
+      fetchHeaders['x-goog-user-project'] = 'secret-bloom-474313-m8';
+    }
+
+    const response = await fetch(fetchUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: fetchHeaders,
       body: JSON.stringify(config),
     });
 
@@ -185,12 +195,18 @@ async function generateVeoVideos() {
     }
 
     try {
+      const isBearerToken = apiKey.startsWith('ya29.') || apiKey.startsWith('AQ.') || apiKey.length > 50;
+      const fetchHeaders = { 'Content-Type': 'application/json' };
+      if (isBearerToken) {
+        fetchHeaders['Authorization'] = `Bearer ${apiKey}`;
+        fetchHeaders['x-goog-user-project'] = 'secret-bloom-474313-m8';
+      } else {
+        fetchHeaders['Authorization'] = `Bearer ${apiKey}`;
+      }
+
       const response = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/secret-bloom-474313-m8/locations/us-central1/publishers/google/models/veo-1.0-turbo:predict`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
+        headers: fetchHeaders,
         body: JSON.stringify(veoPayload),
       });
 
