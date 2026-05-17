@@ -148,7 +148,7 @@ const RequestAccessPage = () => {
         <div className="glass-panel" style={{ padding: '2rem', borderLeft: '4px solid var(--success-color)' }}>
           <h2 style={{ color: 'var(--success-color)', marginBottom: '1rem' }}>Access Approved!</h2>
           <p style={{ marginBottom: '1.5rem' }}>Good news! Your access to RewardSpeller has already been approved.</p>
-          <button className="btn-primary" onClick={() => navigate('/')}>Enter Student Portal</button>
+          <button className="btn-primary" onClick={() => navigate('/app')}>Enter Student Portal</button>
         </div>
       </div>
     );

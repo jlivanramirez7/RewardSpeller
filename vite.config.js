@@ -143,6 +143,12 @@ const scoresApiMiddleware = async (req, res, next) => {
     return;
   }
 
+  if (req.url === '/' && req.method === 'GET') {
+    res.writeHead(302, { Location: '/landing.html' });
+    res.end();
+    return;
+  }
+
   if (req.url === '/api/config' && req.method === 'GET') {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({

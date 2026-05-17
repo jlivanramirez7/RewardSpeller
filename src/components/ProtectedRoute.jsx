@@ -92,13 +92,13 @@ const ProtectedRoute = ({ children, requireAdmin = false, requireParent = false 
 
   if (requireAdmin) {
     if (!isAdmin) {
-      return <Navigate to="/" />;
+      return <Navigate to="/app" />;
     }
   }
 
   if (requireParent) {
     if (isStudent) {
-      return <Navigate to="/" />;
+      return <Navigate to="/app" />;
     }
   }
 

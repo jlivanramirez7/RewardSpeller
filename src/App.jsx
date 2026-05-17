@@ -24,7 +24,7 @@ function App() {
         <div className="nav-links">
           {user && (
             <>
-              <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
+              <Link to="/app" className={`nav-link ${location.pathname === '/app' ? 'active' : ''}`}>
                 <Gamepad2 size={20} />
                 Student Portal
               </Link>
@@ -56,7 +56,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/request-access" element={<RequestAccessPage />} />
-          <Route path="/" element={
+          <Route path="/app" element={
             <ProtectedRoute>
               <StudentPortal key={activeChildId} />
             </ProtectedRoute>

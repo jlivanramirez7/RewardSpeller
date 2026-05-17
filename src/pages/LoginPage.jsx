@@ -34,7 +34,7 @@ const LoginPage = () => {
           console.log(`[LOGIN useEffect] Target UID ${targetUid} exists: ${docSnap.exists()}, isApproved: ${docSnap.exists() && docSnap.data().isApproved}`);
           if (mounted) {
             if (docSnap.exists() && docSnap.data().isApproved) {
-              navigate('/');
+              navigate('/app');
             } else {
               navigate('/request-access');
             }
@@ -98,7 +98,7 @@ const LoginPage = () => {
     try {
       const { isApproved } = await authenticateAndFetchUser();
       if (isApproved) {
-        navigate('/');
+        navigate('/app');
       } else {
         alert("Your account has not been approved yet. Redirecting to Request Access page...");
         navigate('/request-access');
