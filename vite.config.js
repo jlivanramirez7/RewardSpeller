@@ -6,7 +6,6 @@ import crypto from 'crypto'
 import { Resend } from 'resend'
 
 const COPPA_SECRET = process.env.COPPA_JWT_SECRET || 'rewardspeller_coppa_super_secret_key_2026';
-const getCoppaStoragePath = () => path.resolve('coppa_users.json');
 const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_8sBNFkhz_FeG6xx5AQdamd97BaMRrJen5';
 const resend = new Resend(RESEND_API_KEY);
 const SENDER_EMAIL = process.env.COPPA_SENDER_EMAIL || 'privacy@rewardspeller.com';
@@ -63,21 +62,7 @@ async function sendCOPPAEmail(to, subject, textContent) {
   }
 }
 
-async function getCoppaUsers() {
-  const filePath = getCoppaStoragePath();
-  try {
-    await fs.promises.access(filePath);
-    const data = await fs.promises.readFile(filePath, 'utf8');
-    return JSON.parse(data);
-  } catch {
-    return {};
-  }
-}
 
-async function saveCoppaUsers(data) {
-  const filePath = getCoppaStoragePath();
-  await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2));
-}
 
 function getRequestBody(req, limit = 1024 * 100) { // Default 100KB
   return new Promise((resolve, reject) => {
@@ -163,16 +148,6 @@ const scoresApiMiddleware = async (req, res, next) => {
     return;
   }
 
-  if (req.url.startsWith('/api/coppa-status') && req.method === 'GET') {
-    const urlObj = new URL(req.url, `http://${req.headers.host}`);
-    const uid = urlObj.searchParams.get('uid');
-    const users = await getCoppaUsers();
-    res.setHeader('Content-Type', 'application/json');
-    const consented = users[uid]?.coppa_consented || false;
-    res.end(JSON.stringify({ coppa_consented: consented }));
-    return;
-  }
-
   if (req.url === '/api/register-parent' && req.method === 'POST') {
     try {
       const body = await getRequestBody(req);
@@ -184,26 +159,12 @@ const scoresApiMiddleware = async (req, res, next) => {
         return;
       }
 
-      const users = await getCoppaUsers();
-      if (!users[uid]) {
-        users[uid] = {
-          email,
-          uid,
-          coppa_consented: false,
-          registeredAt: Date.now()
-        };
-        await saveCoppaUsers(users);
-      }
+      const token = signJWT({ uid, email, iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + 24 * 3600 });
+      const verifyUrl = `https://${req.headers.host}/api/verify-consent?token=${token}`;
+      
+      const emailText = `Subject: Action Required: Verifiable Parental Consent for RewardSpeller\n\nDear Parent/Guardian,\n\nYou have registered a parent account for RewardSpeller (email: ${email}).\n\nTo comply with the Children's Online Privacy Protection Act (COPPA), we require your explicit verifiable parental consent before your child can access our educational assessment modules or the Jedi Archive.\n\nDATA COLLECTION NOTICE:\nRewardSpeller collects educational performance data (spelling accuracy, struggle words, active learning duration, and engagement streaks) strictly to calibrate your child's individualized learning track and provide diagnostic insights within your Parent Control Center.\n\nPRIVACY GUARANTEE:\nWe pledge that your child's personal and educational data will NEVER be sold, rented, or shared with any third-party advertisers or commercial entities.\n\nTo grant verifiable parental consent and unlock the learning platform, please click the unique, secure verification link below (valid for 24 hours):\n${verifyUrl}\n\nIf you did not request this account, please ignore this email.\n\nSincerely,\nThe RewardSpeller Privacy Team`;
 
-      let emailResult = { success: true };
-      if (!users[uid].coppa_consented) {
-        const token = signJWT({ uid, email, iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + 24 * 3600 });
-        const verifyUrl = `http://${req.headers.host}/api/verify-consent?token=${token}`;
-        
-        const emailText = `Subject: Action Required: Verifiable Parental Consent for RewardSpeller\n\nDear Parent/Guardian,\n\nYou have registered a parent account for RewardSpeller (email: ${email}).\n\nTo comply with the Children's Online Privacy Protection Act (COPPA), we require your explicit verifiable parental consent before your child can access our educational assessment modules or the Jedi Archive.\n\nDATA COLLECTION NOTICE:\nRewardSpeller collects educational performance data (spelling accuracy, struggle words, active learning duration, and engagement streaks) strictly to calibrate your child's individualized learning track and provide diagnostic insights within your Parent Control Center.\n\nPRIVACY GUARANTEE:\nWe pledge that your child's personal and educational data will NEVER be sold, rented, or shared with any third-party advertisers or commercial entities.\n\nTo grant verifiable parental consent and unlock the learning platform, please click the unique, secure verification link below (valid for 24 hours):\n${verifyUrl}\n\nIf you did not request this account, please ignore this email.\n\nSincerely,\nThe RewardSpeller Privacy Team`;
-
-        emailResult = await sendCOPPAEmail(email, 'Action Required: Verifiable Parental Consent for RewardSpeller', emailText);
-      }
+      const emailResult = await sendCOPPAEmail(email, 'Action Required: Verifiable Parental Consent for RewardSpeller', emailText);
 
       res.setHeader('Content-Type', 'application/json');
       if (!emailResult.success) {
@@ -211,7 +172,7 @@ const scoresApiMiddleware = async (req, res, next) => {
         res.end(JSON.stringify({ error: `Resend API Error: ${emailResult.error}` }));
         return;
       }
-      res.end(JSON.stringify({ success: true, coppa_consented: users[uid].coppa_consented }));
+      res.end(JSON.stringify({ success: true }));
     } catch (err) {
       res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
@@ -221,7 +182,7 @@ const scoresApiMiddleware = async (req, res, next) => {
   }
 
   if (req.url.startsWith('/api/verify-consent') && req.method === 'GET') {
-    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+    const urlObj = new URL(req.url, `https://${req.headers.host}`);
     const token = urlObj.searchParams.get('token');
     if (!token) {
       res.statusCode = 400;
@@ -238,19 +199,12 @@ const scoresApiMiddleware = async (req, res, next) => {
       return;
     }
 
-    const users = await getCoppaUsers();
-    if (users[payload.uid]) {
-      users[payload.uid].coppa_consented = true;
-      users[payload.uid].consentedAt = Date.now();
-      await saveCoppaUsers(users);
+    const parentUrl = `https://${req.headers.host}/parent`;
+    const emailText = `Subject: Confirmation: Parental Consent Recorded for RewardSpeller\n\nDear Parent/Guardian,\n\nThank you! We have successfully verified and recorded your parental consent for RewardSpeller (account: ${payload.email}).\n\nYour child's educational workspace is now officially unlocked. They can immediately access the Jedi Archive, begin spelling trials, and earn points toward your configured rewards vault.\n\nYou can monitor their real-time diagnostic struggle reports, calibrate curriculum grade levels, and manage custom rewards at any time by accessing your Parent Control Center:\n${parentUrl}\n\nSincerely,\nThe RewardSpeller Privacy Team`;
 
-      const parentUrl = `http://${req.headers.host}/parent`;
-      const emailText = `Subject: Confirmation: Parental Consent Recorded for RewardSpeller\n\nDear Parent/Guardian,\n\nThank you! We have successfully verified and recorded your parental consent for RewardSpeller (account: ${payload.email}).\n\nYour child's educational workspace is now officially unlocked. They can immediately access the Jedi Archive, begin spelling trials, and earn points toward your configured rewards vault.\n\nYou can monitor their real-time diagnostic struggle reports, calibrate curriculum grade levels, and manage custom rewards at any time by accessing your Parent Control Center:\n${parentUrl}\n\nSincerely,\nThe RewardSpeller Privacy Team`;
+    await sendCOPPAEmail(payload.email, 'Confirmation: Parental Consent Recorded for RewardSpeller', emailText);
 
-      await sendCOPPAEmail(payload.email, 'Confirmation: Parental Consent Recorded for RewardSpeller', emailText);
-    }
-
-    res.writeHead(302, { Location: '/?coppa-success=true' });
+    res.writeHead(302, { Location: '/app?coppa-verified=true' });
     res.end();
     return;
   }

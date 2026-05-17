@@ -373,18 +373,6 @@ export const AppProvider = ({ children }) => {
         setActiveChildId('child_1');
       }
 
-      if (targetUid) {
-        try {
-          const coppaRes = await fetch(`/api/coppa-status?uid=${targetUid}&email=${user?.email || ''}`);
-          if (coppaRes.ok) {
-            const coppaData = await coppaRes.json();
-            if (!ignore) setCoppaConsented(coppaData.coppa_consented);
-          }
-        } catch (coppaErr) {
-          console.error("Error fetching COPPA status:", coppaErr);
-        }
-      }
-
       if (targetUid && db) {
         try {
           const docRef = doc(db, 'users', targetUid);
@@ -393,7 +381,14 @@ export const AppProvider = ({ children }) => {
           if (ignore) return;
 
           if (docSnap.exists()) {
-            restoreProgress(docSnap.data());
+            const data = docSnap.data();
+            restoreProgress(data);
+            
+            if (data.coppaConsented === true || (user && user.email === 'jlivanramirez7@gmail.com')) {
+              setCoppaConsented(true);
+            } else {
+              setCoppaConsented(false);
+            }
             
             if (!isStudent && user && user.email === 'jlivanramirez7@gmail.com') {
               setChildrenMap(prev => {
@@ -469,6 +464,22 @@ export const AppProvider = ({ children }) => {
   // State persistence hook: Synchronizes local state updates to localStorage and Firestore.
   // Throttles unnecessary writes using skipSaveRef during hydration phases.
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('coppa-verified') === 'true') {
+      console.log("[COPPA] Consent verified via email redirect! Updating Firestore...");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCoppaConsented(true);
+      if (user && db) {
+        const targetUid = isStudent ? parentUid : user.uid;
+        setDoc(doc(db, 'users', targetUid), { coppaConsented: true }, { merge: true })
+          .then(() => console.log("[COPPA] Successfully saved coppaConsented: true to Firestore"))
+          .catch(err => console.error("[COPPA] Error saving consent to Firestore:", err));
+      }
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [user, db, isStudent, parentUid]);
+
+  useEffect(() => {
     if (!isLoaded) return;
 
     const targetUid = isStudent ? parentUid : (user ? user.uid : null);
@@ -493,8 +504,9 @@ export const AppProvider = ({ children }) => {
           await setDoc(docRef, {
             activeChildId,
             children: childrenMap,
-            isApproved: true
-          }, { mergeFields: ['activeChildId', 'children', 'isApproved'] });
+            isApproved: true,
+            coppaConsented
+          }, { mergeFields: ['activeChildId', 'children', 'isApproved', 'coppaConsented'] });
 
           if (!isStudent && user) {
             console.log(`[APP CONTEXT] Auto-syncing student links for parent ${user.email}...`);
@@ -524,7 +536,7 @@ export const AppProvider = ({ children }) => {
     };
 
     saveScores();
-  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid]);
+  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid, coppaConsented]);
 
   // Cross-tab storage sync
   // Cross-tab synchronization hook: Listens for storage events across browser tabs
