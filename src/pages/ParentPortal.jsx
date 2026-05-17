@@ -88,9 +88,15 @@ const ParentPortal = () => {
       <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <h2 style={{ margin: 0 }}>👥 Student Accounts Management</h2>
-          <button className="btn-primary" onClick={() => setShowAddModal(true)}>
-            + Add New Student
-          </button>
+          {childrenMap && Object.keys(childrenMap).length < 3 ? (
+            <button className="btn-primary" onClick={() => setShowAddModal(true)}>
+              + Add New Student
+            </button>
+          ) : (
+            <button className="btn-secondary" disabled={true} title="Maximum limit of 3 students reached">
+              🔒 Max 3 Students Reached
+            </button>
+          )}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
           {childrenMap && Object.entries(childrenMap).map(([id, child]) => {

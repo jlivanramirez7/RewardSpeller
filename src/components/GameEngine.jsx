@@ -143,6 +143,25 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     isProcessingRef.current = false;
   };
 
+  const handleTryNextDifficulty = (nextDiff) => {
+    setDifficulty(nextDiff);
+    setIsSessionComplete(false);
+    setCompletionData(null);
+    setCurrentWordIndex(0);
+    setSessionScore(0);
+    setSessionCorrectCount(0);
+    setStudentStreak(0);
+    setFeedback(null);
+    if (section?.words) {
+      setShuffledWords(shuffleArray(section.words));
+    }
+    if (advanceTimeoutRef.current) {
+      clearTimeout(advanceTimeoutRef.current);
+      advanceTimeoutRef.current = null;
+    }
+    isProcessingRef.current = false;
+  };
+
   const checkSpelling = (e) => {
     e.preventDefault();
     if (!userInput.trim() || feedback || isProcessingRef.current) return; // BLOCK if processing
@@ -284,13 +303,60 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
               <p style={{ color: 'var(--text-secondary)' }}>Session Score: <strong style={{ color: 'white' }}>{completionData?.sessionScore}</strong></p>
               <p style={{ color: 'var(--text-secondary)' }}>New Points Awarded: <strong style={{ color: '#fbbf24' }}>{completionData?.pointsAwarded}</strong></p>
             </div>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-              <button className="btn-primary" onClick={handleRetry}>
-                Retry Section
-              </button>
-              <button className="btn-secondary" onClick={onComplete}>
-                Back to Portal
-              </button>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              {(() => {
+                const acc = completionData?.accuracy || 0;
+                const isPassed = acc >= 90;
+                const isPerfect = acc === 100;
+                const currentLabel = `Retry at ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`;
+                
+                let nextButton = null;
+                if (isPassed) {
+                  if (difficulty === 'easy') {
+                    nextButton = (
+                      <button 
+                        className={isPerfect ? "btn-primary" : "btn-secondary"} 
+                        onClick={() => handleTryNextDifficulty('medium')}
+                      >
+                        Try at Medium
+                      </button>
+                    );
+                  } else if (difficulty === 'medium') {
+                    nextButton = (
+                      <button 
+                        className={isPerfect ? "btn-primary" : "btn-secondary"} 
+                        onClick={() => handleTryNextDifficulty('hard')}
+                      >
+                        Try at Hard
+                      </button>
+                    );
+                  } else if (difficulty === 'hard') {
+                    nextButton = (
+                      <button 
+                        className={isPerfect ? "btn-primary" : "btn-secondary"} 
+                        onClick={() => onComplete({ nextSection: true })}
+                      >
+                        Move to Next Section
+                      </button>
+                    );
+                  }
+                }
+
+                return (
+                  <>
+                    <button 
+                      className={!isPerfect ? "btn-primary" : "btn-secondary"} 
+                      onClick={handleRetry}
+                    >
+                      {currentLabel}
+                    </button>
+                    {nextButton}
+                    <button className="btn-secondary" onClick={() => onComplete({ nextSection: false })}>
+                      Back to Portal
+                    </button>
+                  </>
+                );
+              })()}
             </div>
           </div>
         ) : (

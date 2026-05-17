@@ -217,7 +217,13 @@ export const AppProvider = ({ children }) => {
   const addChild = useCallback((name, gradeLevel = '4th') => {
     const newId = `child_${Date.now()}`;
     const newChild = createDefaultChild(newId, name, { currentGradeLevel: gradeLevel });
-    setChildrenMap(prev => ({ ...prev, [newId]: newChild }));
+    setChildrenMap(prev => {
+      if (Object.keys(prev).length >= 3) {
+        alert("Maximum limit of 3 student profiles reached.");
+        return prev;
+      }
+      return { ...prev, [newId]: newChild };
+    });
     setActiveChildId(newId);
   }, []);
 

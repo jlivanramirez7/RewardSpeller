@@ -29,14 +29,12 @@ const StudentPortal = () => {
     return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading Student Data...</div>;
   }
 
-  const handleCompleteSection = () => {
+  const handleCompleteSection = (options = {}) => {
     const sectionData = activePlayData?.section;
     const currentTierId = activePlayData?.tierId;
     
     setActivePlayData(null);
 
-    // Auto-unlock next tier if mastery assessment is complete and passed.
-    // Resolves tier progression string formats dynamically.
     if (sectionData && sectionData.id.toString().includes('mastery')) {
       let nextTierId;
       const match = currentTierId && currentTierId.toString().match(/^(.*_t)(\d+)$/);
@@ -49,7 +47,6 @@ const StudentPortal = () => {
 
       if (isSectionMastered(sectionData.id)) {
         if (!unlockedTiers.includes(nextTierId)) {
-          // Safely push next tier ID
           setUnlockedTiers(prev => [...prev, nextTierId]);
           setNotification({
             type: 'mastery',
@@ -57,6 +54,31 @@ const StudentPortal = () => {
           });
           setTimeout(() => setNotification(null), 6000);
         }
+      }
+    }
+
+    if (options?.nextSection && sectionData) {
+      let foundCurrent = false;
+      let nextSec = null;
+      let nextTierId = null;
+
+      for (const tier of tiers) {
+        for (const sec of tier.sections) {
+          if (foundCurrent) {
+            nextSec = sec;
+            nextTierId = tier.id;
+            break;
+          }
+          if (sec.id === sectionData.id) {
+            foundCurrent = true;
+          }
+        }
+        if (nextSec) break;
+      }
+
+      if (nextSec && nextTierId) {
+        warmupAudio();
+        setActiveLessonData({ ...nextSec, parentTierId: nextTierId, tierRule: nextSec.rule });
       }
     }
   };
