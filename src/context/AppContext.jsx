@@ -686,8 +686,12 @@ export const AppProvider = ({ children }) => {
   const resolveStruggleWord = useCallback((word, tierId) => {
     setStruggleWords(prev => {
       const existing = prev.find(w => w.word === word && w.tierId === tierId);
-      if (existing && !existing.mastered) {
-        return prev.map(w => w.word === word && w.tierId === tierId ? { ...w, mastered: true } : w);
+      if (existing) {
+        return prev.map(w => w.word === word && w.tierId === tierId ? { 
+          ...w, 
+          mastered: true, 
+          correctCount: (w.correctCount || 0) + 1 
+        } : w);
       }
       return prev;
     });

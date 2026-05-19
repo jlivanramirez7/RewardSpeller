@@ -27,6 +27,7 @@ const ParentPortal = () => {
   const [newChildGrade, setNewChildGrade] = useState('4th');
   const [showAllStruggle, setShowAllStruggle] = useState(false);
   const [showCompletedRewards, setShowCompletedRewards] = useState(false);
+  const [showAllIncompleteRewards, setShowAllIncompleteRewards] = useState(false);
 
   const sortedStruggles = useMemo(() => {
     return [...struggleWords].sort((a, b) => b.count - a.count);
@@ -39,6 +40,10 @@ const ParentPortal = () => {
   const incompleteRewards = useMemo(() => {
     return rewards.filter(r => studentPoints < r.cost);
   }, [rewards, studentPoints]);
+
+  const visibleIncompleteRewards = useMemo(() => {
+    return showAllIncompleteRewards ? incompleteRewards : incompleteRewards.slice(0, 5);
+  }, [incompleteRewards, showAllIncompleteRewards]);
 
   const completedRewards = useMemo(() => {
     return rewards.filter(r => studentPoints >= r.cost);
@@ -297,7 +302,9 @@ const ParentPortal = () => {
                       )}
                     </div>
                     <span style={{ color: item.mastered ? 'var(--text-secondary)' : 'var(--error-color)', fontSize: '0.9rem' }}>
-                      {item.mastered ? `Resolved (Missed ${item.count}x)` : `Missed ${item.count}x`}
+                      {item.mastered 
+                        ? `Resolved (Missed ${item.count}x, Correct ${item.correctCount || 1}x)` 
+                        : `Missed ${item.count}x (Correct ${item.correctCount || 0}x)`}
                     </span>
                   </li>
                 ))}
@@ -355,32 +362,43 @@ const ParentPortal = () => {
             {incompleteRewards.length === 0 ? (
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', padding: '1rem 0' }}>No active incomplete rewards configured.</p>
             ) : (
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                {incompleteRewards.map(reward => {
-                  const progress = Math.min((studentPoints / reward.cost) * 100, 100);
-                  return (
-                    <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
-                        <button 
-                          className="btn-secondary"
-                          style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                          onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
-                        <span style={{ color: 'var(--text-secondary)' }}>{studentPoints} / {reward.cost} pts</span>
-                        <span style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
-                      </div>
-                      <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${progress}%`, background: 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
+              <>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                  {visibleIncompleteRewards.map(reward => {
+                    const progress = Math.min((studentPoints / reward.cost) * 100, 100);
+                    return (
+                      <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
+                          <button 
+                            className="btn-secondary"
+                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                            onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
+                          <span style={{ color: 'var(--text-secondary)' }}>{studentPoints} / {reward.cost} pts</span>
+                          <span style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
+                        </div>
+                        <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+                          <div style={{ height: '100%', width: `${progress}%`, background: 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                {incompleteRewards.length > 5 && (
+                  <button 
+                    className="btn-secondary" 
+                    onClick={() => setShowAllIncompleteRewards(!showAllIncompleteRewards)}
+                    style={{ width: '100%', marginTop: '1rem' }}
+                  >
+                    {showAllIncompleteRewards ? 'Show Less' : `Show More (${incompleteRewards.length - 5} more)`}
+                  </button>
+                )}
+              </>
             )}
 
             {completedRewards.length > 0 && (
