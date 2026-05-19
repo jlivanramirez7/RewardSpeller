@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
 
@@ -25,6 +25,24 @@ const ParentPortal = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newChildName, setNewChildName] = useState('');
   const [newChildGrade, setNewChildGrade] = useState('4th');
+  const [showAllStruggle, setShowAllStruggle] = useState(false);
+  const [showCompletedRewards, setShowCompletedRewards] = useState(false);
+
+  const sortedStruggles = useMemo(() => {
+    return [...struggleWords].sort((a, b) => b.count - a.count);
+  }, [struggleWords]);
+
+  const visibleStruggles = useMemo(() => {
+    return showAllStruggle ? sortedStruggles : sortedStruggles.slice(0, 5);
+  }, [sortedStruggles, showAllStruggle]);
+
+  const incompleteRewards = useMemo(() => {
+    return rewards.filter(r => studentPoints < r.cost);
+  }, [rewards, studentPoints]);
+
+  const completedRewards = useMemo(() => {
+    return rewards.filter(r => studentPoints >= r.cost);
+  }, [rewards, studentPoints]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -259,19 +277,41 @@ const ParentPortal = () => {
           </div>
 
           <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Struggle Report</h3>
-          {struggleWords.length === 0 ? (
+          {sortedStruggles.length === 0 ? (
             <div style={{ padding: '1.5rem', textAlign: 'center', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
               <p style={{ color: 'var(--success-color)' }}>No struggle areas identified yet! Student is performing well.</p>
             </div>
           ) : (
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              {struggleWords.map((item, index) => (
-                <li key={index} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ fontWeight: 'bold' }}>{item.word}</span>
-                  <span style={{ color: 'var(--error-color)' }}>Missed {item.count}x</span>
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                {visibleStruggles.map((item, index) => (
+                  <li key={index} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <span style={{ fontWeight: 'bold', textDecoration: item.mastered ? 'line-through' : 'none', color: item.mastered ? 'var(--text-secondary)' : 'white' }}>
+                        {item.word}
+                      </span>
+                      {item.mastered && (
+                        <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '12px', fontWeight: 'bold', marginLeft: '0.5rem' }}>
+                          🏆 Mastered
+                        </span>
+                      )}
+                    </div>
+                    <span style={{ color: item.mastered ? 'var(--text-secondary)' : 'var(--error-color)', fontSize: '0.9rem' }}>
+                      {item.mastered ? `Resolved (Missed ${item.count}x)` : `Missed ${item.count}x`}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {sortedStruggles.length > 5 && (
+                <button 
+                  className="btn-secondary" 
+                  onClick={() => setShowAllStruggle(!showAllStruggle)}
+                  style={{ width: '100%', marginTop: '1rem' }}
+                >
+                  {showAllStruggle ? 'Show Less' : `Show More (${sortedStruggles.length - 5} more)`}
+                </button>
+              )}
+            </>
           )}
         </div>
 
@@ -312,34 +352,79 @@ const ParentPortal = () => {
 
           <div>
             <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Active Rewards</h3>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              {rewards.map(reward => {
-                const progress = Math.min((studentPoints / reward.cost) * 100, 100);
-                const canAfford = studentPoints >= reward.cost;
-                return (
-                  <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span>{reward.name}</span>
-                      <button 
-                        className="btn-secondary"
-                        style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                        onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
-                      <span style={{ color: 'var(--text-secondary)' }}>{Math.min(studentPoints, reward.cost)} / {reward.cost} pts</span>
-                      <span style={{ color: '#fbbf24', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
-                    </div>
-                    {/* Progress Bar */}
-                    <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${progress}%`, background: canAfford ? 'var(--success-color)' : 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+            {incompleteRewards.length === 0 ? (
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', padding: '1rem 0' }}>No active incomplete rewards configured.</p>
+            ) : (
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                {incompleteRewards.map(reward => {
+                  const progress = Math.min((studentPoints / reward.cost) * 100, 100);
+                  return (
+                    <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
+                        <button 
+                          className="btn-secondary"
+                          style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                          onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
+                        <span style={{ color: 'var(--text-secondary)' }}>{studentPoints} / {reward.cost} pts</span>
+                        <span style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
+                      </div>
+                      <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', width: `${progress}%`, background: 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
+            {completedRewards.length > 0 && (
+              <div style={{ marginTop: '1.5rem' }}>
+                <button 
+                  className="btn-secondary" 
+                  onClick={() => setShowCompletedRewards(!showCompletedRewards)}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                >
+                  {showCompletedRewards ? 'Hide Completed Rewards' : `Show Completed Rewards (${completedRewards.length})`}
+                </button>
+                
+                {showCompletedRewards && (
+                  <ul style={{ listStyle: 'none', padding: 0, marginTop: '1rem' }}>
+                    {completedRewards.map(reward => (
+                      <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '8px', marginBottom: '0.5rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', textDecoration: 'line-through' }}>{reward.name}</span>
+                            <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '12px', fontWeight: 'bold', marginLeft: '0.5rem' }}>
+                              🏆 Earned
+                            </span>
+                          </div>
+                          <button 
+                            className="btn-secondary"
+                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                            onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                          <span>{studentPoints} / {reward.cost} pts</span>
+                          <span style={{ fontWeight: 'bold' }}>100%</span>
+                        </div>
+                        <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+                          <div style={{ height: '100%', width: '100%', background: 'var(--success-color)' }}></div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

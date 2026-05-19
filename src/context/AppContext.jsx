@@ -683,6 +683,16 @@ export const AppProvider = ({ children }) => {
     });
   }, [setStruggleWords]);
 
+  const resolveStruggleWord = useCallback((word, tierId) => {
+    setStruggleWords(prev => {
+      const existing = prev.find(w => w.word === word && w.tierId === tierId);
+      if (existing && !existing.mastered) {
+        return prev.map(w => w.word === word && w.tierId === tierId ? { ...w, mastered: true } : w);
+      }
+      return prev;
+    });
+  }, [setStruggleWords]);
+
   const purchaseReward = useCallback((rewardId) => {
     const reward = rewards.find(r => r.id === rewardId);
     if (reward && studentPoints >= reward.cost) {
@@ -799,12 +809,13 @@ export const AppProvider = ({ children }) => {
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,
     studentName, setStudentName,
-    childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild
+    childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild,
+    resolveStruggleWord
   }), [
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
     unlockedTiers, setUnlockedTiers,
-    struggleWords, addStruggleWord,
+    struggleWords, addStruggleWord, resolveStruggleWord,
     sectionScores, updateSectionScore,
     sectionAccuracy, getSectionStats,
     enablePacing, setEnablePacing,

@@ -27,7 +27,7 @@ const shuffleArray = (array) => {
  * @returns {React.ReactElement} The interactive spelling workspace UI.
  */
 const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty = 'easy' }) => {
-  const { setStudentStreak, studentStreak, addStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores, coppaConsented } = useAppContext();
+  const { setStudentStreak, studentStreak, addStruggleWord, resolveStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores, coppaConsented } = useAppContext();
   
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [difficulty, setDifficulty] = useState(initialDifficulty); // easy, medium, hard
@@ -173,6 +173,9 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     let newCorrectCount = sessionCorrectCount;
 
     if (isCorrect) {
+      // Resolve struggle word if they got it right!
+      resolveStruggleWord(currentWord, tierId);
+
       // Pass Path: Calculate points using a stacking streak multiplier.
       // Multiplier increases by +0.1 per streak up to a maximum cap of 2.0x bonus.
       if (!hasFailedCurrentWord) {
