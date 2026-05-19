@@ -85,6 +85,18 @@ const RequestAccessPage = () => {
         status: 'pending',
         timestamp: serverTimestamp()
       });
+
+      // Immediately trigger COPPA Direct Notice email dispatch upon registration!
+      try {
+        await fetch('/api/register-parent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: user.email, uid: user.uid })
+        });
+      } catch (coppaErr) {
+        console.error("Failed to dispatch immediate COPPA notice upon registration:", coppaErr);
+      }
+
       setRequestStatus('pending');
     } catch (error) {
       console.error("Failed to submit request", error);

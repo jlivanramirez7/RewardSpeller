@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 /**
  * @component LoginPage
@@ -96,8 +96,16 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const { isApproved } = await authenticateAndFetchUser();
+      const { authUser, isApproved } = await authenticateAndFetchUser();
       if (isApproved) {
+        // Log last login timestamp in Firestore parent document
+        try {
+          await setDoc(doc(db, 'users', authUser.uid), {
+            lastLoginAt: serverTimestamp()
+          }, { merge: true });
+        } catch (tsErr) {
+          console.error("Failed to log parent last login timestamp:", tsErr);
+        }
         navigate('/app');
       } else {
         alert("Your account has not been approved yet. Redirecting to Request Access page...");

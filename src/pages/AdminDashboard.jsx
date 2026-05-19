@@ -26,6 +26,7 @@ const formatUsageTime = (totalSeconds) => {
 const AdminDashboard = () => {
   const { db, isAdmin } = useAuth();
   const [requests, setRequests] = useState([]);
+  const [activeUsers, setActiveUsers] = useState([]);
   const [metrics, setMetrics] = useState({
     totalUsers: 0,
     totalStudents: 0,
@@ -67,10 +68,20 @@ const AdminDashboard = () => {
       let totalStreak = 0;
       let highestStreak = 0;
       let totalUsageTime = 0;
+      const parsedUsers = [];
 
       usersSnapshot.forEach((docSnap) => {
         const data = docSnap.data();
+        const userId = docSnap.id;
         totalUsers++;
+
+        parsedUsers.push({
+          id: userId,
+          email: data.email || 'Legacy Account',
+          isApproved: data.isApproved || false,
+          lastLoginAt: data.lastLoginAt,
+          children: data.children ? Object.values(data.children).map(c => c.studentName) : []
+        });
 
         if (data.children && typeof data.children === 'object') {
           Object.values(data.children).forEach((child) => {
@@ -166,6 +177,7 @@ const AdminDashboard = () => {
         averageStreak,
         highestStreak
       });
+      setActiveUsers(parsedUsers.filter(u => u.email !== 'Legacy Account' || u.children.length > 0));
       setLoading(false);
     }, (error) => {
       console.error("Failed to fetch users snapshot", error);
@@ -193,9 +205,20 @@ const AdminDashboard = () => {
         isApproved: true
       }, { merge: true });
 
+      // Dispatch welcome notification email immediately via Resend!
+      try {
+        await fetch('/api/notify-approval', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+      } catch (emailErr) {
+        console.error("Failed to dispatch welcome approval email notification:", emailErr);
+      }
+
       // Refresh list
       setRequests(requests.filter(r => r.id !== requestId));
-      alert(`Approved ${email}`);
+      alert(`Approved and welcome email sent to ${email}`);
     } catch (error) {
       console.error("Failed to approve user", error);
       alert("Failed to approve user: " + error.message);
@@ -321,6 +344,74 @@ const AdminDashboard = () => {
             )}
           </div>
         </div>
+      </section>
+
+      <section style={{ marginBottom: '3rem' }}>
+        <h2>👥 Active Parent Directory</h2>
+        {activeUsers.length === 0 ? (
+          <p style={{ color: 'var(--text-secondary)' }}>No active parent accounts registered yet.</p>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
+              <thead>
+                <tr style={{ borderBottom: '2px solid #ddd', textAlign: 'left', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  <th style={{ padding: '1rem 0.75rem' }}>Parent Account</th>
+                  <th style={{ padding: '1rem 0.75rem' }}>Status</th>
+                  <th style={{ padding: '1rem 0.75rem' }}>Associated Students</th>
+                  <th style={{ padding: '1rem 0.75rem', textAlign: 'right' }}>Last Active Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activeUsers.map((parent) => {
+                  const isMaster = parent.email === 'jlivanramirez7@gmail.com';
+                  
+                  let loginTimeStr = 'Never logged in';
+                  if (parent.lastLoginAt) {
+                    const dateObj = parent.lastLoginAt.toDate ? parent.lastLoginAt.toDate() : new Date(parent.lastLoginAt);
+                    loginTimeStr = dateObj.toLocaleString();
+                  }
+
+                  return (
+                    <tr key={parent.id} style={{ borderBottom: '1px solid var(--surface-border)' }}>
+                      <td style={{ padding: '1rem 0.75rem', fontWeight: 'bold', color: 'white' }}>
+                        {parent.email}
+                      </td>
+                      <td style={{ padding: '1rem 0.75rem' }}>
+                        {isMaster ? (
+                          <span style={{ background: 'rgba(239, 68, 68, 0.15)', color: '#f87171', fontSize: '0.75rem', padding: '0.25rem 0.6rem', borderRadius: '12px', fontWeight: 'bold' }}>
+                            Master Parent
+                          </span>
+                        ) : (
+                          <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontSize: '0.75rem', padding: '0.25rem 0.6rem', borderRadius: '12px', fontWeight: 'bold' }}>
+                            Approved Parent
+                          </span>
+                        )}
+                      </td>
+                      <td style={{ padding: '1rem 0.75rem' }}>
+                        {parent.children && parent.children.length > 0 ? (
+                          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                            {parent.children.map((name, idx) => (
+                              <span key={idx} style={{ background: 'rgba(192, 132, 252, 0.15)', color: '#c084fc', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '8px', fontWeight: '600' }}>
+                                👦 {name}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontStyle: 'italic' }}>
+                            No student profiles yet
+                          </span>
+                        )}
+                      </td>
+                      <td style={{ padding: '1rem 0.75rem', textAlign: 'right', color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>
+                        🕒 {loginTimeStr}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
       <section>

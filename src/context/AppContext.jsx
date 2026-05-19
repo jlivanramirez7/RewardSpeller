@@ -356,6 +356,8 @@ export const AppProvider = ({ children }) => {
   const loadedUserUidRef = useRef(null);
   const { user, db, isStudent, parentUid, studentChildId } = useAuth();
   const [coppaConsented, setCoppaConsented] = useState(true);
+  const [isApproved, setIsApproved] = useState(false);
+  const [parentEmail, setParentEmail] = useState('');
 
   // Asynchronous data loading hook: Queries Firestore for user profile progress on authentication state change.
   // Implements active user switching protections to discard stale network resolutions if auth user changes during fetch.
@@ -383,6 +385,11 @@ export const AppProvider = ({ children }) => {
           if (docSnap.exists()) {
             const data = docSnap.data();
             restoreProgress(data);
+            
+            if (!ignore) {
+              setIsApproved(data.isApproved || false);
+              setParentEmail(data.email || '');
+            }
             
             if (data.coppaConsented === true || (user && user.email === 'jlivanramirez7@gmail.com')) {
               setCoppaConsented(true);
@@ -413,6 +420,12 @@ export const AppProvider = ({ children }) => {
 
             if (isStudent && studentChildId) {
               setActiveChildId(studentChildId);
+            }
+          } else {
+            if (!ignore) {
+              setIsApproved(user?.email === 'jlivanramirez7@gmail.com');
+              setParentEmail(user?.email || '');
+              setCoppaConsented(user?.email === 'jlivanramirez7@gmail.com');
             }
           }
           loadedUserUidRef.current = targetUid;
@@ -501,12 +514,14 @@ export const AppProvider = ({ children }) => {
       if (targetUid && db) {
         try {
           const docRef = doc(db, 'users', targetUid);
+          const approvedFlag = isApproved || targetUid === 'jlivanramirez7@gmail.com' || user?.email === 'jlivanramirez7@gmail.com';
           await setDoc(docRef, {
             activeChildId,
             children: childrenMap,
-            isApproved: true,
-            coppaConsented
-          }, { mergeFields: ['activeChildId', 'children', 'isApproved', 'coppaConsented'] });
+            isApproved: approvedFlag,
+            coppaConsented,
+            email: parentEmail || user?.email || ''
+          }, { mergeFields: ['activeChildId', 'children', 'isApproved', 'coppaConsented', 'email'] });
 
           if (!isStudent && user) {
             console.log(`[APP CONTEXT] Auto-syncing student links for parent ${user.email}...`);
@@ -536,7 +551,7 @@ export const AppProvider = ({ children }) => {
     };
 
     saveScores();
-  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid, coppaConsented]);
+  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid, coppaConsented, isApproved, parentEmail]);
 
   // Cross-tab storage sync
   // Cross-tab synchronization hook: Listens for storage events across browser tabs
@@ -779,7 +794,7 @@ export const AppProvider = ({ children }) => {
     enableDifficultyGating, setEnableDifficultyGating,
     isDifficultyUnlocked,
     listenedLessons, markLessonListened,
-    rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa,
+    rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa, isApproved, parentEmail,
     currentGradeLevel, setCurrentGradeLevel,
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,
@@ -796,7 +811,7 @@ export const AppProvider = ({ children }) => {
     enableDifficultyGating, setEnableDifficultyGating,
     isDifficultyUnlocked,
     listenedLessons, markLessonListened,
-    rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa,
+    rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa, isApproved, parentEmail,
     currentGradeLevel, setCurrentGradeLevel,
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,

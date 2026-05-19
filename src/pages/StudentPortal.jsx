@@ -13,7 +13,7 @@ import LessonModal from '../components/LessonModal';
  * @returns {React.ReactElement} The student learning workspace UI.
  */
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName, coppaConsented, registerParentCoppa } = useAppContext();
+  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName, coppaConsented, registerParentCoppa, parentEmail } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
   const [notification, setNotification] = useState(null);
@@ -178,40 +178,67 @@ const StudentPortal = () => {
               <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: '1.6' }}>
                 To comply with the Children's Online Privacy Protection Act (COPPA), we require explicit verifiable parental consent before your child can access our educational assessment modules or the Jedi Archive.
               </p>
-              <p style={{ color: 'white', marginBottom: '2rem', fontSize: '0.95rem' }}>
-                Please check your email inbox for the secure verification link we sent you upon registration.
-              </p>
+              
+              {parentEmail ? (
+                <p style={{ color: 'white', marginBottom: '2rem', fontSize: '0.95rem' }}>
+                  A secure verification link has been sent to your parent at: <strong style={{ color: 'var(--accent-cyan)' }}>{parentEmail}</strong>.
+                </p>
+              ) : (
+                <p style={{ color: 'white', marginBottom: '2rem', fontSize: '0.95rem' }}>
+                  Please check your email inbox for the secure verification link we sent you upon registration.
+                </p>
+              )}
               
               {coppaSubmitted ? (
                 <div style={{ padding: '1rem', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', borderRadius: '8px', fontWeight: 'bold' }}>
-                  ✓ Verification email resent! Please check your inbox (and spam folder).
+                  ✓ Reminder email sent! Please check your inbox (and spam folder).
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-                  <input 
-                    type="email" 
-                    placeholder="Enter parent email to resend notice"
-                    value={coppaEmailInput}
-                    onChange={(e) => setCoppaEmailInput(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--surface-border)', color: 'white', textAlign: 'center' }}
-                  />
-                  <button 
-                    className="btn-primary"
-                    onClick={async () => {
-                      if (coppaEmailInput.trim()) {
+                  {parentEmail ? (
+                    <button 
+                      className="btn-primary"
+                      onClick={async () => {
                         setCoppaError(null);
-                        const result = await registerParentCoppa(coppaEmailInput.trim());
+                        const result = await registerParentCoppa(parentEmail);
                         if (result.success) {
                           setCoppaSubmitted(true);
                         } else {
                           setCoppaError(result.error);
                         }
-                      }
-                    }}
-                    style={{ width: '100%' }}
-                  >
-                    Resend Verification Email
-                  </button>
+                      }}
+                      style={{ width: '100%', padding: '1rem', fontSize: '1.1rem' }}
+                    >
+                      🔔 Remind Parent
+                    </button>
+                  ) : (
+                    <>
+                      <input 
+                        type="email" 
+                        placeholder="Enter parent email to resend notice"
+                        value={coppaEmailInput}
+                        onChange={(e) => setCoppaEmailInput(e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--surface-border)', color: 'white', textAlign: 'center' }}
+                      />
+                      <button 
+                        className="btn-primary"
+                        onClick={async () => {
+                          if (coppaEmailInput.trim()) {
+                            setCoppaError(null);
+                            const result = await registerParentCoppa(coppaEmailInput.trim());
+                            if (result.success) {
+                              setCoppaSubmitted(true);
+                            } else {
+                              setCoppaError(result.error);
+                            }
+                          }
+                        }}
+                        style={{ width: '100%' }}
+                      >
+                        Resend Verification Email
+                      </button>
+                    </>
+                  )}
                   {coppaError && (
                     <div style={{ padding: '1rem', background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.85rem', marginTop: '0.5rem' }}>
                       ❌ {coppaError}

@@ -209,6 +209,37 @@ const scoresApiMiddleware = async (req, res, next) => {
     return;
   }
 
+  if (req.url === '/api/notify-approval' && req.method === 'POST') {
+    try {
+      const body = await getRequestBody(req);
+      const { email } = body;
+      if (!email) {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ error: 'Missing email' }));
+        return;
+      }
+
+      const loginUrl = `https://${req.headers.host}/login`;
+      const emailText = `Subject: Welcome to RewardSpeller: Your Access Has Been Approved!\n\nDear Parent/Guardian,\n\nGreat news! Your access request for RewardSpeller (account: ${email}) has been reviewed and approved by our team.\n\nYou can now log into the application and immediately access the Parent Control Center to create child profiles, link student emails, and manage custom rewards:\n${loginUrl}\n\nAs a reminder, the default password to access your Parent Dashboard/Portal settings is simply "password".\n\nSincerely,\nThe RewardSpeller Team`;
+
+      const emailResult = await sendCOPPAEmail(email, 'Welcome to RewardSpeller: Your Access Has Been Approved!', emailText);
+
+      res.setHeader('Content-Type', 'application/json');
+      if (!emailResult.success) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ error: `Resend API Error: ${emailResult.error}` }));
+        return;
+      }
+      res.end(JSON.stringify({ success: true }));
+    } catch (err) {
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
   next();
 };
 

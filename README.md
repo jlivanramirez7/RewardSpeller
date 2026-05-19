@@ -66,7 +66,10 @@ The global wallet secures anti-grinding protocol through distinct **Differential
 
 ## 👑 Parent Control Center & Multi-Student Profiles
 
-RewardSpeller provides a comprehensive, enterprise-grade parental administration suite designed to manage multi-student learning tracks securely:
+RewardSpeller provides a comprehensive, enterprise-grade parental administration suite designed to manage multi-student learning tracks securely. 
+
+> [!TIP]
+> **Access Security Lock**: The Parent Dashboard/Portal settings are protected by a default lock password. The default password is simply **`password`**.
 
 ### 1. Multi-Student Profiles & Login Flexibility
 Parents can maintain multiple child profiles under a single master parent account (e.g., `jlivanramirez7@gmail.com`). The platform supports two distinct student operational modes:
