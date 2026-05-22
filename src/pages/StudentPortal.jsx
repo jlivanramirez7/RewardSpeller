@@ -406,7 +406,7 @@ const StudentPortal = () => {
                               let allWords = [];
                               tier.sections.forEach(s => allWords.push(...(s.words || [])));
                               const shuffledAll = [...allWords].sort(() => Math.random() - 0.5);
-                              const assessmentWords = shuffledAll.slice(0, 10);
+                              const assessmentWords = shuffledAll.slice(0, 15);
                               
                               const recommendedDifficulty = getRecommendedDifficulty(`tier_${tier.id}_mastery`);
                               setActivePlayData({ 

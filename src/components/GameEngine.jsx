@@ -12,6 +12,42 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
+const shuffleEasyWords = (array) => {
+  const duplicated = [...array, ...array];
+  let shuffled;
+  let attempts = 0;
+  
+  while (attempts < 100) {
+    shuffled = [...duplicated].sort(() => Math.random() - 0.5);
+    let hasAdjacentDuplicates = false;
+    for (let i = 0; i < shuffled.length - 1; i++) {
+      if (shuffled[i].word === shuffled[i+1].word) {
+        hasAdjacentDuplicates = true;
+        break;
+      }
+    }
+    if (!hasAdjacentDuplicates) {
+      return shuffled;
+    }
+    attempts++;
+  }
+  
+  // Fallback: standard fisher-yates shuffle of duplicated array if perfect anti-adjacent shuffle fails
+  const fallback = [...duplicated];
+  for (let i = fallback.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [fallback[i], fallback[j]] = [fallback[j], fallback[i]];
+  }
+  return fallback;
+};
+
+const getWordsForDifficulty = (array, diff) => {
+  if (diff === 'easy') {
+    return shuffleEasyWords(array);
+  }
+  return shuffleArray(array);
+};
+
 /**
  * @component GameEngine
  * @description Interactive spelling assessment workspace. Manages word dictation via Text-to-Speech (TTS),
@@ -48,7 +84,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   const isProcessingRef = useRef(false);
   
   const [shuffledWords, setShuffledWords] = useState(() => 
-    section?.words ? shuffleArray(section.words) : []
+    section?.words ? getWordsForDifficulty(section.words, initialDifficulty) : []
   );
 
 
@@ -77,6 +113,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   // and blocks trailing setTimeout state transitions to prevent memory leaks.
   useEffect(() => {
     isMountedRef.current = true; // RESTORE mounted state explicitly on mount/remount
+    if (section?.words) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShuffledWords(getWordsForDifficulty(section.words, difficulty));
+    }
     return () => {
       isMountedRef.current = false; // Block trailing timeouts
       cancelTTS();
@@ -84,7 +124,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
         clearTimeout(advanceTimeoutRef.current);
       }
     };
-  }, []);
+  }, [section, difficulty]);
 
   const startNewWord = useCallback(() => {
     setUserInput('');
@@ -111,12 +151,13 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   }, [startNewWord, words, currentWordIndex]);
 
   const handleDifficultyChange = (e) => {
-    setDifficulty(e.target.value);
+    const nextDiff = e.target.value;
+    setDifficulty(nextDiff);
     setSessionScore(0);
     setSessionCorrectCount(0);
     setCurrentWordIndex(0);
     if (section?.words) {
-      setShuffledWords(shuffleArray(section.words));
+      setShuffledWords(getWordsForDifficulty(section.words, nextDiff));
     }
     if (advanceTimeoutRef.current) {
       clearTimeout(advanceTimeoutRef.current);
@@ -134,7 +175,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     setStudentStreak(0);
     setFeedback(null);
     if (section?.words) {
-      setShuffledWords(shuffleArray(section.words));
+      setShuffledWords(getWordsForDifficulty(section.words, difficulty));
     }
     if (advanceTimeoutRef.current) {
       clearTimeout(advanceTimeoutRef.current);
@@ -153,7 +194,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     setStudentStreak(0);
     setFeedback(null);
     if (section?.words) {
-      setShuffledWords(shuffleArray(section.words));
+      setShuffledWords(getWordsForDifficulty(section.words, nextDiff));
     }
     if (advanceTimeoutRef.current) {
       clearTimeout(advanceTimeoutRef.current);
@@ -444,6 +485,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
                   }
                 }}
                 placeholder="Type the word here..."
+                spellCheck="false"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
                 style={{
                   width: '100%',
                   padding: '1rem',
