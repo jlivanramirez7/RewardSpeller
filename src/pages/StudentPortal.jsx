@@ -482,32 +482,54 @@ const StudentPortal = () => {
                         border: canAfford ? '2px solid #10b981' : '1px solid var(--surface-border)',
                         textAlign: 'center'
                       }}>
-                        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{reward.name}</h3>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
-                          <span style={{ color: 'var(--text-secondary)' }}>{Math.min(studentPoints, reward.cost)} / {reward.cost} pts</span>
-                          <span style={{ color: '#fbbf24', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
-                        </div>
+                        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', textDecoration: reward.redeemed ? 'line-through' : 'none', color: reward.redeemed ? 'var(--text-secondary)' : 'white' }}>{reward.name}</h3>
                         
-                        <div style={{ width: '100%', height: '8px', background: 'rgba(255, 113, 113, 0.1)', borderRadius: '4px', marginBottom: '1rem', overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${progress}%`, background: canAfford ? 'var(--success-color)' : 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
-                        </div>
-
-                        {canAfford ? (
-                          <button 
-                            className="btn-primary" 
-                            disabled={true}
-                            style={{ width: '100%', background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', fontWeight: 'bold', border: 'none' }}
-                          >
-                            🏆 COMPLETE
-                          </button>
+                        {reward.redeemed ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1rem' }}>
+                            <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
+                              <div style={{ height: '100%', width: '100%', background: 'var(--success-color)' }}></div>
+                            </div>
+                            <div style={{ 
+                              padding: '0.5rem', 
+                              background: 'rgba(96, 165, 250, 0.15)', 
+                              color: '#60a5fa', 
+                              borderRadius: '8px', 
+                              fontWeight: 'bold', 
+                              border: '1px dashed #60a5fa',
+                              fontSize: '0.85rem'
+                            }}>
+                              🎁 REDEEMED & DELIVERED
+                            </div>
+                          </div>
                         ) : (
-                          <button 
-                            className="btn-secondary" 
-                            disabled={true}
-                            style={{ width: '100%' }}
-                          >
-                            Keep Learning!
-                          </button>
+                          <>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
+                              <span style={{ color: 'var(--text-secondary)' }}>{Math.min(studentPoints, reward.cost)} / {reward.cost} pts</span>
+                              <span style={{ color: '#fbbf24', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
+                            </div>
+                            
+                            <div style={{ width: '100%', height: '8px', background: 'rgba(255, 113, 113, 0.1)', borderRadius: '4px', marginBottom: '1rem', overflow: 'hidden' }}>
+                              <div style={{ height: '100%', width: `${progress}%`, background: canAfford ? 'var(--success-color)' : 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
+                            </div>
+
+                            {canAfford ? (
+                              <button 
+                                className="btn-primary" 
+                                disabled={true}
+                                style={{ width: '100%', background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', fontWeight: 'bold', border: 'none' }}
+                              >
+                                🏆 COMPLETE
+                              </button>
+                            ) : (
+                              <button 
+                                className="btn-secondary" 
+                                disabled={true}
+                                style={{ width: '100%' }}
+                              >
+                                Keep Learning!
+                              </button>
+                            )}
+                          </>
                         )}
                       </div>
                     );

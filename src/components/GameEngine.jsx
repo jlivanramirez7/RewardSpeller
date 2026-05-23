@@ -222,7 +222,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
       if (!hasFailedCurrentWord) {
         const multiplier = Math.min(1 + (studentStreak * 0.1), 2); // Max 2x multiplier
         const basePoints = DIFFICULTY_POINTS[difficulty];
-        const earned = Math.round(basePoints * multiplier);
+        const rawEarned = basePoints * multiplier;
+        const earned = difficulty === 'easy' ? Math.round(rawEarned * 10) / 10 : Math.round(rawEarned);
         newSessionScore = sessionScore + earned;
         newCorrectCount = sessionCorrectCount + 1;
         
@@ -243,6 +244,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
       setFeedback({ type: 'error', message: `Incorrect. The correct spelling is: ${currentWord}` });
       setShowWord(true);
       speakWord(); // Re-dictate core answer on error
+      
+      if (difficulty === 'medium' || difficulty === 'hard') {
+        setUserInput('');
+      }
     }
 
     const shouldAdvance = isCorrect || difficulty === 'easy';

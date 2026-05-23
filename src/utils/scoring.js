@@ -9,7 +9,7 @@
  * @constant {Object.<string, number>}
  */
 export const DIFFICULTY_POINTS = {
-  easy: 1,
+  easy: 0.5,
   medium: 3,
   hard: 30
 };

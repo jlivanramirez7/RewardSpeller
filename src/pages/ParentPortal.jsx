@@ -15,7 +15,7 @@ const ParentPortal = () => {
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
     isLoaded, error,
     studentName, setStudentName, linkStudentEmail,
-    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild
+    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,6 +28,8 @@ const ParentPortal = () => {
   const [showAllStruggle, setShowAllStruggle] = useState(false);
   const [showCompletedRewards, setShowCompletedRewards] = useState(false);
   const [showAllIncompleteRewards, setShowAllIncompleteRewards] = useState(false);
+  const [editingRewardId, setEditingRewardId] = useState(null);
+  const [editCostInput, setEditCostInput] = useState(0);
 
   const sortedStruggles = useMemo(() => {
     return [...struggleWords].sort((a, b) => b.count - a.count);
@@ -38,16 +40,20 @@ const ParentPortal = () => {
   }, [sortedStruggles, showAllStruggle]);
 
   const incompleteRewards = useMemo(() => {
-    return rewards.filter(r => studentPoints < r.cost);
+    return rewards.filter(r => studentPoints < r.cost && !r.redeemed);
   }, [rewards, studentPoints]);
 
   const visibleIncompleteRewards = useMemo(() => {
     return showAllIncompleteRewards ? incompleteRewards : incompleteRewards.slice(0, 5);
   }, [incompleteRewards, showAllIncompleteRewards]);
 
-  const completedRewards = useMemo(() => {
-    return rewards.filter(r => studentPoints >= r.cost);
+  const readyToRedeemRewards = useMemo(() => {
+    return rewards.filter(r => studentPoints >= r.cost && !r.redeemed);
   }, [rewards, studentPoints]);
+
+  const redeemedRewards = useMemo(() => {
+    return rewards.filter(r => r.redeemed === true);
+  }, [rewards]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -369,7 +375,48 @@ const ParentPortal = () => {
                     return (
                       <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
+                          {editingRewardId === reward.id ? (
+                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                              <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
+                              <input 
+                                type="number" 
+                                value={editCostInput}
+                                onChange={(e) => setEditCostInput(parseInt(e.target.value, 10) || 0)}
+                                style={{ width: '80px', padding: '0.25rem', borderRadius: '4px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--surface-border)', color: 'white', fontSize: '0.85rem' }}
+                              />
+                              <button 
+                                className="btn-primary"
+                                style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                onClick={() => {
+                                  setRewards(prev => prev.map(r => r.id === reward.id ? { ...r, cost: editCostInput } : r));
+                                  setEditingRewardId(null);
+                                }}
+                              >
+                                Save
+                              </button>
+                              <button 
+                                className="btn-secondary"
+                                style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                onClick={() => setEditingRewardId(null)}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
+                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                              <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
+                              <button 
+                                className="btn-secondary"
+                                style={{ padding: '0.15rem 0.4rem', fontSize: '0.7rem' }}
+                                onClick={() => {
+                                  setEditingRewardId(reward.id);
+                                  setEditCostInput(reward.cost);
+                                }}
+                              >
+                                Edit Cost
+                              </button>
+                            </div>
+                          )}
                           <button 
                             className="btn-secondary"
                             style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
@@ -401,25 +448,60 @@ const ParentPortal = () => {
               </>
             )}
 
-            {completedRewards.length > 0 && (
+            {readyToRedeemRewards.length > 0 && (
+              <div style={{ marginTop: '1.5rem' }}>
+                <h4 style={{ fontSize: '1rem', marginBottom: '0.75rem', color: 'var(--success-color)' }}>🏆 Claimed & Ready to Redeem</h4>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                  {readyToRedeemRewards.map(reward => (
+                    <li key={reward.id} style={{ padding: '1rem', border: '1px solid #10b981', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '8px', marginBottom: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontWeight: 'bold', color: 'white', fontSize: '1.05rem' }}>{reward.name}</span>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button 
+                            className="btn-primary"
+                            style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', background: 'var(--success-color)', border: 'none' }}
+                            onClick={() => redeemReward(reward.id)}
+                          >
+                            🎁 Mark as Redeemed
+                          </button>
+                          <button 
+                            className="btn-secondary"
+                            style={{ padding: '0.35rem 0.5rem', fontSize: '0.8rem' }}
+                            onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                        <span>Progress: {studentPoints} / {reward.cost} pts</span>
+                        <span style={{ color: 'var(--success-color)', fontWeight: 'bold' }}>Ready to Claim!</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {redeemedRewards.length > 0 && (
               <div style={{ marginTop: '1.5rem' }}>
                 <button 
                   className="btn-secondary" 
                   onClick={() => setShowCompletedRewards(!showCompletedRewards)}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  {showCompletedRewards ? 'Hide Completed Rewards' : `Show Completed Rewards (${completedRewards.length})`}
+                  {showCompletedRewards ? 'Hide Redeemed Rewards' : `Show Redeemed Rewards (${redeemedRewards.length})`}
                 </button>
                 
                 {showCompletedRewards && (
                   <ul style={{ listStyle: 'none', padding: 0, marginTop: '1rem' }}>
-                    {completedRewards.map(reward => (
-                      <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '8px', marginBottom: '0.5rem' }}>
+                    {redeemedRewards.map(reward => (
+                      <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', marginBottom: '0.5rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <div>
                             <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', textDecoration: 'line-through' }}>{reward.name}</span>
-                            <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '12px', fontWeight: 'bold', marginLeft: '0.5rem' }}>
-                              🏆 Earned
+                            <span style={{ background: 'rgba(96, 165, 250, 0.15)', color: '#60a5fa', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '12px', fontWeight: 'bold', marginLeft: '0.5rem' }}>
+                              🎁 FULFILLED
                             </span>
                           </div>
                           <button 
@@ -431,11 +513,8 @@ const ParentPortal = () => {
                           </button>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                          <span>{studentPoints} / {reward.cost} pts</span>
+                          <span>Fulfillment Cost: {reward.cost} pts</span>
                           <span style={{ fontWeight: 'bold' }}>100%</span>
-                        </div>
-                        <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: '100%', background: 'var(--success-color)' }}></div>
                         </div>
                       </li>
                     ))}

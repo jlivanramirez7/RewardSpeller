@@ -697,6 +697,10 @@ export const AppProvider = ({ children }) => {
     });
   }, [setStruggleWords]);
 
+  const redeemReward = useCallback((rewardId) => {
+    setRewards(prev => prev.map(r => r.id === rewardId ? { ...r, redeemed: true } : r));
+  }, [setRewards]);
+
   const purchaseReward = useCallback((rewardId) => {
     const reward = rewards.find(r => r.id === rewardId);
     if (reward && studentPoints >= reward.cost) {
@@ -814,12 +818,12 @@ export const AppProvider = ({ children }) => {
     isLoaded, error,
     studentName, setStudentName,
     childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild,
-    resolveStruggleWord
+    resolveStruggleWord, redeemReward
   }), [
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
     unlockedTiers, setUnlockedTiers,
-    struggleWords, addStruggleWord, resolveStruggleWord,
+    struggleWords, addStruggleWord, resolveStruggleWord, redeemReward,
     sectionScores, updateSectionScore,
     sectionAccuracy, getSectionStats,
     enablePacing, setEnablePacing,
