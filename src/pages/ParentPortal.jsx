@@ -330,198 +330,208 @@ const ParentPortal = () => {
 
         {/* Reward Configuration */}
         <div className="glass-panel" style={{ padding: '2rem' }}>
-          <h2 style={{ marginBottom: '1rem' }}>Reward System Configuration</h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>Define custom rewards to incentivize learning.</p>
+          <h2 style={{ marginBottom: '0.5rem' }}>Reward System Configuration</h2>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '2rem' }}>Define custom rewards and manage parent-sponsored redemptions.</p>
           
-          <form 
-            onSubmit={(e) => {
-              e.preventDefault();
-              const name = e.target.rewardName.value;
-              const cost = parseInt(e.target.rewardCost.value, 10);
-              if (name && cost) {
-                setRewards(prev => [...prev, { id: Date.now(), name, cost }]);
-                e.target.reset();
-              }
-            }}
-            style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}
-          >
-            <input 
-              name="rewardName" 
-              type="text" 
-              placeholder="Reward Name (e.g. Park Trip)" 
-              required
-              style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white' }}
-            />
-            <input 
-              name="rewardCost" 
-              type="number" 
-              placeholder="Cost (pts)" 
-              min="10"
-              required
-              style={{ width: '100px', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white' }}
-            />
-            <button type="submit" className="btn-primary">Add</button>
-          </form>
+          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+            
+            {/* COLUMN 1: CATALOG & CREATION */}
+            <div style={{ flex: '1 1 350px', minWidth: '320px' }}>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-cyan)' }}>🔧 Reward Catalog & Setup</h3>
+              
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const name = e.target.rewardName.value;
+                  const cost = parseInt(e.target.rewardCost.value, 10);
+                  if (name && cost) {
+                    setRewards(prev => [...prev, { id: Date.now(), name, cost }]);
+                    e.target.reset();
+                  }
+                }}
+                style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}
+              >
+                <input 
+                  name="rewardName" 
+                  type="text" 
+                  placeholder="Reward Name" 
+                  required
+                  style={{ flex: 1, padding: '0.6rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white', fontSize: '0.9rem' }}
+                />
+                <input 
+                  name="rewardCost" 
+                  type="number" 
+                  placeholder="Cost" 
+                  min="10"
+                  required
+                  style={{ width: '80px', padding: '0.6rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white', fontSize: '0.9rem' }}
+                />
+                <button type="submit" className="btn-primary" style={{ padding: '0.6rem 1.2rem' }}>Add</button>
+              </form>
 
-          <div>
-            <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Active Rewards</h3>
-            {incompleteRewards.length === 0 ? (
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', padding: '1rem 0' }}>No active incomplete rewards configured.</p>
-            ) : (
-              <>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {visibleIncompleteRewards.map(reward => {
-                    const progress = Math.min((studentPoints / reward.cost) * 100, 100);
-                    return (
-                      <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          {editingRewardId === reward.id ? (
-                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                              <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
-                              <input 
-                                type="number" 
-                                value={editCostInput}
-                                onChange={(e) => setEditCostInput(parseInt(e.target.value, 10) || 0)}
-                                style={{ width: '80px', padding: '0.25rem', borderRadius: '4px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--surface-border)', color: 'white', fontSize: '0.85rem' }}
-                              />
-                              <button 
-                                className="btn-primary"
-                                style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                                onClick={() => {
-                                  setRewards(prev => prev.map(r => r.id === reward.id ? { ...r, cost: editCostInput } : r));
-                                  setEditingRewardId(null);
-                                }}
-                              >
-                                Save
-                              </button>
+              {incompleteRewards.length === 0 ? (
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', padding: '1rem 0', fontStyle: 'italic' }}>No active incomplete rewards configured.</p>
+              ) : (
+                <>
+                  <ul style={{ listStyle: 'none', padding: 0 }}>
+                    {visibleIncompleteRewards.map(reward => {
+                      const progress = Math.min((studentPoints / reward.cost) * 100, 100);
+                      return (
+                        <li key={reward.id} style={{ padding: '1rem', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--surface-border)', borderRadius: '8px', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            {editingRewardId === reward.id ? (
+                              <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                                <input 
+                                  type="number" 
+                                  value={editCostInput}
+                                  onChange={(e) => setEditCostInput(parseInt(e.target.value, 10) || 0)}
+                                  style={{ width: '70px', padding: '0.25rem', borderRadius: '4px', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--surface-border)', color: 'white', fontSize: '0.85rem' }}
+                                />
+                                <button 
+                                  className="btn-primary"
+                                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                  onClick={() => {
+                                    setRewards(prev => prev.map(r => r.id === reward.id ? { ...r, cost: editCostInput } : r));
+                                    setEditingRewardId(null);
+                                  }}
+                                >
+                                  Save
+                                </button>
+                                <button 
+                                  className="btn-secondary"
+                                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                  onClick={() => setEditingRewardId(null)}
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            ) : (
+                              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <span style={{ fontWeight: 'bold', color: 'white' }}>{reward.name}</span>
+                                <button 
+                                  className="btn-secondary"
+                                  style={{ padding: '0.15rem 0.4rem', fontSize: '0.7rem', border: '1px dashed rgba(255,255,255,0.2)' }}
+                                  onClick={() => {
+                                    setEditingRewardId(reward.id);
+                                    setEditCostInput(reward.cost);
+                                  }}
+                                >
+                                  Edit Cost
+                                </button>
+                              </div>
+                            )}
+                            
+                            {editingRewardId !== reward.id && (
                               <button 
                                 className="btn-secondary"
-                                style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                                onClick={() => setEditingRewardId(null)}
+                                style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', border: 'none', color: '#ef4444' }}
+                                onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
                               >
-                                Cancel
+                                Remove
                               </button>
-                            </div>
-                          ) : (
-                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                              <span style={{ fontWeight: 'bold' }}>{reward.name}</span>
-                              <button 
-                                className="btn-secondary"
-                                style={{ padding: '0.15rem 0.4rem', fontSize: '0.7rem' }}
-                                onClick={() => {
-                                  setEditingRewardId(reward.id);
-                                  setEditCostInput(reward.cost);
-                                }}
-                              >
-                                Edit Cost
-                              </button>
-                            </div>
-                          )}
-                          <button 
-                            className="btn-secondary"
-                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                            onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
-                          >
-                            Remove
-                          </button>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
-                          <span style={{ color: 'var(--text-secondary)' }}>{studentPoints} / {reward.cost} pts</span>
-                          <span style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
-                        </div>
-                        <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${progress}%`, background: 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-                {incompleteRewards.length > 5 && (
-                  <button 
-                    className="btn-secondary" 
-                    onClick={() => setShowAllIncompleteRewards(!showAllIncompleteRewards)}
-                    style={{ width: '100%', marginTop: '1rem' }}
-                  >
-                    {showAllIncompleteRewards ? 'Show Less' : `Show More (${incompleteRewards.length - 5} more)`}
-                  </button>
-                )}
-              </>
-            )}
-
-            {readyToRedeemRewards.length > 0 && (
-              <div style={{ marginTop: '1.5rem' }}>
-                <h4 style={{ fontSize: '1rem', marginBottom: '0.75rem', color: 'var(--success-color)' }}>🏆 Claimed & Ready to Redeem</h4>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {readyToRedeemRewards.map(reward => (
-                    <li key={reward.id} style={{ padding: '1rem', border: '1px solid #10b981', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '8px', marginBottom: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontWeight: 'bold', color: 'white', fontSize: '1.05rem' }}>{reward.name}</span>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button 
-                            className="btn-primary"
-                            style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', background: 'var(--success-color)', border: 'none' }}
-                            onClick={() => redeemReward(reward.id)}
-                          >
-                            🎁 Mark as Redeemed
-                          </button>
-                          <button 
-                            className="btn-secondary"
-                            style={{ padding: '0.35rem 0.5rem', fontSize: '0.8rem' }}
-                            onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                        <span>Progress: {studentPoints} / {reward.cost} pts</span>
-                        <span style={{ color: 'var(--success-color)', fontWeight: 'bold' }}>Ready to Claim!</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {redeemedRewards.length > 0 && (
-              <div style={{ marginTop: '1.5rem' }}>
-                <button 
-                  className="btn-secondary" 
-                  onClick={() => setShowCompletedRewards(!showCompletedRewards)}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-                >
-                  {showCompletedRewards ? 'Hide Redeemed Rewards' : `Show Redeemed Rewards (${redeemedRewards.length})`}
-                </button>
-                
-                {showCompletedRewards && (
-                  <ul style={{ listStyle: 'none', padding: 0, marginTop: '1rem' }}>
-                    {redeemedRewards.map(reward => (
-                      <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', marginBottom: '0.5rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>
-                            <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', textDecoration: 'line-through' }}>{reward.name}</span>
-                            <span style={{ background: 'rgba(96, 165, 250, 0.15)', color: '#60a5fa', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '12px', fontWeight: 'bold', marginLeft: '0.5rem' }}>
-                              🎁 FULFILLED
-                            </span>
+                            )}
                           </div>
-                          <button 
-                            className="btn-secondary"
-                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                            onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
-                          >
-                            Remove
-                          </button>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                          <span>Fulfillment Cost: {reward.cost} pts</span>
-                          <span style={{ fontWeight: 'bold' }}>100%</span>
-                        </div>
-                      </li>
-                    ))}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
+                            <span style={{ color: 'var(--text-secondary)' }}>{studentPoints} / {reward.cost} pts</span>
+                            <span style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
+                          </div>
+                          <div style={{ width: '100%', height: '5px', background: 'rgba(255,255,255,0.05)', borderRadius: '3px', overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${progress}%`, background: 'var(--accent-color)', transition: 'width 0.3s ease' }}></div>
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ul>
-                )}
-              </div>
-            )}
+                  {incompleteRewards.length > 5 && (
+                    <button 
+                      className="btn-secondary" 
+                      onClick={() => setShowAllIncompleteRewards(!showAllIncompleteRewards)}
+                      style={{ width: '100%', marginTop: '0.5rem', padding: '0.5rem' }}
+                    >
+                      {showAllIncompleteRewards ? 'Show Less' : `Show More (${incompleteRewards.length - 5} more)`}
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* COLUMN 2: REDEMPTION & FULFILLMENT */}
+            <div style={{ flex: '1 1 350px', minWidth: '320px', borderLeft: '1px solid var(--surface-border)', paddingLeft: '2rem' }}>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--success-color)' }}>🎁 Fulfillment Control</h3>
+              
+              {readyToRedeemRewards.length === 0 && redeemedRewards.length === 0 ? (
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', padding: '1rem 0', fontStyle: 'italic' }}>No claimed or fulfilled rewards yet.</p>
+              ) : (
+                <>
+                  {readyToRedeemRewards.length > 0 ? (
+                    <ul style={{ listStyle: 'none', padding: 0 }}>
+                      {readyToRedeemRewards.map(reward => (
+                        <li key={reward.id} style={{ padding: '1rem', border: '1px solid #10b981', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '8px', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontWeight: 'bold', color: 'white', fontSize: '1rem' }}>{reward.name}</span>
+                            <button 
+                              className="btn-primary"
+                              style={{ padding: '0.35rem 0.6rem', fontSize: '0.75rem', background: 'var(--success-color)', border: 'none', color: 'white', fontWeight: 'bold' }}
+                              onClick={() => redeemReward(reward.id)}
+                            >
+                              🎁 Mark Redeemed
+                            </button>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                            <span>Progress: {studentPoints} / {reward.cost} pts</span>
+                            <span style={{ color: 'var(--success-color)', fontWeight: 'bold' }}>Ready to Fulfill!</span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    readyToRedeemRewards.length === 0 && redeemedRewards.length > 0 && (
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.5rem', fontStyle: 'italic' }}>✓ All completed milestones fulfilled!</p>
+                    )
+                  )}
+
+                  {redeemedRewards.length > 0 && (
+                    <div style={{ marginTop: '1.5rem' }}>
+                      <button 
+                        className="btn-secondary" 
+                        onClick={() => setShowCompletedRewards(!showCompletedRewards)}
+                        style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.5rem' }}
+                      >
+                        {showCompletedRewards ? 'Hide Redeemed History' : `Show Redeemed History (${redeemedRewards.length})`}
+                      </button>
+                      
+                      {showCompletedRewards && (
+                        <ul style={{ listStyle: 'none', padding: 0, marginTop: '1rem' }}>
+                          {redeemedRewards.map(reward => (
+                            <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(255,255,255,0.01)', borderRadius: '8px', marginBottom: '0.5rem' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div>
+                                  <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', textDecoration: 'line-through' }}>{reward.name}</span>
+                                  <span style={{ background: 'rgba(96, 165, 250, 0.1)', color: '#60a5fa', fontSize: '0.7rem', padding: '0.15rem 0.4rem', borderRadius: '12px', fontWeight: 'bold', marginLeft: '0.5rem' }}>
+                                    FULFILLED
+                                  </span>
+                                </div>
+                                <button 
+                                  className="btn-secondary"
+                                  style={{ padding: '0.2rem 0.4rem', fontSize: '0.7rem', border: 'none', color: 'var(--text-secondary)' }}
+                                  onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                                <span>Cost: {reward.cost} pts</span>
+                                <span>100%</span>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
 
