@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { collection, query, where, doc, updateDoc, setDoc, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, doc, updateDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 
 const formatUsageTime = (totalSeconds) => {
   if (!totalSeconds) return '0 mins';
@@ -79,7 +79,9 @@ const AdminDashboard = () => {
           id: userId,
           email: data.email || 'Legacy Account',
           isApproved: data.isApproved || false,
+          coppaConsented: data.coppaConsented || false,
           lastLoginAt: data.lastLoginAt,
+          lastInteractionAt: data.lastInteractionAt,
           children: data.children ? Object.values(data.children).map(c => c.studentName) : []
         });
 
@@ -199,10 +201,11 @@ const AdminDashboard = () => {
         status: 'approved'
       });
 
-      // Create or update user document with isApproved: true
+      // Create or update user document with isApproved: true and initial active interaction timestamp
       await setDoc(doc(db, 'users', userId), {
         email: email,
-        isApproved: true
+        isApproved: true,
+        lastInteractionAt: serverTimestamp()
       }, { merge: true });
 
       // Dispatch welcome notification email immediately via Resend!
@@ -356,19 +359,21 @@ const AdminDashboard = () => {
               <thead>
                 <tr style={{ borderBottom: '2px solid #ddd', textAlign: 'left', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                   <th style={{ padding: '1rem 0.75rem' }}>Parent Account</th>
-                  <th style={{ padding: '1rem 0.75rem' }}>Status</th>
+                  <th style={{ padding: '1rem 0.75rem' }}>Access Role</th>
+                  <th style={{ padding: '1rem 0.75rem' }}>COPPA Consent</th>
                   <th style={{ padding: '1rem 0.75rem' }}>Associated Students</th>
-                  <th style={{ padding: '1rem 0.75rem', textAlign: 'right' }}>Last Active Time</th>
+                  <th style={{ padding: '1rem 0.75rem', textAlign: 'right' }}>Last Interaction Time</th>
                 </tr>
               </thead>
               <tbody>
                 {activeUsers.map((parent) => {
                   const isMaster = parent.email === 'jlivanramirez7@gmail.com';
                   
-                  let loginTimeStr = 'Never logged in';
-                  if (parent.lastLoginAt) {
-                    const dateObj = parent.lastLoginAt.toDate ? parent.lastLoginAt.toDate() : new Date(parent.lastLoginAt);
-                    loginTimeStr = dateObj.toLocaleString();
+                  let interactionTimeStr = 'No active telemetry';
+                  const activeTimestamp = parent.lastInteractionAt || parent.lastLoginAt;
+                  if (activeTimestamp) {
+                    const dateObj = activeTimestamp.toDate ? activeTimestamp.toDate() : new Date(activeTimestamp);
+                    interactionTimeStr = dateObj.toLocaleString();
                   }
 
                   return (
@@ -388,6 +393,17 @@ const AdminDashboard = () => {
                         )}
                       </td>
                       <td style={{ padding: '1rem 0.75rem' }}>
+                        {parent.coppaConsented ? (
+                          <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontSize: '0.75rem', padding: '0.25rem 0.6rem', borderRadius: '12px', fontWeight: 'bold' }}>
+                            ✓ Consent Given
+                          </span>
+                        ) : (
+                          <span style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', fontSize: '0.75rem', padding: '0.25rem 0.6rem', borderRadius: '12px', fontWeight: 'bold' }}>
+                            ⏳ Pending / Locked
+                          </span>
+                        )}
+                      </td>
+                      <td style={{ padding: '1rem 0.75rem' }}>
                         {parent.children && parent.children.length > 0 ? (
                           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                             {parent.children.map((name, idx) => (
@@ -403,7 +419,7 @@ const AdminDashboard = () => {
                         )}
                       </td>
                       <td style={{ padding: '1rem 0.75rem', textAlign: 'right', color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>
-                        🕒 {loginTimeStr}
+                        ⚡ {interactionTimeStr}
                       </td>
                     </tr>
                   );

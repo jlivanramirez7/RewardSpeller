@@ -358,7 +358,7 @@ const StudentPortal = () => {
                                       textAlign: 'left'
                                     }}
                                   >
-                                    {section.name}: {section.theme} {isSectionListened ? '▶' : '🔒 (Listen First)'}
+                                    {section.name === section.theme ? section.name : `${section.name}: ${section.theme}`} {isSectionListened ? '▶' : '🔒 (Listen First)'}
                                   </button>
                                   <div style={{ 
                                     display: 'flex', 

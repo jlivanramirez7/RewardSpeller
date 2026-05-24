@@ -98,10 +98,11 @@ const LoginPage = () => {
     try {
       const { authUser, isApproved } = await authenticateAndFetchUser();
       if (isApproved) {
-        // Log last login timestamp in Firestore parent document
+        // Log last login and interaction timestamps in Firestore parent document
         try {
           await setDoc(doc(db, 'users', authUser.uid), {
-            lastLoginAt: serverTimestamp()
+            lastLoginAt: serverTimestamp(),
+            lastInteractionAt: serverTimestamp()
           }, { merge: true });
         } catch (tsErr) {
           console.error("Failed to log parent last login timestamp:", tsErr);

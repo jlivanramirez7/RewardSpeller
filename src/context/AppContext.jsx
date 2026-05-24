@@ -12,7 +12,7 @@ import wordBank4th from '../data/wordBank_4th.json';
 import wordBank5th from '../data/wordBank_5th.json';
 import wordBank6th from '../data/wordBank_6th.json';
 import { calculateRecommendedDifficulty } from '../utils/difficulty';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
 import { generateKidFriendlyName } from '../utils/username';
 
@@ -520,8 +520,9 @@ export const AppProvider = ({ children }) => {
             children: childrenMap,
             isApproved: approvedFlag,
             coppaConsented,
-            email: parentEmail || user?.email || ''
-          }, { mergeFields: ['activeChildId', 'children', 'isApproved', 'coppaConsented', 'email'] });
+            email: parentEmail || user?.email || '',
+            lastInteractionAt: serverTimestamp() // Log active app telemetry!
+          }, { mergeFields: ['activeChildId', 'children', 'isApproved', 'coppaConsented', 'email', 'lastInteractionAt'] });
 
           if (!isStudent && user) {
             console.log(`[APP CONTEXT] Auto-syncing student links for parent ${user.email}...`);
