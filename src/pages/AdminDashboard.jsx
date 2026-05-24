@@ -179,7 +179,7 @@ const AdminDashboard = () => {
         averageStreak,
         highestStreak
       });
-      setActiveUsers(parsedUsers.filter(u => u.email !== 'Legacy Account' || u.children.length > 0));
+      setActiveUsers(parsedUsers.filter(u => u.email !== 'Legacy Account'));
       setLoading(false);
     }, (error) => {
       console.error("Failed to fetch users snapshot", error);
