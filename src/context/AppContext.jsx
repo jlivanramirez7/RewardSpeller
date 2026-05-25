@@ -711,7 +711,7 @@ export const AppProvider = ({ children }) => {
   }, [rewards, studentPoints]);
 
   const adminRestoreLucas = useCallback(() => {
-    if (user?.email !== 'jlivanramirez7@gmail.com') {
+    if (user?.email !== 'jlivanramirez7@gmail.com' || !db) {
       alert("Administrative privileges required.");
       return;
     }
@@ -738,8 +738,9 @@ export const AppProvider = ({ children }) => {
       };
     }
 
+    // Include g4_t1_s7 (Magic E) so all Tier 1 sections are 100% unlocked and completed!
     const TARGET_SECTIONS = [
-      'g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t2_s1', 'g4_t2_s2'
+      'g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t1_s7', 'g4_t2_s1', 'g4_t2_s2'
     ];
     const MASTERY_SECTIONS = ['tier_1_mastery'];
 
@@ -787,16 +788,42 @@ export const AppProvider = ({ children }) => {
       ]
     };
 
-    setChildrenMap(prev => ({
-      ...prev,
+    const updatedChildrenMap = {
+      ...childrenMap,
       [lucasKey]: updatedLucasData
-    }));
+    };
 
-    setActiveChildId(lucasKey);
-    setCoppaConsented(true);
+    // Direct failsafe write to Firestore cloud database!
+    const saveRestoredProgress = async () => {
+      try {
+        const parentUid = user.uid;
+        const docRef = doc(db, 'users', parentUid);
+        
+        console.log(`⚙️ Writing administrative recovery progress to Firestore users/${parentUid}...`);
+        await setDoc(docRef, {
+          activeChildId: lucasKey,
+          children: updatedChildrenMap,
+          isApproved: true,
+          coppaConsented: true,
+          email: 'jlivanramirez7@gmail.com',
+          lastInteractionAt: serverTimestamp()
+        }, { merge: true });
 
-    alert(`🎉 SUCCESS: Lucas's progress successfully restored in client state! Syncing to cloud...`);
-  }, [user, childrenMap]);
+        // Sync client state synchronously after DB write completes
+        skipSaveRef.current = true; // Block redundant save effect
+        setChildrenMap(updatedChildrenMap);
+        setActiveChildId(lucasKey);
+        setCoppaConsented(true);
+
+        alert(`🎉 SUCCESS: Lucas's progress successfully saved to your Cloud Database!`);
+      } catch (err) {
+        console.error("Parent administrative write failed:", err);
+        alert("Parent administrative write failed: " + err.message);
+      }
+    };
+
+    saveRestoredProgress();
+  }, [user, db, childrenMap]);
 
   const linkStudentEmail = useCallback(async (childId, email) => {
     setChildrenMap(prev => ({
