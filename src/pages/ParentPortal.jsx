@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
-import { useAuth } from '../context/AuthContext';
 
 /**
  * @component ParentPortal
@@ -12,12 +11,11 @@ import { useAuth } from '../context/AuthContext';
  * @returns {React.ReactElement} The parent portal control interface.
  */
 const ParentPortal = () => {
-  const { user } = useAuth();
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
     isLoaded, error,
     studentName, setStudentName, linkStudentEmail,
-    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward, adminRestoreLucas
+    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -113,24 +111,7 @@ const ParentPortal = () => {
         <p style={{ color: 'var(--text-secondary)' }}>Command Center: Monitor progress and adjust curriculum.</p>
       </header>
 
-      {/* Administrative Toolkit */}
-      {user?.email === 'jlivanramirez7@gmail.com' && (
-        <div className="glass-panel animate-fade-in" style={{ padding: '2rem', borderLeft: '4px solid #fbbf24', marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <h2 style={{ color: '#fbbf24', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>👑 Administrative Toolkit</h2>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', margin: '0.25rem 0 0 0' }}>Failsafe synchronization tools for database recovery.</p>
-            </div>
-            <button 
-              className="btn-primary"
-              onClick={adminRestoreLucas}
-              style={{ background: 'linear-gradient(135deg, #fbbf24, #d97706)', color: 'black', fontWeight: 'bold', border: 'none', padding: '0.75rem 1.5rem' }}
-            >
-              ⚡ Restore Lucas 100% (Up to Root: PORT)
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Student Accounts Management */}
 
       {/* Student Accounts Management */}
       {/* Student Accounts Management: Renders grid of active and sibling child profiles, */}
@@ -354,10 +335,10 @@ const ParentPortal = () => {
           <h2 style={{ marginBottom: '0.5rem' }}>Reward System Configuration</h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '2rem' }}>Define custom rewards and manage parent-sponsored redemptions.</p>
           
-          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
             
             {/* COLUMN 1: CATALOG & CREATION */}
-            <div style={{ flex: '1 1 350px', minWidth: '320px' }}>
+            <div style={{ flex: '1 1 360px', minWidth: '320px' }}>
               <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-cyan)' }}>🔧 Reward Catalog & Setup</h3>
               
               <form 
@@ -370,14 +351,14 @@ const ParentPortal = () => {
                     e.target.reset();
                   }
                 }}
-                style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}
+                style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}
               >
                 <input 
                   name="rewardName" 
                   type="text" 
                   placeholder="Reward Name" 
                   required
-                  style={{ flex: 1, padding: '0.6rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white', fontSize: '0.9rem' }}
+                  style={{ flex: '2 1 180px', padding: '0.6rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white', fontSize: '0.9rem' }}
                 />
                 <input 
                   name="rewardCost" 
@@ -385,9 +366,9 @@ const ParentPortal = () => {
                   placeholder="Cost" 
                   min="10"
                   required
-                  style={{ width: '80px', padding: '0.6rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white', fontSize: '0.9rem' }}
+                  style={{ flex: '1 1 90px', padding: '0.6rem', borderRadius: '8px', border: '1px solid var(--surface-border)', background: 'rgba(0,0,0,0.2)', color: 'white', fontSize: '0.9rem' }}
                 />
-                <button type="submit" className="btn-primary" style={{ padding: '0.6rem 1.2rem' }}>Add</button>
+                <button type="submit" className="btn-primary" style={{ padding: '0.6rem 1.5rem', flexShrink: 0 }}>Add</button>
               </form>
 
               {incompleteRewards.length === 0 ? (
@@ -477,7 +458,7 @@ const ParentPortal = () => {
             </div>
 
             {/* COLUMN 2: REDEMPTION & FULFILLMENT */}
-            <div style={{ flex: '1 1 350px', minWidth: '320px', borderLeft: '1px solid var(--surface-border)', paddingLeft: '2rem' }}>
+            <div style={{ flex: '1 1 360px', minWidth: '320px' }}>
               <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--success-color)' }}>🎁 Fulfillment Control</h3>
               
               {readyToRedeemRewards.length === 0 && redeemedRewards.length === 0 ? (
