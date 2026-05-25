@@ -780,7 +780,11 @@ export const AppProvider = ({ children }) => {
       listenedLessons,
       sectionScores,
       sectionAccuracy,
-      studentEmail: 'lucasjramirez7@gmail.com'
+      studentEmail: 'lucasjramirez7@gmail.com',
+      rewards: [
+        { id: 1, name: '30 mins Screen Time', cost: 500 },
+        { id: 2, name: 'Trip to Park', cost: 1000 }
+      ]
     };
 
     setChildrenMap(prev => ({
