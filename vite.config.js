@@ -134,6 +134,15 @@ const scoresApiMiddleware = async (req, res, next) => {
     return;
   }
 
+  // HTML5 History SPA routing fallback: Rewrite browser GET routes to index.html
+  // so the React SPA bundle loads cleanly instead of rendering 404 or blank pages!
+  const isApi = req.url.startsWith('/api/');
+  const isAsset = req.url.includes('.') || req.url.startsWith('/@') || req.url.startsWith('/node_modules/') || req.url.startsWith('/src/');
+  
+  if (!isApi && !isAsset && req.method === 'GET') {
+    req.url = '/index.html';
+  }
+
   if (req.url === '/api/config' && req.method === 'GET') {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({

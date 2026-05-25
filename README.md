@@ -136,3 +136,42 @@ The project includes a comprehensive suite of automation and data-engineering ut
 
 > [!NOTE]
 > Active runtime curriculums are split into discrete grade-specific files (`wordBank_2nd.json` through `wordBank_6th.json`). Legacy maintenance scripts referencing `src/data/wordBank.json` are retained for archival reference and structural baseline validation.
+
+---
+
+## 📝 Feature Evolution & Major Upgrades Changelog
+
+The platform has undergone extensive architectural refactoring, UX calibration, security hardening, and gamification upgrades. Below is the complete audit log of all changes completed:
+
+### 1. Stateless Cloud Architecture & Firestore Migration
+* **Firestore Integration**: Fully migrated all student statistics, streaks, point balances, and lessons from localized `localStorage` state variables to a real-time, secure **Google Cloud Firestore** backend database mapping.
+* **Active Telemetry Sync**: Implemented dynamic cross-tab and cross-device synchronization. The React state now hydrates instantly from Firestore upon authentication, preventing any progress loss when switching devices.
+* **Real-Time Telemetry Hook**: Created a `lastInteractionAt` telemetry hook inside the state synchronizer, logging parent/student engagements (learning trials, profile updates, catalog edits) in Firestore dynamically.
+
+### 2. Verifiable Parental Consent & Security Gating (COPPA)
+* **Verifiable Parental Consent Flow**: Developed a strict, legally compliant **Children's Online Privacy Protection Act (COPPA)** security gate. Unapproved parent accounts are completely locked from the student portal and lesson dictations.
+* **HMAC-SHA256 JWT Verification Engine**: Built an administrative JWT signer and verification endpoint. New parent accounts receive a verifiable link in their inbox, valid for 24 hours, which atomically grants database approval upon signature validation.
+* **Immediate Resend Email Integrations**: Integrated the **Resend API** directly in the Vite/Express server middleware to instantly dispatch:
+  1. *Verifiable COPPA Consent Emails* upon registration.
+  2. *Approved Welcome Notifications* to parents as soon as an administrator clicks "Approve" in the Admin Console.
+
+### 3. Endless Unique Username Generator
+* **900 Million Combinations**: Replaced the short static list of adjectives and animals with a highly randomized, whimsical name generator combining **exactly 100 Colors**, **100 Emotions/Traits**, and **100 Animals** with a 3-digit number.
+* **Deterministic Math**: Utilizes a character-hash value of the child profile ID to guarantee a deterministic, kid-friendly username (e.g., `Crimson Joyful Hedgehog 843`) for every single child profile, protecting their privacy and preserving absolute anonymity.
+
+### 4. Real-Time Gamified Leaderboards & Admin Analytics
+* **Real-Time Leaderboard**: Built a grade-specific student leaderboard featuring toggleable sorting between `Total Points` and `Weekly Points`.
+* **Visual Rank Badges**: Features gorgeous, custom rank badges (🥇 `1st`, 🥈 `2nd`, 🥉 `3rd`) with drop-shadow glowing highlights. Expanded Rank column width to `110px` to prevent text/emoji clipping on smaller screens.
+* **Enhanced Admin Dashboard**: Upgraded all metrics to fetch in real time using `onSnapshot` subscriptions:
+  * *Usage Time Tracking*: Added an active interval hook logging student active practice times.
+  * *Visual Struggle Word Cards*: Categorizes student spelling mistakes by error type, sorting by most missed terms and displaying successful recall ratios.
+
+### 5. Milestone Reward Economy & Administrative Controls
+* **Non-Deducting Milestone Rewards**: Converted the deductions economy to a motivating milestone achievement vault. Claiming rewards no longer subtracts points from the student's hard-earned points total! Once the required points are achieved, the card morphs into a green-glowing `🏆 COMPLETE` card.
+* **Absolute Catalog Controls**: Parents can now dynamically add custom rewards, edit the points cost of *any* reward (incomplete, claimed, or fulfilled), and delete them from history inline. If a parent increases a reward's cost, the item dynamically shifts back into the incomplete queue!
+
+### 6. HTML5 History Routing & Responsive Layout Fixes
+* **SPA Fallback Routing**: Addressed Single Page Application (SPA) blank screen rendering issues. If a browser direct-requests client-side routes like `/login`, `/request-access`, `/leaderboard`, or `/parent`, our Express-Vite middleware internally rewrites the request url to `/index.html`, loading the React app instantly while preserving the browser URL.
+* **Root Redirect Gating**: Programmed a fallback redirect to `/landing.html` for all unauthenticated root visits, and redirected authenticated root routes safely to `/app`.
+* **Spacious Two-Column Layout**: Upgraded the rewards dashboard into a responsive layout with a spacious `gap: '3rem'`, removing static borders to ensure Column 2 centers itself beautifully when wrapping on smaller devices.
+

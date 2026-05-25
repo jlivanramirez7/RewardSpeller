@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import StudentPortal from './pages/StudentPortal';
 import ParentPortal from './pages/ParentPortal';
 import LoginPage from './pages/LoginPage';
@@ -54,6 +54,7 @@ function App() {
 
       <main className="main-content">
         <Routes>
+          <Route path="/" element={<Navigate to="/app" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/request-access" element={<RequestAccessPage />} />
           <Route path="/app" element={

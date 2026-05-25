@@ -19,14 +19,14 @@ const LoginPage = () => {
     const checkUser = async () => {
       if (user && db && !loading) {
         if (isAdmin) {
-          if (mounted) navigate('/');
+          if (mounted) navigate('/app');
           return;
         }
         try {
           console.log(`[LOGIN useEffect] Evaluating active session for ${user.email}. isStudent: ${isStudent}, parentUid: ${parentUid}`);
           if (isStudent) {
             console.log(`[LOGIN useEffect] User is a linked student. Auto-approving.`);
-            if (mounted) navigate('/');
+            if (mounted) navigate('/app');
             return;
           }
           const targetUid = user.uid;
