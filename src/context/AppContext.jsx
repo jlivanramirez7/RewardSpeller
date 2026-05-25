@@ -739,7 +739,7 @@ export const AppProvider = ({ children }) => {
     }
 
     const TARGET_SECTIONS = [
-      'g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t2_s1'
+      'g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t2_s1', 'g4_t2_s2'
     ];
     const MASTERY_SECTIONS = ['tier_1_mastery'];
 
@@ -750,15 +750,15 @@ export const AppProvider = ({ children }) => {
 
     TARGET_SECTIONS.forEach((secId) => {
       sectionScores[`${secId}-easy`] = 20;
-      sectionAccuracy[`${secId}-easy`] = 1.0;
+      sectionAccuracy[`${secId}-easy`] = 100;
       pointsTotal += 20;
 
       sectionScores[`${secId}-medium`] = 60;
-      sectionAccuracy[`${secId}-medium`] = 1.0;
+      sectionAccuracy[`${secId}-medium`] = 100;
       pointsTotal += 60;
 
       sectionScores[`${secId}-hard`] = 600;
-      sectionAccuracy[`${secId}-hard`] = 1.0;
+      sectionAccuracy[`${secId}-hard`] = 100;
       pointsTotal += 600;
 
       listenedLessons.push(secId);
@@ -766,7 +766,7 @@ export const AppProvider = ({ children }) => {
 
     MASTERY_SECTIONS.forEach((masteryId) => {
       sectionScores[`${masteryId}-hard`] = 900;
-      sectionAccuracy[`${masteryId}-hard`] = 1.0;
+      sectionAccuracy[`${masteryId}-hard`] = 100;
       pointsTotal += 900;
 
       listenedLessons.push(masteryId);
