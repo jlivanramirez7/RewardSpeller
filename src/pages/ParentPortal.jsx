@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 /**
  * @component ParentPortal
@@ -11,11 +12,12 @@ import { useAppContext } from '../context/AppContext';
  * @returns {React.ReactElement} The parent portal control interface.
  */
 const ParentPortal = () => {
+  const { user } = useAuth();
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
     isLoaded, error,
     studentName, setStudentName, linkStudentEmail,
-    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward
+    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward, coppaConsented, registerParentCoppa
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -110,6 +112,35 @@ const ParentPortal = () => {
         <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Parent Portal</h1>
         <p style={{ color: 'var(--text-secondary)' }}>Command Center: Monitor progress and adjust curriculum.</p>
       </header>
+
+      {/* COPPA Consent Warning Banner */}
+      {!coppaConsented && (
+        <div className="glass-panel animate-fade-in" style={{ padding: '2rem', borderLeft: '4px solid #f59e0b', marginBottom: '2rem', background: 'rgba(245, 158, 11, 0.08)' }}>
+          <h2 style={{ color: '#f59e0b', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem' }}>
+            ⚠️ Verifiable Parental Consent Required
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>
+            Your child's educational workspace is currently locked. To comply with the Children's Online Privacy Protection Act (COPPA), we require your explicit verifiable consent. If you did not receive the verification email or the link expired, click the button below to send a fresh verification link to your inbox.
+          </p>
+          <button 
+            className="btn-primary"
+            onClick={async () => {
+              const parentEmail = user?.email;
+              if (parentEmail) {
+                const res = await registerParentCoppa(parentEmail);
+                if (res.success) {
+                  alert(`📬 SUCCESS: A fresh verifiable parental consent email has been dispatched to ${parentEmail}. Please check your inbox (and spam folder) to verify your account!`);
+                } else {
+                  alert(`❌ Failed to resend consent email: ${res.error}`);
+                }
+              }
+            }}
+            style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: 'white', fontWeight: 'bold', border: 'none', padding: '0.6rem 1.2rem', cursor: 'pointer' }}
+          >
+            📧 Resend COPPA Consent Email
+          </button>
+        </div>
+      )}
 
       {/* Student Accounts Management */}
 
