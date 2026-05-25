@@ -710,6 +710,90 @@ export const AppProvider = ({ children }) => {
     return false;
   }, [rewards, studentPoints]);
 
+  const adminRestoreLucas = useCallback(() => {
+    if (user?.email !== 'jlivanramirez7@gmail.com') {
+      alert("Administrative privileges required.");
+      return;
+    }
+
+    // Find Lucas profile
+    let lucasKey = null;
+    let lucasData = null;
+
+    for (const [cId, child] of Object.entries(childrenMap)) {
+      if (child && child.studentName && child.studentName.trim().toLowerCase() === 'lucas') {
+        lucasKey = cId;
+        lucasData = child;
+        break;
+      }
+    }
+
+    if (!lucasKey) {
+      lucasKey = `child_${Date.now()}`;
+      lucasData = {
+        studentName: 'Lucas',
+        currentGradeLevel: '4th',
+        studentStreak: 0,
+        usageTime: 1800
+      };
+    }
+
+    const TARGET_SECTIONS = [
+      'g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t2_s1'
+    ];
+    const MASTERY_SECTIONS = ['tier_1_mastery'];
+
+    const sectionScores = {};
+    const sectionAccuracy = {};
+    const listenedLessons = [];
+    let pointsTotal = 0;
+
+    TARGET_SECTIONS.forEach((secId) => {
+      sectionScores[`${secId}-easy`] = 20;
+      sectionAccuracy[`${secId}-easy`] = 1.0;
+      pointsTotal += 20;
+
+      sectionScores[`${secId}-medium`] = 60;
+      sectionAccuracy[`${secId}-medium`] = 1.0;
+      pointsTotal += 60;
+
+      sectionScores[`${secId}-hard`] = 600;
+      sectionAccuracy[`${secId}-hard`] = 1.0;
+      pointsTotal += 600;
+
+      listenedLessons.push(secId);
+    });
+
+    MASTERY_SECTIONS.forEach((masteryId) => {
+      sectionScores[`${masteryId}-hard`] = 900;
+      sectionAccuracy[`${masteryId}-hard`] = 1.0;
+      pointsTotal += 900;
+
+      listenedLessons.push(masteryId);
+    });
+
+    const updatedLucasData = {
+      ...lucasData,
+      studentPoints: pointsTotal,
+      weeklyPoints: pointsTotal,
+      unlockedTiers: ['tier_1', 'tier_2'],
+      listenedLessons,
+      sectionScores,
+      sectionAccuracy,
+      studentEmail: 'lucasjramirez7@gmail.com'
+    };
+
+    setChildrenMap(prev => ({
+      ...prev,
+      [lucasKey]: updatedLucasData
+    }));
+
+    setActiveChildId(lucasKey);
+    setCoppaConsented(true);
+
+    alert(`🎉 SUCCESS: Lucas's progress successfully restored in client state! Syncing to cloud...`);
+  }, [user, childrenMap]);
+
   const linkStudentEmail = useCallback(async (childId, email) => {
     setChildrenMap(prev => ({
       ...prev,
@@ -819,12 +903,12 @@ export const AppProvider = ({ children }) => {
     isLoaded, error,
     studentName, setStudentName,
     childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild,
-    resolveStruggleWord, redeemReward
+    resolveStruggleWord, redeemReward, adminRestoreLucas
   }), [
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
     unlockedTiers, setUnlockedTiers,
-    struggleWords, addStruggleWord, resolveStruggleWord, redeemReward,
+    struggleWords, addStruggleWord, resolveStruggleWord, redeemReward, adminRestoreLucas,
     sectionScores, updateSectionScore,
     sectionAccuracy, getSectionStats,
     enablePacing, setEnablePacing,

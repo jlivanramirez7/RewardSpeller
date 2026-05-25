@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 /**
  * @component ParentPortal
@@ -11,11 +12,12 @@ import { useAppContext } from '../context/AppContext';
  * @returns {React.ReactElement} The parent portal control interface.
  */
 const ParentPortal = () => {
+  const { user } = useAuth();
   const { 
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
     isLoaded, error,
     studentName, setStudentName, linkStudentEmail,
-    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward
+    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward, adminRestoreLucas
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -110,6 +112,25 @@ const ParentPortal = () => {
         <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Parent Portal</h1>
         <p style={{ color: 'var(--text-secondary)' }}>Command Center: Monitor progress and adjust curriculum.</p>
       </header>
+
+      {/* Administrative Toolkit */}
+      {user?.email === 'jlivanramirez7@gmail.com' && (
+        <div className="glass-panel animate-fade-in" style={{ padding: '2rem', borderLeft: '4px solid #fbbf24', marginBottom: '2rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <h2 style={{ color: '#fbbf24', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>👑 Administrative Toolkit</h2>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', margin: '0.25rem 0 0 0' }}>Failsafe synchronization tools for database recovery.</p>
+            </div>
+            <button 
+              className="btn-primary"
+              onClick={adminRestoreLucas}
+              style={{ background: 'linear-gradient(135deg, #fbbf24, #d97706)', color: 'black', fontWeight: 'bold', border: 'none', padding: '0.75rem 1.5rem' }}
+            >
+              ⚡ Restore Lucas 100% (Up to Root: PORT)
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Student Accounts Management */}
       {/* Student Accounts Management: Renders grid of active and sibling child profiles, */}
