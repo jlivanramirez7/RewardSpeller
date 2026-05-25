@@ -204,7 +204,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
           <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 0.5rem' }}>
             <thead>
               <tr style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'left' }}>
-                <th style={{ padding: '0.75rem 1rem', width: '80px' }}>Rank</th>
+                <th style={{ padding: '0.75rem 1rem', width: '110px' }}>Rank</th>
                 <th style={{ padding: '0.75rem 1rem' }}>Student Name</th>
                 <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>Points This Week</th>
                 <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>Total Points</th>
@@ -217,9 +217,9 @@ const Leaderboard = ({ currentGradeLevel }) => {
                 const rank = student.rank;
                 
                 let rankBadge = <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)' }}>#{rank}</span>;
-                if (rank === 1) rankBadge = <span style={{ background: '#fbbf24', color: '#1f2937', padding: '0.25rem 0.75rem', borderRadius: '12px', fontWeight: 'bold', fontSize: '0.85rem', boxShadow: '0 2px 8px rgba(251,191,36,0.4)' }}>🥇 1st</span>;
-                else if (rank === 2) rankBadge = <span style={{ background: '#94a3b8', color: '#1f2937', padding: '0.25rem 0.75rem', borderRadius: '12px', fontWeight: 'bold', fontSize: '0.85rem' }}>🥈 2nd</span>;
-                else if (rank === 3) rankBadge = <span style={{ background: '#b45309', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '12px', fontWeight: 'bold', fontSize: '0.85rem' }}>🥉 3rd</span>;
+                if (rank === 1) rankBadge = <span style={{ background: '#fbbf24', color: '#1f2937', padding: '0.25rem 0.75rem', borderRadius: '12px', fontWeight: 'bold', fontSize: '0.85rem', boxShadow: '0 2px 8px rgba(251,191,36,0.4)', display: 'inline-block', whiteSpace: 'nowrap' }}>🥇 1st</span>;
+                else if (rank === 2) rankBadge = <span style={{ background: '#94a3b8', color: '#1f2937', padding: '0.25rem 0.75rem', borderRadius: '12px', fontWeight: 'bold', fontSize: '0.85rem', display: 'inline-block', whiteSpace: 'nowrap' }}>🥈 2nd</span>;
+                else if (rank === 3) rankBadge = <span style={{ background: '#b45309', color: 'white', padding: '0.25rem 0.75rem', borderRadius: '12px', fontWeight: 'bold', fontSize: '0.85rem', display: 'inline-block', whiteSpace: 'nowrap' }}>🥉 3rd</span>;
 
                 return (
                   <tr 
@@ -235,7 +235,9 @@ const Leaderboard = ({ currentGradeLevel }) => {
                       borderBottomLeftRadius: '8px',
                       borderTop: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
                       borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
-                      borderLeft: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
+                      borderLeft: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
+                      whiteSpace: 'nowrap',
+                      minWidth: '110px'
                     }}>
                       {rankBadge}
                     </td>
