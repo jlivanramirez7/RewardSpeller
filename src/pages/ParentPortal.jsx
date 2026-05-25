@@ -470,14 +470,66 @@ const ParentPortal = () => {
                       {readyToRedeemRewards.map(reward => (
                         <li key={reward.id} style={{ padding: '1rem', border: '1px solid #10b981', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '8px', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontWeight: 'bold', color: 'white', fontSize: '1rem' }}>{reward.name}</span>
-                            <button 
-                              className="btn-primary"
-                              style={{ padding: '0.35rem 0.6rem', fontSize: '0.75rem', background: 'var(--success-color)', border: 'none', color: 'white', fontWeight: 'bold' }}
-                              onClick={() => redeemReward(reward.id)}
-                            >
-                              🎁 Mark Redeemed
-                            </button>
+                            {editingRewardId === reward.id ? (
+                              <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                                <input 
+                                  type="number" 
+                                  value={editCostInput}
+                                  onChange={(e) => setEditCostInput(parseInt(e.target.value, 10) || 0)}
+                                  style={{ width: '70px', padding: '0.25rem', borderRadius: '4px', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--surface-border)', color: 'white', fontSize: '0.85rem' }}
+                                />
+                                <button 
+                                  className="btn-primary"
+                                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                  onClick={() => {
+                                    setRewards(prev => prev.map(r => r.id === reward.id ? { ...r, cost: editCostInput } : r));
+                                    setEditingRewardId(null);
+                                  }}
+                                >
+                                  Save
+                                </button>
+                                <button 
+                                  className="btn-secondary"
+                                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                  onClick={() => setEditingRewardId(null)}
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            ) : (
+                              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <span style={{ fontWeight: 'bold', color: 'white', fontSize: '1rem' }}>{reward.name}</span>
+                                <button 
+                                  className="btn-secondary"
+                                  style={{ padding: '0.15rem 0.4rem', fontSize: '0.7rem', border: '1px dashed rgba(255,255,255,0.2)' }}
+                                  onClick={() => {
+                                    setEditingRewardId(reward.id);
+                                    setEditCostInput(reward.cost);
+                                  }}
+                                >
+                                  Edit Cost
+                                </button>
+                              </div>
+                            )}
+                            
+                            {editingRewardId !== reward.id && (
+                              <div style={{ display: 'flex', gap: '0.4rem' }}>
+                                <button 
+                                  className="btn-primary"
+                                  style={{ padding: '0.35rem 0.6rem', fontSize: '0.75rem', background: 'var(--success-color)', border: 'none', color: 'white', fontWeight: 'bold' }}
+                                  onClick={() => redeemReward(reward.id)}
+                                >
+                                  🎁 Mark Redeemed
+                                </button>
+                                <button 
+                                  className="btn-secondary"
+                                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', border: 'none', color: '#ef4444' }}
+                                  onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            )}
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                             <span>Progress: {studentPoints} / {reward.cost} pts</span>
@@ -507,19 +559,60 @@ const ParentPortal = () => {
                           {redeemedRewards.map(reward => (
                             <li key={reward.id} style={{ padding: '0.75rem', borderBottom: '1px solid var(--surface-border)', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(255,255,255,0.01)', borderRadius: '8px', marginBottom: '0.5rem' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div>
-                                  <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', textDecoration: 'line-through' }}>{reward.name}</span>
-                                  <span style={{ background: 'rgba(96, 165, 250, 0.1)', color: '#60a5fa', fontSize: '0.7rem', padding: '0.15rem 0.4rem', borderRadius: '12px', fontWeight: 'bold', marginLeft: '0.5rem' }}>
-                                    FULFILLED
-                                  </span>
-                                </div>
-                                <button 
-                                  className="btn-secondary"
-                                  style={{ padding: '0.2rem 0.4rem', fontSize: '0.7rem', border: 'none', color: 'var(--text-secondary)' }}
-                                  onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
-                                >
-                                  Remove
-                                </button>
+                                {editingRewardId === reward.id ? (
+                                  <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                                    <input 
+                                      type="number" 
+                                      value={editCostInput}
+                                      onChange={(e) => setEditCostInput(parseInt(e.target.value, 10) || 0)}
+                                      style={{ width: '70px', padding: '0.25rem', borderRadius: '4px', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--surface-border)', color: 'white', fontSize: '0.85rem' }}
+                                    />
+                                    <button 
+                                      className="btn-primary"
+                                      style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                      onClick={() => {
+                                        setRewards(prev => prev.map(r => r.id === reward.id ? { ...r, cost: editCostInput } : r));
+                                        setEditingRewardId(null);
+                                      }}
+                                    >
+                                      Save
+                                    </button>
+                                    <button 
+                                      className="btn-secondary"
+                                      style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                      onClick={() => setEditingRewardId(null)}
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                                    <span style={{ fontWeight: 'bold', color: 'var(--text-secondary)', textDecoration: 'line-through' }}>{reward.name}</span>
+                                    <span style={{ background: 'rgba(96, 165, 250, 0.1)', color: '#60a5fa', fontSize: '0.7rem', padding: '0.15rem 0.4rem', borderRadius: '12px', fontWeight: 'bold', marginRight: '0.5rem' }}>
+                                      FULFILLED
+                                    </span>
+                                    <button 
+                                      className="btn-secondary"
+                                      style={{ padding: '0.15rem 0.4rem', fontSize: '0.7rem', border: '1px dashed rgba(255,255,255,0.2)' }}
+                                      onClick={() => {
+                                        setEditingRewardId(reward.id);
+                                        setEditCostInput(reward.cost);
+                                      }}
+                                    >
+                                      Edit Cost
+                                    </button>
+                                  </div>
+                                )}
+                                
+                                {editingRewardId !== reward.id && (
+                                  <button 
+                                    className="btn-secondary"
+                                    style={{ padding: '0.2rem 0.4rem', border: 'none', color: '#ef4444' }}
+                                    onClick={() => setRewards(prev => prev.filter(r => r.id !== reward.id))}
+                                  >
+                                    Remove
+                                  </button>
+                                )}
                               </div>
                               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                                 <span>Cost: {reward.cost} pts</span>
