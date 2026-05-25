@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { collection, query, where, doc, updateDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, doc, updateDoc, setDoc, onSnapshot, serverTimestamp, deleteDoc, getDoc } from 'firebase/firestore';
 
 const formatUsageTime = (totalSeconds) => {
   if (!totalSeconds) return '0 mins';
@@ -240,7 +240,68 @@ const AdminDashboard = () => {
       alert("Failed to deny request: " + error.message);
     }
   };
+  const handleDeleteParent = async (parent) => {
+    const isMaster = parent.email === 'jlivanramirez7@gmail.com';
+    if (isMaster) {
+      alert("Security Protocol: Master Parent account jlivanramirez7@gmail.com cannot be deleted.");
+      return;
+    }
 
+    const confirmFirst = window.confirm(
+      `⚠️ WARNING: Are you absolutely sure you want to permanently delete the parent account "${parent.email}" and ALL of their associated student profiles?\n\nThis action is 100% irreversible and will delete all student progress and rewards from the database!`
+    );
+    if (!confirmFirst) return;
+
+    const confirmSecond = window.confirm(
+      `🚨 FINAL VERIFICATION: Type 'DELETE' to confirm purge. This will delete their parental access requests, linked student Gmail profiles, and spelling records.`
+    );
+    if (!confirmSecond) return;
+
+    try {
+      console.log(`[ADMIN PURGE] Initiating surgical delete for parent document users/${parent.id} (${parent.email})...`);
+      
+      // Step 1: Fetch parent document to identify any linked student emails
+      const parentDocRef = doc(db, 'users', parent.id);
+      const parentDocSnap = await getDoc(parentDocRef);
+      
+      if (parentDocSnap.exists()) {
+        const parentData = parentDocSnap.data();
+        if (parentData.children && typeof parentData.children === 'object') {
+          for (const child of Object.values(parentData.children)) {
+            if (child && child.studentEmail && child.studentEmail.trim()) {
+              const studentEmail = child.studentEmail.trim();
+              console.log(`[ADMIN PURGE] Deleting linked student profile document in student_links/${studentEmail}...`);
+              try {
+                await deleteDoc(doc(db, 'student_links', studentEmail));
+                console.log(`[ADMIN PURGE] Successfully deleted student_links/${studentEmail}`);
+              } catch (linkErr) {
+                console.error(`[ADMIN PURGE] Error deleting student_links document:`, linkErr);
+              }
+            }
+          }
+        }
+      }
+
+      // Step 2: Delete corresponding entry from access_requests collection
+      console.log(`[ADMIN PURGE] Deleting access request record in access_requests/${parent.id}...`);
+      try {
+        await deleteDoc(doc(db, 'access_requests', parent.id));
+        console.log(`[ADMIN PURGE] Successfully deleted access_requests/${parent.id}`);
+      } catch (reqErr) {
+        console.error(`[ADMIN PURGE] Error deleting access_requests document:`, reqErr);
+      }
+
+      // Step 3: Delete parent document from users collection
+      console.log(`[ADMIN PURGE] Deleting parent database record users/${parent.id}...`);
+      await deleteDoc(parentDocRef);
+      console.log(`[ADMIN PURGE] Surgical purge completed successfully for parent ${parent.email}!`);
+
+      alert(`🎉 SUCCESS: Parent account ${parent.email} and all linked profiles permanently deleted.`);
+    } catch (err) {
+      console.error("Failed to delete parent account:", err);
+      alert("Failed to delete parent account: " + err.message);
+    }
+  };
   if (!isAdmin) {
     return <div style={{ padding: '2rem', textAlign: 'center' }}>Access Denied. Admins only.</div>;
   }
@@ -363,6 +424,7 @@ const AdminDashboard = () => {
                   <th style={{ padding: '1rem 0.75rem' }}>COPPA Consent</th>
                   <th style={{ padding: '1rem 0.75rem' }}>Associated Students</th>
                   <th style={{ padding: '1rem 0.75rem', textAlign: 'right' }}>Last Interaction Time</th>
+                  <th style={{ padding: '1rem 0.75rem', textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -420,6 +482,19 @@ const AdminDashboard = () => {
                       </td>
                       <td style={{ padding: '1rem 0.75rem', textAlign: 'right', color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>
                         ⚡ {interactionTimeStr}
+                      </td>
+                      <td style={{ padding: '1rem 0.75rem', textAlign: 'right' }}>
+                        {isMaster ? (
+                          <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontStyle: 'italic' }}>Protected</span>
+                        ) : (
+                          <button 
+                            className="btn-secondary"
+                            style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', border: 'none', color: '#ef4444', background: 'rgba(239, 68, 68, 0.1)', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer' }}
+                            onClick={() => handleDeleteParent(parent)}
+                          >
+                            🗑️ Purge Account
+                          </button>
+                        )}
                       </td>
                     </tr>
                   );
