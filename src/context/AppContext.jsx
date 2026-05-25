@@ -676,25 +676,27 @@ export const AppProvider = ({ children }) => {
 
   const addStruggleWord = useCallback((word, tierId, errorType) => {
     setStruggleWords(prev => {
-      const existing = prev.find(w => w.word === word);
+      const safePrev = prev || [];
+      const existing = safePrev.find(w => w.word === word);
       if (existing) {
-        return prev.map(w => w.word === word ? { ...w, count: w.count + 1 } : w);
+        return safePrev.map(w => w.word === word ? { ...w, count: w.count + 1 } : w);
       }
-      return [...prev, { word, tierId, errorType, count: 1 }];
+      return [...safePrev, { word, tierId, errorType, count: 1 }];
     });
   }, [setStruggleWords]);
 
   const resolveStruggleWord = useCallback((word, tierId) => {
     setStruggleWords(prev => {
-      const existing = prev.find(w => w.word === word && w.tierId === tierId);
+      const safePrev = prev || [];
+      const existing = safePrev.find(w => w.word === word && w.tierId === tierId);
       if (existing) {
-        return prev.map(w => w.word === word && w.tierId === tierId ? { 
+        return safePrev.map(w => w.word === word && w.tierId === tierId ? { 
           ...w, 
           mastered: true, 
           correctCount: (w.correctCount || 0) + 1 
         } : w);
       }
-      return prev;
+      return safePrev;
     });
   }, [setStruggleWords]);
 
@@ -782,6 +784,8 @@ export const AppProvider = ({ children }) => {
       sectionScores,
       sectionAccuracy,
       studentEmail: 'lucasjramirez7@gmail.com',
+      struggleWords: [],
+      studentStreak: 0,
       rewards: [
         { id: 1, name: '30 mins Screen Time', cost: 500 },
         { id: 2, name: 'Trip to Park', cost: 1000 }
