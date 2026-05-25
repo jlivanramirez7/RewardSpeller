@@ -742,7 +742,7 @@ export const AppProvider = ({ children }) => {
     const TARGET_SECTIONS = [
       'g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t1_s7', 'g4_t2_s1', 'g4_t2_s2'
     ];
-    const MASTERY_SECTIONS = ['tier_1_mastery'];
+    const MASTERY_SECTIONS = ['tier_g4_t1_mastery'];
 
     const sectionScores = {};
     const sectionAccuracy = {};
@@ -777,7 +777,7 @@ export const AppProvider = ({ children }) => {
       ...lucasData,
       studentPoints: pointsTotal,
       weeklyPoints: pointsTotal,
-      unlockedTiers: ['tier_1', 'tier_2'],
+      unlockedTiers: ['g4_t1', 'g4_t2'],
       listenedLessons,
       sectionScores,
       sectionAccuracy,
