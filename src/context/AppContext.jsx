@@ -57,7 +57,7 @@ export const getISOWeekString = () => {
 
 const createDefaultChild = (id, name = '', overrides = {}) => {
   const trimmed = name ? name.trim() : '';
-  const finalName = trimmed !== '' ? trimmed : generateKidFriendlyName(id);
+  const finalName = trimmed !== '' ? trimmed : generateKidFriendlyName(); // Truly random default name sequence!
   return {
     id,
     studentName: finalName,

@@ -288,9 +288,13 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   const mediumScore = sectionScores[section.id + '-medium'] || 0;
   const hardScore = sectionScores[section.id + '-hard'] || 0;
   const totalSectionScore = easyScore + mediumScore + hardScore;
-  const maxEasyScore = words.length * DIFFICULTY_POINTS.easy * 2;
-  const maxMediumScore = words.length * DIFFICULTY_POINTS.medium * 2;
-  const maxHardScore = words.length * DIFFICULTY_POINTS.hard * 2;
+
+  // Enforce constant max scores based on the baseline wordbank words length
+  // to prevent fluctuating score ceilings (e.g., 20/10) when toggling between easy/hard mode!
+  const baselineLength = section.words?.length || 10;
+  const maxEasyScore = (baselineLength * 2) * DIFFICULTY_POINTS.easy * 2; // Easy difficulty has doubled questions
+  const maxMediumScore = baselineLength * DIFFICULTY_POINTS.medium * 2;
+  const maxHardScore = baselineLength * DIFFICULTY_POINTS.hard * 2;
   const maxPossibleScore = maxEasyScore + maxMediumScore + maxHardScore;
 
   const easyProg = maxEasyScore > 0 ? Math.max(0, Math.min((easyScore / maxEasyScore) * 100, 100)) : 0;
