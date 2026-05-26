@@ -297,7 +297,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
                       borderTop: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
                       borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
                     }}>
-                      {student.weeklyPoints} pts
+                      {Math.round(student.weeklyPoints)} pts
                     </td>
                     <td style={{ 
                       padding: '1rem', 
@@ -311,7 +311,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
                       borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
                       borderRight: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
                     }}>
-                      {student.totalPoints} pts
+                      {Math.round(student.totalPoints)} pts
                     </td>
                   </tr>
                 );

@@ -143,7 +143,7 @@ const StudentPortal = () => {
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Points</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fbbf24' }}>{studentPoints}</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fbbf24' }}>{Math.round(studentPoints)}</div>
           </div>
           <div>
             <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Streak</div>
@@ -504,7 +504,7 @@ const StudentPortal = () => {
                         ) : (
                           <>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
-                              <span style={{ color: 'var(--text-secondary)' }}>{Math.min(studentPoints, reward.cost)} / {reward.cost} pts</span>
+                              <span style={{ color: 'var(--text-secondary)' }}>{Math.round(Math.min(studentPoints, reward.cost))} / {reward.cost} pts</span>
                               <span style={{ color: '#fbbf24', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
                             </div>
                             

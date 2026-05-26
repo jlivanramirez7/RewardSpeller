@@ -187,7 +187,7 @@ const ParentPortal = () => {
                 
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#fbbf24', fontWeight: 'bold' }}>
                   <span>Total Points:</span>
-                  <span>{child?.studentPoints || 0} pts</span>
+                  <span>{Math.round(child?.studentPoints || 0)} pts</span>
                 </div>
 
                 {/* Student Email Link */}
@@ -465,7 +465,7 @@ const ParentPortal = () => {
                             )}
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
-                            <span style={{ color: 'var(--text-secondary)' }}>{studentPoints} / {reward.cost} pts</span>
+                            <span style={{ color: 'var(--text-secondary)' }}>{Math.round(studentPoints)} / {reward.cost} pts</span>
                             <span style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>{Math.round(progress)}%</span>
                           </div>
                           <div style={{ width: '100%', height: '5px', background: 'rgba(255,255,255,0.05)', borderRadius: '3px', overflow: 'hidden' }}>
@@ -563,7 +563,7 @@ const ParentPortal = () => {
                             )}
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                            <span>Progress: {studentPoints} / {reward.cost} pts</span>
+                            <span>Progress: {Math.round(studentPoints)} / {reward.cost} pts</span>
                             <span style={{ color: 'var(--success-color)', fontWeight: 'bold' }}>Ready to Fulfill!</span>
                           </div>
                         </li>

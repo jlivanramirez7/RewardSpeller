@@ -536,7 +536,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
 
             {/* Progress */}
             <div style={{ marginTop: '2rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-              Word {currentWordIndex + 1} of {words.length} | Points: {totalSectionScore} / {maxPossibleScore}
+              Word {currentWordIndex + 1} of {words.length} | Points: {Math.round(totalSectionScore)} / {maxPossibleScore}
             </div>
 
             <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', background: 'rgba(0,0,0,0.2)', padding: '1.25rem', borderRadius: '12px', textAlign: 'left' }}>
@@ -546,7 +546,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
                 <div key={diff.label}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
                     <span>{diff.label}</span>
-                    <span style={{ color: 'white' }}>{diff.score} / {diff.max} pts</span>
+                    <span style={{ color: 'white' }}>{Math.round(diff.score)} / {diff.max} pts</span>
                   </div>
                   <div 
                     role="progressbar" 
@@ -572,7 +572,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
             <span style={{ fontSize: '1.5rem' }}>🏆</span>
             <h3 style={{ margin: 0, color: 'white', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Rewards Track</h3>
-            <span style={{ marginLeft: 'auto', color: '#fbbf24', fontWeight: 'bold' }}>Current Total: {studentPoints} pts</span>
+            <span style={{ marginLeft: 'auto', color: '#fbbf24', fontWeight: 'bold' }}>Current Total: {Math.round(studentPoints)} pts</span>
          </div>
          <div style={{ 
              display: 'grid', 
