@@ -17,8 +17,9 @@ import { generateKidFriendlyName } from '../utils/username';
  * @returns {React.ReactElement} Gamified leaderboard UI panel.
  */
 const Leaderboard = ({ currentGradeLevel }) => {
-  const { user, db, isStudent, parentUid } = useAuth();
+  const { user, db, isStudent, parentUid, isAdmin } = useAuth();
   const { activeChildId } = useAppContext();
+  const [selectedGrade, setSelectedGrade] = useState(currentGradeLevel);
   const [rawStudents, setRawStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,7 +38,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
         
         if (data.children && typeof data.children === 'object') {
           Object.entries(data.children).forEach(([childId, child]) => {
-            if (child.currentGradeLevel === currentGradeLevel) {
+            if (child.currentGradeLevel === selectedGrade) {
               let displayName = child.studentName ? child.studentName.trim() : '';
               if (!displayName || displayName.toLowerCase() === 'student') {
                 displayName = generateKidFriendlyName(childId);
@@ -68,7 +69,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
           const validGrades = ['2nd', '3rd', '4th', '5th', '6th'];
           if (!validGrades.includes(grade)) grade = '4th';
 
-          if (grade === currentGradeLevel) {
+          if (grade === selectedGrade) {
             let displayName = data.studentName ? data.studentName.trim() : '';
             if (!displayName || displayName.toLowerCase() === 'student') {
               displayName = generateKidFriendlyName('child_1');
@@ -102,7 +103,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
     });
 
     return () => unsubscribe();
-  }, [db, currentGradeLevel]);
+  }, [db, selectedGrade, currentGradeLevel]);
 
   const leaderboardData = useMemo(() => {
     const sorted = [...rawStudents].sort((a, b) => {
@@ -148,50 +149,81 @@ const Leaderboard = ({ currentGradeLevel }) => {
 
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '2rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1.5rem' }}>
         <div>
           <h2 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            🏆 Grade {currentGradeLevel} Leaderboard
+            🏆 Grade {selectedGrade} Leaderboard
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.25rem' }}>
             See how you rank against other Jedi Spellers in your grade!
           </p>
         </div>
         
-        {/* Sorting Toggle Buttons */}
-        <div style={{ display: 'flex', gap: '0.5rem', background: 'rgba(0,0,0,0.2)', padding: '0.25rem', borderRadius: '8px', border: '1px solid var(--surface-border)' }}>
-          <button
-            onClick={() => handleSort('total')}
-            style={{
-              padding: '0.5rem 1rem',
-              fontSize: '0.875rem',
-              borderRadius: '6px',
-              background: sortBy === 'total' ? 'var(--accent-color)' : 'transparent',
-              color: sortBy === 'total' ? 'white' : 'var(--text-secondary)',
-              fontWeight: sortBy === 'total' ? 'bold' : 'normal',
-              boxShadow: sortBy === 'total' ? '0 2px 8px rgba(244, 63, 94, 0.4)' : 'none',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-          >
-            Total Points
-          </button>
-          <button
-            onClick={() => handleSort('weekly')}
-            style={{
-              padding: '0.5rem 1rem',
-              fontSize: '0.875rem',
-              borderRadius: '6px',
-              background: sortBy === 'weekly' ? 'var(--accent-color)' : 'transparent',
-              color: sortBy === 'weekly' ? 'white' : 'var(--text-secondary)',
-              fontWeight: sortBy === 'weekly' ? 'bold' : 'normal',
-              boxShadow: sortBy === 'weekly' ? '0 2px 8px rgba(244, 63, 94, 0.4)' : 'none',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-          >
-            This Week
-          </button>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          {/* Role-Gated Grade Switcher (Parents/Admins Only) */}
+          {(!isStudent || isAdmin) && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="gradeSelect" style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 'bold' }}>Grade:</label>
+              <select
+                id="gradeSelect"
+                value={selectedGrade}
+                onChange={(e) => setSelectedGrade(e.target.value)}
+                style={{
+                  padding: '0.4rem 0.8rem',
+                  borderRadius: '6px',
+                  background: 'rgba(0,0,0,0.3)',
+                  color: 'white',
+                  border: '1px solid var(--surface-border)',
+                  outline: 'none',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                <option value="2nd" style={{ color: 'black' }}>2nd Grade</option>
+                <option value="3rd" style={{ color: 'black' }}>3rd Grade</option>
+                <option value="4th" style={{ color: 'black' }}>4th Grade</option>
+                <option value="5th" style={{ color: 'black' }}>5th Grade</option>
+                <option value="6th" style={{ color: 'black' }}>6th Grade</option>
+              </select>
+            </div>
+          )}
+
+          {/* Sorting Toggle Buttons */}
+          <div style={{ display: 'flex', gap: '0.5rem', background: 'rgba(0,0,0,0.2)', padding: '0.25rem', borderRadius: '8px', border: '1px solid var(--surface-border)' }}>
+            <button
+              onClick={() => handleSort('total')}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                borderRadius: '6px',
+                background: sortBy === 'total' ? 'var(--accent-color)' : 'transparent',
+                color: sortBy === 'total' ? 'white' : 'var(--text-secondary)',
+                fontWeight: sortBy === 'total' ? 'bold' : 'normal',
+                boxShadow: sortBy === 'total' ? '0 2px 8px rgba(244, 63, 94, 0.4)' : 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              Total Points
+            </button>
+            <button
+              onClick={() => handleSort('weekly')}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                borderRadius: '6px',
+                background: sortBy === 'weekly' ? 'var(--accent-color)' : 'transparent',
+                color: sortBy === 'weekly' ? 'white' : 'var(--text-secondary)',
+                fontWeight: sortBy === 'weekly' ? 'bold' : 'normal',
+                boxShadow: sortBy === 'weekly' ? '0 2px 8px rgba(244, 63, 94, 0.4)' : 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              This Week
+            </button>
+          </div>
         </div>
       </div>
 

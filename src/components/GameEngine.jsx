@@ -581,23 +581,32 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
          }}>
             {[...(rewards || [])].sort((a, b) => a.cost - b.cost).map((rew) => {
                 const prog = Math.min((studentPoints / rew.cost) * 100, 100);
-                const isAchieved = studentPoints >= rew.cost;
+                const isAchieved = studentPoints >= rew.cost || rew.redeemed;
                 return (
                     <div key={rew.id} style={{ 
-                        background: 'rgba(255, 255, 255, 0.05)', 
+                        background: rew.redeemed ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.05)', 
                         padding: '1rem', 
                         borderRadius: '8px', 
-                        border: isAchieved ? '1px solid #10b981' : '1px solid rgba(255, 255, 255, 0.1)',
+                        border: isAchieved ? '2px solid #10b981' : '1px solid rgba(255, 255, 255, 0.1)',
                         position: 'relative'
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.5rem', color: 'white' }}>
-                            <span style={{ fontWeight: isAchieved ? 'bold' : 'normal', opacity: isAchieved ? 1 : 0.9 }}>{rew.name}</span>
-                            <span style={{ color: isAchieved ? '#10b981' : 'var(--text-secondary)', fontSize: '0.8rem' }}>{rew.cost}</span>
+                            <span style={{ 
+                              fontWeight: isAchieved ? 'bold' : 'normal', 
+                              opacity: isAchieved ? 1 : 0.9,
+                              textDecoration: rew.redeemed ? 'line-through' : 'none',
+                              color: rew.redeemed ? 'var(--text-secondary)' : 'white'
+                            }}>
+                              {rew.name} {rew.redeemed ? ' 🎁' : ''}
+                            </span>
+                            <span style={{ color: isAchieved ? '#10b981' : 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 'bold' }}>
+                              {rew.redeemed ? 'REDEEMED' : `${rew.cost} pts`}
+                            </span>
                         </div>
                         <div style={{ width: '100%', height: '6px', background: 'rgba(0,0,0,0.3)', borderRadius: '3px', overflow: 'hidden' }}>
                            <div style={{ 
                                 height: '100%', 
-                                width: `${prog}%`, 
+                                width: rew.redeemed ? '100%' : `${prog}%`, 
                                 background: isAchieved ? '#10b981' : '#3b82f6',
                                 transition: 'width 0.4s ease-out'
                             }} />
