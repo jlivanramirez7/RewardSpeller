@@ -440,7 +440,7 @@ const StudentPortal = () => {
                                     letterSpacing: '1px'
                                   }}
                                 >
-                                  {tierMasteryMastered ? '🏆 TIER MASTERED 🏆' : '🏆 Summative Assessment Unlocked 🏆'}
+                                  {tierMasteryMastered ? '🏆 TIER MASTERED 🏆' : '🏆 Tier Mastery Assessment 🏆'}
                                 </button>
                                 {tierMasteryMastered && (
                                   <div style={{ 

@@ -890,7 +890,7 @@ export const AppProvider = ({ children }) => {
   const isSectionMastered = useCallback((sectionId) => {
     const stats = getSectionStats(sectionId);
     if (sectionId.toString().includes('mastery')) {
-      return stats.easyAcc === 100 || stats.medAcc === 100 || stats.hardAcc === 100;
+      return stats.isPassed;
     }
     return stats.completionPercent >= 90;
   }, [getSectionStats]);
