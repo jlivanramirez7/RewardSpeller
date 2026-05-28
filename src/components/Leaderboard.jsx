@@ -54,7 +54,23 @@ const Leaderboard = ({ currentGradeLevel }) => {
               }
 
               const wordleDateKey = getWordleDateKey();
-              const wordlePoints = (child.wordleScores && child.wordleScores[wordleDateKey]) || 0;
+              let wordlePoints = (child.wordleScores && child.wordleScores[wordleDateKey]) || 0;
+
+              // Local Fallback Guard for active student browser session
+              if (childId === activeChildId && wordlePoints === 0) {
+                try {
+                  const localChildrenRaw = localStorage.getItem('children');
+                  if (localChildrenRaw) {
+                    const localChildren = JSON.parse(localChildrenRaw);
+                    const localChild = localChildren[childId];
+                    if (localChild && localChild.wordleScores && localChild.wordleScores[wordleDateKey]) {
+                       wordlePoints = localChild.wordleScores[wordleDateKey];
+                    }
+                  }
+                } catch (e) {
+                   console.warn("Local Wordle Points Fallback Error:", e);
+                }
+              }
 
               students.push({
                 userId,

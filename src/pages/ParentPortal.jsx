@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
+import { getWordleDateKey } from '../utils/wordle';
 
 /**
  * @component ParentPortal
@@ -359,6 +360,49 @@ const ParentPortal = () => {
               )}
             </>
           )}
+        </div>
+
+        {/* Daily Spellerle Telemetry Ledger */}
+        <div className="glass-panel" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '6px', color: '#a855f7' }}>
+            <span>🎮</span> Daily Spellerle Activity
+          </h2>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+             Synchronized tracking for today's 6:00 AM Wordle release window. 
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {childrenMap && Object.entries(childrenMap).map(([id, child]) => {
+               const dateKey = getWordleDateKey();
+               const score = (child.wordleScores && child.wordleScores[dateKey]) || 0;
+               const isPlayed = score > 0;
+               return (
+                 <div key={id} style={{ 
+                   display: 'flex', 
+                   justifyContent: 'space-between', 
+                   alignItems: 'center',
+                   padding: '1rem', 
+                   background: 'rgba(0,0,0,0.2)', 
+                   borderRadius: '8px',
+                   border: isPlayed ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--surface-border)'
+                 }}>
+                   <div>
+                     <strong style={{ color: 'white', display: 'block' }}>{child.studentName || 'Student'}</strong>
+                     <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Grade: {child.currentGradeLevel || '4th'}</span>
+                   </div>
+                   <div style={{ textAlign: 'right' }}>
+                     {isPlayed ? (
+                       <>
+                         <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '0.9rem', display: 'block' }}>🟢 Completed</span>
+                         <span style={{ color: '#a855f7', fontWeight: 'bold', fontSize: '0.85rem' }}>{score} Wordle pts</span>
+                       </>
+                     ) : (
+                       <span style={{ color: '#f59e0b', fontWeight: 'bold', fontSize: '0.85rem' }}>🟡 Pending (Not Played)</span>
+                     )}
+                   </div>
+                 </div>
+               );
+            })}
+          </div>
         </div>
 
         {/* Reward Configuration */}
