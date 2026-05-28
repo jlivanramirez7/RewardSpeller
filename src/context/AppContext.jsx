@@ -423,7 +423,6 @@ export const AppProvider = ({ children }) => {
             }
           } else {
             if (!ignore) {
-              skipSaveRef.current = true; // Guard against overwriting Firestore with empty defaults on read miss!
               setIsApproved(user?.email === 'jlivanramirez7@gmail.com');
               setParentEmail(user?.email || '');
               setCoppaConsented(user?.email === 'jlivanramirez7@gmail.com');
@@ -453,19 +452,6 @@ export const AppProvider = ({ children }) => {
     loadScores();
     return () => { ignore = true; };
   }, [user, db, restoreProgress, isStudent, parentUid, studentChildId]);
-
-  // Admin Recovery Hook for jlivanramirez7@gmail.com
-  useEffect(() => {
-    if (isLoaded && user && user.email === 'jlivanramirez7@gmail.com') {
-      const hasLucas = Object.values(childrenMap || {}).some(child => 
-        child && child.studentName && child.studentName.trim().toLowerCase() === 'lucas'
-      );
-      if (!hasLucas) {
-        console.log("[ADMIN RECOVERY] Lucas profile not found for jlivanramirez7@gmail.com. Auto-triggering adminRestoreLucas...");
-        adminRestoreLucas();
-      }
-    }
-  }, [isLoaded, user, childrenMap, adminRestoreLucas]);
 
   const activeChild = useMemo(() => {
     return childrenMap[activeChildId] || createDefaultChild(activeChildId);
@@ -825,12 +811,6 @@ export const AppProvider = ({ children }) => {
           coppaConsented: true,
           email: 'jlivanramirez7@gmail.com',
           lastInteractionAt: serverTimestamp()
-        }, { merge: true });
-
-        console.log(`⚙️ Writing administrative student link for lucasjramirez7@gmail.com...`);
-        await setDoc(doc(db, 'student_links', 'lucasjramirez7@gmail.com'), {
-          parentUid: parentUid,
-          childId: lucasKey
         }, { merge: true });
 
         // Sync client state synchronously after DB write completes
