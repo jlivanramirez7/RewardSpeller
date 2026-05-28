@@ -103,73 +103,7 @@ export const AppProvider = ({ children }) => {
 
   // Multi-student profiles state dictionary mapping child IDs to StudentProfile objects.
   // Includes legacy single-student migration fallback parsing to ensure seamless parent account upgrades.
-  const [childrenMap, setChildrenMap] = useState(() => {
-    const currentWeek = getISOWeekString();
-    const savedChildren = localStorage.getItem('children');
-    if (savedChildren) {
-      try {
-        const parsed = JSON.parse(savedChildren);
-        const validated = {};
-        for (const [childId, childData] of Object.entries(parsed)) {
-          let weeklyPoints = childData.weeklyPoints ?? 0;
-          let lastResetWeek = childData.lastResetWeek || currentWeek;
-          let usageTime = childData.usageTime ?? 0;
-          if (lastResetWeek !== currentWeek) {
-            weeklyPoints = 0;
-            lastResetWeek = currentWeek;
-          }
-          validated[childId] = {
-            ...childData,
-            weeklyPoints,
-            lastResetWeek,
-            usageTime
-          };
-        }
-        return validated;
-      } catch (e) {
-        console.error("Error parsing children from localStorage", e);
-      }
-    }
-    // Legacy Migration Fallback
-    const legacyPoints = localStorage.getItem('studentPoints');
-    if (legacyPoints !== null) {
-      let grade = loadState('currentGradeLevel', '4th');
-      if (grade === '4th-5th') grade = '4th';
-      if (grade === '6th+') grade = '6th';
-      const validGrades = ['2nd', '3rd', '4th', '5th', '6th'];
-      if (!validGrades.includes(grade)) grade = '4th';
-
-      let weeklyPoints = loadState('weeklyPoints', 0);
-      let lastResetWeek = loadState('lastResetWeek', currentWeek);
-      let usageTime = loadState('usageTime', 0);
-      if (lastResetWeek !== currentWeek) {
-        weeklyPoints = 0;
-        lastResetWeek = currentWeek;
-      }
-
-      const legacyChild = createDefaultChild('child_1', loadState('studentName', ''), {
-        studentPoints: loadState('studentPoints', 0),
-        weeklyPoints,
-        lastResetWeek,
-        usageTime,
-        studentStreak: loadState('studentStreak', 0),
-        unlockedTiers: loadState('unlockedTiers', []),
-        struggleWords: loadState('struggleWords', []),
-        sectionScores: loadState('sectionScores', {}),
-        sectionAccuracy: loadState('sectionAccuracy', {}),
-        enablePacing: loadState('enablePacing', true),
-        enableDifficultyGating: loadState('enableDifficultyGating', true),
-        listenedLessons: loadState('listenedLessons', []),
-        rewards: loadState('rewards', [
-          { id: 1, name: '30 mins Screen Time', cost: 500 },
-          { id: 2, name: 'Trip to Park', cost: 1000 }
-        ]),
-        currentGradeLevel: grade
-      });
-      return { child_1: legacyChild };
-    }
-    return { child_1: createDefaultChild('child_1') };
-  });
+  const [childrenMap, setChildrenMap] = useState(null);
 
   const skipSaveRef = useRef(false);
 
@@ -177,6 +111,7 @@ export const AppProvider = ({ children }) => {
   // of the currently active student profile, preserving untouched sibling profiles safely.
   const updateActiveChildField = useCallback((field, valueOrUpdater) => {
     setChildrenMap(prevMap => {
+      if (!prevMap) return null;
       const currentActiveId = activeChildId;
       const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
       const oldValue = currentChild[field];
@@ -209,7 +144,7 @@ export const AppProvider = ({ children }) => {
   const setStudentName = useCallback((val) => updateActiveChildField('studentName', val), [updateActiveChildField]);
 
   const switchChild = useCallback((id) => {
-    if (childrenMap[id]) {
+    if (childrenMap && childrenMap[id]) {
       setActiveChildId(id);
     }
   }, [childrenMap]);
@@ -218,6 +153,7 @@ export const AppProvider = ({ children }) => {
     const newId = `child_${Date.now()}`;
     const newChild = createDefaultChild(newId, name, { currentGradeLevel: gradeLevel });
     setChildrenMap(prev => {
+      if (!prev) return null;
       if (Object.keys(prev).length >= 3) {
         alert("Maximum limit of 3 student profiles reached.");
         return prev;
@@ -229,6 +165,7 @@ export const AppProvider = ({ children }) => {
 
   const deleteChild = useCallback((id) => {
     setChildrenMap(prev => {
+      if (!prev) return null;
       const remainingKeys = Object.keys(prev).filter(k => k !== id);
       if (remainingKeys.length === 0) {
         return { child_1: createDefaultChild('child_1', 'Student') };
@@ -240,7 +177,7 @@ export const AppProvider = ({ children }) => {
 
     if (activeChildId === id) {
       let nextActiveId;
-      const remaining = Object.keys(childrenMap).filter(k => k !== id);
+      const remaining = Object.keys(childrenMap || {}).filter(k => k !== id);
       if (remaining.length > 0) {
         nextActiveId = remaining[0];
       } else {
@@ -423,6 +360,7 @@ export const AppProvider = ({ children }) => {
             }
           } else {
             if (!ignore) {
+              setChildrenMap({ child_1: createDefaultChild('child_1') }); // Safely initialize default profile ONLY if database is verified missing!
               setIsApproved(user?.email === 'jlivanramirez7@gmail.com');
               setParentEmail(user?.email || '');
               setCoppaConsented(user?.email === 'jlivanramirez7@gmail.com');
@@ -440,7 +378,7 @@ export const AppProvider = ({ children }) => {
         if (!ignore) {
           if (loadedUserUidRef.current !== null) {
             skipSaveRef.current = true;
-            setChildrenMap({ child_1: createDefaultChild('child_1') });
+            setChildrenMap(null); // Reset childrenMap to null on logout
             setActiveChildId('child_1');
           }
           loadedUserUidRef.current = null;
@@ -454,6 +392,7 @@ export const AppProvider = ({ children }) => {
   }, [user, db, restoreProgress, isStudent, parentUid, studentChildId]);
 
   const activeChild = useMemo(() => {
+    if (!childrenMap) return createDefaultChild(activeChildId);
     return childrenMap[activeChildId] || createDefaultChild(activeChildId);
   }, [childrenMap, activeChildId]);
 
@@ -502,6 +441,8 @@ export const AppProvider = ({ children }) => {
       return;
     }
 
+    if (!childrenMap) return; // Ignore save effects if childrenMap is null!
+
     localStorage.setItem('activeChildId', activeChildId);
     localStorage.setItem('children', JSON.stringify(childrenMap));
 
@@ -511,7 +452,7 @@ export const AppProvider = ({ children }) => {
     }
 
     const saveScores = async () => {
-      if (targetUid && db) {
+      if (targetUid && db && childrenMap) {
         try {
           const docRef = doc(db, 'users', targetUid);
           const approvedFlag = isApproved || targetUid === 'jlivanramirez7@gmail.com' || user?.email === 'jlivanramirez7@gmail.com';
@@ -578,6 +519,7 @@ export const AppProvider = ({ children }) => {
 
   const addPoints = useCallback((points) => {
     setChildrenMap(prevMap => {
+      if (!prevMap) return null;
       const currentActiveId = activeChildId;
       const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
       const currentWeek = getISOWeekString();
@@ -604,6 +546,7 @@ export const AppProvider = ({ children }) => {
 
   const addUsageTime = useCallback((seconds) => {
     setChildrenMap(prevMap => {
+      if (!prevMap) return null;
       const currentActiveId = activeChildId;
       const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
       return {
@@ -722,7 +665,7 @@ export const AppProvider = ({ children }) => {
     let lucasKey = null;
     let lucasData = null;
 
-    for (const [cId, child] of Object.entries(childrenMap)) {
+    for (const [cId, child] of Object.entries(childrenMap || {})) {
       if (child && child.studentName && child.studentName.trim().toLowerCase() === 'lucas') {
         lucasKey = cId;
         lucasData = child;
@@ -793,7 +736,7 @@ export const AppProvider = ({ children }) => {
     };
 
     const updatedChildrenMap = {
-      ...childrenMap,
+      ...(childrenMap || {}),
       [lucasKey]: updatedLucasData
     };
 
@@ -830,13 +773,17 @@ export const AppProvider = ({ children }) => {
   }, [user, db, childrenMap]);
 
   const linkStudentEmail = useCallback(async (childId, email) => {
-    setChildrenMap(prev => ({
-      ...prev,
-      [childId]: {
-        ...prev[childId],
-        studentEmail: email
-      }
-    }));
+    setChildrenMap(prev => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        [childId]: {
+          ...(prev[childId] || {}),
+          studentEmail: email
+        }
+      };
+    });
+
 
     if (user && db && email) {
       try {
