@@ -78,6 +78,7 @@ const createDefaultChild = (id, name = '', overrides = {}) => {
       { id: 1, name: '30 mins Screen Time', cost: 500 },
       { id: 2, name: 'Trip to Park', cost: 1000 }
     ],
+    wordleScores: {},
     ...overrides
   };
 };
@@ -544,6 +545,30 @@ export const AppProvider = ({ children }) => {
     });
   }, [activeChildId]);
 
+  const addWordlePoints = useCallback((dateKey, points) => {
+    setChildrenMap(prevMap => {
+      if (!prevMap) return null;
+      const currentActiveId = activeChildId;
+      const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
+      const existingScores = currentChild.wordleScores || {};
+      
+      if (existingScores[dateKey] !== undefined) {
+        return prevMap; // Block duplicate scores for the same date key
+      }
+
+      return {
+        ...prevMap,
+        [currentActiveId]: {
+          ...currentChild,
+          wordleScores: {
+            ...existingScores,
+            [dateKey]: points
+          }
+        }
+      };
+    });
+  }, [activeChildId]);
+
   const addUsageTime = useCallback((seconds) => {
     setChildrenMap(prevMap => {
       if (!prevMap) return null;
@@ -868,6 +893,9 @@ export const AppProvider = ({ children }) => {
     return calculateRecommendedDifficulty(sectionId, sectionAccuracy);
   }, [sectionAccuracy]);
 
+  const rawWordleScores = activeChild.wordleScores;
+  const wordleScores = useMemo(() => rawWordleScores || {}, [rawWordleScores]);
+
   const contextValue = useMemo(() => ({
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
@@ -885,7 +913,8 @@ export const AppProvider = ({ children }) => {
     isLoaded, error,
     studentName, setStudentName,
     childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild,
-    resolveStruggleWord, redeemReward, adminRestoreLucas
+    resolveStruggleWord, redeemReward, adminRestoreLucas,
+    wordleScores, addWordlePoints
   }), [
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
@@ -902,7 +931,8 @@ export const AppProvider = ({ children }) => {
     tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,
     studentName, setStudentName,
-    childrenMap, activeChildId, switchChild, addChild, deleteChild
+    childrenMap, activeChildId, switchChild, addChild, deleteChild,
+    wordleScores, addWordlePoints
   ]);
 
   return (

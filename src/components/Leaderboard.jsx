@@ -9,6 +9,7 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
 import { useAppContext, getISOWeekString } from '../context/AppContext';
 import { generateKidFriendlyName } from '../utils/username';
+import { getWordleDateKey } from '../utils/wordle';
 
 /**
  * @component Leaderboard
@@ -52,12 +53,16 @@ const Leaderboard = ({ currentGradeLevel }) => {
                 weeklyPoints = 0;
               }
 
+              const wordleDateKey = getWordleDateKey();
+              const wordlePoints = (child.wordleScores && child.wordleScores[wordleDateKey]) || 0;
+
               students.push({
                 userId,
                 childId,
                 displayName,
                 totalPoints,
-                weeklyPoints
+                weeklyPoints,
+                wordlePoints
               });
             }
           });
@@ -107,6 +112,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
 
   const leaderboardData = useMemo(() => {
     const sorted = [...rawStudents].sort((a, b) => {
+      if (sortBy === 'wordle') return b.wordlePoints - a.wordlePoints;
       return sortBy === 'weekly' ? b.weeklyPoints - a.weeklyPoints : b.totalPoints - a.totalPoints;
     });
 
@@ -116,7 +122,7 @@ const Leaderboard = ({ currentGradeLevel }) => {
 
     for (let i = 0; i < sorted.length; i++) {
       const student = sorted[i];
-      const points = sortBy === 'weekly' ? student.weeklyPoints : student.totalPoints;
+      const points = sortBy === 'wordle' ? student.wordlePoints : (sortBy === 'weekly' ? student.weeklyPoints : student.totalPoints);
       if (previousPoints !== null && points < previousPoints) {
         currentRank = i + 1;
       }
@@ -223,6 +229,22 @@ const Leaderboard = ({ currentGradeLevel }) => {
             >
               This Week
             </button>
+            <button
+              onClick={() => handleSort('wordle')}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                borderRadius: '6px',
+                background: sortBy === 'wordle' ? '#a855f7' : 'transparent',
+                color: sortBy === 'wordle' ? 'white' : 'var(--text-secondary)',
+                fontWeight: sortBy === 'wordle' ? 'bold' : 'normal',
+                boxShadow: sortBy === 'wordle' ? '0 2px 8px rgba(168, 85, 247, 0.4)' : 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              🏆 Daily Spellerle
+            </button>
           </div>
         </div>
       </div>
@@ -238,8 +260,14 @@ const Leaderboard = ({ currentGradeLevel }) => {
               <tr style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'left' }}>
                 <th style={{ padding: '0.75rem 1rem', width: '110px' }}>Rank</th>
                 <th style={{ padding: '0.75rem 1rem' }}>Student Name</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>Points This Week</th>
-                <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>Total Points</th>
+                {sortBy === 'wordle' ? (
+                  <th style={{ padding: '0.75rem 1rem', textAlign: 'right', color: '#a855f7' }}>Today's Spellerle</th>
+                ) : (
+                  <>
+                    <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>Points This Week</th>
+                    <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>Total Points</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -289,30 +317,49 @@ const Leaderboard = ({ currentGradeLevel }) => {
                         )}
                       </div>
                     </td>
-                    <td style={{ 
-                      padding: '1rem', 
-                      textAlign: 'right', 
-                      fontWeight: '600',
-                      color: '#fb923c',
-                      borderTop: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
-                      borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
-                    }}>
-                      {Math.round(student.weeklyPoints)} pts
-                    </td>
-                    <td style={{ 
-                      padding: '1rem', 
-                      textAlign: 'right', 
-                      fontWeight: 'bold', 
-                      color: '#fbbf24',
-                      fontSize: '1.1rem',
-                      borderTopRightRadius: '8px', 
-                      borderBottomRightRadius: '8px',
-                      borderTop: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
-                      borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
-                      borderRight: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
-                    }}>
-                      {Math.round(student.totalPoints)} pts
-                    </td>
+                    {sortBy === 'wordle' ? (
+                      <td style={{ 
+                        padding: '1rem', 
+                        textAlign: 'right', 
+                        fontWeight: 'bold', 
+                        color: '#a855f7',
+                        fontSize: '1.1rem',
+                        borderTopRightRadius: '8px', 
+                        borderBottomRightRadius: '8px',
+                        borderTop: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
+                        borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
+                        borderRight: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
+                      }}>
+                        {Math.round(student.wordlePoints)} pts
+                      </td>
+                    ) : (
+                      <>
+                        <td style={{ 
+                          padding: '1rem', 
+                          textAlign: 'right', 
+                          fontWeight: '600',
+                          color: '#fb923c',
+                          borderTop: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
+                          borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
+                        }}>
+                          {Math.round(student.weeklyPoints)} pts
+                        </td>
+                        <td style={{ 
+                          padding: '1rem', 
+                          textAlign: 'right', 
+                          fontWeight: 'bold', 
+                          color: '#fbbf24',
+                          fontSize: '1.1rem',
+                          borderTopRightRadius: '8px', 
+                          borderBottomRightRadius: '8px',
+                          borderTop: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
+                          borderBottom: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)',
+                          borderRight: isCurrentUser ? '2px solid #10b981' : '1px solid var(--surface-border)'
+                        }}>
+                          {Math.round(student.totalPoints)} pts
+                        </td>
+                      </>
+                    )}
                   </tr>
                 );
               })}

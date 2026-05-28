@@ -3,6 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import { warmupAudio } from '../services/ttsService';
 import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
+import WordleEngine from '../components/WordleEngine';
 
 /**
  * @component StudentPortal
@@ -20,6 +21,7 @@ const StudentPortal = () => {
   const [coppaEmailInput, setCoppaEmailInput] = useState('');
   const [coppaSubmitted, setCoppaSubmitted] = useState(false);
   const [coppaError, setCoppaError] = useState(null);
+  const [showWordle, setShowWordle] = useState(false);
 
   if (error) {
     return <div style={{ color: 'red', padding: '2rem', textAlign: 'center' }}>Error loading student data: {error}</div>;
@@ -131,6 +133,29 @@ const StudentPortal = () => {
           <p style={{ color: 'var(--text-secondary)' }}>Welcome {studentName && studentName.trim() ? `${studentName.trim()}!` : 'back! Ready to learn?'}</p>
         </div>
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <button 
+            className="btn-primary"
+            onClick={() => {
+              warmupAudio();
+              setShowWordle(true);
+            }}
+            style={{ 
+              background: 'linear-gradient(135deg, #a855f7, #6b21a8)', 
+              color: 'white', 
+              border: 'none', 
+              fontWeight: 'bold', 
+              padding: '0.6rem 1.2rem', 
+              borderRadius: '8px', 
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '0.9rem',
+              boxShadow: '0 4px 12px rgba(168, 85, 247, 0.3)'
+            }}
+          >
+            🎮 Play Daily Spellerle 🎮
+          </button>
           <div style={{ 
             textAlign: 'center', 
             background: 'rgba(0, 180, 216, 0.15)', 
@@ -442,20 +467,6 @@ const StudentPortal = () => {
                                 >
                                   {tierMasteryMastered ? '🏆 TIER MASTERED 🏆' : '🏆 Summative Tier Assessment Unlocked 🏆'}
                                 </button>
-                                {tierMasteryMastered && (
-                                  <div style={{ 
-                                    marginTop: '0.5rem', 
-                                    textAlign: 'center', 
-                                    color: '#fbbf24', 
-                                    fontWeight: 'bold',
-                                    padding: '0.5rem',
-                                    background: 'rgba(251, 191, 36, 0.1)',
-                                    borderRadius: '4px',
-                                    border: '1px dashed #fbbf24'
-                                  }}>
-                                    ⚔️ OFFICIAL JEDI MASTER OF TIER {tier.id} ⚔️
-                                  </div>
-                                )}
                               </div>
                             );
                           })()}
@@ -540,6 +551,10 @@ const StudentPortal = () => {
             </div>
           )}
         </>
+      )}
+
+      {showWordle && (
+        <WordleEngine onClose={() => setShowWordle(false)} />
       )}
 
       {activeLessonData && (
