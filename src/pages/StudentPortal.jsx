@@ -432,15 +432,15 @@ const StudentPortal = () => {
                                   onClick={handleTierMastery}
                                   style={{ 
                                     width: '100%', 
-                                    background: tierMasteryMastered ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #60a5fa, var(--accent-cyan))', 
+                                    background: tierMasteryMastered ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #b91c1c)', 
                                     color: 'white', 
                                     fontWeight: 'bold',
-                                    border: tierMasteryMastered ? '2px solid #10b981' : '2px solid #fbbf24',
+                                    border: tierMasteryMastered ? '2px solid #10b981' : '2px solid #ef4444',
                                     textTransform: 'uppercase',
                                     letterSpacing: '1px'
                                   }}
                                 >
-                                  {tierMasteryMastered ? '🏆 TIER MASTERED 🏆' : '🏆 Tier Mastery Assessment 🏆'}
+                                  {tierMasteryMastered ? '🏆 TIER MASTERED 🏆' : '🏆 Summative Tier Assessment Unlocked 🏆'}
                                 </button>
                                 {tierMasteryMastered && (
                                   <div style={{ 
