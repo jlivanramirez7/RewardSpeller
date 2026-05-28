@@ -24,7 +24,7 @@ const formatUsageTime = (totalSeconds) => {
  * @returns {React.ReactElement} The administrative control interface.
  */
 const AdminDashboard = () => {
-  const { db, isAdmin } = useAuth();
+  const { db, isAdmin, user } = useAuth();
   const [requests, setRequests] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
   const [metrics, setMetrics] = useState({
@@ -314,6 +314,145 @@ const AdminDashboard = () => {
     <div style={{ padding: '2rem' }}>
       <h1>Admin Dashboard</h1>
       
+      {/* ADMINISTRATIVE RECOVERY BUTTON FOR LUCAS */}
+      <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem', borderLeft: '4px solid #a855f7', background: 'rgba(168, 85, 247, 0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h3 style={{ color: '#a855f7', margin: 0 }}>⚙️ Failsafe Profile Recovery Tool</h3>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '4px' }}>Restore and re-associate the child profile for Lucas (`lucasjramirez7@gmail.com`) for the Admin Account (`jlivanramirez7@gmail.com`) with 100% completion for Tier 1 and partial completion for Tier 2.</p>
+        </div>
+        <button 
+          className="btn-primary"
+          style={{ background: 'linear-gradient(135deg, #a855f7, #6b21a8)', color: 'white', border: 'none', padding: '0.75rem 1.5rem', fontWeight: 'bold', borderRadius: '8px', cursor: 'pointer' }}
+          onClick={async () => {
+            if (!user || !db) {
+              alert("Error: Admin authentication or Firestore DB connection missing.");
+              return;
+            }
+            if (user.email !== 'jlivanramirez7@gmail.com') {
+              alert("Error: Only the Master Parent account jlivanramirez7@gmail.com can trigger this recovery tool.");
+              return;
+            }
+
+            const targetDocRef = doc(db, 'users', user.uid);
+            let existingChildrenMap = {};
+            let lucasKey = `child_${Date.now()}`;
+
+            try {
+              const parentDocSnap = await getDoc(targetDocRef);
+              if (parentDocSnap.exists()) {
+                const data = parentDocSnap.data();
+                if (data.children && typeof data.children === 'object') {
+                  existingChildrenMap = { ...data.children };
+                  for (const [cId, child] of Object.entries(data.children)) {
+                    if (child && child.studentName && child.studentName.trim().toLowerCase() === 'lucas') {
+                      lucasKey = cId;
+                      break;
+                    }
+                  }
+                }
+              }
+
+              const sectionScores = {};
+              const sectionAccuracy = {};
+              const listenedLessons = [];
+              let totalPoints = 0;
+
+              // T1 Sections (1 to 7)
+              const T1_SECTIONS = ['g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t1_s7'];
+              T1_SECTIONS.forEach(secId => {
+                sectionScores[`${secId}-easy`] = 20;
+                sectionScores[`${secId}-medium`] = 60;
+                sectionScores[`${secId}-hard`] = 600;
+                sectionAccuracy[`${secId}-easy`] = 100;
+                sectionAccuracy[`${secId}-medium`] = 100;
+                sectionAccuracy[`${secId}-hard`] = 100;
+                listenedLessons.push(secId);
+                totalPoints += 680;
+              });
+
+              // T1 Mastery Summative
+              sectionScores['tier_g4_t1_mastery-hard'] = 900;
+              sectionAccuracy['tier_g4_t1_mastery-hard'] = 100;
+              listenedLessons.push('tier_g4_t1_mastery');
+              totalPoints += 900;
+
+              // T2 Sections (1 to 5)
+              const T2_SECTIONS_FULL = ['g4_t2_s1', 'g4_t2_s2', 'g4_t2_s3', 'g4_t2_s4', 'g4_t2_s5'];
+              T2_SECTIONS_FULL.forEach(secId => {
+                sectionScores[`${secId}-easy`] = 20;
+                sectionScores[`${secId}-medium`] = 60;
+                sectionScores[`${secId}-hard`] = 600;
+                sectionAccuracy[`${secId}-easy`] = 100;
+                sectionAccuracy[`${secId}-medium`] = 100;
+                sectionAccuracy[`${secId}-hard`] = 100;
+                listenedLessons.push(secId);
+                totalPoints += 680;
+              });
+
+              // T2 Suffix: ABLE/FUL (Easy=100, Med=100, Hard=0)
+              sectionScores['g4_t2_s6-easy'] = 20;
+              sectionScores['g4_t2_s6-medium'] = 60;
+              sectionScores['g4_t2_s6-hard'] = 0;
+              sectionAccuracy['g4_t2_s6-easy'] = 100;
+              sectionAccuracy['g4_t2_s6-medium'] = 100;
+              sectionAccuracy['g4_t2_s6-hard'] = 0;
+              listenedLessons.push('g4_t2_s6');
+              totalPoints += 80;
+
+              const restoredLucasData = {
+                id: lucasKey,
+                studentName: 'Lucas',
+                studentEmail: 'lucasjramirez7@gmail.com',
+                currentGradeLevel: '4th',
+                studentPoints: totalPoints,
+                weeklyPoints: totalPoints,
+                usageTime: 1800,
+                studentStreak: 0,
+                unlockedTiers: ['g4_t1', 'g4_t2'],
+                struggleWords: [],
+                sectionScores,
+                sectionAccuracy,
+                enablePacing: true,
+                enableDifficultyGating: true,
+                listenedLessons,
+                rewards: [
+                  { id: 1, name: '30 mins Screen Time', cost: 500 },
+                  { id: 2, name: 'Trip to Park', cost: 1000 }
+                ]
+              };
+
+              const updatedChildrenMap = {
+                ...existingChildrenMap,
+                [lucasKey]: restoredLucasData
+              };
+
+              console.log(`[ADMIN ACTION] Writing administrative recovery for Lucas to Firestore users/${user.uid}...`);
+              await setDoc(targetDocRef, {
+                activeChildId: lucasKey,
+                children: updatedChildrenMap,
+                isApproved: true,
+                coppaConsented: true,
+                email: 'jlivanramirez7@gmail.com',
+                lastInteractionAt: serverTimestamp()
+              }, { merge: true });
+
+              console.log(`[ADMIN ACTION] Writing administrative student link for lucasjramirez7@gmail.com...`);
+              await setDoc(doc(db, 'student_links', 'lucasjramirez7@gmail.com'), {
+                parentUid: user.uid,
+                childId: lucasKey
+              }, { merge: true });
+
+              alert(`🎉 SUCCESS: Lucas's updated progress (Tier 1 Completed + Tier 2 partial) has been safely restored in your Cloud Database!`);
+            } catch (err) {
+              console.error("Failed administrative recovery for Lucas:", err);
+              alert("Failed administrative recovery for Lucas: " + err.message);
+            }
+          }}
+        >
+          🚀 Restore Lucas Profile
+        </button>
+      </div>
+
       <section style={{ marginBottom: '3rem' }}>
         <h2 style={{ marginBottom: '1.5rem' }}>Platform Analytics Overview</h2>
         
