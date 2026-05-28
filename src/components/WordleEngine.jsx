@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
 import { playStaticAudio, cancelTTS } from '../services/ttsService';
@@ -122,7 +122,7 @@ const WordleEngine = ({ onClose }) => {
 
   if (!targetWordObj) {
     return createPortal(
-      <div className="lightbox-overlay" onClick={onClose}>
+      <div className="lightbox-overlay" onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(5, 8, 15, 0.95)', backdropFilter: 'blur(15px)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: '3rem' }}>
         <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center', color: 'white' }}>
           <p>No 5-letter words found in your active curriculum for today's puzzle.</p>
           <button className="btn-primary" onClick={onClose} style={{ marginTop: '1rem' }}>Close</button>
@@ -156,7 +156,7 @@ const WordleEngine = ({ onClose }) => {
   ];
 
   return createPortal(
-    <div className="lightbox-overlay" style={{ background: 'rgba(15, 23, 42, 0.9)', zIndex: 9999 }}>
+    <div className="lightbox-overlay" style={{ position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(5, 8, 15, 0.95)', backdropFilter: 'blur(15px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3rem' }}>
       <div className="animate-scale-up" style={{ 
         display: 'flex', 
         gap: '2rem', 
@@ -183,7 +183,7 @@ const WordleEngine = ({ onClose }) => {
                color: '#fbbf24', 
                fontSize: '1.1rem' 
              }}>
-               ⏱️ {Math.floor(secondsElapsed / 60)}:String(secondsElapsed % 60).padStart(2, '0')
+               ⏱️ {Math.floor(secondsElapsed / 60)}:{String(secondsElapsed % 60).padStart(2, '0')}
              </div>
           </div>
 
