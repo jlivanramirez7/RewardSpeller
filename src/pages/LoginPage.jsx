@@ -60,7 +60,7 @@ const LoginPage = () => {
 
     if (isAdmin || authUser.email === 'jlivanramirez7@gmail.com') {
       console.log(`[LOGIN] User is Admin/Master Parent. Auto-approving.`);
-      return { authUser, isApproved: true };
+      return { authUser, targetUid: authUser.uid, isApproved: true };
     }
 
     console.log(`[LOGIN] Probing student_links collection in Firestore for email: "${authUser.email}"...`);
@@ -82,7 +82,7 @@ const LoginPage = () => {
 
     if (isStudentLink) {
       console.log(`[LOGIN] User is a linked student. Auto-approving access.`);
-      return { authUser, isApproved: true };
+      return { authUser, targetUid, isApproved: true };
     }
 
     console.log(`[LOGIN] Querying users collection for approval status of UID: ${targetUid}...`);
@@ -91,16 +91,17 @@ const LoginPage = () => {
     const isApproved = docSnap.exists() && docSnap.data().isApproved;
     console.log(`[LOGIN] Approval verification result for UID ${targetUid}: ${isApproved} (Document exists: ${docSnap.exists()})`);
     
-    return { authUser, isApproved };
+    return { authUser, targetUid, isApproved };
   };
 
   const handleLogin = async () => {
     try {
-      const { authUser, isApproved } = await authenticateAndFetchUser();
+      const { authUser, targetUid, isApproved } = await authenticateAndFetchUser();
       if (isApproved) {
         // Log last login and interaction timestamps in Firestore parent document
         try {
-          await setDoc(doc(db, 'users', authUser.uid), {
+          console.log(`[LOGIN] Writing lastLoginAt and lastInteractionAt telemetry to Firestore doc users/${targetUid}`);
+          await setDoc(doc(db, 'users', targetUid), {
             lastLoginAt: serverTimestamp(),
             lastInteractionAt: serverTimestamp()
           }, { merge: true });
