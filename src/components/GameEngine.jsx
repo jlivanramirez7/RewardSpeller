@@ -174,6 +174,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   };
 
   const handleRetry = () => {
+    cancelTTS(); // Stop active dictation immediately
     setIsSessionComplete(false);
     setCompletionData(null);
     setCurrentWordIndex(0);
@@ -433,6 +434,37 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
           </div>
         ) : (
           <>
+            {/* Header with Title and Restart Button */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>
+              <div style={{ textAlign: 'left' }}>
+                <h3 style={{ margin: 0, color: 'white', fontSize: '1.2rem', fontWeight: 'bold' }}>{section?.name || 'Spelling Trial'}</h3>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  {difficulty} Mode
+                </span>
+              </div>
+              <button 
+                type="button"
+                className="btn-secondary"
+                onClick={() => {
+                  if (window.confirm("Are you sure you want to restart this section? Your current progress and streak will reset.")) {
+                    handleRetry();
+                  }
+                }}
+                style={{ 
+                  padding: '0.4rem 0.8rem', 
+                  fontSize: '0.8rem', 
+                  borderColor: 'rgba(239, 68, 68, 0.5)', 
+                  color: '#f87171',
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  borderRadius: '6px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+              >
+                🔄 Restart
+              </button>
+            </div>
+
             {tierRule && (
               <div style={{ 
                   background: 'rgba(244, 63, 94, 0.12)', 
