@@ -112,13 +112,23 @@ export const AppProvider = ({ children }) => {
   // of the currently active student profile, preserving untouched sibling profiles safely.
   const updateActiveChildField = useCallback((field, valueOrUpdater) => {
     setChildrenMap(prevMap => {
-      if (!prevMap) return null;
+      if (!prevMap) {
+        console.warn(`[APP CONTEXT] updateActiveChildField: childrenMap is null, skipping update for field: ${field}`);
+        return null;
+      }
       const currentActiveId = activeChildId;
       const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
       const oldValue = currentChild[field];
       const newValue = typeof valueOrUpdater === 'function' ? valueOrUpdater(oldValue) : valueOrUpdater;
 
-      if (oldValue === newValue) return prevMap;
+      console.log(`[APP CONTEXT] updateActiveChildField: updating child "${currentActiveId}", field: "${field}"`);
+      console.log(`[APP CONTEXT] updateActiveChildField: oldValue:`, oldValue);
+      console.log(`[APP CONTEXT] updateActiveChildField: newValue:`, newValue);
+
+      if (oldValue === newValue) {
+        console.log(`[APP CONTEXT] updateActiveChildField: value unchanged, skipping state update`);
+        return prevMap;
+      }
 
       return {
         ...prevMap,
@@ -433,27 +443,39 @@ export const AppProvider = ({ children }) => {
   }, [user, db, isStudent, parentUid]);
 
   useEffect(() => {
-    if (!isLoaded) return;
-
-    const targetUid = isStudent ? parentUid : (user ? user.uid : null);
-
-    if (targetUid && targetUid !== loadedUserUidRef.current) {
-      console.warn("Save blocked: current user/parent does not match loaded user");
+    if (!isLoaded) {
+      console.log("[APP CONTEXT] save effect: skipped because isLoaded is false");
       return;
     }
 
-    if (!childrenMap) return; // Ignore save effects if childrenMap is null!
+    const targetUid = isStudent ? parentUid : (user ? user.uid : null);
 
+    console.log("[APP CONTEXT] save effect triggered. targetUid:", targetUid, "childrenMap:", !!childrenMap);
+
+    if (targetUid && targetUid !== loadedUserUidRef.current) {
+      console.warn(`[APP CONTEXT] Save blocked: current user/parent (${targetUid}) does not match loaded user (${loadedUserUidRef.current})`);
+      return;
+    }
+
+    if (!childrenMap) {
+      console.log("[APP CONTEXT] save effect: childrenMap is null, skipping write");
+      return;
+    }
+
+    console.log("[APP CONTEXT] save effect: saving childrenMap to localStorage:", childrenMap);
     localStorage.setItem('activeChildId', activeChildId);
     localStorage.setItem('children', JSON.stringify(childrenMap));
 
     if (skipSaveRef.current) {
+      console.log("[APP CONTEXT] save effect: skipSaveRef is true. Resetting to false and skipping Firestore write.");
       skipSaveRef.current = false;
       return;
     }
 
     const saveScores = async () => {
       if (targetUid && db && childrenMap) {
+        console.log(`[APP CONTEXT] saveScores: attempting to save state to Firestore for UID: ${targetUid}`);
+        console.log(`[APP CONTEXT] saveScores: state to save:`, { activeChildId, children: childrenMap });
         try {
           const docRef = doc(db, 'users', targetUid);
           const approvedFlag = isApproved || targetUid === 'jlivanramirez7@gmail.com' || user?.email === 'jlivanramirez7@gmail.com';
@@ -465,6 +487,7 @@ export const AppProvider = ({ children }) => {
             email: parentEmail || user?.email || '',
             lastInteractionAt: serverTimestamp() // Log active app telemetry!
           }, { mergeFields: ['activeChildId', 'children', 'isApproved', 'coppaConsented', 'email', 'lastInteractionAt'] });
+          console.log(`[APP CONTEXT] saveScores: successfully saved state to Firestore for UID: ${targetUid}`);
 
           if (!isStudent && user) {
             console.log(`[APP CONTEXT] Auto-syncing student links for parent ${user.email}...`);
@@ -488,8 +511,10 @@ export const AppProvider = ({ children }) => {
             });
           }
         } catch (error) {
-          console.error('Error saving scores to Firestore:', error);
+          console.error('[APP CONTEXT] saveScores: Error saving scores to Firestore:', error);
         }
+      } else {
+        console.log(`[APP CONTEXT] saveScores: skipped. targetUid: ${targetUid}, db: ${!!db}, childrenMap: ${!!childrenMap}`);
       }
     };
 
@@ -669,7 +694,13 @@ export const AppProvider = ({ children }) => {
   }, [setStruggleWords]);
 
   const redeemReward = useCallback((rewardId) => {
-    setRewards(prev => prev.map(r => r.id === rewardId ? { ...r, redeemed: true } : r));
+    console.log(`[APP CONTEXT] redeemReward called for rewardId: ${rewardId}`);
+    setRewards(prev => {
+      console.log(`[APP CONTEXT] redeemReward: mapping rewards. Previous rewards state:`, prev);
+      const updated = prev.map(r => r.id === rewardId ? { ...r, redeemed: true } : r);
+      console.log(`[APP CONTEXT] redeemReward: updated rewards state:`, updated);
+      return updated;
+    });
   }, [setRewards]);
 
   const purchaseReward = useCallback((rewardId) => {

@@ -140,9 +140,21 @@ export const AuthProvider = ({ children }) => {
    * @returns {Promise} Promise resolving to the UserCredential upon successful authentication.
    */
   const signInWithGoogle = () => {
-    if (!authInstance) return Promise.reject('Auth not initialized');
+    if (!authInstance) {
+      console.error('[AUTH] signInWithGoogle failed: Auth not initialized');
+      return Promise.reject('Auth not initialized');
+    }
+    console.log('[AUTH] signInWithGoogle: initiating popup flow');
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(authInstance, provider);
+    return signInWithPopup(authInstance, provider)
+      .then((result) => {
+        console.log('[AUTH] signInWithGoogle: successful login. User:', result.user?.email);
+        return result;
+      })
+      .catch((err) => {
+        console.error('[AUTH] signInWithGoogle: error during popup flow:', err);
+        throw err;
+      });
   };
 
   /**
@@ -150,8 +162,19 @@ export const AuthProvider = ({ children }) => {
    * @returns {Promise} Promise resolving upon successful sign out.
    */
   const signOut = () => {
-    if (!authInstance) return Promise.reject('Auth not initialized');
-    return firebaseSignOut(authInstance);
+    if (!authInstance) {
+      console.error('[AUTH] signOut failed: Auth not initialized');
+      return Promise.reject('Auth not initialized');
+    }
+    console.log('[AUTH] signOut: initiating sign out');
+    return firebaseSignOut(authInstance)
+      .then(() => {
+        console.log('[AUTH] signOut: successful sign out');
+      })
+      .catch((err) => {
+        console.error('[AUTH] signOut: error during sign out:', err);
+        throw err;
+      });
   };
 
   const value = {

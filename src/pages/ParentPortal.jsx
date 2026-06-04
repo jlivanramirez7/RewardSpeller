@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { getWordleDateKey } from '../utils/wordle';
+import { calculateMaxPointsForCurriculum } from '../utils/scoring';
 
 /**
  * @component ParentPortal
@@ -317,7 +318,7 @@ const ParentPortal = () => {
             </div>
             <div>
               <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Maximum Possible Points</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fbbf24' }}>{tiers.reduce((acc, tier) => acc + tier.sections.reduce((sAcc, sec) => sAcc + sec.words.length, 0), 0) * 60}</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fbbf24' }}>{calculateMaxPointsForCurriculum(tiers)}</div>
             </div>
           </div>
 
@@ -592,7 +593,10 @@ const ParentPortal = () => {
                                 <button 
                                   className="btn-primary"
                                   style={{ padding: '0.35rem 0.6rem', fontSize: '0.75rem', background: 'var(--success-color)', border: 'none', color: 'white', fontWeight: 'bold' }}
-                                  onClick={() => redeemReward(reward.id)}
+                                  onClick={() => {
+                                    console.log(`[PARENT PORTAL] "Mark Redeemed" clicked for reward:`, reward);
+                                    redeemReward(reward.id);
+                                  }}
                                 >
                                   🎁 Mark Redeemed
                                 </button>

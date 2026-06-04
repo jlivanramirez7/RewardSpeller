@@ -113,11 +113,15 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   // and blocks trailing setTimeout state transitions to prevent memory leaks.
   useEffect(() => {
     isMountedRef.current = true; // RESTORE mounted state explicitly on mount/remount
+    console.log(`[GAME ENGINE] Mounted/Updated with section: ${section?.id}, difficulty: ${difficulty}`);
     if (section?.words) {
+      const wordsForDiff = getWordsForDifficulty(section.words, difficulty);
+      console.log(`[GAME ENGINE] Loaded ${wordsForDiff.length} words for difficulty ${difficulty}`);
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setShuffledWords(getWordsForDifficulty(section.words, difficulty));
+      setShuffledWords(wordsForDiff);
     }
     return () => {
+      console.log(`[GAME ENGINE] Unmounting/Cleaning up section: ${section?.id}`);
       isMountedRef.current = false; // Block trailing timeouts
       cancelTTS();
       if (advanceTimeoutRef.current) {
@@ -130,6 +134,9 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     setUserInput('');
     setFeedback(null);
     setHasFailedCurrentWord(false);
+    
+    const wordToSpeak = shuffledWords[currentWordIndex]?.word;
+    console.log(`[GAME ENGINE] startNewWord: Index ${currentWordIndex}, Word: "${wordToSpeak}"`);
     speakWord();
     
     if (difficulty === 'easy' || difficulty === 'medium') {
@@ -141,7 +148,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     setTimeout(() => {
       if (isMountedRef.current && inputRef.current) inputRef.current.focus();
     }, 50);
-  }, [difficulty, speakWord]);
+  }, [difficulty, speakWord, shuffledWords, currentWordIndex]);
 
   useEffect(() => {
     if (words.length > 0) {
@@ -208,12 +215,15 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     if (!userInput.trim() || feedback || isProcessingRef.current) return; // BLOCK if processing
     
     isProcessingRef.current = true;
+    const trimmedInput = userInput.trim();
+    console.log(`[GAME ENGINE] checkSpelling: User submitted: "${trimmedInput}" for target word: "${currentWord}"`);
 
-    const isCorrect = userInput.trim().toLowerCase() === currentWord.toLowerCase();
+    const isCorrect = trimmedInput.toLowerCase() === currentWord.toLowerCase();
     let newSessionScore = sessionScore;
     let newCorrectCount = sessionCorrectCount;
 
     if (isCorrect) {
+      console.log(`[GAME ENGINE] checkSpelling: Correct!`);
       // Resolve struggle word if they got it right!
       resolveStruggleWord(currentWord, tierId);
 
@@ -227,17 +237,22 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
         newSessionScore = sessionScore + earned;
         newCorrectCount = sessionCorrectCount + 1;
         
+        console.log(`[GAME ENGINE] checkSpelling: Earned ${earned} points (base: ${basePoints}, mult: ${multiplier}). New session score: ${newSessionScore}`);
+        
         setSessionScore(newSessionScore);
         setSessionCorrectCount(newCorrectCount);
         setStudentStreak(prev => prev + 1);
         setFeedback({ type: 'success', message: `Awesome! +${earned} session points` });
       } else {
+        console.log(`[GAME ENGINE] checkSpelling: Correct but previously failed this word. No points awarded.`);
         setFeedback({ type: 'success', message: 'Correct! Moving on.' });
       }
     } else {
       // Fail Path
+      console.log(`[GAME ENGINE] checkSpelling: Incorrect! Resetting streak.`);
       setStudentStreak(0);
       if (!hasFailedCurrentWord) {
+        console.log(`[GAME ENGINE] checkSpelling: Adding "${currentWord}" to struggle words.`);
         addStruggleWord(currentWord, tierId, 'spelling_error');
       }
       setHasFailedCurrentWord(true);
@@ -257,14 +272,17 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
       
       if (shouldAdvance) {
         if (currentWordIndex < words.length - 1) {
+          console.log(`[GAME ENGINE] checkSpelling: Advancing to next word index: ${currentWordIndex + 1}`);
           setCurrentWordIndex(prev => prev + 1);
         } else {
           const accuracy = (newCorrectCount / words.length) * 100;
           const isPerfect = newCorrectCount === words.length;
           
           newSessionScore = calculateFinalSessionScore(words.length, difficulty, newSessionScore, isPerfect);
+          console.log(`[GAME ENGINE] checkSpelling: Session complete! Final Score: ${newSessionScore}, Accuracy: ${accuracy}%, Perfect: ${isPerfect}`);
           
           const actualPointsAwarded = updateSectionScore(section.id, difficulty, newSessionScore, accuracy);
+          console.log(`[GAME ENGINE] checkSpelling: Points awarded by AppContext: ${actualPointsAwarded}`);
           
           setCompletionData({
             accuracy,
@@ -275,6 +293,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
         }
       } else {
         // Medium/Hard on fail: stay on word, clear feedback to allow retry
+        console.log(`[GAME ENGINE] checkSpelling: Retry allowed for difficulty ${difficulty}`);
         setFeedback(null);
       }
       advanceTimeoutRef.current = null;
