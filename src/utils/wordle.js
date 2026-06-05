@@ -1,3 +1,17 @@
+import allowedWords from '../data/allowed_words.json';
+
+const allowedSet = new Set(allowedWords.map(w => w.toLowerCase()));
+
+/**
+ * Validates if a guess is a real 5-letter English word.
+ * @param {string} word - The word to validate.
+ * @returns {boolean} True if valid.
+ */
+export const isValidWord = (word) => {
+  if (!word || word.length !== 5) return false;
+  return allowedSet.has(word.trim().toLowerCase());
+};
+
 /**
  * @module wordle
  * @description Utility module for the "Daily Spellerle" word game. Implements date-shifting algorithms,

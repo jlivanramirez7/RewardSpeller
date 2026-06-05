@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppContext } from '../context/AppContext';
 import { playStaticAudio, cancelTTS } from '../services/ttsService';
-import { getDailyWord, getWordleDateKey, calculateWordleScore, evaluateGuess } from '../utils/wordle';
+import { getDailyWord, getWordleDateKey, calculateWordleScore, evaluateGuess, isValidWord } from '../utils/wordle';
 
 /**
  * @component WordleEngine
@@ -73,6 +73,19 @@ const WordleEngine = ({ onClose }) => {
         setErrorMessage('Word must be 5 letters long.');
         setShakeRowIndex(guesses.length);
         setTimeout(() => setShakeRowIndex(-1), 500);
+        return;
+      }
+
+      if (!isValidWord(currentGuess)) {
+        setErrorMessage('Sorry, only real words are allowed');
+        setShakeRowIndex(guesses.length);
+        setTimeout(() => setShakeRowIndex(-1), 500);
+        
+        setTimeout(() => {
+          setErrorMessage(current => {
+            return current === 'Sorry, only real words are allowed' ? '' : current;
+          });
+        }, 3000);
         return;
       }
 
