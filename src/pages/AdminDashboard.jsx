@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useAppContext } from '../context/AppContext';
 import { collection, query, where, doc, updateDoc, setDoc, onSnapshot, serverTimestamp, deleteDoc, getDoc } from 'firebase/firestore';
 
 const formatUsageTime = (totalSeconds) => {
@@ -25,6 +26,7 @@ const formatUsageTime = (totalSeconds) => {
  */
 const AdminDashboard = () => {
   const { db, isAdmin, user } = useAuth();
+  const { adminRestoreLucas } = useAppContext();
   const [requests, setRequests] = useState([]);
   const [activeUsers, setActiveUsers] = useState([]);
   const [metrics, setMetrics] = useState({
@@ -314,7 +316,27 @@ const AdminDashboard = () => {
     <div style={{ padding: '2rem' }}>
       <h1>Admin Dashboard</h1>
       
-
+      {user?.email === 'jlivanramirez7@gmail.com' && (
+        <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem', borderLeft: '4px solid #a855f7', background: 'rgba(168, 85, 247, 0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h3 style={{ color: '#a855f7', margin: 0 }}>⚙️ Surgical Profile Recovery Tool</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '4px' }}>
+              Restore child profile for Lucas (`lucasjramirez7@gmail.com`) to 100% completion for Tiers 1-3, and Tier 4 up to section 6 (Homophones 6).
+            </p>
+          </div>
+          <button
+            className="btn-primary"
+            style={{ background: 'linear-gradient(135deg, #a855f7, #6b21a8)', color: 'white', border: 'none', padding: '0.75rem 1.5rem', fontWeight: 'bold', borderRadius: '8px', cursor: 'pointer' }}
+            onClick={() => {
+              if (window.confirm("Are you sure you want to run administrative recovery for Lucas? This will overwrite his current database record with T1-T3 fully completed and T4 up to Section 6.")) {
+                adminRestoreLucas();
+              }
+            }}
+          >
+            🚀 Restore Lucas Profile
+          </button>
+        </div>
+      )}
 
       <section style={{ marginBottom: '3rem' }}>
         <h2 style={{ marginBottom: '1.5rem' }}>Platform Analytics Overview</h2>

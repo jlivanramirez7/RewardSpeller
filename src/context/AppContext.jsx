@@ -739,46 +739,74 @@ export const AppProvider = ({ children }) => {
       };
     }
 
-    // Include g4_t1_s7 (Magic E) so all Tier 1 sections are 100% unlocked and completed!
-    const TARGET_SECTIONS = [
-      'g4_t1_s1', 'g4_t1_s2', 'g4_t1_s3', 'g4_t1_s4', 'g4_t1_s5', 'g4_t1_s6', 'g4_t1_s7', 'g4_t2_s1', 'g4_t2_s2'
-    ];
-    const MASTERY_SECTIONS = ['tier_g4_t1_mastery'];
-
     const sectionScores = {};
     const sectionAccuracy = {};
     const listenedLessons = [];
     let pointsTotal = 0;
 
-    TARGET_SECTIONS.forEach((secId) => {
-      sectionScores[`${secId}-easy`] = 20;
+    // Helper to calculate and record 100% perfect scores
+    const completeSection = (secId, words) => {
+      const wCount = words?.length || 0;
+      if (wCount === 0) return;
+
+      const easyScore = wCount * 2; // (wCount * 2) * 0.5 * 2
+      const medScore = wCount * 6;  // wCount * 3 * 2
+      const hardScore = wCount * 60; // wCount * 30 * 2
+
+      sectionScores[`${secId}-easy`] = easyScore;
       sectionAccuracy[`${secId}-easy`] = 100;
-      pointsTotal += 20;
+      pointsTotal += easyScore;
 
-      sectionScores[`${secId}-medium`] = 60;
+      sectionScores[`${secId}-medium`] = medScore;
       sectionAccuracy[`${secId}-medium`] = 100;
-      pointsTotal += 60;
+      pointsTotal += medScore;
 
-      sectionScores[`${secId}-hard`] = 600;
+      sectionScores[`${secId}-hard`] = hardScore;
       sectionAccuracy[`${secId}-hard`] = 100;
-      pointsTotal += 600;
+      pointsTotal += hardScore;
 
       listenedLessons.push(secId);
-    });
+    };
 
-    MASTERY_SECTIONS.forEach((masteryId) => {
-      sectionScores[`${masteryId}-hard`] = 900;
+    const completeMastery = (tierId) => {
+      const masteryId = `tier_${tierId}_mastery`;
+      const score = 15 * 60; // 15 words * 30 pts * 2
+      sectionScores[`${masteryId}-hard`] = score;
       sectionAccuracy[`${masteryId}-hard`] = 100;
-      pointsTotal += 900;
-
+      pointsTotal += score;
       listenedLessons.push(masteryId);
-    });
+    };
+
+    // Process Curriculum wordBank4th
+    const t1 = wordBank4th.tiers.find(t => t.id === 'g4_t1');
+    if (t1) {
+      t1.sections.forEach(s => completeSection(s.id, s.words));
+      completeMastery('g4_t1');
+    }
+
+    const t2 = wordBank4th.tiers.find(t => t.id === 'g4_t2');
+    if (t2) {
+      t2.sections.forEach(s => completeSection(s.id, s.words));
+      completeMastery('g4_t2');
+    }
+
+    const t3 = wordBank4th.tiers.find(t => t.id === 'g4_t3');
+    if (t3) {
+      t3.sections.forEach(s => completeSection(s.id, s.words));
+      completeMastery('g4_t3');
+    }
+
+    const t4 = wordBank4th.tiers.find(t => t.id === 'g4_t4');
+    if (t4) {
+      t4.sections.forEach(s => completeSection(s.id, s.words));
+      // T4 mastery is unlocked but NOT completed
+    }
 
     const updatedLucasData = {
       ...lucasData,
       studentPoints: pointsTotal,
       weeklyPoints: pointsTotal,
-      unlockedTiers: ['g4_t1', 'g4_t2'],
+      unlockedTiers: ['g4_t1', 'g4_t2', 'g4_t3', 'g4_t4'],
       listenedLessons,
       sectionScores,
       sectionAccuracy,
@@ -796,13 +824,12 @@ export const AppProvider = ({ children }) => {
       [lucasKey]: updatedLucasData
     };
 
-    // Direct failsafe write to Firestore cloud database!
     const saveRestoredProgress = async () => {
       try {
         const parentUid = user.uid;
         const docRef = doc(db, 'users', parentUid);
         
-        console.log(`⚙️ Writing administrative recovery progress to Firestore users/${parentUid}...`);
+        console.log(`[ADMIN ACTION] Writing Lucas recovery data to users/${parentUid}...`);
         await setDoc(docRef, {
           activeChildId: lucasKey,
           children: updatedChildrenMap,
@@ -812,16 +839,22 @@ export const AppProvider = ({ children }) => {
           lastInteractionAt: serverTimestamp()
         }, { merge: true });
 
-        // Sync client state synchronously after DB write completes
-        skipSaveRef.current = true; // Block redundant save effect
+        console.log(`[ADMIN ACTION] Establishing student_links association for lucasjramirez7@gmail.com...`);
+        await setDoc(doc(db, 'student_links', 'lucasjramirez7@gmail.com'), {
+          parentUid: parentUid,
+          childId: lucasKey
+        }, { merge: true });
+
+        // Sync client state
+        skipSaveRef.current = true;
         setChildrenMap(updatedChildrenMap);
         setActiveChildId(lucasKey);
         setCoppaConsented(true);
 
-        alert(`🎉 SUCCESS: Lucas's progress successfully saved to your Cloud Database!`);
+        alert(`🎉 SUCCESS: Lucas's progress restored up to Homophones 6 (Tier 4)! Email association established.`);
       } catch (err) {
-        console.error("Parent administrative write failed:", err);
-        alert("Parent administrative write failed: " + err.message);
+        console.error("Administrative recovery failed:", err);
+        alert("Administrative recovery failed: " + err.message);
       }
     };
 
