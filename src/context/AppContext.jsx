@@ -465,6 +465,7 @@ export const AppProvider = ({ children }) => {
     console.log("[APP CONTEXT] save effect: saving childrenMap to localStorage:", childrenMap);
     localStorage.setItem('activeChildId', activeChildId);
     localStorage.setItem('children', JSON.stringify(childrenMap));
+    localStorage.setItem('coppaConsented', JSON.stringify(coppaConsented));
 
     if (skipSaveRef.current) {
       console.log("[APP CONTEXT] save effect: skipSaveRef is true. Resetting to false and skipping Firestore write.");
@@ -478,15 +479,11 @@ export const AppProvider = ({ children }) => {
         console.log(`[APP CONTEXT] saveScores: state to save:`, { activeChildId, children: childrenMap });
         try {
           const docRef = doc(db, 'users', targetUid);
-          const approvedFlag = isApproved || targetUid === 'jlivanramirez7@gmail.com' || user?.email === 'jlivanramirez7@gmail.com';
           await setDoc(docRef, {
             activeChildId,
             children: childrenMap,
-            isApproved: approvedFlag,
-            coppaConsented,
-            email: parentEmail || user?.email || '',
             lastInteractionAt: serverTimestamp() // Log active app telemetry!
-          }, { mergeFields: ['activeChildId', 'children', 'isApproved', 'coppaConsented', 'email', 'lastInteractionAt'] });
+          }, { mergeFields: ['activeChildId', 'children', 'lastInteractionAt'] });
           console.log(`[APP CONTEXT] saveScores: successfully saved state to Firestore for UID: ${targetUid}`);
 
           if (!isStudent && user) {
@@ -519,7 +516,7 @@ export const AppProvider = ({ children }) => {
     };
 
     saveScores();
-  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid, coppaConsented, isApproved, parentEmail]);
+  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid, coppaConsented]);
 
   // Cross-tab storage sync
   // Cross-tab synchronization hook: Listens for storage events across browser tabs
@@ -537,6 +534,13 @@ export const AppProvider = ({ children }) => {
       if (e.key === 'activeChildId' && e.newValue) {
         skipSaveRef.current = true;
         setActiveChildId(e.newValue);
+      }
+      if (e.key === 'coppaConsented' && e.newValue) {
+        try {
+          setCoppaConsented(JSON.parse(e.newValue));
+        } catch (err) {
+          console.error("Error parsing coppaConsented from localStorage", err);
+        }
       }
     };
     window.addEventListener('storage', handleStorageChange);
