@@ -242,6 +242,29 @@ const AdminDashboard = () => {
       alert("Failed to deny request: " + error.message);
     }
   };
+  const handleReApprove = async (parent) => {
+    try {
+      console.log(`[ADMIN ACTION] Re-approving parent account users/${parent.id} (${parent.email})...`);
+      
+      // Step 1: Update users collection to set isApproved: true
+      await setDoc(doc(db, 'users', parent.id), {
+        isApproved: true,
+        lastInteractionAt: serverTimestamp()
+      }, { merge: true });
+
+      // Step 2: Sync access_requests status
+      await setDoc(doc(db, 'access_requests', parent.id), {
+        status: 'approved'
+      }, { merge: true });
+
+      console.log(`[ADMIN ACTION] Successfully re-approved parent ${parent.email}`);
+      alert(`🎉 SUCCESS: Access granted to ${parent.email}. They can now log in successfully.`);
+    } catch (error) {
+      console.error("Failed to grant access", error);
+      alert("Failed to grant access: " + error.message);
+    }
+  };
+
   const handleDeleteParent = async (parent) => {
     const isMaster = parent.email === 'jlivanramirez7@gmail.com';
     if (isMaster) {
@@ -472,9 +495,13 @@ const AdminDashboard = () => {
                           <span style={{ background: 'rgba(239, 68, 68, 0.15)', color: '#f87171', fontSize: '0.75rem', padding: '0.25rem 0.6rem', borderRadius: '12px', fontWeight: 'bold' }}>
                             Master Parent
                           </span>
-                        ) : (
+                        ) : parent.isApproved ? (
                           <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', fontSize: '0.75rem', padding: '0.25rem 0.6rem', borderRadius: '12px', fontWeight: 'bold' }}>
                             Approved Parent
+                          </span>
+                        ) : (
+                          <span style={{ background: 'rgba(239, 68, 68, 0.15)', color: '#f87171', fontSize: '0.75rem', padding: '0.25rem 0.6rem', borderRadius: '12px', fontWeight: 'bold' }}>
+                            Locked / Unapproved
                           </span>
                         )}
                       </td>
@@ -511,13 +538,24 @@ const AdminDashboard = () => {
                         {isMaster ? (
                           <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontStyle: 'italic' }}>Protected</span>
                         ) : (
-                          <button 
-                            className="btn-secondary"
-                            style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', border: 'none', color: '#ef4444', background: 'rgba(239, 68, 68, 0.1)', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer' }}
-                            onClick={() => handleDeleteParent(parent)}
-                          >
-                            🗑️ Purge Account
-                          </button>
+                          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                            {!parent.isApproved && (
+                              <button 
+                                className="btn-primary"
+                                style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer', background: 'var(--success-color)', border: 'none' }}
+                                onClick={() => handleReApprove(parent)}
+                              >
+                                🔓 Grant Access
+                              </button>
+                            )}
+                            <button 
+                              className="btn-secondary"
+                              style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', border: 'none', color: '#ef4444', background: 'rgba(239, 68, 68, 0.1)', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer' }}
+                              onClick={() => handleDeleteParent(parent)}
+                            >
+                              🗑️ Purge Account
+                            </button>
+                          </div>
                         )}
                       </td>
                     </tr>
