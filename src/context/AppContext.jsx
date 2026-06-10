@@ -12,7 +12,7 @@ import wordBank4th from '../data/wordBank_4th.json';
 import wordBank5th from '../data/wordBank_5th.json';
 import wordBank6th from '../data/wordBank_6th.json';
 import { calculateRecommendedDifficulty } from '../utils/difficulty';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp, onSnapshot } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
 import { generateKidFriendlyName } from '../utils/username';
 
@@ -108,6 +108,11 @@ export const AppProvider = ({ children }) => {
   const [childrenMap, setChildrenMap] = useState(null);
 
   const skipSaveRef = useRef(false);
+  const childrenMapRef = useRef(childrenMap);
+
+  useEffect(() => {
+    childrenMapRef.current = childrenMap;
+  }, [childrenMap]);
 
   // Memoized proxy updater: Performs immutable state updates on specific fields
   // of the currently active student profile, preserving untouched sibling profiles safely.
@@ -312,95 +317,94 @@ export const AppProvider = ({ children }) => {
   // Implements active user switching protections to discard stale network resolutions if auth user changes during fetch.
   useEffect(() => {
     let ignore = false;
-    const loadScores = async () => {
+    let unsubscribe;
+
+    const targetUid = isStudent ? parentUid : (user ? user.uid : null);
+
+    if (targetUid && loadedUserUidRef.current !== null && targetUid !== loadedUserUidRef.current) {
+      skipSaveRef.current = true;
+      setChildrenMap({ child_1: createDefaultChild('child_1') });
+      setActiveChildId('child_1');
+    }
+
+    if (targetUid && db) {
       setIsLoaded(false);
       setError(null);
+      const docRef = doc(db, 'users', targetUid);
 
-      const targetUid = isStudent ? parentUid : (user ? user.uid : null);
+      console.log(`[APP CONTEXT] Establishing real-time listener for users/${targetUid}`);
+      unsubscribe = onSnapshot(docRef, (docSnap) => {
+        if (ignore) return;
 
-      if (targetUid && loadedUserUidRef.current !== null && targetUid !== loadedUserUidRef.current) {
-        skipSaveRef.current = true;
-        setChildrenMap({ child_1: createDefaultChild('child_1') });
-        setActiveChildId('child_1');
-      }
+        if (docSnap.exists()) {
+          const data = docSnap.data();
 
-      if (targetUid && db) {
-        try {
-          const docRef = doc(db, 'users', targetUid);
-          const docSnap = await getDoc(docRef);
+          // Prevent redundant re-renders on local-initiated writes
+          const localStr = JSON.stringify(childrenMapRef.current);
+          const incomingStr = JSON.stringify(data.children || null);
 
-          if (ignore) return;
-
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            restoreProgress(data);
-            
-            if (!ignore) {
-              setIsApproved(data.isApproved || false);
-              setParentEmail(data.email || '');
-            }
-            
+          if (localStr === incomingStr && childrenMapRef.current !== null) {
+            console.log("[APP CONTEXT] onSnapshot update matches local state. Skipping progress load.");
+            setIsApproved(data.isApproved || false);
+            setParentEmail(data.email || '');
             if (data.coppaConsented === true || (user && user.email === 'jlivanramirez7@gmail.com')) {
               setCoppaConsented(true);
             } else {
               setCoppaConsented(false);
             }
-            
-            if (!isStudent && user && user.email === 'jlivanramirez7@gmail.com') {
-              setChildrenMap(prev => {
-                const updated = { ...prev };
-                let modified = false;
-                Object.entries(updated).forEach(([cId, cData]) => {
-                  if (cData.studentName && cData.studentName.toLowerCase() === 'lucas' && !cData.pointsRestored) {
-                    updated[cId] = {
-                      ...cData,
-                      studentPoints: (cData.studentPoints || 0) + 1200,
-                      pointsRestored: true
-                    };
-                    modified = true;
-                  }
-                });
-                if (modified) {
-                  skipSaveRef.current = false;
-                }
-                return updated;
-              });
-            }
+            return;
+          }
+          
+          console.log("[APP CONTEXT] Loading new external state updates from Firestore users doc...");
+          restoreProgress(data);
 
-            if (isStudent && studentChildId) {
-              setActiveChildId(studentChildId);
-            }
-          } else {
-            if (!ignore) {
-              setChildrenMap({ child_1: createDefaultChild('child_1') }); // Safely initialize default profile ONLY if database is verified missing!
-              setIsApproved(user?.email === 'jlivanramirez7@gmail.com');
-              setParentEmail(user?.email || '');
-              setCoppaConsented(user?.email === 'jlivanramirez7@gmail.com');
-            }
-          }
-          loadedUserUidRef.current = targetUid;
-          setIsLoaded(true);
-        } catch (error) {
-          console.error('Error loading scores from Firestore:', error);
           if (!ignore) {
-            setError(error.message);
+            setIsApproved(data.isApproved || false);
+            setParentEmail(data.email || '');
+          }
+
+          if (data.coppaConsented === true || (user && user.email === 'jlivanramirez7@gmail.com')) {
+            setCoppaConsented(true);
+          } else {
+            setCoppaConsented(false);
+          }
+
+          if (isStudent && studentChildId) {
+            setActiveChildId(studentChildId);
+          }
+        } else {
+          if (!ignore) {
+            setChildrenMap({ child_1: createDefaultChild('child_1') });
+            setIsApproved(user?.email === 'jlivanramirez7@gmail.com');
+            setParentEmail(user?.email || '');
+            setCoppaConsented(user?.email === 'jlivanramirez7@gmail.com');
           }
         }
-      } else if (!user) {
-        if (!ignore) {
-          if (loadedUserUidRef.current !== null) {
-            skipSaveRef.current = true;
-            setChildrenMap(null); // Reset childrenMap to null on logout
-            setActiveChildId('child_1');
-          }
-          loadedUserUidRef.current = null;
-          setIsLoaded(true);
+        loadedUserUidRef.current = targetUid;
+        setIsLoaded(true);
+      }, (err) => {
+        console.error('Error in user doc subscription:', err);
+        setError(err.message);
+      });
+    } else if (!user) {
+      if (!ignore) {
+        if (loadedUserUidRef.current !== null) {
+          skipSaveRef.current = true;
+          setChildrenMap(null); // Reset childrenMap to null on logout
+          setActiveChildId('child_1');
         }
+        loadedUserUidRef.current = null;
+        setIsLoaded(true);
+      }
+    }
+
+    return () => {
+      ignore = true;
+      if (unsubscribe) {
+        console.log(`[APP CONTEXT] Unsubscribing real-time listener for users/${targetUid}`);
+        unsubscribe();
       }
     };
-
-    loadScores();
-    return () => { ignore = true; };
   }, [user, db, restoreProgress, isStudent, parentUid, studentChildId]);
 
   const activeChild = useMemo(() => {
@@ -831,14 +835,25 @@ export const AppProvider = ({ children }) => {
     const t4 = wordBank4th.tiers.find(t => t.id === 'g4_t4');
     if (t4) {
       t4.sections.forEach(s => completeSection(s.id, s.words));
-      // T4 mastery is unlocked but NOT completed
+      completeMastery('g4_t4');
+    }
+
+    const t5 = wordBank4th.tiers.find(t => t.id === 'g4_t5');
+    if (t5) {
+      const completedT5Sections = ['g4_t5_s1', 'g4_t5_s2', 'g4_t5_s3', 'g4_t5_s4'];
+      t5.sections.forEach(s => {
+        if (completedT5Sections.includes(s.id)) {
+          completeSection(s.id, s.words);
+        }
+      });
+      // T5 mastery is unlocked but NOT completed since T5 is not fully finished
     }
 
     const updatedLucasData = {
       ...lucasData,
       studentPoints: pointsTotal,
       weeklyPoints: pointsTotal,
-      unlockedTiers: ['g4_t1', 'g4_t2', 'g4_t3', 'g4_t4'],
+      unlockedTiers: ['g4_t1', 'g4_t2', 'g4_t3', 'g4_t4', 'g4_t5'],
       listenedLessons,
       sectionScores,
       sectionAccuracy,
