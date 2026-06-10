@@ -6,9 +6,10 @@ import RequestAccessPage from './pages/RequestAccessPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import Leaderboard from './components/Leaderboard';
+import SummerSchedule from './pages/SummerSchedule';
 import { useAuth } from './context/AuthContext';
 import { useAppContext } from './context/AppContext';
-import { Settings, Gamepad2, LogOut, Trophy } from 'lucide-react';
+import { Settings, Gamepad2, LogOut, Trophy, Calendar } from 'lucide-react';
 
 function App() {
   const location = useLocation();
@@ -27,6 +28,10 @@ function App() {
               <Link to="/app" className={`nav-link ${location.pathname === '/app' ? 'active' : ''}`}>
                 <Gamepad2 size={20} />
                 Student Portal
+              </Link>
+              <Link to="/summer-schedule" className={`nav-link ${location.pathname === '/summer-schedule' ? 'active' : ''}`}>
+                <Calendar size={20} />
+                Summer Plan
               </Link>
               <Link to="/leaderboard" className={`nav-link ${location.pathname === '/leaderboard' ? 'active' : ''}`}>
                 <Trophy size={20} />
@@ -60,6 +65,11 @@ function App() {
           <Route path="/app" element={
             <ProtectedRoute>
               <StudentPortal key={activeChildId} />
+            </ProtectedRoute>
+          } />
+          <Route path="/summer-schedule" element={
+            <ProtectedRoute>
+              <SummerSchedule />
             </ProtectedRoute>
           } />
           <Route path="/leaderboard" element={

@@ -79,6 +79,7 @@ const createDefaultChild = (id, name = '', overrides = {}) => {
       { id: 2, name: 'Trip to Park', cost: 1000 }
     ],
     wordleScores: {},
+    summerProgress: [],
     ...overrides
   };
 };
@@ -651,6 +652,9 @@ export const AppProvider = ({ children }) => {
 
   const studentName = activeChild.studentName || '';
 
+  const rawSummerProgress = activeChild.summerProgress;
+  const summerProgress = useMemo(() => rawSummerProgress || [], [rawSummerProgress]);
+
   // Differential ledger accounting method: Updates section high scores and accuracy percentages.
   // Enforces anti-grinding protocol: awards new points only when previous recorded high scores are beaten.
   const updateSectionScore = useCallback((sectionId, difficulty, newScore, accuracyPercent) => {
@@ -706,6 +710,30 @@ export const AppProvider = ({ children }) => {
       return updated;
     });
   }, [setRewards]);
+
+  const toggleSummerProgress = useCallback((date) => {
+    setChildrenMap(prevMap => {
+      if (!prevMap) return null;
+      const currentActiveId = activeChildId;
+      const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
+      const currentProgress = currentChild.summerProgress || [];
+      
+      let newProgress;
+      if (currentProgress.includes(date)) {
+        newProgress = currentProgress.filter(d => d !== date);
+      } else {
+        newProgress = [...currentProgress, date];
+      }
+      
+      return {
+        ...prevMap,
+        [currentActiveId]: {
+          ...currentChild,
+          summerProgress: newProgress
+        }
+      };
+    });
+  }, [activeChildId]);
 
   const purchaseReward = useCallback((rewardId) => {
     const reward = rewards.find(r => r.id === rewardId);
@@ -982,7 +1010,8 @@ export const AppProvider = ({ children }) => {
     studentName, setStudentName,
     childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild,
     resolveStruggleWord, redeemReward, adminRestoreLucas,
-    wordleScores, addWordlePoints
+    wordleScores, addWordlePoints,
+    summerProgress, toggleSummerProgress
   }), [
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
@@ -1000,7 +1029,8 @@ export const AppProvider = ({ children }) => {
     isLoaded, error,
     studentName, setStudentName,
     childrenMap, activeChildId, switchChild, addChild, deleteChild,
-    wordleScores, addWordlePoints
+    wordleScores, addWordlePoints,
+    summerProgress, toggleSummerProgress
   ]);
 
   return (
