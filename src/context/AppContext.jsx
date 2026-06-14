@@ -79,6 +79,7 @@ const createDefaultChild = (id, name = '', overrides = {}) => {
       { id: 2, name: 'Trip to Park', cost: 1000 }
     ],
     wordleScores: {},
+    dailyReviewHistory: {},
     summerProgress: [],
     ...overrides
   };
@@ -428,6 +429,14 @@ export const AppProvider = ({ children }) => {
     }
   }, [currentGradeLevel]);
 
+  const allCurriculumTiers = useMemo(() => [
+    ...(wordBank2nd.tiers || []),
+    ...(wordBank3rd.tiers || []),
+    ...(wordBank4th.tiers || []),
+    ...(wordBank5th.tiers || []),
+    ...(wordBank6th.tiers || [])
+  ], []);
+
   // Save to localStorage and Firestore on change
   // State persistence hook: Synchronizes local state updates to localStorage and Firestore.
   // Throttles unnecessary writes using skipSaveRef during hydration phases.
@@ -597,6 +606,30 @@ export const AppProvider = ({ children }) => {
           wordleScores: {
             ...existingScores,
             [dateKey]: points
+          }
+        }
+      };
+    });
+  }, [activeChildId]);
+
+  const addDailyReviewScore = useCallback((dateKey, record) => {
+    setChildrenMap(prevMap => {
+      if (!prevMap) return null;
+      const currentActiveId = activeChildId;
+      const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
+      const existingHistory = currentChild.dailyReviewHistory || {};
+      
+      if (existingHistory[dateKey] !== undefined) {
+        return prevMap; // Block duplicate daily review recording for the same date key
+      }
+
+      return {
+        ...prevMap,
+        [currentActiveId]: {
+          ...currentChild,
+          dailyReviewHistory: {
+            ...existingHistory,
+            [dateKey]: record
           }
         }
       };
@@ -1007,6 +1040,9 @@ export const AppProvider = ({ children }) => {
   const rawWordleScores = activeChild.wordleScores;
   const wordleScores = useMemo(() => rawWordleScores || {}, [rawWordleScores]);
 
+  const rawDailyReviewHistory = activeChild.dailyReviewHistory;
+  const dailyReviewHistory = useMemo(() => rawDailyReviewHistory || {}, [rawDailyReviewHistory]);
+
   const contextValue = useMemo(() => ({
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
@@ -1020,12 +1056,13 @@ export const AppProvider = ({ children }) => {
     listenedLessons, markLessonListened,
     rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa, isApproved, parentEmail,
     currentGradeLevel, setCurrentGradeLevel,
-    tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
+    tiers, allCurriculumTiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,
     studentName, setStudentName,
     childrenMap, activeChildId, setActiveChildId: switchChild, addChild, deleteChild,
     resolveStruggleWord, redeemReward, adminRestoreLucas,
     wordleScores, addWordlePoints,
+    dailyReviewHistory, addDailyReviewScore,
     summerProgress, toggleSummerProgress
   }), [
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
@@ -1040,11 +1077,12 @@ export const AppProvider = ({ children }) => {
     listenedLessons, markLessonListened,
     rewards, setRewards, purchaseReward, linkStudentEmail, coppaConsented, registerParentCoppa, isApproved, parentEmail,
     currentGradeLevel, setCurrentGradeLevel,
-    tiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
+    tiers, allCurriculumTiers, resetProgress, isSectionMastered, getRecommendedDifficulty, restoreProgress,
     isLoaded, error,
     studentName, setStudentName,
     childrenMap, activeChildId, switchChild, addChild, deleteChild,
     wordleScores, addWordlePoints,
+    dailyReviewHistory, addDailyReviewScore,
     summerProgress, toggleSummerProgress
   ]);
 

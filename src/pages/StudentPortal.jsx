@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { warmupAudio } from '../services/ttsService';
+import { getWordleDateKey } from '../utils/wordle';
 import GameEngine from '../components/GameEngine';
 import LessonModal from '../components/LessonModal';
 import WordleEngine from '../components/WordleEngine';
@@ -14,7 +15,7 @@ import WordleEngine from '../components/WordleEngine';
  * @returns {React.ReactElement} The student learning workspace UI.
  */
 const StudentPortal = () => {
-  const { studentPoints, studentStreak, tiers, unlockedTiers, setUnlockedTiers, rewards, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName, coppaConsented, registerParentCoppa, parentEmail } = useAppContext();
+  const { studentPoints, addPoints, studentStreak, tiers, allCurriculumTiers, unlockedTiers, setUnlockedTiers, rewards, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName, coppaConsented, registerParentCoppa, parentEmail, dailyReviewHistory, addDailyReviewScore } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
   const [notification, setNotification] = useState(null);
@@ -32,6 +33,24 @@ const StudentPortal = () => {
   }
 
   const handleCompleteSection = (options = {}) => {
+    if (options?.returnToPortal) {
+      setActivePlayData(null);
+      return;
+    }
+
+    if (options?.isDailyReviewComplete) {
+      const dateKey = getWordleDateKey();
+      addDailyReviewScore(dateKey, {
+        date: dateKey,
+        score: options.sessionScore || 0,
+        accuracy: Math.round(options.accuracy || 0),
+        correctWords: options.correctWords || [],
+        wrongWords: options.wrongWords || []
+      });
+      addPoints(options.sessionScore || 0);
+      return;
+    }
+
     const sectionData = activePlayData?.section;
     const currentTierId = activePlayData?.tierId;
     
@@ -85,6 +104,56 @@ const StudentPortal = () => {
     }
   };
 
+  const handleStartDailyReview = () => {
+    warmupAudio();
+    const dateKey = getWordleDateKey();
+    
+    if (dailyReviewHistory && dailyReviewHistory[dateKey]) {
+      alert(`🏆 You have already completed today's Daily Review! (Score: ${dailyReviewHistory[dateKey].score} pts, Accuracy: ${dailyReviewHistory[dateKey].accuracy}%). Check back tomorrow for 10 new review words!`);
+      return;
+    }
+
+    const pool = [];
+    (allCurriculumTiers || tiers).forEach(t => {
+      t.sections.forEach(sec => {
+        const stats = getSectionStats(sec.id);
+        if (stats.is100Percent && sec.words && sec.words.length > 0) {
+          sec.words.forEach(w => {
+            pool.push({
+              ...w,
+              sectionId: sec.id
+            });
+          });
+        }
+      });
+    });
+
+    if (pool.length === 0) {
+      alert("You haven't fully completed (100% score on Easy, Medium, and Hard) any sections yet! Master at least one section across all three modes to unlock Daily Review.");
+      return;
+    }
+
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const selectedWords = shuffled.slice(0, 10);
+
+    while (selectedWords.length < 10) {
+      selectedWords.push(shuffled[selectedWords.length % shuffled.length]);
+    }
+
+    setActivePlayData({
+      isDailyReview: true,
+      tierId: 'daily_review',
+      tierRule: "Listen carefully to the audio dictation and spell each review word correctly on Hard mode!",
+      section: {
+        id: 'daily_review',
+        name: `Daily Review (${dateKey})`,
+        theme: "10-Word Hard Dictation Review",
+        words: selectedWords
+      },
+      initialDifficulty: 'hard'
+    });
+  };
+
   // Elegant tier visibility rule: show unlocked tiers plus the immediately following locked tier.
   // Pacing gate calculation: Maps unlocked status to tier array indices and filters visible
   // tiers to ensure students can preview upcoming goals without skipping unmastered prerequisites.
@@ -133,29 +202,53 @@ const StudentPortal = () => {
           <p style={{ color: 'var(--text-secondary)' }}>Welcome {studentName && studentName.trim() ? `${studentName.trim()}!` : 'back! Ready to learn?'}</p>
         </div>
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <button 
-            className="btn-primary"
-            onClick={() => {
-              warmupAudio();
-              setShowWordle(true);
-            }}
-            style={{ 
-              background: 'linear-gradient(135deg, #a855f7, #6b21a8)', 
-              color: 'white', 
-              border: 'none', 
-              fontWeight: 'bold', 
-              padding: '0.6rem 1.2rem', 
-              borderRadius: '8px', 
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '0.9rem',
-              boxShadow: '0 4px 12px rgba(168, 85, 247, 0.3)'
-            }}
-          >
-            🎮 Play Daily Spellerle 🎮
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <button 
+              className="btn-primary"
+              onClick={() => {
+                warmupAudio();
+                setShowWordle(true);
+              }}
+              style={{ 
+                background: 'linear-gradient(135deg, #a855f7, #6b21a8)', 
+                color: 'white', 
+                border: 'none', 
+                fontWeight: 'bold', 
+                padding: '0.5rem 1rem', 
+                borderRadius: '8px', 
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                fontSize: '0.85rem',
+                boxShadow: '0 4px 12px rgba(168, 85, 247, 0.3)'
+              }}
+            >
+              🎮 Play Daily Spellerle 🎮
+            </button>
+            <button 
+              className="btn-primary"
+              onClick={handleStartDailyReview}
+              style={{ 
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', 
+                color: 'white', 
+                border: 'none', 
+                fontWeight: 'bold', 
+                padding: '0.5rem 1rem', 
+                borderRadius: '8px', 
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                fontSize: '0.85rem',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+              }}
+            >
+              📅 Play Daily Review 📅
+            </button>
+          </div>
           <div style={{ 
             textAlign: 'center', 
             background: 'rgba(0, 180, 216, 0.15)', 

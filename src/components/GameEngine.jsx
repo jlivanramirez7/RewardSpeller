@@ -62,7 +62,7 @@ const getWordsForDifficulty = (array, diff) => {
  * @param {string} [props.initialDifficulty='easy'] - Starting difficulty mode.
  * @returns {React.ReactElement} The interactive spelling workspace UI.
  */
-const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty = 'easy' }) => {
+const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty = 'easy', isDailyReview = false }) => {
   const { setStudentStreak, studentStreak, addStruggleWord, resolveStruggleWord, updateSectionScore, isDifficultyUnlocked, rewards, studentPoints, sectionScores, coppaConsented } = useAppContext();
   
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -72,6 +72,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
   const [showWord, setShowWord] = useState(true);
   const [sessionScore, setSessionScore] = useState(0);
   const [sessionCorrectCount, setSessionCorrectCount] = useState(0);
+  const [sessionCorrectWords, setSessionCorrectWords] = useState([]);
+  const [sessionWrongWords, setSessionWrongWords] = useState([]);
   const [isSessionComplete, setIsSessionComplete] = useState(false);
   const [completionData, setCompletionData] = useState(null);
   const [hasFailedCurrentWord, setHasFailedCurrentWord] = useState(false);
@@ -102,7 +104,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     const textToSpeak = `${currentWord}. ${currentWordObj.definition || ''} ${currentWordObj.sentence || ''} The word is: ${currentWord}.`;
     // Pattern matched filename: word_apple.mp3
     const safeWord = currentWord.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const filename = `word_${section.id}_${safeWord}.mp3`;
+    const filename = `word_${currentWordObj?.sectionId || section.id}_${safeWord}.mp3`;
 
     // Dual-path dispatch: attempts local static playback, failovers automatically if absent.
     playStaticAudio(filename, null, null, textToSpeak, 'assessment');
@@ -162,6 +164,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     setDifficulty(nextDiff);
     setSessionScore(0);
     setSessionCorrectCount(0);
+    setSessionCorrectWords([]);
+    setSessionWrongWords([]);
     setCurrentWordIndex(0);
     if (section?.words) {
       setShuffledWords(getWordsForDifficulty(section.words, nextDiff));
@@ -180,6 +184,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     setCurrentWordIndex(0);
     setSessionScore(0);
     setSessionCorrectCount(0);
+    setSessionCorrectWords([]);
+    setSessionWrongWords([]);
     setStudentStreak(0);
     setFeedback(null);
     if (section?.words) {
@@ -199,6 +205,8 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     setCurrentWordIndex(0);
     setSessionScore(0);
     setSessionCorrectCount(0);
+    setSessionCorrectWords([]);
+    setSessionWrongWords([]);
     setStudentStreak(0);
     setFeedback(null);
     if (section?.words) {
@@ -223,6 +231,9 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
     let newSessionScore = sessionScore;
     let newCorrectCount = sessionCorrectCount;
 
+    let newCorrectWords = [...sessionCorrectWords];
+    let newWrongWords = [...sessionWrongWords];
+
     if (isCorrect) {
       console.log(`[GAME ENGINE] checkSpelling: Correct!`);
       // Resolve struggle word if they got it right!
@@ -231,6 +242,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
       // Pass Path: Calculate points using a stacking streak multiplier.
       // Multiplier increases by +0.1 per streak up to a maximum cap of 2.0x bonus.
       if (!hasFailedCurrentWord) {
+        if (!newCorrectWords.includes(currentWord)) {
+          newCorrectWords.push(currentWord);
+          setSessionCorrectWords(newCorrectWords);
+        }
         const multiplier = Math.min(1 + (studentStreak * 0.1), 2); // Max 2x multiplier
         const basePoints = DIFFICULTY_POINTS[difficulty];
         const rawEarned = basePoints * multiplier;
@@ -253,6 +268,10 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
       console.log(`[GAME ENGINE] checkSpelling: Incorrect! Resetting streak.`);
       setStudentStreak(0);
       if (!hasFailedCurrentWord) {
+        if (!newWrongWords.includes(currentWord)) {
+          newWrongWords.push(currentWord);
+          setSessionWrongWords(newWrongWords);
+        }
         console.log(`[GAME ENGINE] checkSpelling: Adding "${currentWord}" to struggle words.`);
         addStruggleWord(currentWord, tierId, 'spelling_error');
       }
@@ -282,15 +301,30 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
           newSessionScore = calculateFinalSessionScore(words.length, difficulty, newSessionScore, isPerfect);
           console.log(`[GAME ENGINE] checkSpelling: Session complete! Final Score: ${newSessionScore}, Accuracy: ${accuracy}%, Perfect: ${isPerfect}`);
           
-          const actualPointsAwarded = updateSectionScore(section.id, difficulty, newSessionScore, accuracy);
-          console.log(`[GAME ENGINE] checkSpelling: Points awarded by AppContext: ${actualPointsAwarded}`);
-          
-          setCompletionData({
-            accuracy,
-            sessionScore: newSessionScore,
-            pointsAwarded: actualPointsAwarded
-          });
-          setIsSessionComplete(true);
+          if (isDailyReview) {
+            onComplete({
+              isDailyReviewComplete: true,
+              sessionScore: newSessionScore,
+              accuracy,
+              correctWords: newCorrectWords,
+              wrongWords: newWrongWords
+            });
+            setCompletionData({
+              accuracy,
+              sessionScore: newSessionScore
+            });
+            setIsSessionComplete(true);
+          } else {
+            const actualPointsAwarded = updateSectionScore(section.id, difficulty, newSessionScore, accuracy);
+            console.log(`[GAME ENGINE] checkSpelling: Points awarded by AppContext: ${actualPointsAwarded}`);
+            
+            setCompletionData({
+              accuracy,
+              sessionScore: newSessionScore,
+              pointsAwarded: actualPointsAwarded
+            });
+            setIsSessionComplete(true);
+          }
         }
       } else {
         // Medium/Hard on fail: stay on word, clear feedback to allow retry
@@ -370,66 +404,76 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
         <div className="glass-panel" style={{ padding: '2.5rem', width: '100%', minWidth: '320px', maxWidth: '600px', flex: '1 1 350px', textAlign: 'center', background: 'rgba(15, 23, 42, 0.6)' }}>
         {isSessionComplete ? (
           <div className="animate-fade-in">
-            <h2 style={{ fontSize: '2rem', color: 'white', marginBottom: '1.5rem' }}>Section Complete!</h2>
+            <h2 style={{ fontSize: '2rem', color: 'white', marginBottom: '1.5rem' }}>
+              {isDailyReview ? '🏆 Daily Review Complete! 🏆' : 'Section Complete!'}
+            </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
               <p style={{ color: 'var(--text-secondary)' }}>Accuracy: <strong style={{ color: 'white' }}>{Math.round(completionData?.accuracy)}%</strong></p>
-              <p style={{ color: 'var(--text-secondary)' }}>Session Score: <strong style={{ color: 'white' }}>{completionData?.sessionScore}</strong></p>
-              <p style={{ color: 'var(--text-secondary)' }}>New Points Awarded: <strong style={{ color: '#fbbf24' }}>{completionData?.pointsAwarded}</strong></p>
+              <p style={{ color: 'var(--text-secondary)' }}>
+                {isDailyReview ? 'Daily Review Score:' : 'Session Score:'} <strong style={{ color: '#fbbf24' }}>{completionData?.sessionScore} pts</strong>
+              </p>
+              {!isDailyReview && <p style={{ color: 'var(--text-secondary)' }}>New Points Awarded: <strong style={{ color: '#fbbf24' }}>{completionData?.pointsAwarded}</strong></p>}
             </div>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {(() => {
-                const acc = completionData?.accuracy || 0;
-                const isPassed = acc >= 90;
-                const isPerfect = acc === 100;
-                const currentLabel = `Retry at ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`;
-                
-                let nextButton = null;
-                if (isPassed) {
-                  if (difficulty === 'easy') {
-                    nextButton = (
-                      <button 
-                        className={isPerfect ? "btn-primary" : "btn-secondary"} 
-                        onClick={() => handleTryNextDifficulty('medium')}
-                      >
-                        Try at Medium
-                      </button>
-                    );
-                  } else if (difficulty === 'medium') {
-                    nextButton = (
-                      <button 
-                        className={isPerfect ? "btn-primary" : "btn-secondary"} 
-                        onClick={() => handleTryNextDifficulty('hard')}
-                      >
-                        Try at Hard
-                      </button>
-                    );
-                  } else if (difficulty === 'hard') {
-                    nextButton = (
-                      <button 
-                        className={isPerfect ? "btn-primary" : "btn-secondary"} 
-                        onClick={() => onComplete({ nextSection: true })}
-                      >
-                        Move to Next Section
-                      </button>
-                    );
+              {isDailyReview ? (
+                <button className="btn-primary" style={{ padding: '0.75rem 2rem', fontSize: '1.1rem' }} onClick={() => onComplete({ returnToPortal: true })}>
+                  Return to Portal
+                </button>
+              ) : (
+                (() => {
+                  const acc = completionData?.accuracy || 0;
+                  const isPassed = acc >= 90;
+                  const isPerfect = acc === 100;
+                  const currentLabel = `Retry at ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`;
+                  
+                  let nextButton = null;
+                  if (isPassed) {
+                    if (difficulty === 'easy') {
+                      nextButton = (
+                        <button 
+                          className={isPerfect ? "btn-primary" : "btn-secondary"} 
+                          onClick={() => handleTryNextDifficulty('medium')}
+                        >
+                          Try at Medium
+                        </button>
+                      );
+                    } else if (difficulty === 'medium') {
+                      nextButton = (
+                        <button 
+                          className={isPerfect ? "btn-primary" : "btn-secondary"} 
+                          onClick={() => handleTryNextDifficulty('hard')}
+                        >
+                          Try at Hard
+                        </button>
+                      );
+                    } else if (difficulty === 'hard') {
+                      nextButton = (
+                        <button 
+                          className={isPerfect ? "btn-primary" : "btn-secondary"} 
+                          onClick={() => onComplete({ nextSection: true })}
+                        >
+                          Move to Next Section
+                        </button>
+                      );
+                    }
                   }
-                }
 
-                return (
-                  <>
-                    <button 
-                      className={!isPerfect ? "btn-primary" : "btn-secondary"} 
-                      onClick={handleRetry}
-                    >
-                      {currentLabel}
-                    </button>
-                    {nextButton}
-                    <button className="btn-secondary" onClick={() => onComplete({ nextSection: false })}>
-                      Back to Portal
-                    </button>
-                  </>
-                );
-              })()}
+                  return (
+                    <>
+                      <button 
+                        className={!isPerfect ? "btn-primary" : "btn-secondary"} 
+                        onClick={handleRetry}
+                      >
+                        {currentLabel}
+                      </button>
+                      {nextButton}
+                      <button className="btn-secondary" onClick={() => onComplete({ nextSection: false })}>
+                        Back to Portal
+                      </button>
+                    </>
+                  );
+                })()
+              )}
             </div>
           </div>
         ) : (
@@ -482,7 +526,7 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
             )}
             
             {/* Controls */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', alignItems: 'center' }}>
               <button className="btn-secondary" onClick={() => {
                 speakWord();
                 setTimeout(() => {
@@ -491,15 +535,31 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
               }}>
                 🔊 Hear Word Again
               </button>
-              <select 
-                value={difficulty} 
-                onChange={handleDifficultyChange}
-                style={{ padding: '0.5rem', borderRadius: '8px', background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none', cursor: 'pointer' }}
-              >
-                <option value="easy" style={{color: 'black'}}>Easy (Copy)</option>
-                <option value="medium" disabled={!isMediumUnlocked} style={{color: isMediumUnlocked ? 'black' : '#94a3b8'}}>{isMediumUnlocked ? 'Medium (Recall)' : '🔒 Medium (Finish Easy First)'}</option>
-                <option value="hard" disabled={!isHardUnlocked} style={{color: isHardUnlocked ? 'black' : '#94a3b8'}}>{isHardUnlocked ? 'Hard (Dictate)' : '🔒 Hard (Finish Medium First)'}</option>
-              </select>
+              {isDailyReview ? (
+                <span style={{ 
+                  background: 'rgba(239, 68, 68, 0.2)', 
+                  color: '#ef4444', 
+                  padding: '0.5rem 1rem', 
+                  borderRadius: '8px', 
+                  fontWeight: 'bold', 
+                  border: '1px solid rgba(239, 68, 68, 0.4)',
+                  fontSize: '0.85rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px' 
+                }}>
+                  Hard Mode (Dictate Only)
+                </span>
+              ) : (
+                <select 
+                  value={difficulty} 
+                  onChange={handleDifficultyChange}
+                  style={{ padding: '0.5rem', borderRadius: '8px', background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none', cursor: 'pointer' }}
+                >
+                  <option value="easy" style={{color: 'black'}}>Easy (Copy)</option>
+                  <option value="medium" disabled={!isMediumUnlocked} style={{color: isMediumUnlocked ? 'black' : '#94a3b8'}}>{isMediumUnlocked ? 'Medium (Recall)' : '🔒 Medium (Finish Easy First)'}</option>
+                  <option value="hard" disabled={!isHardUnlocked} style={{color: isHardUnlocked ? 'black' : '#94a3b8'}}>{isHardUnlocked ? 'Hard (Dictate)' : '🔒 Hard (Finish Medium First)'}</option>
+                </select>
+              )}
             </div>
 
             {/* Visual Support (The Word) */}
@@ -587,31 +647,37 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
 
             {/* Progress */}
             <div style={{ marginTop: '2rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-              Word {currentWordIndex + 1} of {words.length} | Points: {Math.round(totalSectionScore)} / {maxPossibleScore}
+              {isDailyReview ? (
+                <span>Review Word {currentWordIndex + 1} of {words.length} | Daily Review Score: {sessionScore} pts</span>
+              ) : (
+                <span>Word {currentWordIndex + 1} of {words.length} | Points: {Math.round(totalSectionScore)} / {maxPossibleScore}</span>
+              )}
             </div>
 
-            <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', background: 'rgba(0,0,0,0.2)', padding: '1.25rem', borderRadius: '12px', textAlign: 'left' }}>
-              <h4 style={{ color: 'white', fontSize: '0.9rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', opacity: 0.8 }}>Points Breakdown</h4>
-              
-              {difficultyConfig.map((diff) => (
-                <div key={diff.label}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
-                    <span>{diff.label}</span>
-                    <span style={{ color: 'white' }}>{Math.round(diff.score)} / {diff.max} pts</span>
+            {!isDailyReview && (
+              <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', background: 'rgba(0,0,0,0.2)', padding: '1.25rem', borderRadius: '12px', textAlign: 'left' }}>
+                <h4 style={{ color: 'white', fontSize: '0.9rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', opacity: 0.8 }}>Points Breakdown</h4>
+                
+                {difficultyConfig.map((diff) => (
+                  <div key={diff.label}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
+                      <span>{diff.label}</span>
+                      <span style={{ color: 'white' }}>{Math.round(diff.score)} / {diff.max} pts</span>
+                    </div>
+                    <div 
+                      role="progressbar" 
+                      aria-label={diff.label}
+                      aria-valuenow={diff.prog} 
+                      aria-valuemin="0" 
+                      aria-valuemax="100"
+                      style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden' }}
+                    >
+                      <div style={{ height: '100%', width: `${diff.prog}%`, background: diff.color, transition: 'width 0.4s ease-out' }} />
+                    </div>
                   </div>
-                  <div 
-                    role="progressbar" 
-                    aria-label={diff.label}
-                    aria-valuenow={diff.prog} 
-                    aria-valuemin="0" 
-                    aria-valuemax="100"
-                    style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden' }}
-                  >
-                    <div style={{ height: '100%', width: `${diff.prog}%`, background: diff.color, transition: 'width 0.4s ease-out' }} />
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </>
         )}
         </div>

@@ -34,6 +34,7 @@ const ParentPortal = () => {
   const [showAllIncompleteRewards, setShowAllIncompleteRewards] = useState(false);
   const [editingRewardId, setEditingRewardId] = useState(null);
   const [editCostInput, setEditCostInput] = useState(0);
+  const [selectedReviewModal, setSelectedReviewModal] = useState(null);
 
   const sortedStruggles = useMemo(() => {
     return [...struggleWords].sort((a, b) => b.count - a.count);
@@ -400,6 +401,63 @@ const ParentPortal = () => {
                        <span style={{ color: '#f59e0b', fontWeight: 'bold', fontSize: '0.85rem' }}>🟡 Pending (Not Played)</span>
                      )}
                    </div>
+                 </div>
+               );
+            })}
+          </div>
+        </div>
+
+        {/* Daily Review Telemetry Ledger & History */}
+        <div className="glass-panel" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '6px', color: '#3b82f6' }}>
+            <span>📅</span> Daily Review History
+          </h2>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+            Cumulative review records across 10-word randomized dictations.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {childrenMap && Object.entries(childrenMap).map(([id, child]) => {
+               const historyMap = child?.dailyReviewHistory || {};
+               const historyEntries = Object.values(historyMap).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+               
+               return (
+                 <div key={id} style={{ background: 'rgba(255,255,255,0.02)', padding: '1.25rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
+                     <strong style={{ color: 'white', fontSize: '1.1rem' }}>{child?.studentName || 'Student'}</strong>
+                     <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Completed Reviews: {historyEntries.length}</span>
+                   </div>
+                   
+                   {historyEntries.length === 0 ? (
+                     <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                       No Daily Review sessions completed yet.
+                     </div>
+                   ) : (
+                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                       {historyEntries.map((entry, eIdx) => (
+                         <div key={eIdx} style={{ 
+                           display: 'flex', 
+                           justifyContent: 'space-between', 
+                           alignItems: 'center', 
+                           padding: '0.75rem 1rem', 
+                           background: 'rgba(0,0,0,0.25)', 
+                           borderRadius: '8px',
+                           borderLeft: '4px solid #3b82f6'
+                         }}>
+                           <div>
+                             <strong style={{ color: 'white', display: 'block', fontSize: '0.95rem' }}>{entry.date}</strong>
+                             <span style={{ fontSize: '0.8rem', color: '#fbbf24' }}>Score: {entry.score} pts | Accuracy: {entry.accuracy}%</span>
+                           </div>
+                           <button 
+                             className="btn-secondary" 
+                             style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
+                             onClick={() => setSelectedReviewModal({ ...entry, studentName: child?.studentName })}
+                           >
+                             Review Words
+                           </button>
+                         </div>
+                       ))}
+                     </div>
+                   )}
                  </div>
                );
             })}
@@ -980,6 +1038,95 @@ const ParentPortal = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Daily Review Popup Modal Card */}
+      {selectedReviewModal && createPortal(
+        <div 
+          className="lightbox-overlay animate-fade-in" 
+          onClick={() => setSelectedReviewModal(null)} 
+          style={{ 
+            position: 'fixed', 
+            inset: 0, 
+            zIndex: 10000, 
+            background: 'rgba(5,8,15,0.9)', 
+            backdropFilter: 'blur(10px)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            padding: '2rem' 
+          }}
+        >
+          <div 
+            className="glass-panel" 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ 
+              padding: '2.5rem', 
+              maxWidth: '650px', 
+              width: '100%', 
+              maxHeight: '85vh', 
+              overflowY: 'auto', 
+              background: 'rgba(30,41,59,0.95)', 
+              border: '1px solid #3b82f6',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.5)' 
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.4rem', color: 'white' }}>Daily Review: {selectedReviewModal.date}</h3>
+                <span style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)' }}>Student: {selectedReviewModal.studentName || 'Student'}</span>
+              </div>
+              <button 
+                onClick={() => setSelectedReviewModal(null)} 
+                style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.75rem', cursor: 'pointer', opacity: 0.8 }}
+              >
+                ×
+              </button>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem', padding: '1.25rem', background: 'rgba(0,0,0,0.3)', borderRadius: '12px', justifyContent: 'space-around', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Total Score</div>
+                <strong style={{ display: 'block', fontSize: '1.75rem', color: '#fbbf24' }}>{selectedReviewModal.score} pts</strong>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Accuracy</div>
+                <strong style={{ display: 'block', fontSize: '1.75rem', color: selectedReviewModal.accuracy >= 90 ? '#10b981' : '#f59e0b' }}>{selectedReviewModal.accuracy}%</strong>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+              {/* Correct Words */}
+              <div style={{ background: 'rgba(16,185,129,0.1)', padding: '1.25rem', borderRadius: '10px', border: '1px solid rgba(16,185,129,0.2)' }}>
+                <h4 style={{ color: '#34d399', margin: '0 0 0.75rem 0', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '1.05rem' }}>
+                  <span>✓</span> Correct ({selectedReviewModal.correctWords?.length || 0})
+                </h4>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.95rem', color: 'white' }}>
+                  {selectedReviewModal.correctWords?.map((w, i) => (
+                    <li key={i} style={{ padding: '4px 8px', background: 'rgba(0,0,0,0.2)', borderRadius: '4px' }}>• {w}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Wrong Words */}
+              <div style={{ background: 'rgba(239,68,68,0.1)', padding: '1.25rem', borderRadius: '10px', border: '1px solid rgba(239,68,68,0.2)' }}>
+                <h4 style={{ color: '#f87171', margin: '0 0 0.75rem 0', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '1.05rem' }}>
+                  <span>✗</span> Wrong ({selectedReviewModal.wrongWords?.length || 0})
+                </h4>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.95rem', color: 'white' }}>
+                  {selectedReviewModal.wrongWords?.map((w, i) => (
+                    <li key={i} style={{ padding: '4px 8px', background: 'rgba(0,0,0,0.2)', borderRadius: '4px' }}>• {w}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <button className="btn-primary" onClick={() => setSelectedReviewModal(null)} style={{ width: '100%', padding: '1rem', fontSize: '1.05rem' }}>
+              Close Review Card
+            </button>
           </div>
         </div>,
         document.body
