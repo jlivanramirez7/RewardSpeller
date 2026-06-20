@@ -286,6 +286,7 @@ const StudentPortal = () => {
             onComplete={handleCompleteSection} 
             tierRule={activePlayData.tierRule} 
             initialDifficulty={activePlayData.initialDifficulty}
+            isDailyReview={activePlayData.isDailyReview}
           />
         </div>
       ) : (
