@@ -36,6 +36,7 @@ const ParentPortal = () => {
   const [editingRewardId, setEditingRewardId] = useState(null);
   const [editCostInput, setEditCostInput] = useState(0);
   const [selectedReviewModal, setSelectedReviewModal] = useState(null);
+  const [showAllHistory, setShowAllHistory] = useState({});
 
   const sortedStruggles = useMemo(() => {
     return [...struggleWords].sort((a, b) => b.count - a.count);
@@ -478,31 +479,49 @@ const ParentPortal = () => {
                        No Daily Review sessions completed yet.
                      </div>
                    ) : (
-                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                       {historyEntries.map((entry, eIdx) => (
-                         <div key={eIdx} style={{ 
-                           display: 'flex', 
-                           justifyContent: 'space-between', 
-                           alignItems: 'center', 
-                           padding: '0.75rem 1rem', 
-                           background: 'rgba(0,0,0,0.25)', 
-                           borderRadius: '8px',
-                           borderLeft: '4px solid #3b82f6'
-                         }}>
-                           <div>
-                             <strong style={{ color: 'white', display: 'block', fontSize: '0.95rem' }}>{entry.date}</strong>
-                             <span style={{ fontSize: '0.8rem', color: '#fbbf24' }}>Score: {entry.score} pts | Accuracy: {entry.accuracy}%</span>
-                           </div>
-                           <button 
-                             className="btn-secondary" 
-                             style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
-                             onClick={() => setSelectedReviewModal({ ...entry, studentName: child?.studentName })}
-                           >
-                             Review Words
-                           </button>
+                     (() => {
+                       const showAll = showAllHistory[id] || false;
+                       const visibleEntries = showAll ? historyEntries : historyEntries.slice(0, 5);
+                       const hasMore = historyEntries.length > 5;
+                       
+                       return (
+                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                           {visibleEntries.map((entry, eIdx) => (
+                             <div key={eIdx} style={{ 
+                               display: 'flex', 
+                               justifyContent: 'space-between', 
+                               alignItems: 'center', 
+                               padding: '0.75rem 1rem', 
+                               background: 'rgba(0,0,0,0.25)', 
+                               borderRadius: '8px',
+                               borderLeft: '4px solid #3b82f6'
+                             }}>
+                               <div>
+                                 <strong style={{ color: 'white', display: 'block', fontSize: '0.95rem' }}>{entry.date}</strong>
+                                 <span style={{ fontSize: '0.8rem', color: '#fbbf24' }}>Score: {entry.score} pts | Accuracy: {entry.accuracy}%</span>
+                               </div>
+                               <button 
+                                 className="btn-secondary" 
+                                 style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
+                                 onClick={() => setSelectedReviewModal({ ...entry, studentName: child?.studentName })}
+                               >
+                                 Review Words
+                               </button>
+                             </div>
+                           ))}
+                           
+                           {hasMore && (
+                             <button 
+                               className="btn-secondary" 
+                               onClick={() => setShowAllHistory(prev => ({ ...prev, [id]: !showAll }))}
+                               style={{ width: '100%', marginTop: '0.5rem' }}
+                             >
+                               {showAll ? 'Show Less' : `Show More (${historyEntries.length - 5} more)`}
+                             </button>
+                           )}
                          </div>
-                       ))}
-                     </div>
+                       );
+                     })()
                    )}
                  </div>
                );
