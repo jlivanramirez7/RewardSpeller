@@ -19,7 +19,8 @@ const ParentPortal = () => {
     struggleWords, currentGradeLevel, setCurrentGradeLevel, rewards, setRewards, studentPoints, tiers, resetProgress, enablePacing, setEnablePacing, enableDifficultyGating, setEnableDifficultyGating,
     isLoaded, error,
     studentName, setStudentName, linkStudentEmail,
-    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward, coppaConsented, registerParentCoppa
+    childrenMap, activeChildId, setActiveChildId, addChild, deleteChild, redeemReward, coppaConsented, registerParentCoppa,
+    unlockedTiers, setUnlockedTiers
   } = useAppContext();
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,6 +44,29 @@ const ParentPortal = () => {
   const visibleStruggles = useMemo(() => {
     return showAllStruggle ? sortedStruggles : sortedStruggles.slice(0, 5);
   }, [sortedStruggles, showAllStruggle]);
+
+  const highestUnlockedTierIdx = useMemo(() => {
+    if (!unlockedTiers || unlockedTiers.length === 0) return 0;
+    let maxIdx = 0;
+    tiers.forEach((t, idx) => {
+      if (unlockedTiers.includes(t.id)) {
+        maxIdx = idx;
+      }
+    });
+    return maxIdx;
+  }, [unlockedTiers, tiers]);
+
+  const handleUnlockUpTo = (targetIdx) => {
+    const gradeDigit = currentGradeLevel[0];
+    const nonCurrentGradeTiers = unlockedTiers.filter(id => !id.startsWith(`g${gradeDigit}_t`));
+    const newCurrentTiers = [];
+    for (let i = 0; i <= targetIdx; i++) {
+      if (i > 0) {
+        newCurrentTiers.push(tiers[i].id);
+      }
+    }
+    setUnlockedTiers([...nonCurrentGradeTiers, ...newCurrentTiers]);
+  };
 
   const incompleteRewards = useMemo(() => {
     return rewards.filter(r => studentPoints < r.cost && !r.redeemed);
@@ -301,6 +325,28 @@ const ParentPortal = () => {
               <option value="4th" style={{color: 'black'}}>4th Grade (Building Blocks)</option>
               <option value="5th" style={{color: 'black'}}>5th Grade (Advanced Word Study)</option>
               <option value="6th" style={{color: 'black'}}>6th Grade (Advanced Roots)</option>
+            </select>
+          </div>
+          <div style={{ marginBottom: '1rem', marginTop: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Unlock Up To Tier (Manual Progression Override)</label>
+            <select 
+              value={highestUnlockedTierIdx}
+              onChange={(e) => handleUnlockUpTo(parseInt(e.target.value, 10))}
+              style={{ 
+                width: '100%', 
+                padding: '0.75rem', 
+                borderRadius: '8px', 
+                background: 'rgba(255,255,255,0.1)', 
+                color: 'white',
+                border: '1px solid var(--surface-border)',
+                outline: 'none'
+              }}
+            >
+              {tiers.map((tier, idx) => (
+                <option key={tier.id} value={idx} style={{color: 'black'}}>
+                  Tier {idx + 1}: {tier.name}
+                </option>
+              ))}
             </select>
           </div>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Adjusting this will shift the underlying word banks available in the Student Portal.</p>
@@ -915,6 +961,16 @@ const ParentPortal = () => {
           Reset Profile Progress
         </button>
       </div>
+
+      {/* Collapsible Debug Panel */}
+      <details style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(0,0,0,0.3)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+        <summary style={{ color: 'var(--text-secondary)', cursor: 'pointer', fontWeight: 'bold' }}>🔧 Debug Diagnostic State</summary>
+        <div style={{ marginTop: '1rem' }}>
+          <pre style={{ overflowX: 'auto', background: '#0f172a', padding: '1rem', borderRadius: '6px', color: '#38bdf8', fontSize: '0.85rem' }}>
+            {JSON.stringify(childrenMap, null, 2)}
+          </pre>
+        </div>
+      </details>
 
       {/* Custom Reset Confirmation Modal */}
       {/* Custom Reset Confirmation Modal: Teleports confirmation dialog via createPortal */}

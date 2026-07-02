@@ -337,6 +337,14 @@ export const AppProvider = ({ children }) => {
       unsubscribe = onSnapshot(docRef, (docSnap) => {
         if (ignore) return;
 
+        // Concurrency guard: Ignore incoming Firestore snapshots if we have local writes 
+        // pending backend synchronization. This prevents race conditions where old snapshots 
+        // overwrite newer local state updates (e.g. unlocking tiers, updating points) in real time.
+        if (docSnap.metadata.hasPendingWrites) {
+          console.log("[APP CONTEXT] onSnapshot: local writes pending. Skipping load.");
+          return;
+        }
+
         if (docSnap.exists()) {
           const data = docSnap.data();
 
