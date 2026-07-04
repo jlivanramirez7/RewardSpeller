@@ -108,7 +108,8 @@ export const AppProvider = ({ children }) => {
   // Includes legacy single-student migration fallback parsing to ensure seamless parent account upgrades.
   const [childrenMap, setChildrenMap] = useState(null);
 
-  const skipSaveRef = useRef(false);
+  const skipSaveChildrenRef = useRef(false);
+  const skipSaveActiveChildRef = useRef(false);
   const childrenMapRef = useRef(childrenMap);
 
   useEffect(() => {
@@ -212,7 +213,8 @@ export const AppProvider = ({ children }) => {
   const restoreProgress = useCallback((data) => {
     if (!data || Object.keys(data).length === 0) return;
 
-    skipSaveRef.current = true; // Concurrency guard preventing write amplification on state restore
+    skipSaveChildrenRef.current = true;
+    skipSaveActiveChildRef.current = true; // Concurrency guard preventing write amplification on state restore
 
     const currentWeek = getISOWeekString();
 
@@ -323,7 +325,8 @@ export const AppProvider = ({ children }) => {
     const targetUid = isStudent ? parentUid : (user ? user.uid : null);
 
     if (targetUid && loadedUserUidRef.current !== null && targetUid !== loadedUserUidRef.current) {
-      skipSaveRef.current = true;
+      skipSaveChildrenRef.current = true;
+      skipSaveActiveChildRef.current = true;
       setChildrenMap({ child_1: createDefaultChild('child_1') });
       setActiveChildId('child_1');
     }
@@ -398,7 +401,8 @@ export const AppProvider = ({ children }) => {
     } else if (!user) {
       if (!ignore) {
         if (loadedUserUidRef.current !== null) {
-          skipSaveRef.current = true;
+          skipSaveChildrenRef.current = true;
+          skipSaveActiveChildRef.current = true;
           setChildrenMap(null); // Reset childrenMap to null on logout
           setActiveChildId('child_1');
         }
@@ -447,7 +451,7 @@ export const AppProvider = ({ children }) => {
 
   // Save to localStorage and Firestore on change
   // State persistence hook: Synchronizes local state updates to localStorage and Firestore.
-  // Throttles unnecessary writes using skipSaveRef during hydration phases.
+  // Throttles unnecessary writes using skipSaveChildrenRef and skipSaveActiveChildRef during hydration phases.
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('coppa-verified') === 'true') {
@@ -464,81 +468,105 @@ export const AppProvider = ({ children }) => {
     }
   }, [user, db, isStudent, parentUid]);
 
+  // Save childrenMap to LocalStorage and Firestore
   useEffect(() => {
     if (!isLoaded) {
-      console.log("[APP CONTEXT] save effect: skipped because isLoaded is false");
+      console.log("[APP CONTEXT] save childrenMap effect: skipped because isLoaded is false");
       return;
     }
 
     const targetUid = isStudent ? parentUid : (user ? user.uid : null);
 
-    console.log("[APP CONTEXT] save effect triggered. targetUid:", targetUid, "childrenMap:", !!childrenMap);
+    console.log("[APP CONTEXT] save childrenMap effect triggered. targetUid:", targetUid, "childrenMap:", !!childrenMap);
 
     if (targetUid && targetUid !== loadedUserUidRef.current) {
-      console.warn(`[APP CONTEXT] Save blocked: current user/parent (${targetUid}) does not match loaded user (${loadedUserUidRef.current})`);
+      console.warn(`[APP CONTEXT] Save childrenMap blocked: current user/parent (${targetUid}) does not match loaded user (${loadedUserUidRef.current})`);
       return;
     }
 
     if (!childrenMap) {
-      console.log("[APP CONTEXT] save effect: childrenMap is null, skipping write");
+      console.log("[APP CONTEXT] save childrenMap effect: childrenMap is null, skipping write");
       return;
     }
 
-    console.log("[APP CONTEXT] save effect: saving childrenMap to localStorage:", childrenMap);
-    localStorage.setItem('activeChildId', activeChildId);
+    console.log("[APP CONTEXT] save childrenMap effect: saving to localStorage:", childrenMap);
     localStorage.setItem('children', JSON.stringify(childrenMap));
     localStorage.setItem('coppaConsented', JSON.stringify(coppaConsented));
 
-    if (skipSaveRef.current) {
-      console.log("[APP CONTEXT] save effect: skipSaveRef is true. Resetting to false and skipping Firestore write.");
-      skipSaveRef.current = false;
+    if (skipSaveChildrenRef.current) {
+      console.log("[APP CONTEXT] save childrenMap effect: skipSaveChildrenRef is true. Resetting to false and skipping Firestore write.");
+      skipSaveChildrenRef.current = false;
       return;
     }
 
-    const saveScores = async () => {
+    const saveChildrenMap = async () => {
       if (targetUid && db && childrenMap) {
-        console.log(`[APP CONTEXT] saveScores: attempting to save state to Firestore for UID: ${targetUid}`);
-        console.log(`[APP CONTEXT] saveScores: state to save:`, { activeChildId, children: childrenMap });
+        console.log(`[APP CONTEXT] saveChildrenMap: attempting to save children to Firestore for UID: ${targetUid}`);
         try {
           const docRef = doc(db, 'users', targetUid);
           await setDoc(docRef, {
-            activeChildId,
             children: childrenMap,
-            lastInteractionAt: serverTimestamp() // Log active app telemetry!
-          }, { mergeFields: ['activeChildId', 'children', 'lastInteractionAt'] });
-          console.log(`[APP CONTEXT] saveScores: successfully saved state to Firestore for UID: ${targetUid}`);
+            lastInteractionAt: serverTimestamp()
+          }, { merge: true });
+          console.log(`[APP CONTEXT] saveChildrenMap: successfully saved children to Firestore for UID: ${targetUid}`);
 
           if (!isStudent && user) {
             console.log(`[APP CONTEXT] Auto-syncing student links for parent ${user.email}...`);
             Object.entries(childrenMap).forEach(async ([cId, child]) => {
-              console.log(`[APP CONTEXT] Checking child profile ${cId} (${child?.studentName}): studentEmail = "${child?.studentEmail}"`);
               if (child && child.studentEmail && child.studentEmail.trim()) {
                 const email = child.studentEmail.trim();
                 try {
-                  console.log(`[APP CONTEXT] Writing student_links doc for ${email} -> Parent UID: ${user.uid}, Child ID: ${cId}`);
                   await setDoc(doc(db, 'student_links', email), {
                     parentUid: user.uid,
                     childId: cId
                   }, { merge: true });
-                  console.log(`[APP CONTEXT] Successfully auto-synced student_links for ${email}`);
                 } catch (linkErr) {
                   console.error(`[APP CONTEXT] Error auto-syncing student link for ${email}:`, linkErr);
                 }
-              } else {
-                console.log(`[APP CONTEXT] Child ${cId} has no studentEmail set. Skipping auto-sync.`);
               }
             });
           }
         } catch (error) {
-          console.error('[APP CONTEXT] saveScores: Error saving scores to Firestore:', error);
+          console.error('[APP CONTEXT] saveChildrenMap: Error saving scores to Firestore:', error);
+          alert("⚠️ Warning: Progress could not be saved to the cloud. Check your connection.");
         }
-      } else {
-        console.log(`[APP CONTEXT] saveScores: skipped. targetUid: ${targetUid}, db: ${!!db}, childrenMap: ${!!childrenMap}`);
       }
     };
 
-    saveScores();
-  }, [isLoaded, user, db, activeChildId, childrenMap, isStudent, parentUid, coppaConsented]);
+    saveChildrenMap();
+  }, [isLoaded, user, db, childrenMap, isStudent, parentUid, coppaConsented]);
+
+  // Save activeChildId to LocalStorage and Firestore (Separate effect to prevent childrenMap regression on tab switch)
+  useEffect(() => {
+    if (!isLoaded) return;
+    localStorage.setItem('activeChildId', activeChildId);
+
+    const targetUid = isStudent ? parentUid : (user ? user.uid : null);
+    if (!targetUid || !db || !activeChildId) return;
+
+    if (targetUid !== loadedUserUidRef.current) return;
+
+    if (skipSaveActiveChildRef.current) {
+      console.log("[APP CONTEXT] save activeChildId effect: skipSaveActiveChildRef is true. Resetting to false and skipping Firestore write.");
+      skipSaveActiveChildRef.current = false;
+      return;
+    }
+
+    const saveActiveChild = async () => {
+      try {
+        const docRef = doc(db, 'users', targetUid);
+        await setDoc(docRef, {
+          activeChildId,
+          lastInteractionAt: serverTimestamp()
+        }, { merge: true });
+        console.log(`[APP CONTEXT] saveActiveChild: successfully updated activeChildId to ${activeChildId}`);
+      } catch (err) {
+        console.error("[APP CONTEXT] Error saving activeChildId:", err);
+      }
+    };
+
+    saveActiveChild();
+  }, [isLoaded, user, db, activeChildId, isStudent, parentUid]);
 
   // Cross-tab storage sync
   // Cross-tab synchronization hook: Listens for storage events across browser tabs
@@ -547,14 +575,14 @@ export const AppProvider = ({ children }) => {
     const handleStorageChange = (e) => {
       if (e.key === 'children' && e.newValue) {
         try {
-          skipSaveRef.current = true;
+          skipSaveChildrenRef.current = true;
           setChildrenMap(JSON.parse(e.newValue));
         } catch (err) {
           console.error('Storage sync parse error', err);
         }
       }
       if (e.key === 'activeChildId' && e.newValue) {
-        skipSaveRef.current = true;
+        skipSaveActiveChildRef.current = true;
         setActiveChildId(e.newValue);
       }
       if (e.key === 'coppaConsented' && e.newValue) {
@@ -822,86 +850,106 @@ export const AppProvider = ({ children }) => {
     let pointsTotal = 0;
 
     // Helper to calculate and record 100% perfect scores
-    const completeSection = (secId, words) => {
+    const completeSection = (secId, words, modes = ['easy', 'medium', 'hard']) => {
       const wCount = words?.length || 0;
       if (wCount === 0) return;
 
-      const easyScore = wCount * 2; // (wCount * 2) * 0.5 * 2
-      const medScore = wCount * 6;  // wCount * 3 * 2
-      const hardScore = wCount * 60; // wCount * 30 * 2
+      if (modes.includes('easy')) {
+        const easyScore = wCount * 2;
+        sectionScores[`${secId}-easy`] = easyScore;
+        sectionAccuracy[`${secId}-easy`] = 100;
+        pointsTotal += easyScore;
+      }
 
-      sectionScores[`${secId}-easy`] = easyScore;
-      sectionAccuracy[`${secId}-easy`] = 100;
-      pointsTotal += easyScore;
+      if (modes.includes('medium')) {
+        const medScore = wCount * 6;
+        sectionScores[`${secId}-medium`] = medScore;
+        sectionAccuracy[`${secId}-medium`] = 100;
+        pointsTotal += medScore;
+      }
 
-      sectionScores[`${secId}-medium`] = medScore;
-      sectionAccuracy[`${secId}-medium`] = 100;
-      pointsTotal += medScore;
+      if (modes.includes('hard')) {
+        const hardScore = wCount * 60;
+        sectionScores[`${secId}-hard`] = hardScore;
+        sectionAccuracy[`${secId}-hard`] = 100;
+        pointsTotal += hardScore;
+      }
 
-      sectionScores[`${secId}-hard`] = hardScore;
-      sectionAccuracy[`${secId}-hard`] = 100;
-      pointsTotal += hardScore;
-
-      listenedLessons.push(secId);
+      if (!listenedLessons.includes(secId)) {
+        listenedLessons.push(secId);
+      }
     };
 
     const completeMastery = (tierId) => {
       const masteryId = `tier_${tierId}_mastery`;
-      const score = 15 * 60; // 15 words * 30 pts * 2
-      sectionScores[`${masteryId}-hard`] = score;
+      
+      sectionScores[`${masteryId}-easy`] = 15 * 2;
+      sectionAccuracy[`${masteryId}-easy`] = 100;
+      pointsTotal += 15 * 2;
+
+      sectionScores[`${masteryId}-medium`] = 15 * 6;
+      sectionAccuracy[`${masteryId}-medium`] = 100;
+      pointsTotal += 15 * 6;
+
+      const hardScore = 15 * 60; // 15 words * 30 pts * 2
+      sectionScores[`${masteryId}-hard`] = hardScore;
       sectionAccuracy[`${masteryId}-hard`] = 100;
-      pointsTotal += score;
-      listenedLessons.push(masteryId);
+      pointsTotal += hardScore;
+      
+      if (!listenedLessons.includes(masteryId)) {
+        listenedLessons.push(masteryId);
+      }
     };
 
-    // Process Curriculum wordBank4th
-    const t1 = wordBank4th.tiers.find(t => t.id === 'g4_t1');
-    if (t1) {
-      t1.sections.forEach(s => completeSection(s.id, s.words));
-      completeMastery('g4_t1');
-    }
+    // Process Curriculum wordBank4th (All Tiers fully completed)
+    wordBank4th.tiers.forEach(t => {
+      t.sections.forEach(s => completeSection(s.id, s.words));
+      completeMastery(t.id);
+    });
 
-    const t2 = wordBank4th.tiers.find(t => t.id === 'g4_t2');
-    if (t2) {
-      t2.sections.forEach(s => completeSection(s.id, s.words));
-      completeMastery('g4_t2');
-    }
+    // Process Curriculum wordBank5th (Tiers 1-4 fully completed)
+    const completed5thTiers = ['g5_t1', 'g5_t2', 'g5_t3', 'g5_t4'];
+    wordBank5th.tiers.forEach(t => {
+      if (completed5thTiers.includes(t.id)) {
+        t.sections.forEach(s => completeSection(s.id, s.words));
+        completeMastery(t.id);
+      }
+    });
 
-    const t3 = wordBank4th.tiers.find(t => t.id === 'g4_t3');
-    if (t3) {
-      t3.sections.forEach(s => completeSection(s.id, s.words));
-      completeMastery('g4_t3');
-    }
-
-    const t4 = wordBank4th.tiers.find(t => t.id === 'g4_t4');
-    if (t4) {
-      t4.sections.forEach(s => completeSection(s.id, s.words));
-      completeMastery('g4_t4');
-    }
-
-    const t5 = wordBank4th.tiers.find(t => t.id === 'g4_t5');
-    if (t5) {
-      const completedT5Sections = ['g4_t5_s1', 'g4_t5_s2', 'g4_t5_s3', 'g4_t5_s4'];
-      t5.sections.forEach(s => {
-        if (completedT5Sections.includes(s.id)) {
+    // Process Tier 5 (g5_t5) partially completed
+    const t5_5th = wordBank5th.tiers.find(t => t.id === 'g5_t5');
+    if (t5_5th) {
+      t5_5th.sections.forEach(s => {
+        if (s.id === 'g5_t5_s1' || s.id === 'g5_t5_s2') {
           completeSection(s.id, s.words);
+        } else if (s.id === 'g5_t5_s3') {
+          completeSection(s.id, s.words, ['easy']);
         }
       });
-      // T5 mastery is unlocked but NOT completed since T5 is not fully finished
     }
 
     const updatedLucasData = {
       ...lucasData,
-      studentPoints: pointsTotal,
-      weeklyPoints: pointsTotal,
-      unlockedTiers: ['g4_t1', 'g4_t2', 'g4_t3', 'g4_t4', 'g4_t5'],
-      listenedLessons,
-      sectionScores,
-      sectionAccuracy,
+      studentPoints: Math.max(pointsTotal, 39300), // Ensure points match diagnostics + progress
+      weeklyPoints: 3000,
+      unlockedTiers: [
+        'g4_t1', 'g4_t2', 'g4_t3', 'g4_t4', 'g4_t5', 'g4_t6',
+        'g5_t1', 'g5_t2', 'g5_t3', 'g5_t4', 'g5_t5'
+      ],
+      currentGradeLevel: '5th',
+      listenedLessons: Array.from(new Set([...(lucasData?.listenedLessons || []), ...listenedLessons])),
+      sectionScores: {
+        ...(lucasData?.sectionScores || {}),
+        ...sectionScores
+      },
+      sectionAccuracy: {
+        ...(lucasData?.sectionAccuracy || {}),
+        ...sectionAccuracy
+      },
       studentEmail: 'lucasjramirez7@gmail.com',
-      struggleWords: [],
-      studentStreak: 0,
-      rewards: [
+      struggleWords: lucasData?.struggleWords || [],
+      studentStreak: lucasData?.studentStreak || 0,
+      rewards: lucasData?.rewards || [
         { id: 1, name: '30 mins Screen Time', cost: 500 },
         { id: 2, name: 'Trip to Park', cost: 1000 }
       ]
@@ -934,7 +982,8 @@ export const AppProvider = ({ children }) => {
         }, { merge: true });
 
         // Sync client state
-        skipSaveRef.current = true;
+        skipSaveChildrenRef.current = true;
+        skipSaveActiveChildRef.current = true;
         setChildrenMap(updatedChildrenMap);
         setActiveChildId(lucasKey);
         setCoppaConsented(true);
