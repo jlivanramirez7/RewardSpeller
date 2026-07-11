@@ -655,9 +655,8 @@ export const AppProvider = ({ children }) => {
       const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
       const existingHistory = currentChild.dailyReviewHistory || {};
       
-      if (existingHistory[dateKey] !== undefined) {
-        return prevMap; // Block duplicate daily review recording for the same date key
-      }
+      const timestamp = Date.now();
+      const entryId = `${dateKey}_${timestamp}`;
 
       return {
         ...prevMap,
@@ -665,7 +664,11 @@ export const AppProvider = ({ children }) => {
           ...currentChild,
           dailyReviewHistory: {
             ...existingHistory,
-            [dateKey]: record
+            [entryId]: {
+              ...record,
+              timestamp,
+              entryId
+            }
           }
         }
       };

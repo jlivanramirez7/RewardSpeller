@@ -107,11 +107,6 @@ const StudentPortal = () => {
   const handleStartDailyReview = () => {
     warmupAudio();
     const dateKey = getWordleDateKey();
-    
-    if (dailyReviewHistory && dailyReviewHistory[dateKey]) {
-      alert(`🏆 You have already completed today's Daily Review! (Score: ${dailyReviewHistory[dateKey].score} pts, Accuracy: ${dailyReviewHistory[dateKey].accuracy}%). Check back tomorrow for 10 new review words!`);
-      return;
-    }
 
     const pool = [];
     (allCurriculumTiers || tiers).forEach(t => {

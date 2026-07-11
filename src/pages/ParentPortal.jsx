@@ -465,50 +465,94 @@ const ParentPortal = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {childrenMap && Object.entries(childrenMap).map(([id, child]) => {
                const historyMap = child?.dailyReviewHistory || {};
-               const historyEntries = Object.values(historyMap).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-               
-               return (
-                 <div key={id} style={{ background: 'rgba(255,255,255,0.02)', padding: '1.25rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
-                     <strong style={{ color: 'white', fontSize: '1.1rem' }}>{child?.studentName || 'Student'}</strong>
-                     <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Completed Reviews: {historyEntries.length}</span>
-                   </div>
-                   
-                   {historyEntries.length === 0 ? (
-                     <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-                       No Daily Review sessions completed yet.
-                     </div>
-                   ) : (
-                     (() => {
-                       const showAll = showAllHistory[id] || false;
-                       const visibleEntries = showAll ? historyEntries : historyEntries.slice(0, 5);
-                       const hasMore = historyEntries.length > 5;
-                       
-                       return (
-                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                           {visibleEntries.map((entry, eIdx) => (
-                             <div key={eIdx} style={{ 
-                               display: 'flex', 
-                               justifyContent: 'space-between', 
-                               alignItems: 'center', 
-                               padding: '0.75rem 1rem', 
-                               background: 'rgba(0,0,0,0.25)', 
-                               borderRadius: '8px',
-                               borderLeft: '4px solid #3b82f6'
-                             }}>
-                               <div>
-                                 <strong style={{ color: 'white', display: 'block', fontSize: '0.95rem' }}>{entry.date}</strong>
-                                 <span style={{ fontSize: '0.8rem', color: '#fbbf24' }}>Score: {entry.score} pts | Accuracy: {entry.accuracy}%</span>
-                               </div>
-                               <button 
-                                 className="btn-secondary" 
-                                 style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
-                                 onClick={() => setSelectedReviewModal({ ...entry, studentName: child?.studentName })}
-                               >
-                                 Review Words
-                               </button>
-                             </div>
-                           ))}
+                const allEntries = Object.values(historyMap);
+
+                // Group entries by date to compute attempt numbers chronologically per day
+                const entriesByDate = {};
+                allEntries.forEach(entry => {
+                  const dateStr = entry.date || 'Unknown Date';
+                  if (!entriesByDate[dateStr]) entriesByDate[dateStr] = [];
+                  entriesByDate[dateStr].push(entry);
+                });
+
+                const processedEntries = [];
+                Object.entries(entriesByDate).forEach(([dateStr, entries]) => {
+                  entries.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+                  entries.forEach((entry, idx) => {
+                    const attemptNum = idx + 1;
+                    const totalForDate = entries.length;
+                    let timeStr = '';
+                    if (entry.timestamp) {
+                      try {
+                        timeStr = new Date(entry.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                      } catch (e) {
+                        timeStr = '';
+                      }
+                    }
+                    let displayTitle = dateStr;
+                    if (totalForDate > 1) {
+                      displayTitle = `${dateStr} • Attempt #${attemptNum}${timeStr ? ` (${timeStr})` : ''}`;
+                    } else if (timeStr) {
+                      displayTitle = `${dateStr} (${timeStr})`;
+                    }
+
+                    processedEntries.push({
+                      ...entry,
+                      attemptNumber: attemptNum,
+                      displayTitle
+                    });
+                  });
+                });
+
+                const historyEntries = processedEntries.sort((a, b) => {
+                  if (b.timestamp && a.timestamp) return b.timestamp - a.timestamp;
+                  if (b.timestamp && !a.timestamp) return -1;
+                  if (!b.timestamp && a.timestamp) return 1;
+                  return (b.date || '').localeCompare(a.date || '') || ((b.attemptNumber || 1) - (a.attemptNumber || 1));
+                });
+                
+                return (
+                  <div key={id} style={{ background: 'rgba(255,255,255,0.02)', padding: '1.25rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
+                      <strong style={{ color: 'white', fontSize: '1.1rem' }}>{child?.studentName || 'Student'}</strong>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Completed Reviews: {historyEntries.length}</span>
+                    </div>
+                    
+                    {historyEntries.length === 0 ? (
+                      <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                        No Daily Review sessions completed yet.
+                      </div>
+                    ) : (
+                      (() => {
+                        const showAll = showAllHistory[id] || false;
+                        const visibleEntries = showAll ? historyEntries : historyEntries.slice(0, 5);
+                        const hasMore = historyEntries.length > 5;
+                        
+                        return (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                            {visibleEntries.map((entry, eIdx) => (
+                              <div key={eIdx} style={{ 
+                                display: 'flex', 
+                                justifyContent: 'space-between', 
+                                alignItems: 'center', 
+                                padding: '0.75rem 1rem', 
+                                background: 'rgba(0,0,0,0.25)', 
+                                borderRadius: '8px',
+                                borderLeft: '4px solid #3b82f6'
+                              }}>
+                                <div>
+                                  <strong style={{ color: 'white', display: 'block', fontSize: '0.95rem' }}>{entry.displayTitle || entry.date}</strong>
+                                  <span style={{ fontSize: '0.8rem', color: '#fbbf24' }}>Score: {entry.score} pts | Accuracy: {entry.accuracy}%</span>
+                                </div>
+                                <button 
+                                  className="btn-secondary" 
+                                  style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
+                                  onClick={() => setSelectedReviewModal({ ...entry, studentName: child?.studentName })}
+                                >
+                                  Review Words
+                                </button>
+                              </div>
+                            ))}
                            
                            {hasMore && (
                              <button 
@@ -1151,7 +1195,7 @@ const ParentPortal = () => {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.4rem', color: 'white' }}>Daily Review: {selectedReviewModal.date}</h3>
+                <h3 style={{ margin: 0, fontSize: '1.4rem', color: 'white' }}>Daily Review: {selectedReviewModal.displayTitle || selectedReviewModal.date}</h3>
                 <span style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)' }}>Student: {selectedReviewModal.studentName || 'Student'}</span>
               </div>
               <button 
