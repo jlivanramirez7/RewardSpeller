@@ -675,6 +675,30 @@ export const AppProvider = ({ children }) => {
     });
   }, [activeChildId]);
 
+  const setDailyReviewWordsForDate = useCallback((dateKey, words) => {
+    setChildrenMap(prevMap => {
+      if (!prevMap) return null;
+      const currentActiveId = activeChildId;
+      const currentChild = prevMap[currentActiveId] || createDefaultChild(currentActiveId);
+      const existingMap = currentChild.dailyReviewWordsByDate || {};
+      
+      if (existingMap[dateKey]) {
+        return prevMap; // Don't overwrite if already set for this date
+      }
+
+      return {
+        ...prevMap,
+        [currentActiveId]: {
+          ...currentChild,
+          dailyReviewWordsByDate: {
+            ...existingMap,
+            [dateKey]: words
+          }
+        }
+      };
+    });
+  }, [activeChildId]);
+
   const addUsageTime = useCallback((seconds) => {
     setChildrenMap(prevMap => {
       if (!prevMap) return null;
@@ -1103,6 +1127,9 @@ export const AppProvider = ({ children }) => {
   const rawDailyReviewHistory = activeChild.dailyReviewHistory;
   const dailyReviewHistory = useMemo(() => rawDailyReviewHistory || {}, [rawDailyReviewHistory]);
 
+  const rawDailyReviewWordsByDate = activeChild.dailyReviewWordsByDate;
+  const dailyReviewWordsByDate = useMemo(() => rawDailyReviewWordsByDate || {}, [rawDailyReviewWordsByDate]);
+
   const contextValue = useMemo(() => ({
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
     studentStreak, setStudentStreak,
@@ -1123,6 +1150,7 @@ export const AppProvider = ({ children }) => {
     resolveStruggleWord, redeemReward, adminRestoreLucas,
     wordleScores, addWordlePoints,
     dailyReviewHistory, addDailyReviewScore,
+    dailyReviewWordsByDate, setDailyReviewWordsForDate,
     summerProgress, toggleSummerProgress
   }), [
     studentPoints, setStudentPoints, addPoints, weeklyPoints, usageTime, addUsageTime,
@@ -1143,6 +1171,7 @@ export const AppProvider = ({ children }) => {
     childrenMap, activeChildId, switchChild, addChild, deleteChild,
     wordleScores, addWordlePoints,
     dailyReviewHistory, addDailyReviewScore,
+    dailyReviewWordsByDate, setDailyReviewWordsForDate,
     summerProgress, toggleSummerProgress
   ]);
 

@@ -15,7 +15,7 @@ import WordleEngine from '../components/WordleEngine';
  * @returns {React.ReactElement} The student learning workspace UI.
  */
 const StudentPortal = () => {
-  const { studentPoints, addPoints, studentStreak, tiers, allCurriculumTiers, unlockedTiers, setUnlockedTiers, rewards, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName, coppaConsented, registerParentCoppa, parentEmail, dailyReviewHistory, addDailyReviewScore } = useAppContext();
+  const { studentPoints, addPoints, studentStreak, tiers, allCurriculumTiers, unlockedTiers, setUnlockedTiers, rewards, isSectionMastered, listenedLessons, getSectionStats, enablePacing, sectionScores, currentGradeLevel, getRecommendedDifficulty, isLoaded, error, studentName, coppaConsented, registerParentCoppa, parentEmail, dailyReviewHistory, addDailyReviewScore, dailyReviewWordsByDate, setDailyReviewWordsForDate } = useAppContext();
   const [activePlayData, setActivePlayData] = useState(null);
   const [activeLessonData, setActiveLessonData] = useState(null);
   const [notification, setNotification] = useState(null);
@@ -108,6 +108,43 @@ const StudentPortal = () => {
     warmupAudio();
     const dateKey = getWordleDateKey();
 
+    if (dailyReviewWordsByDate && dailyReviewWordsByDate[dateKey] && dailyReviewWordsByDate[dateKey].length === 10) {
+      setActivePlayData({
+        isDailyReview: true,
+        tierId: 'daily_review',
+        tierRule: "Listen carefully to the audio dictation and spell each review word correctly on Hard mode!",
+        section: {
+          id: 'daily_review',
+          name: `Daily Review (${dateKey})`,
+          theme: "10-Word Hard Dictation Review",
+          words: dailyReviewWordsByDate[dateKey]
+        },
+        initialDifficulty: 'hard'
+      });
+      return;
+    }
+
+    const existingTodayAttempt = dailyReviewHistory ? Object.values(dailyReviewHistory).find(e => e.date === dateKey) : null;
+    if (existingTodayAttempt && (existingTodayAttempt.correctWords || existingTodayAttempt.wrongWords)) {
+      const combinedWords = [...(existingTodayAttempt.correctWords || []), ...(existingTodayAttempt.wrongWords || [])];
+      if (combinedWords.length === 10) {
+        setDailyReviewWordsForDate(dateKey, combinedWords);
+        setActivePlayData({
+          isDailyReview: true,
+          tierId: 'daily_review',
+          tierRule: "Listen carefully to the audio dictation and spell each review word correctly on Hard mode!",
+          section: {
+            id: 'daily_review',
+            name: `Daily Review (${dateKey})`,
+            theme: "10-Word Hard Dictation Review",
+            words: combinedWords
+          },
+          initialDifficulty: 'hard'
+        });
+        return;
+      }
+    }
+
     const pool = [];
     (allCurriculumTiers || tiers).forEach(t => {
       t.sections.forEach(sec => {
@@ -128,12 +165,28 @@ const StudentPortal = () => {
       return;
     }
 
-    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const getSeededScore = (wordObj, dateStr, index) => {
+      const str = `${dateStr}_${wordObj.word || ''}_${wordObj.sectionId || ''}_${index}`;
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+      }
+      const x = Math.sin(hash) * 10000;
+      return x - Math.floor(x);
+    };
+
+    const shuffled = pool.map((w, i) => ({ word: w, sortKey: getSeededScore(w, dateKey, i) }))
+                         .sort((a, b) => a.sortKey - b.sortKey)
+                         .map(item => item.word);
+
     const selectedWords = shuffled.slice(0, 10);
 
     while (selectedWords.length < 10) {
       selectedWords.push(shuffled[selectedWords.length % shuffled.length]);
     }
+
+    setDailyReviewWordsForDate(dateKey, selectedWords);
 
     setActivePlayData({
       isDailyReview: true,
