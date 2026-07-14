@@ -108,7 +108,29 @@ const StudentPortal = () => {
     warmupAudio();
     const dateKey = getWordleDateKey();
 
+    // Helper map to resolve any string or partial word object into the complete word object with definition, sentence, and sectionId
+    const allWordsMap = {};
+    (allCurriculumTiers || tiers).forEach(t => {
+      t.sections?.forEach(sec => {
+        sec.words?.forEach(w => {
+          if (w?.word) {
+            allWordsMap[w.word.toLowerCase()] = { ...w, sectionId: sec.id };
+          }
+        });
+      });
+    });
+
+    const normalizeToWordObjects = (wordList) => {
+      return (wordList || []).map(item => {
+        const wStr = typeof item === 'string' ? item : (item?.word || '');
+        const found = allWordsMap[wStr.toLowerCase()];
+        if (found) return found;
+        return typeof item === 'object' && item !== null ? item : { word: wStr, definition: '', sentence: '' };
+      });
+    };
+
     if (dailyReviewWordsByDate && dailyReviewWordsByDate[dateKey] && dailyReviewWordsByDate[dateKey].length === 10) {
+      const normalizedWords = normalizeToWordObjects(dailyReviewWordsByDate[dateKey]);
       setActivePlayData({
         isDailyReview: true,
         tierId: 'daily_review',
@@ -117,7 +139,7 @@ const StudentPortal = () => {
           id: 'daily_review',
           name: `Daily Review (${dateKey})`,
           theme: "10-Word Hard Dictation Review",
-          words: dailyReviewWordsByDate[dateKey]
+          words: normalizedWords
         },
         initialDifficulty: 'hard'
       });
@@ -128,7 +150,8 @@ const StudentPortal = () => {
     if (existingTodayAttempt && (existingTodayAttempt.correctWords || existingTodayAttempt.wrongWords)) {
       const combinedWords = [...(existingTodayAttempt.correctWords || []), ...(existingTodayAttempt.wrongWords || [])];
       if (combinedWords.length === 10) {
-        setDailyReviewWordsForDate(dateKey, combinedWords);
+        const normalizedWords = normalizeToWordObjects(combinedWords);
+        setDailyReviewWordsForDate(dateKey, normalizedWords);
         setActivePlayData({
           isDailyReview: true,
           tierId: 'daily_review',
@@ -137,7 +160,7 @@ const StudentPortal = () => {
             id: 'daily_review',
             name: `Daily Review (${dateKey})`,
             theme: "10-Word Hard Dictation Review",
-            words: combinedWords
+            words: normalizedWords
           },
           initialDifficulty: 'hard'
         });

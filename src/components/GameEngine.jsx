@@ -93,8 +93,9 @@ const GameEngine = ({ tierId, section, onComplete, tierRule, initialDifficulty =
 
   // The word list for the current section
   const words = shuffledWords;
-  const currentWordObj = words[currentWordIndex];
-  const currentWord = currentWordObj?.word || '';
+  const rawWordObj = words[currentWordIndex];
+  const currentWordObj = typeof rawWordObj === 'string' ? { word: rawWordObj, definition: '', sentence: '' } : (rawWordObj || { word: '', definition: '', sentence: '' });
+  const currentWord = currentWordObj.word || '';
 
 
 
